@@ -3,22 +3,14 @@
 
 class Config {
 	
-	var $config = null;
-	var $db = null;
+	private $config = null;
 	
-	function Config() {
-		$this->config = $this->getConfig();	
-		$this->db =& new Magirc_DB;
-	}
-	
-	// Gets Magirc configuration from DB
-	function getConfig(){
+	function Config($data) {
 		$config = array();
-		$data = $this->db->select('magirc_config', array('parameter', 'value'));
 		foreach ($data as $item) {
 			$config[$item['parameter']] = $item['value'];
 		}
-		return $config;
+		$this->config = $config;
 	}
 	
 	// Return requested configuration parameter

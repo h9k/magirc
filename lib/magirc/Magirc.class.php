@@ -9,7 +9,7 @@ class Magirc {
 
 	function Magirc() {
 		$this->db =& new Magirc_DB;
-		$this->cfg =& new Config;
+		$this->cfg =& new Config($this->db->select('magirc_config', array('parameter', 'value')));
 		$this->tpl =& new Magirc_Smarty;
 		$this->denora =& new Denora;
 	}
