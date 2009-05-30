@@ -3,9 +3,11 @@
 
 class Config {
 	var $config;
+	var $db;
 	
 	function Config() {
 		$this->config = $this->getConfig();	
+		$this->db =& new Magirc_DB;
 	}
 	
 	// Gets Magirc configuration from DB

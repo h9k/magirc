@@ -5,6 +5,7 @@ include('lib/magirc/version.inc.php');
 require('lib/smarty/Smarty.class.php');
 require('lib/pear/MDB2.php');
 require('lib/magirc/DB.class.php');
+require('lib/magirc/Config.class.php');
 require('lib/magirc/Magirc.class.php');
 require('lib/magirc/denora/Denora.class.php');
 
