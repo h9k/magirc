@@ -27,17 +27,17 @@ if (file_exists('conf/db.cfg.php')) {
 include('lib/magirc/init.inc.php');
 
 $magirc =& new Magirc;
-echo $magirc->tpl->template_dir;
 
-$inc_file = 'inc/' . $magirc->getUrlParameter('section') . '.inc.php';
+$section = $magirc->getUrlParameter('section');
+$inc_file = 'inc/' . $section . '.inc.php';
 if (file_exists($inc_file)) {
 	require_once($inc_file);
 } else {
-	if ($content = $magirc->getPage($page)) {
+	if ($content = $magirc->getPage($section)) {
 		$magirc->tpl->assign('content', $content);
 		$magirc->tpl->display('generic.tpl');
 	} else {
-		$magirc->displayError('The requested page does not exist');
+		$magirc->displayError("The requested page '$section' does not exist");
 	}
 }
 

@@ -18,8 +18,11 @@ class Magirc {
 			case 'section':
 				$param = isset($_GET['section']) ? $_GET['section'] : 'home';
 				break;
+			case 'action':
+				$param = isset($_GET['action']) ? $_GET['action'] : 'main';
+				break;
 			default:
-				$param = NULL;
+				$param = isset($_GET[$param]) ? $_GET[$param] : '';
 		}
 		return stripslashes(htmlspecialchars(basename($param)));
 	}

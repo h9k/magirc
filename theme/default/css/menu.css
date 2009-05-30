@@ -1,0 +1,58 @@
+/* $Id$ */
+
+@CHARSET "UTF-8";
+
+/* Hauptmenu */
+
+#tabsH {
+	width: 100%;
+	font-size: 93%;
+	line-height: normal;
+	font-weight: bold;
+}
+
+#tabsH ul {
+	margin: 0;
+	padding: 10px 10px 0 0px;
+	list-style: none;
+}
+
+#tabsH li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+#tabsH a {
+	float: left;
+	background: url("../img/tableftH.gif") no-repeat left top;
+	margin: 0;
+	padding: 0 0 0 4px;
+	text-decoration: none;
+}
+
+#tabsH a span {
+	float: left;
+	display: block;
+	background: url("../img/tabrightH.gif") no-repeat right top;
+	padding: 5px 10px 4px 16px;
+	color: #FFF;
+	white-space: nowrap;
+}
+
+#tabsH a img {
+	float:left;
+	margin-top: 3px;
+	padding: 0px;
+}
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#tabsH a span {
+	float: none;
+}
+
+/* End IE5-Mac hack */
+#tabsH a:hover span {color: orange;}
+#tabsH a.active span {color: yellow;}
+#tabsH a:hover, #tabsH a.active {background-position: 0% -42px;}
+#tabsH a:hover span, #tabsH a.active span {background-position: 100% -42px;}

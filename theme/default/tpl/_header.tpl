@@ -13,3 +13,21 @@
 <link href="theme/default/css/default.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div id="header">
+<h1>php<strong>Denora</strong>2 <span style="color:#C0C0C0;">Prototype testing...</span></h1>
+<div id="tabsH">
+  <ul>
+    	<li><a href="status/" title="Status"{if $smarty.get.section eq 'status' or !$smarty.get.section} class="active"{/if}><img src="theme/default/img/menu/status.png" alt="" height="16" width="16" /><span>&nbsp;Status</span></a></li>
+    	<li><a href="evolution/" title="Evolution"{if $smarty.get.section eq 'evolution'} class="active"{/if}><img src="theme/default/img/menu/evolution.png" alt="" height="16" width="16" /><span>&nbsp;Evolution</span></a></li>
+	    <li><a href="servers/" title="Servers"{if $smarty.get.section eq 'servers'} class="active"{/if}><img src="theme/default/img/menu/servers.png" alt="" height="16" width="16" /><span>&nbsp;Servers</span></a></li>
+	    <li><a href="countries/" title="Countries"{if $smarty.get.section eq 'countries'} class="active"{/if}><img src="theme/default/img/menu/countries.png" alt="" height="16" width="16" /><span>&nbsp;Countries</span></a></li>
+   	    <li><a href="clients/" title="Clients"{if $smarty.get.section eq 'clients'} class="active"{/if}><img src="theme/default/img/menu/clients.png" alt="" height="16" width="16" /><span>&nbsp;Clients</span></a></li>
+	    <li><a href="channels/" title="Channels"{if $smarty.get.section eq 'channels'} class="active"{/if}><img src="theme/default/img/menu/channels.png" alt="" height="16" width="16" /><span>&nbsp;Channels</span></a></li>
+        <li><a href="users/" title="Users"{if $smarty.get.section eq 'users'} class="active"{/if}><img src="theme/default/img/menu/users.png" alt="" height="16" width="16" /><span>&nbsp;Users</span></a></li>
+		<li><a href="operators/" title="Operators"{if $smarty.get.section eq 'opers'} class="active"{/if}><img src="theme/default/img/menu/operators.png" alt="" height="16" width="16" /><span>&nbsp;Operators</span></a></li>
+		<li><a href="search/" title="Search"{if $smarty.get.section eq 'search'} class="active"{/if}><img src="theme/default/img/menu/search.png" alt="" height="16" width="16" /><span>&nbsp;Search</span></a></li>
+  </ul>
+</div>
+</div>
+<div id="main">
+<div id="content">
