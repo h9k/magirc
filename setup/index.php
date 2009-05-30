@@ -21,7 +21,7 @@ if (!file_exists($denora_conf)) {
 require_once('../lib/magirc/DB.class.php');
 require_once('../lib/magirc/Config.class.php');
 require_once('../lib/magirc/denora/Denora.class.php');*/
-require_once('../lib/magirc/init.inc.php');
+require_once('lib/init.inc.php');
 require_once('lib/Setup.class.php');
 
 $setup = new Setup();

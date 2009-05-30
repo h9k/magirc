@@ -14,8 +14,6 @@ class Magirc_DB extends DB {
 	function Magirc_DB() {
 		if (file_exists('conf/magirc.cfg.php')) {
 			include('conf/magirc.cfg.php');
-		} elseif (file_exists('../conf/magirc.cfg.php')) {
-			include('../conf/magirc.cfg.php');
 		} else {
 			die ('magirc.cfg.php configuration file missing');
 		}
@@ -28,8 +26,6 @@ class Denora_DB extends DB {
 	function Denora_DB() {
 		if (file_exists('conf/denora.cfg.php')) {
 			include('conf/denora.cfg.php');
-		} elseif (file_exists('../conf/denora.cfg.php')) {
-			include('../conf/denora.cfg.php');
 		} else {
 			die ('denora.cfg.php configuration file missing');
 		}
