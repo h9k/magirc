@@ -14,6 +14,11 @@ class Setup {
 	 * (not really implemented since we only have one table version till now...)
 	 */
 	function configCheck(){
+		$tables = $this->db->getTables();
+		return isset($tables['magirc_config']);
+	}
+	
+	function getDbVersion(){
 		$result = $this->db->select('magirc_config', array('value'), array('parameter' => 'db_version'));
 		return $result['value'];
 	}

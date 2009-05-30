@@ -10,15 +10,15 @@ if (isset($_POST['password'])) { $password = htmlspecialchars($_POST['password']
 //sql_db_connect();
 echo "<pre>Logging in... ";
 if (isset($username) && isset($password)) {
-	$result = $this->denora->login($username, $password);
-	if ($result == 1) {
+	$result = $setup->denora->login($username, $password);
+	if ($result[0]['uname'] == $username) {
 		echo "<span style=\"color:green;\">Done</span></pre>";
 		
 		echo "<pre>Checking configuration table... ";
-		$check = $this->configCheck();
+		$check = $setup->configCheck();
 		if (!$check) { // Dump file to db
 			echo " Creating... ";
-			$result = $this->configDump();
+			$result = $setup->configDump();
 			if ($result == 0) {
 				echo "<span style=\"color:green;\">Done</span></pre>";
 			} else {

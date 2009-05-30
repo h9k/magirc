@@ -22,7 +22,7 @@ class Denora {
 		if (!isset($username) || !isset($password))
 			return false;
 		
-		return $this->db->select('admin', array('uname'),array('uname' => $username, 'passwd' => md5(trim($password)), 'level' => 1));
+		return $this->db->select('admin', array('uname'), array('uname' => $username, 'passwd' => md5(trim($password)), 'level' => 1));
 	}
 	
 	// Returns the Denora version

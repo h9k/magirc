@@ -7,7 +7,7 @@
 -- Table structure for table `phpdenora_config`
 -- 
 
-CREATE TABLE `magirc_config` (
+CREATE TABLE IF NOT EXISTS `magirc_config` (
   `parameter` varchar(32) NOT NULL default '',
   `value` varchar(1024) NOT NULL default '',
   PRIMARY KEY (`parameter`)
@@ -17,7 +17,7 @@ CREATE TABLE `magirc_config` (
 -- Dumping data for table `magirc_config`
 -- 
 
-INSERT INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '1'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '1'),
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
 ('msg_welcome', '<div class="title_section">Welcome to Magirc</div><p>These are the Web Stats of this IRC Network.<br />You will find detailed information about the network status and the activity of its channels and users.<br />Enjoy your stay!</p>'),
