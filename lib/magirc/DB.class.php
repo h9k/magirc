@@ -219,16 +219,25 @@ class DB {
 		return $this->query($query);
 	}
 	
-	function select($table, $where, $sort, $order = 'ASC', $limit = 0) {	
-		$conditions = null;
-		foreach($where as $key => $value) {
-			$conditions .= sprintf("`%s` = '%s' AND ", $this->escape($key), $this->escape($value));
+	function select($table, $what = array('*'), $where = NULL, $sort = NULL, $order = 'ASC', $limit = 0) {	
+		$columns = null;
+		foreach($what as $value) {
+			$columns .= sprintf("`%s`, ", $this->escape($value));
 		}
-		$conditions = substr($conditions, 0, -5);
 		
-		$query = sprintf("SELECT * FROM `%s` WHERE %s ORDER BY `%s` %s", $table, $conditions, $sort, $order);
+		$query = sprintf("SELECT %s FROM `%s`", substr($columns, 0, -2), $table);
+		if ($where) {
+			$conditions = null;
+			foreach($where as $key => $value) {
+				$conditions .= sprintf("`%s` = '%s' AND ", $this->escape($key), $this->escape($value));
+			}
+			$query .= sprintf(" WHERE %s", substr($conditions, 0, -5));
+		}
+		if ($sort) {
+			$query .= sprintf(" ORDER BY `%s` %s", $this->escape($sort), $this->escape($order));
+		}
 		if ($limit) {
-			$query .= sprintf(" LIMIT %s", $limit);
+			$query .= sprintf(" LIMIT %s", $this->escape($limit));
 		}
 		
 		$this->query($query, SQL_ALL, SQL_ASSOC);

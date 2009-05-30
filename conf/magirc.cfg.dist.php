@@ -1,10 +1,14 @@
 <?php
 // $Id$
 
-// MAGIRC Configuration File
+// Configure and rename this file to magirc.cfg.php
 
-define('DEBUG', true);
-define('THEME', 'default');
-define('BASE_URL', 'http://stats.yournet.tld/');
+$db = array(
+	'username'	=> 'magirc',
+	'password'	=> 'magirc',
+	'database'	=> 'magirc',
+	'hostname'	=> 'localhost',
+	'port'		=> 3306
+);
 
 ?>

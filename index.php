@@ -13,23 +13,15 @@
 ini_set('display_errors','off');
 error_reporting(E_ALL);
 
-// read config and load libs
-if (file_exists('conf/magirc.cfg.php')) {
-	include('conf/magirc.cfg.php');
-	if (DEBUG) {
-		ini_set('display_errors','on');
-	}
-} else {
-	die ('magirc.cfg.php configuration file missing');
-}
-if (file_exists('conf/db.cfg.php')) {
-	include('conf/db.cfg.php');
-} else {
-	die ('db.cfg.php configuration file missing');
-}
+// load libs
 include('lib/magirc/init.inc.php');
 
 $magirc =& new Magirc;
+
+define('DEBUG', $magirc->cfg->getParam('debug_level'));
+define('BASE_URL', $magirc->cfg->getParam('base_url'));
+$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
+$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
 
 $section = $magirc->getUrlParameter('section');
 $inc_file = 'inc/' . $section . '.inc.php';

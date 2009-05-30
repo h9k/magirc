@@ -3,13 +3,28 @@
 
 class Magirc {
 	var $db = null;
+	var $cfg = null;
 	var $tpl = null;
 	var $denora = null;
 
 	function Magirc() {
 		$this->db =& new Magirc_DB;
+		$this->cfg =& new Config;
 		$this->tpl =& new Magirc_Smarty;
-		$this->denora =& new Denora_DB;
+		$this->denora =& new Denora;
+	}
+	
+	// Returns session status
+	function sessionStatus() {
+		if (!isset($_SESSION["loginUsername"])) {
+			$_SESSION["message"] = "Access denied";
+			return false;
+		}
+		if (!isset($_SESSION["loginIP"]) || ($_SESSION["loginIP"] != $_SERVER["REMOTE_ADDR"])) {
+			$_SESSION["message"] = "Access denied";
+			return false;
+		}
+		return true;
 	}
 	
 	// Gets and returns the given url parameter depending on what it is
@@ -27,6 +42,7 @@ class Magirc {
 		return stripslashes(htmlspecialchars(basename($param)));
 	}
 	
+	// Displays an error page with the given message
 	function displayError($err_msg) {
 		$this->tpl->assign('err_msg', $err_msg);
 		$this->tpl->assign('server', $_SERVER);
