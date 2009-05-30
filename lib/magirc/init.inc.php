@@ -1,4 +1,5 @@
 <?php
+// $Id$
 
 include('lib/magirc/version.inc.php');
 require('lib/magirc/DB.class.php');

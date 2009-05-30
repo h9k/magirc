@@ -8,8 +8,8 @@ class Magirc {
 
 	function Magirc() {
 		$this->db =& new Magirc_DB;
-		$this->denora =& new Denora_DB;
 		$this->tpl =& new Magirc_Smarty;
+		$this->denora =& new Denora_DB;
 	}
 	
 	// Gets and returns the given url parameter depending on what it is

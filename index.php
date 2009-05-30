@@ -14,8 +14,16 @@ ini_set('display_errors','on');
 error_reporting(E_ALL);
 
 // read config and load libs
-include('conf/magirc.cfg.php') or die ('magirc.cfg.php configuration file missing');
-include('conf/db.cfg.php') or die ('db.cfg.php configuration file missing');
+if (file_exists('conf/magirc.cfg.php')) {
+	include('conf/magirc.cfg.php');
+} else {
+	die ('magirc.cfg.php configuration file missing');
+}
+if (file_exists('conf/db.cfg.php')) {
+	include('conf/db.cfg.php');
+} else {
+	die ('db.cfg.php configuration file missing');
+}
 include('lib/magirc/init.inc.php');
 
 $magirc =& new Magirc;
