@@ -17,10 +17,11 @@ if (!file_exists($denora_conf)) {
 	die('Please configure conf/denora.cfg.dist.php and rename it to conf/denora.cfg.php');
 }
 
-require_once('../lib/magirc/version.inc.php');
+/*require_once('../lib/magirc/version.inc.php');
 require_once('../lib/magirc/DB.class.php');
 require_once('../lib/magirc/Config.class.php');
-require_once('../lib/magirc/denora/Denora.class.php');
+require_once('../lib/magirc/denora/Denora.class.php');*/
+require_once('../lib/magirc/init.inc.php');
 require_once('lib/Setup.class.php');
 
 $setup = new Setup();

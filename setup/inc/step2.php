@@ -7,7 +7,6 @@ $config['show_exec_time'] = 0;
 
 $denoraver = $setup->denora->getVersion('full');
 $denoranum = $setup->denora->getVersion('num');
-$denorarev = $setup->denora->getVersion('rev');
 
 echo "<pre>Checking Database consistency... ";
 if (!$denoraver) {
