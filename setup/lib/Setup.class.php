@@ -3,12 +3,10 @@
 
 class Setup {
 	var $db = null;
-	var $cfg = null;
 	var $denora = null;
 
 	function Setup() {
 		$this->db = new Magirc_DB;
-		$this->cfg = new Config;
 		$this->denora = new Denora;
 	}
 
