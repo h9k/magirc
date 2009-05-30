@@ -11,7 +11,6 @@ class Magirc {
 		$this->db =& new Magirc_DB;
 		$this->cfg =& new Config;
 		$this->tpl =& new Magirc_Smarty;
-		$this->denora =& new Denora;
 	}
 	
 	// Returns session status

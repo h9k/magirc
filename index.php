@@ -10,14 +10,14 @@
  * -------------------------------------- *
  */
 
-ini_set('display_errors','off');
+ini_set('display_errors','on');
 error_reporting(E_ALL);
 
 // load libs
 include('lib/magirc/init.inc.php');
 
 $magirc =& new Magirc;
-
+$magirc->denora =& new Denora();
 define('DEBUG', $magirc->cfg->getParam('debug_level'));
 define('BASE_URL', $magirc->cfg->getParam('base_url'));
 $magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
