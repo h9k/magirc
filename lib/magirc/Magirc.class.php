@@ -29,6 +29,7 @@ class Magirc {
 	
 	function displayError($err_msg) {
 		$this->tpl->assign('err_msg', $err_msg);
+		$this->tpl->assign('server', $_SERVER);
 		$this->tpl->display('error.tpl');
 	}
 	
