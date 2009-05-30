@@ -2,8 +2,9 @@
 // $Id$
 
 class Config {
-	var $config;
-	var $db;
+	
+	var $config = null;
+	var $db = null;
 	
 	function Config() {
 		$this->config = $this->getConfig();	
