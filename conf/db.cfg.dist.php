@@ -4,10 +4,26 @@
  * Configure and rename this file to db.cfg.php
  */
 
-$db['username'] = "denora";
-$db['password'] = "denora";
-$db['db_name'] = "denora";
-$db['hostname'] = "localhost";
-$db['port'] = "3306";
+$db = array(
+
+	'magirc' => array(
+		'username'	=> 'magirc',
+		'password'	=> 'magirc',
+		'database'	=> 'magirc',
+		'hostname'	=> 'localhost',
+		'port'		=> 3306,
+		'prefix'	=> 'magirc_'
+	),
+	
+	'denora' => array(
+		'username'	=> 'denora',
+		'password'	=> 'denora',
+		'database'	=> 'denora',
+		'hostname'	=> 'localhost',
+		'port'		=> 3306,
+		'prefix'	=> ''	
+	)
+
+);
 
 ?>

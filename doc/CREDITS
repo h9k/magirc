@@ -1,0 +1,15 @@
+MAGIRC CREDITS
+--------------
+
+Magirc originates from phpDenora, but is a complete rewrite. 
+
+Magirc comes with makes use of the following products
+developed by 3rd parties: 
+
+- ckeditor
+- jpgraph
+- pear mdb2
+- phpmailer
+- smarty template engine
+- dejavu ttf fonts
+- yahoo ui libs
