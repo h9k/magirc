@@ -2,6 +2,10 @@
 
 @CHARSET "UTF-8";
 
+html {
+	background-color: #000022;
+}
+
 body {
 	background-color: #000022;
 	background-image: url(../img/bg_bottom.png);

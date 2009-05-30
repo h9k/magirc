@@ -11,10 +11,11 @@
 <link href="theme/default/css/yui/reset-fonts.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/yui/base-min.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/default.css" rel="stylesheet" type="text/css" />
+<link href="theme/default/css/menu.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="header">
-<h1>php<strong>Denora</strong>2 <span style="color:#C0C0C0;">Prototype testing...</span></h1>
+<h1><strong>Magirc</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
 <div id="tabsH">
   <ul>
     	<li><a href="status/" title="Status"{if $smarty.get.section eq 'status' or !$smarty.get.section} class="active"{/if}><img src="theme/default/img/menu/status.png" alt="" height="16" width="16" /><span>&nbsp;Status</span></a></li>
