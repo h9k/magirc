@@ -1,0 +1,9 @@
+/* $Id$ */
+@CHARSET "UTF-8";
+
+body {
+	background:#00a;
+	color:#fff;
+	font:14px bold;
+	font-family:terminal, fixedsys, courier, monospace;
+}

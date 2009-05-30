@@ -27,6 +27,7 @@ if (file_exists('conf/db.cfg.php')) {
 include('lib/magirc/init.inc.php');
 
 $magirc =& new Magirc;
+echo $magirc->tpl->template_dir;
 
 $inc_file = 'inc/' . $magirc->getUrlParameter('section') . '.inc.php';
 if (file_exists($inc_file)) {
@@ -36,8 +37,7 @@ if (file_exists($inc_file)) {
 		$magirc->tpl->assign('content', $content);
 		$magirc->tpl->display('generic.tpl');
 	} else {
-		$magirc->tpl->assign('err_msg', 'The requested page does not exist');
-		$magirc->tpl->display('error.tpl');
+		$magirc->displayError('The requested page does not exist');
 	}
 }
 

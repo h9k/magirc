@@ -24,6 +24,11 @@ class Magirc {
 		return stripslashes(htmlspecialchars(basename($param)));
 	}
 	
+	function displayError($err_msg) {
+		$this->tpl->assign('err_msg', $err_msg);
+		$this->tpl->display('error.tpl');
+	}
+	
 	//TODO: implement :)
 	function getPage($page) {
 		return NULL;
