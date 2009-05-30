@@ -27,28 +27,30 @@ class Denora {
 	
 	// Returns the Denora version
 	function getVersion($what) {
+		global $config;
 		$table = isset($config['table_server']) ? $config['table_server'] : 'server';
 		$query = sprintf("SELECT `version` FROM `%s` WHERE `version` LIKE 'Denora%%'", $table);
 		$this->db->query($query, SQL_INIT, SQL_ASSOC);
-		if ($result = $this->db->record) {
+		$result = $this->db->record;
+		if (isset($result['version'])) {
 			switch ($what) {
 				case 'full':
-					$version = explode("-", $result[0]);
+					$version = explode("-", $result['version']);
 					return @$version[1];
 					break;
 				case 'num':
 					$pattern = '/([0-9.]+)/';
-					preg_match($pattern, $result[0], $version);
+					preg_match($pattern, $result['version'], $version);
 					return @$version[1];
 					break;
 				case 'rev':
 					$pattern = '/([0-9.]+)/';
-					preg_match($pattern, $result[0], $num);
+					preg_match($pattern, $result['version'], $num);
 					if (!$num) {
-						$version = explode("(",substr($result[0], 0, -1));
+						$version = explode("(",substr($result['version'], 0, -1));
 					} else {
 						$pattern = '/(\.[0-9]+)\s/';
-						preg_match($pattern, $result[0], $version);
+						preg_match($pattern, $result['version'], $version);
 						$version[1] = substr($version[1], 1);
 					}
 					return @$version[1];
