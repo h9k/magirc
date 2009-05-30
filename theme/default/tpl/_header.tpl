@@ -7,7 +7,7 @@
 <meta name="ROBOTS" content="INDEX, FOLLOW" />
 <meta name="Keywords" content="Magirc IRC Chat Statistics Denora stats phpDenora" />
 <meta name="Description" content="IRC Statistics powered by Magirc" />
-<base href="$smarty.const.BASE_URL" />
+<base href="{$smarty.const.BASE_URL}" />
 <link href="theme/default/css/yui/reset-fonts.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/yui/base-min.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/default.css" rel="stylesheet" type="text/css" />

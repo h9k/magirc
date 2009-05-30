@@ -1,12 +1,14 @@
 # $Id$
 
-RewriteEngine On
+#RewriteBase /~ircd/magirc/
 
 ErrorDocument 400 index.php?section=error&action=400
 ErrorDocument 401 index.php?section=error&action=401
 ErrorDocument 403 index.php?section=error&action=403
 ErrorDocument 404 index.php?section=error&action=404
 ErrorDocument 500 index.php?section=error&action=500
+
+RewriteEngine On
 
 RewriteRule ^setup/$ setup/ [L]
 RewriteRule ^admin/$ admin/ [L]

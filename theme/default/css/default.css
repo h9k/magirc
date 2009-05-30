@@ -4,12 +4,11 @@
 
 html {
 	background-color: #000022;
+	background-image: url(../img/bg_bottom.png);
+	background-repeat: repeat-x;
 }
 
 body {
-	background-color: #000022;
-	background-image: url(../img/bg_bottom.png);
-	background-repeat: repeat-x;
 	margin:0;
 	padding:0;
 	font: 11px/1.5em Verdana, Arial, Helvetica, sans-serif;

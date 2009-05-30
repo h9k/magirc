@@ -8,10 +8,16 @@
 <meta name="ROBOTS" content="INDEX, FOLLOW" />
 <meta name="Keywords" content="Magirc IRC Chat Statistics Denora stats phpDenora" />
 <meta name="Description" content="IRC Statistics powered by Magirc" />
-<base href="$smarty.const.BASE_URL" />
+<base href="{$smarty.const.BASE_URL}" />
 <link href="theme/default/css/bsod.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-*** ERROR: {$err_msg}
+*** STOP: {$err_msg}
+{if $smarty.const.DEBUG}
+<br /><br />
+{foreach from=$server item=item key=key}
+{$key}: {$item}<br />
+{/foreach}
+{/if}
 </body>
 </html>

@@ -10,12 +10,15 @@
  * -------------------------------------- *
  */
 
-ini_set('display_errors','on');
+ini_set('display_errors','off');
 error_reporting(E_ALL);
 
 // read config and load libs
 if (file_exists('conf/magirc.cfg.php')) {
 	include('conf/magirc.cfg.php');
+	if (DEBUG) {
+		ini_set('display_errors','on');
+	}
 } else {
 	die ('magirc.cfg.php configuration file missing');
 }
