@@ -12,6 +12,7 @@
 
 ini_set('display_errors','on');
 error_reporting(E_ALL);
+ini_set('default_charset','UTF-8');
 
 // load libs
 include('lib/magirc/init.inc.php');

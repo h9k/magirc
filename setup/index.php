@@ -1,20 +1,24 @@
 <?php
 // $Id$
 
-define( '_VALID_PARENT', 1 );
-ini_set('display_errors','off');
+ini_set('display_errors','on');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 
 $step = (isset($_GET['step'])) ? htmlspecialchars($_GET['step']) : 1;
-$sql_config_file = '../conf/db.cfg.php';
+$magirc_conf = '../conf/magirc.cfg.php';
+$denora_conf = '../conf/denora.cfg.php';
 $config = array(); $sql = array();
 
-if (!file_exists($sql_config_file)) {
-	die('Please configure conf/db.cfg.dist.php and rename it to conf/db.cfg.php');
+if (!file_exists($magirc_conf)) {
+	die('Please configure conf/magirc.cfg.dist.php and rename it to conf/magirc.cfg.php');
+}
+if (!file_exists($denora_conf)) {
+	die('Please configure conf/denora.cfg.dist.php and rename it to conf/denora.cfg.php');
 }
 
-require_once($sql_config_file);
+require_once($magirc_conf);
+require_once($denora_conf);
 require_once('../lib/magirc/version.inc.php');
 require_once('../lib/magirc/DB.class.php');
 require_once('../lib/magirc/Config.class.php');
