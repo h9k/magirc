@@ -6,6 +6,7 @@
 <p>Please follow the on-screen instructions to install Magirc</p>
 <?php
 $error = 0;
+require_once($magirc_conf);
 
 echo "<pre>Checking PHP version... ";
 if (version_compare("5.2.0", phpversion(), "<") == 1) {
@@ -35,7 +36,7 @@ echo "<pre>Checking SQL configuration files... ";
 if (is_writable($magirc_conf) && is_writable($denora_conf)) {
 	echo "<span style=\"color:green;\">Writable</span></pre>";
 } else {
-	echo "<span style=\"color:orange;\">Not writable</span><br />Please ensure that the conf/$magirc_conf and conf/$denora_conf files have enough write permissions.<br />Try chmod 0666 or 0777. If it still doesn't work don't worry, you can continue anyway.</pre>";
+	echo "<span style=\"color:orange;\">Not writable</span><br />Please ensure that the $magirc_conf and $denora_conf files have enough write permissions.<br />Try chmod 0666 or 0777. If it still doesn't work don't worry, you can continue anyway.</pre>";
 }
 
 // If the DB Test failed, user could fill a form to change config. Here we handle the new input.

@@ -1,9 +1,6 @@
 <?php
 // $Id$
 
-/** ensure this file is being included by a parent file */
-defined('_VALID_PARENT') or header("Location: ../");
-
 $config['debug_mode'] = 0;
 $config['show_exec_time'] = 0;
 
