@@ -2,7 +2,6 @@
 // $Id$
 
 // Load the correct protocol file
-require('lib/magirc/denora/protocol/'.$magirc->cfg->getParam('ircd').'.inc.php');
 
 class Denora {
 	
@@ -11,6 +10,10 @@ class Denora {
 
 	function Denora() {
 		$this->db =& new Denora_DB;
+	}
+	
+	function loadProtocol($ircd) {
+		require("lib/magirc/denora/protocol/$ircd.inc.php");
 		$this->ircd =& new Protocol;
 	}
 	
