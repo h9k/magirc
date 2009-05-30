@@ -8,10 +8,10 @@ class Magirc {
 	var $denora = null;
 
 	function Magirc() {
-		$this->db =& new Magirc_DB;
-		$this->cfg =& new Config($this->db->select('magirc_config', array('parameter', 'value')));
-		$this->tpl =& new Magirc_Smarty;
-		$this->denora =& new Denora;
+		$this->db = new Magirc_DB;
+		$this->cfg = new Config($this->db->select('magirc_config', array('parameter', 'value')));
+		$this->tpl = new Magirc_Smarty;
+		$this->denora = new Denora;
 	}
 	
 	// Returns session status

@@ -7,9 +7,9 @@ class Setup {
 	var $denora = null;
 
 	function Magirc() {
-		$this->db =& new Magirc_DB;
-		$this->cfg =& new Config;
-		$this->denora =& new Denora;
+		$this->db = new Magirc_DB;
+		$this->cfg = new Config;
+		$this->denora = new Denora;
 	}
 
 	/* Checks if the configuration table is up to date

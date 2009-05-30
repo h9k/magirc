@@ -5,9 +5,9 @@ $config['table_server'] = (isset($_GET['table_server'])) ? $_GET['table_server']
 $config['debug_mode'] = 0;
 $config['show_exec_time'] = 0;
 
-$denoraver = $this->denora->getVersion('full');
-$denoranum = $this->denora->getVersion('num');
-$denorarev = $this->denora->getVersion('rev');
+$denoraver = $setup->denora->getVersion('full');
+$denoranum = $setup->denora->getVersion('num');
+$denorarev = $setup->denora->getVersion('rev');
 
 echo "<pre>Checking Database consistency... ";
 if (!$denoraver) {

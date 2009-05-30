@@ -17,7 +17,7 @@ ini_set('default_charset','UTF-8');
 // load libs
 include('lib/magirc/init.inc.php');
 
-$magirc =& new Magirc;
+$magirc = new Magirc;
 
 $magirc->denora->loadProtocol($magirc->cfg->getParam('ircd'));
 

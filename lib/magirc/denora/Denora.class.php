@@ -9,12 +9,12 @@ class Denora {
 	var $ircd = null;
 
 	function Denora() {
-		$this->db =& new Denora_DB;
+		$this->db = new Denora_DB;
 	}
 	
 	function loadProtocol($ircd) {
 		require("lib/magirc/denora/protocol/$ircd.inc.php");
-		$this->ircd =& new Protocol;
+		$this->ircd = new Protocol;
 	}
 	
 	// login function

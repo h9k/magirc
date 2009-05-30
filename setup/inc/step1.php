@@ -50,14 +50,14 @@ if (isset($_POST['button'])) {
 $config['table_server'] = (isset($_REQUEST['table_server'])) ? $_REQUEST['table_server'] : 'server';
 
 if (!$error) {
-	echo "<pre>Testing Database connection... ";
+	echo "<pre>Testing Magirc Database connection... ";
 	$db_error = false;
 	// Test DB connection
 	if (!$db_error) {
 		echo "<span style=\"color:green;\">Passed</span></pre>";
 		// DB Test was successful, so we can now save the new info
 		if (isset($_POST['button'])) {
-				$db_buffer = "<?php
+			$db_buffer = "<?php
 defined('_VALID_PARENT') or header(\"Location: ../\");
 \$db['username'] = \"".$db['username']."\";
 \$db['password'] = \"".$db['password']."\";
@@ -77,42 +77,83 @@ defined('_VALID_PARENT') or header(\"Location: ../\");
 				echo "<p>When you are done please <a href=\"?step=1&amp;table_server=".$config['table_server']."\">repeat this step</a></p>";
 			}
 		} else {
-			echo "<p>Continue to the <a href=\"?step=2&amp;table_server=".$config['table_server']."\">next step</a></p>";
+			//TODO: check for Denora DB here
+			echo "<pre>Testing Denora Database connection... ";
+			$db_error = false;
+			// Test DB connection
+			if (!$db_error) {
+				echo "<span style=\"color:green;\">Passed</span></pre>";
+				// DB Test was successful, so we can now save the new info
+				if (isset($_POST['button'])) {
+					$db_buffer = "<?php
+		defined('_VALID_PARENT') or header(\"Location: ../\");
+		\$db['username'] = \"".$db['username']."\";
+		\$db['password'] = \"".$db['password']."\";
+		\$db['database'] = \"".$db['database']."\";
+		\$db['hostname'] = \"".$db['hostname']."\";
+		\$db['port'] = \"".$db['port']."\";
+		?>";
+					if (is_writable($denora_conf)) {
+						$writefile = fopen($denora_conf,"w");
+						fwrite($writefile,$db_buffer);
+						fclose($writefile);
+						echo "<div class=\"configsave\">Configuration saved</div>";
+						echo "<p>Continue to the <a href=\"?step=2&amp;table_server=".$config['table_server']."\">next step</a></p>";
+					} else {
+						echo "<p><strong>Please replace the contents of the $denora_conf file with the text below:</strong></p>";
+						echo "<textarea name=\"sql_buffer\" cols=\"64\" rows=\"10\" readonly=\"readonly\">$db_buffer</textarea>";
+						echo "<p>When you are done please <a href=\"?step=1&amp;table_server=".$config['table_server']."\">repeat this step</a></p>";
+					}
+				} else {
+					echo "<p>Continue to the <a href=\"?step=2&amp;table_server=".$config['table_server']."\">next step</a></p>";
+				}
+			}
 		}
 	} else {
 		echo "<span style=\"color:red;\">$db_error</span></pre>";
-?>
+		?>
 <p>Please configure the access to the Magirc SQL database</p>
 <form id="database" name="database" method="post" action="">
-  <table width="100%" border="0" cellspacing="0" cellpadding="5">
-    <tr>
-      <td align="right">Username</td>
-      <td align="left"><input name="username" type="text" id="username" tabindex="1" value="<?php echo $db['username']; ?>" size="32" maxlength="1024" /></td>
-    </tr>
-    <tr>
-      <td align="right">Password</td>
-      <td align="left"><input type="password" name="password" id="password" tabindex="2" value="<?php echo $db['password']; ?>" size="32" maxlength="1024" /></td>
-    </tr>
-    <tr>
-      <td align="right">Database Name</td>
-      <td align="left"><input type="text" name="db_name" id="db_name" tabindex="3" value="<?php echo $db['db_name']; ?>" size="32" maxlength="1024" /></td>
-    </tr>
-    <tr>
-      <td align="right">Hostname</td>
-      <td align="left"><input type="text" name="hostname" id="hostname" tabindex="4" value="<?php echo $db['hostname']; ?>" size="32" maxlength="1024" /></td>
-    </tr>
-    <tr>
-      <td align="right">TCP Port</td>
-      <td align="left"><input type="text" name="port" id="port" tabindex="5" value="<?php echo $db['port']; ?>" size="32" maxlength="1024" /></td>
-    </tr>
-    <tr>
-      <td align="right">Server table</td>
-      <td align="left"><input type="text" name="table_server" id="table_server" tabindex="6" value="<?php echo $config['table_server']; ?>" size="32" maxlength="1024" /></td>
-    </tr>
-  </table>
-  <p align="right">
-    <input type="submit" name="button" id="button" value="Continue" tabindex="8" />
-  </p>
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+	<tr>
+		<td align="right">Username</td>
+		<td align="left"><input name="username" type="text" id="username"
+			tabindex="1" value="<?php echo $db['username']; ?>" size="32"
+			maxlength="1024" /></td>
+	</tr>
+	<tr>
+		<td align="right">Password</td>
+		<td align="left"><input type="password" name="password" id="password"
+			tabindex="2" value="<?php echo $db['password']; ?>" size="32"
+			maxlength="1024" /></td>
+	</tr>
+	<tr>
+		<td align="right">Database Name</td>
+		<td align="left"><input type="text" name="db_name" id="db_name"
+			tabindex="3" value="<?php echo $db['db_name']; ?>" size="32"
+			maxlength="1024" /></td>
+	</tr>
+	<tr>
+		<td align="right">Hostname</td>
+		<td align="left"><input type="text" name="hostname" id="hostname"
+			tabindex="4" value="<?php echo $db['hostname']; ?>" size="32"
+			maxlength="1024" /></td>
+	</tr>
+	<tr>
+		<td align="right">TCP Port</td>
+		<td align="left"><input type="text" name="port" id="port" tabindex="5"
+			value="<?php echo $db['port']; ?>" size="32" maxlength="1024" /></td>
+	</tr>
+	<tr>
+		<td align="right">Server table</td>
+		<td align="left"><input type="text" name="table_server"
+			id="table_server" tabindex="6"
+			value="<?php echo $config['table_server']; ?>" size="32"
+			maxlength="1024" /></td>
+	</tr>
+</table>
+<p align="right"><input type="submit" name="button" id="button"
+	value="Continue" tabindex="8" /></p>
 </form>
 
-<?php } } ?>
+		<?php } } ?>
