@@ -4,7 +4,7 @@
   <tr>
     <td width="50%" align="center"><a href="?page=home"><img src="img/home.png" alt="" width="22" height="22" /><br />
 Home</a></td>
-    <td width="50%" align="center"><a href="http://{$config.magirc_url}"><img src="img/stats.png" alt="" width="22" height="22" /><br />
+    <td width="50%" align="center"><a href="../"><img src="img/stats.png" alt="" width="22" height="22" /><br />
     View Stats</a></td>
   </tr>
 </table>
@@ -30,8 +30,5 @@ Home</a></td>
 <div class="menu_title"><img src="img/documentation.png" alt="" width="16" height="16" /> Documentation</div>
 <ul>
   <li><a href="?page=docs&amp;f=README">Read Me</a></li>
-  <li><a href="?page=docs&amp;f=FAQ">FAQ</a></li>
-  <li><a href="?page=docs&amp;f=REMOTE">Remote API</a></li>
-  <li><a href="?page=docs&amp;f=THEMES">Themes</a></li>
-  <li><a href="?page=docs&amp;f=TRANSLATIONS">Languages</a></li>  
+  <li><a href="?page=docs&amp;f=changelog.txt">Changelog</a></li>
 </ul>

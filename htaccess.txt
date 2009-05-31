@@ -1,6 +1,6 @@
-# $Id$
+# $Id: .htaccess 9 2009-05-30 16:33:05Z hal9000 $
 
-RewriteBase /magirc/
+#RewriteBase /stats/
 
 ErrorDocument 400 index.php?section=error&action=400
 ErrorDocument 401 index.php?section=error&action=401

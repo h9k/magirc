@@ -29,6 +29,7 @@ class Admin {
 
 	/* Saves the given configuration parameter and value */
 	function saveConfig($parameter, $value){
+		$this->cfg->config[$parameter] = $value;
 		return $this->db->update('magirc_config', array('value' => $value), array('parameter' => $parameter));
 	}
 }
