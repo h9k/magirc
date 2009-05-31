@@ -51,17 +51,14 @@ class DB {
 		$this->db->disconnect();
 	}
 	
-	/*function numRows() {
-		$test = $this->result->numRows();
-		echo "CAZZO";
-		if (MDB2::isError($test)) {
-			echo "<pre>" . $this->result->numRows()->getMessage() . "</pre>";
-			return false;
+	function numRows() {
+		$rows = $this->result->numRows();
+		if (MDB2::isError($rows)) {
+			die($this->result->numRows()->getMessage());
 		} else {
-			//return $test;
-			return true;		
+			return $rows;		
 		}
-	}*/
+	}
 
 	/**
 	 * query the database
@@ -81,9 +78,7 @@ class DB {
 		$this->result = $this->db->query($query);
 		if (MDB2::isError($this->result)) {
 			$this->error = $this->result->getMessage();
-			//$this->log('system', 'error', sprintf("%s (Query: %s)", $this->error, $query)); //infinite loop if error is in log query!
-			//$this->log('system', 'error', $this->error); //infinite loop if error is in log query!
-			die("<pre>".$query."</pre><pre>".$this->error."</pre>"); //temporary!
+			die("<br />QUERY: ".$query."<br />".$this->error);
 			return false;
 		}
 		switch ($type) {
@@ -179,7 +174,6 @@ class DB {
 		if ($this->query($query)) {
 			$lastID = $this->lastInsertID();
 			if (MDB2::isError($lastID)) {
-				//$this->log('system', 'error', sprintf("%s (Query: %s)", $lastID->getMessage(), $query));
 				die($lastID->getMessage());
 			} else {
 				return $lastID;

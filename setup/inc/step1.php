@@ -1,42 +1,48 @@
 <?php
-// $Id$
-
-?>
-<div class="page_title">Welcome to the Magirc Setup!</div>
-<p>Please follow the on-screen instructions to install Magirc</p>
-<?php
 $error = 0;
-require_once($magirc_conf);
+$status = array();
 
-echo "<pre>Checking PHP version... ";
+$setup->tpl->assign('phpversion', phpversion());
+
 if (version_compare("5.2.0", phpversion(), "<") == 1) {
-	echo "<span style=\"color:green\">Supported</span> (".phpversion().")</pre>";
+	$status['php'] = true;
 } else {
-	echo "<span style=\"color:red\">Not Supported</span> (".phpversion().") ><br />You need at least version 5.2.0</pre>";
+	$status['php'] = false;
 	$error = 1;
 }
 
-echo "<pre>Checking PHP MySQLi extension... ";
 if (extension_loaded('mysqli') == 1) {
-	echo "<span style=\"color:green\">Present</span></pre>";
+	$status['mysqli'] = true;
 } else {
-	echo "<span style=\"color:red\">Missing!</span><br />This component is required to run Magirc. Please contact your Administrator.</pre>";
+	$status['mysqli'] = false;
 	$error = 1;
 }
 
-echo "<pre>Checking PHP GD extension... ";
 if (extension_loaded('gd') == 1) {
-	echo "<span style=\"color:green\">Present</span></pre>";
+	$status['gd'] = true;
 } else {
-	echo "<span style=\"color:red\">Missing!</span><br />This component is required to run Magirc. Please contact your Administrator.</pre>";
+	$status['gd'] = false;
 	$error = 1;
 }
 
-echo "<pre>Checking SQL configuration files... ";
 if (is_writable($magirc_conf) && is_writable($denora_conf)) {
-	echo "<span style=\"color:green;\">Writable</span></pre>";
+	$status['writable'] = true;
 } else {
-	echo "<span style=\"color:orange;\">Not writable</span><br />Please ensure that the $magirc_conf and $denora_conf files have enough write permissions.<br />Try chmod 0666 or 0777. If it still doesn't work don't worry, you can continue anyway.</pre>";
+	$status['writable'] = false;
+}
+
+if (is_writable('../tmp/compiled')) {
+	$status['compiled'] = true;
+} else {
+	$status['compiled'] = false;
+	$error = 1;
+}
+
+if (is_writable('../tmp/cache')) {
+	$status['cache'] = true;
+} else {
+	$status['cache'] = false;
+	$error = 1;
 }
 
 $config['table_server'] = (isset($_REQUEST['table_server'])) ? $_REQUEST['table_server'] : 'server';
@@ -50,111 +56,59 @@ if (isset($_POST['button'])) {
 	$db['port'] = (isset($_POST['port'])) ? $_POST['port'] : $db['port'];
 }
 
+$status['error'] = $error;
+
 if (!$error) {
-	echo "<pre>Testing Magirc Database connection... ";
-	$db_error = false;
-	// Test DB connection
-	if (!$db_error) {
-		echo "<span style=\"color:green;\">Passed</span></pre>";
+	// Check Magirc Database connection
+	include($magirc_conf);
+	if (!($magirc_db = $setup->dbCheck($db))) {
 		// DB Test was successful, so we can now save the new info
-		if (isset($_POST['button'])) {
+		if (isset($_POST['button']) && $_GET['db'] == "magirc") {
 			$db_buffer = "<?php
-defined('_VALID_PARENT') or header(\"Location: ../\");
 \$db['username'] = \"".$db['username']."\";
 \$db['password'] = \"".$db['password']."\";
 \$db['database'] = \"".$db['database']."\";
 \$db['hostname'] = \"".$db['hostname']."\";
 \$db['port'] = \"".$db['port']."\";
 ?>";
+			$setup->tpl->assign('db_buffer', $db_buffer);
 			if (is_writable($magirc_conf)) {
 				$writefile = fopen($magirc_conf,"w");
 				fwrite($writefile,$db_buffer);
 				fclose($writefile);
-				echo "<div class=\"configsave\">Configuration saved</div>";
-				echo "<p>Continue to the <a href=\"?step=2&amp;table_server=".$config['table_server']."\">next step</a></p>";
-			} else {
-				echo "<p><strong>Please replace the contents of the $magirc_conf file with the text below:</strong></p>";
-				echo "<textarea name=\"sql_buffer\" cols=\"64\" rows=\"10\" readonly=\"readonly\">$db_buffer</textarea>";
-				echo "<p>When you are done please <a href=\"?step=1&amp;table_server=".$config['table_server']."\">repeat this step</a></p>";
-			}
-		} else {
-			//TODO: check for Denora DB here
-			echo "<pre>Testing Denora Database connection... ";
-			$db_error = false;
-			// Test DB connection
-			if (!$db_error) {
-				echo "<span style=\"color:green;\">Passed</span></pre>";
-				// DB Test was successful, so we can now save the new info
-				if (isset($_POST['button'])) {
-					$db_buffer = "<?php
-		defined('_VALID_PARENT') or header(\"Location: ../\");
-		\$db['username'] = \"".$db['username']."\";
-		\$db['password'] = \"".$db['password']."\";
-		\$db['database'] = \"".$db['database']."\";
-		\$db['hostname'] = \"".$db['hostname']."\";
-		\$db['port'] = \"".$db['port']."\";
-		?>";
-					if (is_writable($denora_conf)) {
-						$writefile = fopen($denora_conf,"w");
-						fwrite($writefile,$db_buffer);
-						fclose($writefile);
-						echo "<div class=\"configsave\">Configuration saved</div>";
-						echo "<p>Continue to the <a href=\"?step=2&amp;table_server=".$config['table_server']."\">next step</a></p>";
-					} else {
-						echo "<p><strong>Please replace the contents of the $denora_conf file with the text below:</strong></p>";
-						echo "<textarea name=\"sql_buffer\" cols=\"64\" rows=\"10\" readonly=\"readonly\">$db_buffer</textarea>";
-						echo "<p>When you are done please <a href=\"?step=1&amp;table_server=".$config['table_server']."\">repeat this step</a></p>";
-					}
-				} else {
-					echo "<p>Continue to the <a href=\"?step=2&amp;table_server=".$config['table_server']."\">next step</a></p>";
-				}
 			}
 		}
-	} else {
-		echo "<span style=\"color:red;\">$db_error</span></pre>";
-		?>
-<p>Please configure the access to the Magirc SQL database</p>
-<form id="database" name="database" method="post" action="">
-<table width="100%" border="0" cellspacing="0" cellpadding="5">
-	<tr>
-		<td align="right">Username</td>
-		<td align="left"><input name="username" type="text" id="username"
-			tabindex="1" value="<?php echo $db['username']; ?>" size="32"
-			maxlength="1024" /></td>
-	</tr>
-	<tr>
-		<td align="right">Password</td>
-		<td align="left"><input type="password" name="password" id="password"
-			tabindex="2" value="<?php echo $db['password']; ?>" size="32"
-			maxlength="1024" /></td>
-	</tr>
-	<tr>
-		<td align="right">Database Name</td>
-		<td align="left"><input type="text" name="db_name" id="db_name"
-			tabindex="3" value="<?php echo $db['db_name']; ?>" size="32"
-			maxlength="1024" /></td>
-	</tr>
-	<tr>
-		<td align="right">Hostname</td>
-		<td align="left"><input type="text" name="hostname" id="hostname"
-			tabindex="4" value="<?php echo $db['hostname']; ?>" size="32"
-			maxlength="1024" /></td>
-	</tr>
-	<tr>
-		<td align="right">TCP Port</td>
-		<td align="left"><input type="text" name="port" id="port" tabindex="5"
-			value="<?php echo $db['port']; ?>" size="32" maxlength="1024" /></td>
-	</tr>
-	<tr>
-		<td align="right">Server table</td>
-		<td align="left"><input type="text" name="table_server"
-			id="table_server" tabindex="6"
-			value="<?php echo $config['table_server']; ?>" size="32"
-			maxlength="1024" /></td>
-	</tr>
-</table>
-<p align="right"><input type="submit" name="button" id="button"
-	value="Continue" tabindex="8" /></p>
-</form>
+	}
+	$status['magirc_db'] = $magirc_db;
+	$setup->tpl->assign('db_magirc', $db);
+	unset($db);
+	
+	// Check Denora Database connection
+	include($denora_conf);
+	if (!($denora_db = $setup->dbCheck($db, $config['table_server']))) { //TODO: Test Denora DB connection
+			// DB Test was successful, so we can now save the new info
+		if (isset($_POST['button']) && $_GET['db'] == "denora") {
+			$db_buffer = "<?php
+\$db['username'] = \"".$db['username']."\";
+\$db['password'] = \"".$db['password']."\";
+\$db['database'] = \"".$db['database']."\";
+\$db['hostname'] = \"".$db['hostname']."\";
+\$db['port'] = \"".$db['port']."\";
+?>";
+			$setup->tpl->assign('db_buffer', $db_buffer);
+			if (is_writable($denora_conf)) {
+				$writefile = fopen($denora_conf,"w");
+				fwrite($writefile,$db_buffer);
+				fclose($writefile);
+			}
+		}
+	}
+	$status['denora_db'] = $denora_db;
+	$setup->tpl->assign('db_denora', $db);
+	unset($db);
+}
 
-		<?php } } ?>
+$setup->tpl->assign('status', $status);
+$setup->tpl->assign('config', $config);
+$setup->tpl->display('step1.tpl');
+?>

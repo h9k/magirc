@@ -15,7 +15,7 @@
 </head>
 <body>
 <div id="header">
-<h1><strong>Magirc</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
+<h1><strong>Magi</strong><em>r</em><strong>c</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
 <div id="tabsH">
   <ul>
 	<li><a href="home/" title="Home"{if $smarty.get.section eq 'home' or !$smarty.get.section} class="active"{/if}><img src="theme/default/img/menu/home.png" alt="" height="16" width="16" /><span>&nbsp;Home</span></a></li>

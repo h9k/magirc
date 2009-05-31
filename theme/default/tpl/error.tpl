@@ -13,11 +13,15 @@
 </head>
 <body>
 *** STOP: {$err_msg}
-{if $smarty.const.DEBUG}
 <br /><br />
+{if $smarty.const.DEBUG}
 {foreach from=$server item=item key=key}
 {$key}: {$item}<br />
 {/foreach}
+{else}
+This should not have happened. Please contact the Administrator.<br />
+If you are the Administrator, please enable Debug mode to see more information<br />
+and submit it to the Magirc developers. Thank you!
 {/if}
 </body>
 </html>

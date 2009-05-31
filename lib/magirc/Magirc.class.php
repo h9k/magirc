@@ -9,8 +9,14 @@ class Magirc {
 
 	function Magirc() {
 		$this->db = new Magirc_DB;
-		$this->cfg = new Config($this->db->select('magirc_config', array('parameter', 'value')));
+		
+		$query = "SHOW TABLES LIKE 'magirc_config'";
+		$this->db->query($query, SQL_INIT);
 		$this->tpl = new Magirc_Smarty;
+		if (!$this->db->record) {
+			$this->displayError('Database table missing. Please run setup.');
+		}
+		$this->cfg = new Config($this->db->select('magirc_config', array('parameter', 'value')));
 		$this->denora = new Denora;
 	}
 	

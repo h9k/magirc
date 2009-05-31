@@ -5,7 +5,7 @@ ini_set('display_errors','on');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 
-$step = (isset($_GET['step'])) ? htmlspecialchars($_GET['step']) : 1;
+$_GET['step'] = (isset($_GET['step'])) ? htmlspecialchars($_GET['step']) : 1;
 $magirc_conf = '../conf/magirc.cfg.php';
 $denora_conf = '../conf/denora.cfg.php';
 $config = array(); $sql = array();
@@ -16,33 +16,16 @@ if (!file_exists($magirc_conf)) {
 if (!file_exists($denora_conf)) {
 	die('Please configure conf/denora.cfg.dist.php and rename it to conf/denora.cfg.php');
 }
+if (!is_writable('tmp/')) {
+	die("The 'setup/tmp/' directory is not writable. Please chmod it to 0777.");
+}
 
 require_once('lib/init.inc.php');
 require_once('lib/Setup.class.php');
 
 $setup = new Setup();
 
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Magirc :: Setup</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
-<link href="css/default.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<div id="header">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td align="left" valign="bottom"><a href="http://magirc.org/"><img src="img/logo.png" width="138" height="50" /></a> <strong>Installer</strong></td>
-    <td align="right" valign="bottom"><strong>Step <?php echo $step; ?>/3</strong></td>
-  </tr>
-</table>
-  </div>
-<div id="content">
-<?php
-switch($step) {
+switch($_GET['step']) {
 	case 1: // System requirements checks, SQL config check
 		include('inc/step1.php');
 		break;
@@ -53,13 +36,8 @@ switch($step) {
 		include('inc/step3.php');
 		break;
 	default:
-		echo "<pre><span style=\"color:red;\">Error:</span> unknown step $step</pre>";
+		echo "<pre><span style=\"color:red;\">Error:</span> unknown step $_GET[step]</pre>";
 		break;
 }
+
 ?>
-  </div>
-  <div id="footer">
-    Powered by <a href="http://magirc.org/">Magirc</a> v<?php echo VERSION_FULL; ?>
-  </div>
-</body>
-</html>

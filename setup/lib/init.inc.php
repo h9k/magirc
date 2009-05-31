@@ -3,6 +3,7 @@
 
 include('../lib/magirc/version.inc.php');
 require('../lib/pear/MDB2.php');
+require('../lib/smarty/Smarty.class.php');
 require('../lib/magirc/DB.class.php');
 require('../lib/magirc/denora/Denora.class.php');
 
@@ -28,6 +29,14 @@ class Denora_DB extends DB {
 		}
 		$dsn = sprintf("mysqli://%s:%s@%s/%s", $db['username'], $db['password'], $db['hostname'], $db['database']);
 		$this->connect($dsn) || die('Error opening Denora database<br />'.$this->error);
+	}
+}
+
+// smarty configuration
+class Setup_Smarty extends Smarty {
+	function Setup_Smarty() {
+		$this->template_dir = 'tpl';
+		$this->compile_dir = 'tmp';
 	}
 }
 
