@@ -21,7 +21,7 @@ class Setup {
 	
 	function getDbVersion(){
 		$result = $this->db->select('magirc_config', array('value'), array('parameter' => 'db_version'));
-		return $result['value'];
+		return $result[0]['value'];
 	}
 
 	/* Loads the configuration table schema to the Denora database */

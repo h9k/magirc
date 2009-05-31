@@ -17,10 +17,6 @@ if (!file_exists($denora_conf)) {
 	die('Please configure conf/denora.cfg.dist.php and rename it to conf/denora.cfg.php');
 }
 
-/*require_once('../lib/magirc/version.inc.php');
-require_once('../lib/magirc/DB.class.php');
-require_once('../lib/magirc/Config.class.php');
-require_once('../lib/magirc/denora/Denora.class.php');*/
 require_once('lib/init.inc.php');
 require_once('lib/Setup.class.php');
 
@@ -53,7 +49,7 @@ switch($step) {
 	case 2: // Check denora version, display login form
 		include('inc/step2.php');
 		break;
-	case 3: // Log in, Perform DB checks, create/update phpdenora config table, display link to admin panel
+	case 3: // Log in, Perform DB checks, create/update magirc config table, display link to admin panel
 		include('inc/step3.php');
 		break;
 	default:

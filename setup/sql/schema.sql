@@ -4,7 +4,7 @@
 --
 
 -- 
--- Table structure for table `phpdenora_config`
+-- Table structure for table `magirc_config`
 -- 
 
 CREATE TABLE IF NOT EXISTS `magirc_config` (

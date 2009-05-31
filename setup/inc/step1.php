@@ -20,7 +20,7 @@ echo "<pre>Checking PHP MySQLi extension... ";
 if (extension_loaded('mysqli') == 1) {
 	echo "<span style=\"color:green\">Present</span></pre>";
 } else {
-	echo "<span style=\"color:red\">Missing!</span><br />This component is required to run phpDenora. Please contact your Administrator.</pre>";
+	echo "<span style=\"color:red\">Missing!</span><br />This component is required to run Magirc. Please contact your Administrator.</pre>";
 	$error = 1;
 }
 
@@ -28,7 +28,7 @@ echo "<pre>Checking PHP GD extension... ";
 if (extension_loaded('gd') == 1) {
 	echo "<span style=\"color:green\">Present</span></pre>";
 } else {
-	echo "<span style=\"color:red\">Missing!</span><br />This component is required to run phpDenora. Please contact your Administrator.</pre>";
+	echo "<span style=\"color:red\">Missing!</span><br />This component is required to run Magirc. Please contact your Administrator.</pre>";
 	$error = 1;
 }
 
@@ -39,6 +39,8 @@ if (is_writable($magirc_conf) && is_writable($denora_conf)) {
 	echo "<span style=\"color:orange;\">Not writable</span><br />Please ensure that the $magirc_conf and $denora_conf files have enough write permissions.<br />Try chmod 0666 or 0777. If it still doesn't work don't worry, you can continue anyway.</pre>";
 }
 
+$config['table_server'] = (isset($_REQUEST['table_server'])) ? $_REQUEST['table_server'] : 'server';
+
 // If the DB Test failed, user could fill a form to change config. Here we handle the new input.
 if (isset($_POST['button'])) {
 	$db['username'] = (isset($_POST['username'])) ? $_POST['username'] : $db['username'];
@@ -47,7 +49,6 @@ if (isset($_POST['button'])) {
 	$db['hostname'] = (isset($_POST['hostname'])) ? $_POST['hostname'] : $db['hostname'];
 	$db['port'] = (isset($_POST['port'])) ? $_POST['port'] : $db['port'];
 }
-$config['table_server'] = (isset($_REQUEST['table_server'])) ? $_REQUEST['table_server'] : 'server';
 
 if (!$error) {
 	echo "<pre>Testing Magirc Database connection... ";

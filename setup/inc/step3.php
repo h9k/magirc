@@ -29,7 +29,7 @@ if (isset($username) && isset($password)) {
 				$error = 1;
 			}
 		} else {
-			echo "<span style=\"color:green;\">OK</span> (version ".$check.")</pre>";
+			echo "<span style=\"color:green;\">OK</span> (version ".$setup->getDbVersion().")</pre>";
 		}
 	} else {
 		echo "<span style=\"color:red;\">Failed</span></pre>";
