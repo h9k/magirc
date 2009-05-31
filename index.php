@@ -19,7 +19,12 @@ include('lib/magirc/init.inc.php');
 
 $magirc = new Magirc;
 
-$magirc->denora->loadProtocol($magirc->cfg->getParam('ircd_type'));
+if ($ircd = $magirc->cfg->getParam('ircd_type')) {
+	$magirc->denora->loadProtocol($ircd);
+} else {
+	$magirc->displayError("Unable to load config");
+	exit;
+}
 
 define('DEBUG', $magirc->cfg->getParam('debug_mode'));
 define('BASE_URL', $magirc->cfg->getParam('base_url'));
@@ -36,6 +41,7 @@ if (file_exists($inc_file)) {
 		$magirc->tpl->display('generic.tpl');
 	} else {
 		$magirc->displayError("The requested page '$section' does not exist");
+		exit;
 	}
 }
 

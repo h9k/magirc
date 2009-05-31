@@ -1,8 +1,6 @@
 <?php
 // $Id: advanced.php 308 2007-07-24 17:09:00Z Hal9000 $
 
-/** ensure this file is being included by a parent file */
-defined('_VALID_PARENT') or header("Location: ../");
 
 $sql_config_file = '../sql.cfg.php';
 

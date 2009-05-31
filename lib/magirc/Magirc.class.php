@@ -16,7 +16,7 @@ class Magirc {
 		if (!$this->db->record) {
 			$this->displayError('Database table missing. Please run setup.');
 		}
-		$this->cfg = new Config($this->db->select('magirc_config', array('parameter', 'value')));
+		$this->cfg = new Config();
 		$this->denora = new Denora;
 	}
 	

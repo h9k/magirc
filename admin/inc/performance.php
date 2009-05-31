@@ -1,8 +1,6 @@
 <?php
 // $Id: performance.php 311 2007-07-30 20:17:06Z Hal9000 $
 
-/** ensure this file is being included by a parent file */
-defined('_VALID_PARENT') or header("Location: ../");
 
 if (isset($_POST['button'])) {
 	if (isset($_POST['graph_cache'])) { save_config('graph_cache',1); }

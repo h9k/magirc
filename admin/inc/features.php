@@ -1,8 +1,6 @@
 <?php
 // $Id: features.php 315 2007-08-18 11:41:28Z Hal9000 $
 
-/** ensure this file is being included by a parent file */
-defined('_VALID_PARENT') or header("Location: ../");
 
 if (isset($_POST['button'])) {
 	if (isset($_POST['status_lookup'])) { save_config('status_lookup',1); }
