@@ -244,10 +244,6 @@ class DB {
 		
 		return $this->record;
 	}
-	
-	function getTables() {
-		return $this->db->listSequences();
-	}
 
 }
 

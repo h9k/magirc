@@ -14,8 +14,9 @@ class Setup {
 	 * (not really implemented since we only have one table version till now...)
 	 */
 	function configCheck(){
-		$tables = $this->db->getTables();
-		return isset($tables['magirc_config']);
+		$query = "SHOW TABLES LIKE 'magirc_config'";
+		$this->db->query($query, SQL_INIT);
+		return $this->db->record;
 	}
 	
 	function getDbVersion(){

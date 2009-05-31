@@ -19,9 +19,9 @@ include('lib/magirc/init.inc.php');
 
 $magirc = new Magirc;
 
-$magirc->denora->loadProtocol($magirc->cfg->getParam('ircd'));
+$magirc->denora->loadProtocol($magirc->cfg->getParam('ircd_type'));
 
-define('DEBUG', $magirc->cfg->getParam('debug_level'));
+define('DEBUG', $magirc->cfg->getParam('debug_mode'));
 define('BASE_URL', $magirc->cfg->getParam('base_url'));
 $magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
 $magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';

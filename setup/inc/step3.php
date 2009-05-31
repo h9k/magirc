@@ -7,7 +7,7 @@ $config['show_exec_time'] = 0;
 $error = 0;
 if (isset($_POST['username'])) { $username = htmlspecialchars($_POST['username']); }
 if (isset($_POST['password'])) { $password = htmlspecialchars($_POST['password']); }
-//sql_db_connect();
+
 echo "<pre>Logging in... ";
 if (isset($username) && isset($password)) {
 	$result = $setup->denora->login($username, $password);
@@ -19,6 +19,9 @@ if (isset($username) && isset($password)) {
 		if (!$check) { // Dump file to db
 			echo " Creating... ";
 			$result = $setup->configDump();
+			$base_url = explode('setup/', $_SERVER['HTTP_REFERER']);
+			$query = sprintf("UPDATE `magirc_config` SET `value` = '%s' WHERE `parameter` = 'base_url'", $base_url[0]);
+			$setup->db->query($query, SQL_NONE);
 			if ($result == 0) {
 				echo "<span style=\"color:green;\">Done</span></pre>";
 			} else {

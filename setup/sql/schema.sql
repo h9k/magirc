@@ -80,4 +80,5 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('table_serverstats', 'serverstats'),
 ('table_channelstats', 'channelstats'),
 ('table_userstats', 'stats'),
-('table_aliases', 'aliases');
+('table_aliases', 'aliases'),
+('base_url', '');
