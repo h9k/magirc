@@ -15,7 +15,7 @@ if (!file_exists($denora_conf)) {
 	die('Please configure conf/denora.cfg.dist.php and rename it to conf/denora.cfg.php');
 }
 if (!is_writable('tmp/')) {
-	die("The 'setup/tmp/' directory is not writable. Please chmod it to 0777.");
+	die("The 'admin/tmp/' directory is not writable. Please chmod it to 0777.");
 }
 
 require_once('lib/init.inc.php');
