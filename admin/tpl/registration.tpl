@@ -13,7 +13,7 @@
         </tr>
         <tr>
           <td align="right"><strong>Magirc URL: </strong></td>
-          <td>http://{$phpdenora_url}</td>
+          <td>http://{$magirc_url}</td>
         </tr>
         <tr>
           <td align="right"><strong>Magirc Version: </strong></td>

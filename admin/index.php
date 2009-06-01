@@ -42,10 +42,6 @@ $admin->tpl->assign('session', @$_SESSION);
 $admin->tpl->assign('get', @$_GET);
 $admin->tpl->assign('post', @$_POST);
 
-$magirc_url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$magirc_url = explode("admin/",$magirc_url);
-$magirc_url = $magirc_url[0];
-
 if (isset($_SESSION['loginUsername'])) {
 	$page = (isset($_GET['page'])) ? $_GET['page'] : 'home';
 } else {
