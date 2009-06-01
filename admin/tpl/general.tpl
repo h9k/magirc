@@ -1,9 +1,6 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-{if $smarty.post.button}
-<div class="configsave">Configuration saved</div>
-{/if}
 <div class="page_title">General Settings</div>
 <form id="general" name="general" method="post" action="">
   <table width="100%" border="0" cellspacing="0" cellpadding="5">

@@ -45,6 +45,8 @@ if (is_writable('../tmp/cache')) {
 	$error = 1;
 }
 
+$status['magic_quotes'] = get_magic_quotes_gpc();
+
 $config['table_server'] = (isset($_REQUEST['table_server'])) ? $_REQUEST['table_server'] : 'server';
 
 // If the DB Test failed, user could fill a form to change config. Here we handle the new input.
