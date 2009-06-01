@@ -30,7 +30,7 @@
 	{else} <span style="color:red">{$status.magirc_db}</span>
 		{include file="_db_magirc.tpl"}
 	{/if}
-	{if $smarty.post.button}
+	{if $post.button}
 		{if $status.writable}
 		<div class="configsave">Configuration saved</div>
 		{else}
@@ -44,7 +44,7 @@
 	{else} <span style="color:red">{$status.denora_db}</span>
 		{include file="_db_denora.tpl"}
 	{/if}
-	{if $smarty.post.button}
+	{if $post.button}
 		{if $status.writable}
 		<div class="configsave">Configuration saved</div>
 		{else}

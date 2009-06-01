@@ -54,7 +54,8 @@ class Admin_Smarty extends Smarty {
 	function Admin_Smarty() {
 		$this->template_dir = 'tpl';
 		$this->compile_dir = 'tmp';
-		$this->request_use_auto_globals = true;
+		$this->config_dir = '../conf';
+		$this->cache_dir = 'tmp';
 	}
 }
 

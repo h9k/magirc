@@ -31,6 +31,10 @@ define('BASE_URL', $magirc->cfg->getParam('base_url'));
 $magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
 $magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
 
+// workaround fot $smarty var not working properly for some reason...
+$magirc->tpl->assign('get', @$_GET);
+$magirc->tpl->assign('post', @$_POST);
+
 $section = $magirc->getUrlParameter('section');
 $inc_file = 'inc/' . $section . '.inc.php';
 if (file_exists($inc_file)) {

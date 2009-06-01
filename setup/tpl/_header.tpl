@@ -13,7 +13,7 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="left" valign="bottom"><a href="http://magirc.org/"><img src="img/logo.png" width="138" height="50" /></a> <strong>Installer</strong></td>
-    <td align="right" valign="bottom"><strong>Step {$smarty.get.step}/3</strong></td>
+    <td align="right" valign="bottom"><strong>Step {$get.step}/3</strong></td>
   </tr>
 </table>
 </div>

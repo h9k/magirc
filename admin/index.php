@@ -5,6 +5,8 @@ ini_set('display_errors','on');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 
+session_start();
+
 $magirc_conf = '../conf/magirc.cfg.php';
 $denora_conf = '../conf/denora.cfg.php';
 
@@ -30,13 +32,20 @@ if (!$admin->cfg->getParam('db_version')) {
 if ($admin->cfg->getParam('debug_mode') < 1) {
 	ini_set('display_errors','off');
 	error_reporting(E_ERROR);
+} else {
+	$admin->tpl->force_compile = true;
+	//$admin->tpl->debugging = true;
 }
+
+// workaround fot $smarty var not working properly for some reason...
+$admin->tpl->assign('session', @$_SESSION);
+$admin->tpl->assign('get', @$_GET);
+$admin->tpl->assign('post', @$_POST);
 
 $magirc_url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $magirc_url = explode("admin/",$magirc_url);
 $magirc_url = $magirc_url[0];
 
-session_start();
 if (isset($_SESSION['loginUsername'])) {
 	$page = (isset($_GET['page'])) ? $_GET['page'] : 'home';
 } else {
@@ -54,6 +63,7 @@ if ($page == 'login' && isset($_POST['login'])) {
 		$_SESSION['message'] = "Could not connect to the admin panel as '{$username}'";
 		$page = 'logout';
 	}
+	$admin->tpl->assign('session', $_SESSION);
 }
 
 if ($page == 'logout') {
@@ -67,6 +77,7 @@ if ($page == 'logout') {
 		unset($_SESSION["message"]);
 	}
 	session_destroy();
+	$admin->tpl->assign('session', array());
 	$admin->tpl->assign('message', $message);
 	$admin->tpl->display('login.tpl');
 } elseif ($page == "login") {

@@ -25,6 +25,10 @@ require_once('lib/Setup.class.php');
 
 $setup = new Setup();
 
+// workaround fot $smarty var not working properly for some reason...
+$setup->tpl->assign('get', @$_GET);
+$setup->tpl->assign('post', @$_POST);
+
 switch($_GET['step']) {
 	case 1: // System requirements checks, SQL config check
 		include('inc/step1.php');
