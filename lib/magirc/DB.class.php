@@ -216,7 +216,11 @@ class DB {
 	function select($table, $what = array('*'), $where = NULL, $sort = NULL, $order = 'ASC', $limit = 0) {	
 		$columns = null;
 		foreach($what as $value) {
-			$columns .= sprintf("`%s`, ", $this->escape($value));
+			if ($value == '*') {
+				$columns .= "*, ";
+			} else {
+				$columns .= sprintf("`%s`, ", $this->escape($value));
+			}
 		}
 		
 		$query = sprintf("SELECT %s FROM `%s`", substr($columns, 0, -2), $table);

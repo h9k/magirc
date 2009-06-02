@@ -1,7 +1,7 @@
 <?php
 // $Id$
 
-// Load the correct protocol file
+require_once('lib/magirc/denora/Server.class.php');
 
 class Denora {
 	
@@ -9,7 +9,7 @@ class Denora {
 	var $ircd = null;
 
 	function Denora() {
-		$this->db = new Denora_DB;
+		$this->db = new Denora_DB();
 	}
 	
 	function loadProtocol($ircd) {
@@ -61,6 +61,11 @@ class Denora {
 		} else {
 			return NULL;
 		}
+	}
+	
+	// return an array of all servers
+	function getServers() {
+		return $this->db->select('server');
 	}
 	
 }

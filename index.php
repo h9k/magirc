@@ -31,6 +31,14 @@ define('BASE_URL', $magirc->cfg->getParam('base_url'));
 $magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
 $magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
 
+if ($magirc->cfg->getParam('debug_mode') < 1) {
+	ini_set('display_errors','off');
+	error_reporting(E_ERROR);
+} else {
+	$magirc->tpl->force_compile = true;
+	$magirc->tpl->debugging = false;
+}
+
 // workaround fot $smarty var not working properly for some reason...
 $magirc->tpl->assign('get', @$_GET);
 $magirc->tpl->assign('post', @$_POST);
