@@ -11,23 +11,18 @@
 		<th>Operators</th>
 	</tr>
 	{foreach from=$serverlist item=item}
-	<tr onclick="document.location='server/{$item.server}/'" class="{cycle values="row1 row1a,row2 row2a" advance="true"}">
+	<tr onclick="document.location='{$smarty.const.BASE_URL}server/{$item.server}/'" class="{cycle values="row1 row1a,row2 row2a" advance="true"}">
 		<td><img src="theme/default/img/status/{if $item.online}online{else}offline{/if}.png" /></td>
-		<td>{$item.server}</td>
+		<td>{$item.server}{if $item.uline} (<span style="color:blue;">Ulined</span>){/if}</td>
 		<td>{$item.comment}</td>
 		<td>{$item.currentusers}</td>
 		<td>{$item.opers}</td>
 	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="5"><em>no servers to display</em></td>
 	{/foreach}
 </table>
-
-{*<ul>
-{foreach from=$serverlist item=item}
-<li><a href="server/{$item.server}/">{$item.server}</a>{if $item.uline} (<span style="color:blue;">Ulined</span>){/if} <em>{$item.comment}</em></li>
-{foreachelse}
-<li>no servers to display</li>
-{/foreach}
-</ul>*}
 
 <h2>Servers <strong>today</strong> | last week | last month | last year</h2>
 

@@ -57,6 +57,7 @@ class Magirc_Smarty extends Smarty {
 		$this->config_dir = 'theme/default/cfg'; // we change is later on
 		$this->compile_dir = 'tmp/compiled';
 		$this->cache_dir = 'tmp/cache';
+		$this->plugins_dir[] = 'lib/smarty-plugins/';
 	}
 }
 
