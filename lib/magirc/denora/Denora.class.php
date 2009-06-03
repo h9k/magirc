@@ -1,8 +1,6 @@
 <?php
 // $Id$
 
-require_once('lib/magirc/denora/Server.class.php');
-
 class Denora {
 	
 	var $db = null;
