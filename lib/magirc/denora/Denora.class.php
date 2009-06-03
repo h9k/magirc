@@ -65,7 +65,7 @@ class Denora {
 	
 	// return an array of all servers
 	function getServers() {
-		return $this->db->select('server');
+		return $this->db->select('server', array('*'), NULL, 'server', 'ASC');
 	}
 	
 }
