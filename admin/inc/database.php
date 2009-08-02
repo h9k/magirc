@@ -22,10 +22,8 @@ defined('_VALID_PARENT') or header(\"Location: ../\");
 		$writefile = fopen($db_config_file,"w");
 		fwrite($writefile,$db_buffer);
 		fclose($writefile);
-		echo "<div class=\"configsave\">Configuration saved</div>";
 	} else {
-		echo "<pre><strong>Please copy the following text and paste it into the $db_config_file file</strong></pre>";
-		echo "<textarea name=\"sql_buffer\" cols=\"64\" rows=\"10\" readonly=\"readonly\">$db_buffer</textarea>";
+		$admin->tpl->assign('db_buffer', $db_buffer);
 	}
 }
 

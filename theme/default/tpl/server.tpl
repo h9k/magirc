@@ -1,4 +1,4 @@
-{* $Id *}
+{* $Id$ *}
 {include file="_header.tpl"}
 
 <h2>Server list</h2>

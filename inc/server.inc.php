@@ -1,5 +1,7 @@
 <?php
-// $Id: status.inc.php 34 2009-06-01 11:10:30Z hal9000 $
+// $Id$
+
+require_once('lib/magirc/denora/Server.class.php');
 
 if (isset($_GET['server'])) {
 	$server = new Server($_GET['server']);

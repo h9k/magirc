@@ -1,7 +1,7 @@
 <?php
 // $Id$
 
-//Configure and rename this file to denora.cfg.php
+// Configure and rename this file to denora.cfg.php
 
 $db = array(
 	'username'	=> 'denora',

@@ -17,13 +17,13 @@ if (get_magic_quotes_gpc()) {
     $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 }
 
-include('lib/magirc/version.inc.php');
-require('lib/smarty/Smarty.class.php');
-require('lib/pear/MDB2.php');
-require('lib/magirc/DB.class.php');
-require('lib/magirc/Config.class.php');
-require('lib/magirc/Magirc.class.php');
-require('lib/magirc/denora/Denora.class.php');
+include_once('lib/magirc/version.inc.php');
+require_once('lib/smarty/Smarty.class.php');
+require_once('lib/pear/MDB2.php');
+require_once('lib/magirc/DB.class.php');
+require_once('lib/magirc/Config.class.php');
+require_once('lib/magirc/Magirc.class.php');
+require_once('lib/magirc/denora/Denora.class.php');
 
 // database configuration
 class Magirc_DB extends DB {

@@ -6,6 +6,7 @@ $Id$
 
 magirc v0.1.0-dev
 -----------------
+2009-08-02 Added dummys for all planned sections and fixed some things
 2009-06-01 Setup wizard and Admin Panel added
 2009-05-31 Frontend base code and default theme are done
 
