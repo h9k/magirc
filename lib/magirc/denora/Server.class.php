@@ -41,6 +41,10 @@ class Server extends Denora {
 		return @$server[0];
 	}
 	
+	/*function getServers() {
+		return $this->db->select('server', array('*'), NULL, 'server', 'ASC');
+	}*/
+	
 }
 
 ?>

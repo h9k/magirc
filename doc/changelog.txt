@@ -4,6 +4,10 @@ $Id$
  MAGIRC CHANGELOG
 ==================
 
+magirc v0.2.0-dev
+-----------------
+2009-08-02 -
+
 magirc v0.1.0-dev
 -----------------
 2009-08-02 Added dummys for all planned sections and fixed some things

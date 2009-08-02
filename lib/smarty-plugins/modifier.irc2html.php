@@ -24,14 +24,8 @@ function smarty_modifier_irc2html($text) {
 	$color["color:15;"]= "color:#D2D2D2;";
 	
 	/* Wrap the text to avoid overflowing the layout */
-	/* If the second parameter of this function is 0, wrapping will be skipped */
-	$numargs = func_num_args();
-	$arg_list = func_get_args();
-	$wrap = ($numargs > 1) ? $arg_list[1] : 1;
-	if ($wrap == 1) {
-		$text = str_replace(chr(03), ' ' . chr(03), $text);
-		$text = preg_replace('#([^\n\r ]{60})#i', '\\1  ', $text);
-	}
+	$text = str_replace(chr(03), ' ' . chr(03), $text);
+	//$text = preg_replace('#([^\n\r ]{60})#i', '\\1', $text);
 	
 	/* Transform the text into xhtml */
 	$text = @htmlentities($text,ENT_COMPAT,'UTF-8');
