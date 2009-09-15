@@ -3,7 +3,7 @@
  // File:  		 JPGRAPH_LINE.PHP
  // Description: Line plot extension for JpGraph
  // Created:  	 2001-01-08
- // Ver:  		 $Id: jpgraph_line.php 1106 2009-02-22 20:16:35Z ljp $
+ // Ver:  		 $Id$
  //
  // Copyright (c) Aditus Consulting. All rights reserved.
  //========================================================================
@@ -29,7 +29,7 @@ class LinePlot extends Plot{
     protected $line_style=1; // Default to solid
     protected $filledAreas = array(); // array of arrays(with min,max,col,filled in them)
     public $barcenter=false;  // When we mix line and bar. Should we center the line in the bar.
-    protected $fillFromMin = false ;
+    protected $fillFromMin = false, $fillFromMax = false;
     protected $fillgrad=false,$fillgrad_fromcolor='navy',$fillgrad_tocolor='silver',$fillgrad_numcolors=100;
     protected $iFastStroke=false;
 
@@ -38,13 +38,14 @@ class LinePlot extends Plot{
     function LinePlot($datay,$datax=false) {
         parent::__construct($datay,$datax);
         $this->mark = new PlotMark() ;
+        $this->color = ColorFactory::getColor();
+        $this->fill_color = $this->color;
     }
     //---------------
     // PUBLIC METHODS
 
-    // Set style, filled or open
-    function SetFilled($aFlag=true) {
-        JpGraphError::RaiseL(10001);//('LinePlot::SetFilled() is deprecated. Use SetFillColor()');
+    function SetFilled($aFlg=true) {
+		$this->filled = $aFlg;
     }
 
     function SetBarCenter($aFlag=true) {
@@ -67,7 +68,12 @@ class LinePlot extends Plot{
         $this->fillFromMin = $f ;
     }
 
+    function SetFillFromYMax($f=true) {
+        $this->fillFromMax = $f ;
+    }
+
     function SetFillColor($aColor,$aFilled=true) {
+    	$this->color = $aColor;
         $this->fill_color=$aColor;
         $this->filled=$aFilled;
     }
@@ -223,16 +229,23 @@ class LinePlot extends Plot{
         $yscale->Translate($this->coords[0][$startpoint]));
 
         if( $this->filled ) {
-            $min = $yscale->GetMinVal();
-            if( $min > 0 || $this->fillFromMin ) {
-                $fillmin = $yscale->scale_abs[0];//Translate($min);
+            if( $this->fillFromMax ) {
+                //$max = $yscale->GetMaxVal();
+                $cord[$idx++] = $xscale->Translate($xs);
+                $cord[$idx++] = $yscale->scale_abs[1];
             }
             else {
-                $fillmin = $yscale->Translate(0);
-            }
+                $min = $yscale->GetMinVal();
+                if( $min > 0 || $this->fillFromMin ) {
+                    $fillmin = $yscale->scale_abs[0];//Translate($min);
+                }
+                else {
+                    $fillmin = $yscale->Translate(0);
+                }
 
-            $cord[$idx++] = $xscale->Translate($xs);
-            $cord[$idx++] = $fillmin;
+                $cord[$idx++] = $xscale->Translate($xs);
+                $cord[$idx++] = $fillmin;
+            }
         }
         $xt = $xscale->Translate($xs);
         $yt = $yscale->Translate($this->coords[0][$startpoint]);
@@ -252,7 +265,7 @@ class LinePlot extends Plot{
 
 
         while( $pnts < $numpoints ) {
-             
+
             if( $exist_x ) {
                 $x=$this->coords[1][$pnts];
             }
@@ -261,7 +274,7 @@ class LinePlot extends Plot{
             }
             $xt = $xscale->Translate($x);
             $yt = $yscale->Translate($this->coords[0][$pnts]);
-             
+
             $y=$this->coords[0][$pnts];
             if( $this->step_style ) {
                 // To handle null values within step style we need to record the
@@ -340,11 +353,16 @@ class LinePlot extends Plot{
 
         if( $this->filled  ) {
             $cord[$idx++] = $xt;
-            if( $min > 0 || $this->fillFromMin ) {
-                $cord[$idx++] = $yscale->Translate($min);
+            if( $this->fillFromMax ) {
+                $cord[$idx++] = $yscale->scale_abs[1];
             }
             else {
-                $cord[$idx++] = $yscale->Translate(0);
+                if( $min > 0 || $this->fillFromMin ) {
+                    $cord[$idx++] = $yscale->Translate($min);
+                }
+                else {
+                    $cord[$idx++] = $yscale->Translate(0);
+                }
             }
             if( $this->fillgrad ) {
                 $img->SetLineWeight(1);
@@ -381,7 +399,7 @@ class LinePlot extends Plot{
                 ($this->filledAreas[$i][1] - $this->filledAreas[$i][0] + ($this->step_style ? 0 : 1))  * $factor));
                 $areaCoords[] = $areaCoords[sizeof($areaCoords)-2]; // last x
                 $areaCoords[] = $minY; // last y
-                 
+
                 if($this->filledAreas[$i][3]) {
                     $img->SetColor($this->filledAreas[$i][2]);
                     $img->FilledPolygon($areaCoords);
@@ -391,8 +409,6 @@ class LinePlot extends Plot{
                 // If not we still re-draw the line since it might have been
                 // partially overwritten by the filled area and it doesn't look
                 // very good.
-                // TODO: The behaviour is undefined if the line does not have
-                // any line at the position of the area.
                 if( $this->filledAreas[$i][4] ) {
                     $img->Polygon($areaCoords);
                 }

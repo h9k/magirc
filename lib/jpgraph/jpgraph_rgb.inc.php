@@ -4,7 +4,7 @@
 // Description: Class to handle RGb color space specification and
 //              named colors
 // Created:     2001-01-08 (Refactored to separate file 2008-08-01)
-// Ver:         $Id: jpgraph_rgb.inc.php 1115 2009-03-08 22:47:33Z ljp $
+// Ver:         $Id$
 //
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================
@@ -59,6 +59,11 @@ class RGB {
             'lightgray'=>array(211,211,211),
             'midnightblue'=>array(25,25,112),
             'navy'=>array(0,0,128),
+                'indigo'=>array(75,0,130),
+                'electricindigo'=>array(102,0,255),
+                'deepindigo'=>array(138,43,226),
+                'pigmentindigo'=>array(75,0,130),
+                'indigodye'=>array(0,65,106),
             'cornflowerblue'=>array(100,149,237),
             'darkslateblue'=>array(72,61,139),
             'slateblue'=>array(106,90,205),
@@ -573,7 +578,22 @@ class RGB {
         }
         return imagecolorresolvealpha($this->img, $r, $g, $b, round($aAlpha * 127));
     }
-    
+
+    static function tryHexConversion($aColor) {
+        if( is_array( $aColor ) ) {
+            if( count( $aColor ) == 3 ) {
+                if( is_numeric($aColor[0]) &&is_numeric($aColor[1]) && is_numeric($aColor[2]) ) {
+                    if( ($aColor[0] >= 0 && $aColor[0] <= 255) &&
+                        ($aColor[1] >= 0 && $aColor[1] <= 255) &&
+                        ($aColor[2] >= 0 && $aColor[2] <= 255) ) {
+                        return sprintf('#%02x%02x%02x',$aColor[0],$aColor[1],$aColor[2]);
+                    }
+                }
+            }
+        }
+        return $aColor;
+    }
+
 
     // Return a RGB tripple corresponding to a position in the normal light spectrum
     // The argumen values is in the range [0, 1] where a value of 0 correponds to blue and
@@ -601,9 +621,8 @@ class RGB {
         else {
             return array($sat, round($sat-$sat*($aVal-0.75)/$a), 0);
         }
+    }
 
-    }    
-    
   } // Class
 
 ?>

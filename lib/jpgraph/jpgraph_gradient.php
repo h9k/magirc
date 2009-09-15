@@ -3,7 +3,7 @@
  // File:        JPGRAPH_GRADIENT.PHP
  // Description: Create a color gradient
  // Created:     2003-02-01
- // Ver:         $Id: jpgraph_gradient.php 1153 2009-03-30 19:14:48Z ljp $
+ // Ver:         $Id$
  //
  // Copyright (c) Aditus Consulting. All rights reserved.
  //========================================================================
@@ -50,9 +50,10 @@ class Gradient {
     // $to_color End color in the gradient
     // $style  Which way is the gradient oriented?
     function FilledRectangle($xl,$yt,$xr,$yb,$from_color,$to_color,$style=1) {
+        $this->img->SetLineWeight(1);
         switch( $style ) {
             case GRAD_VER:
-                $steps = ceil(abs($xr-$xl));
+                $steps = ceil(abs($xr-$xl)+1);
                 $delta = $xr>=$xl ? 1 : -1;
                 $this->GetColArray($from_color,$to_color,$steps,$colors,$this->numcolors);
                 for( $i=0, $x=$xl; $i < $steps; ++$i ) {
@@ -63,8 +64,8 @@ class Gradient {
                 break;
 
             case GRAD_HOR:
-                $steps = ceil(abs($yb-$yt));
-                $delta = $yb>=$yt ? 1 : -1;
+                $steps = ceil(abs($yb-$yt)+1);
+                $delta = $yb >= $yt ? 1 : -1;
                 $this->GetColArray($from_color,$to_color,$steps,$colors,$this->numcolors);
                 for($i=0,$y=$yt; $i < $steps; ++$i) {
                     $this->img->current_color = $colors[$i];
@@ -343,7 +344,7 @@ class Gradient {
             $miny = min($miny,$y);
             $maxy = max($maxy,$y);
         }
-         
+
         $colors = array();
         $this->GetColArray($from_color,$to_color,abs($maxy-$miny)+1,$colors,$this->numcolors);
         for($i=$miny, $idx=0; $i <= $maxy; ++$i ) {
@@ -362,7 +363,7 @@ class Gradient {
                 $this->img->current_color = $colmap[$yy];
                 $this->img->Line($p1[0],$yy,$p2[0]-1,$yy);
             }
-             
+
             if( $p1[1] == $p2[1] ) {
                 continue;
             }
@@ -399,7 +400,7 @@ class Gradient {
         if( $arr_size==0 ) {
             return;
         }
-        
+
         // If color is given as text get it's corresponding r,g,b values
         $from_color = $this->img->rgb->Color($from_color);
         $to_color = $this->img->rgb->Color($to_color);

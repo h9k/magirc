@@ -1,5 +1,5 @@
 <?php
-/* $Id: modifier.CloseTags.php 111 2009-04-24 13:26:39Z hosting9000.com $
+/* $Id$
 * Smarty plugin
 * -------------------------------------------------------------
 * Type:    modifier

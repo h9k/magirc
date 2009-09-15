@@ -42,7 +42,7 @@
 // | Author: Paul Cooper <pgc@ucecom.com>                                 |
 // +----------------------------------------------------------------------+
 //
-// $Id: pgsql.php,v 1.70 2007/04/10 20:35:49 nrf Exp $
+// $Id$
 
 require_once 'MDB2/Driver/Manager/Common.php';
 

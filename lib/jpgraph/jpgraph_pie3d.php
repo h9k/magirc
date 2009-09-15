@@ -3,7 +3,7 @@
  // File:        JPGRAPH_PIE3D.PHP
  // Description: 3D Pie plot extension for JpGraph
  // Created:     2001-03-24
- // Ver:         $Id: jpgraph_pie3d.php 1106 2009-02-22 20:16:35Z ljp $
+ // Ver:         $Id$
  //
  // Copyright (c) Aditus Consulting. All rights reserved.
  //========================================================================
@@ -60,12 +60,6 @@ class PiePlot3D extends PiePlot {
     function SetEdge($aColor='black',$aWeight=1) {
         $this->edgecolor = $aColor;
         $this->edgeweight = $aWeight;
-    }
-
-    // Dummy function to make Pie3D behave in a similair way to 2D
-    function ShowBorder($exterior=true,$interior=true) {
-        JpGraphError::RaiseL(14001);
-        //('Pie3D::ShowBorder() . Deprecated function. Use Pie3D::SetEdge() to control the edges around slices.');
     }
 
     // Specify projection angle for 3D in degrees

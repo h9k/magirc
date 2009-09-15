@@ -1,5 +1,5 @@
 <?php
-// $Id: unreal32.php 286 2007-01-15 11:42:44Z Hal9000 $
+// $Id$
 
 // Inspircd 1.1/1.2 protocol file for Denora support on Magirc
 

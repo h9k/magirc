@@ -5,7 +5,7 @@
 //              names on the data series. The number of rows and columns
 //              in the legend are user specifyable.
 // Created:     2001-01-08 (Refactored to separate file 2008-08-01)
-// Ver:         $Id: jpgraph_legend.inc.php 1106 2009-02-22 20:16:35Z ljp $
+// Ver:         $Id$
 //
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================
@@ -26,8 +26,8 @@ class Legend {
     private $shadow=true; // Shadow around legend "box"
     private $shadow_color='darkgray@0.5';
     private $mark_abs_hsize=_DEFAULT_LPM_SIZE,$mark_abs_vsize=_DEFAULT_LPM_SIZE;
-    private $xmargin=10,$ymargin=3,$shadow_width=2;
-    private $xlmargin=2, $ylmargin='';
+    private $xmargin=10,$ymargin=6,$shadow_width=2;
+    private $xlmargin=4, $ylmargin='';
     private $xpos=0.05, $ypos=0.15, $xabspos=-1, $yabspos=-1;
     private $halign="right", $valign="top";
     private $font_family=FF_FONT1,$font_style=FS_NORMAL,$font_size=12;
@@ -120,11 +120,11 @@ class Legend {
         $this->font_size = $aSize;
     }
 
-    function SetPos($aX,$aY,$aHAlign="right",$aVAlign="top") {
+    function SetPos($aX,$aY,$aHAlign='right',$aVAlign='top') {
         $this->Pos($aX,$aY,$aHAlign,$aVAlign);
     }
 
-    function SetAbsPos($aX,$aY,$aHAlign="right",$aVAlign="top") {
+    function SetAbsPos($aX,$aY,$aHAlign='right',$aVAlign='top') {
         $this->xabspos=$aX;
         $this->yabspos=$aY;
         $this->halign=$aHAlign;
@@ -132,7 +132,7 @@ class Legend {
     }
 
 
-    function Pos($aX,$aY,$aHAlign="right",$aVAlign="top") {
+    function Pos($aX,$aY,$aHAlign='right',$aVAlign='top') {
         if( !($aX<1 && $aY<1) )
         JpGraphError::RaiseL(25120);//(" Position for legend must be given as percentage in range 0-1");
         $this->xpos=$aX;
@@ -143,6 +143,10 @@ class Legend {
 
     function SetFillColor($aColor) {
         $this->fill_color=$aColor;
+    }
+
+    function Clear() {
+        $this->txtcol = array();
     }
 
     function Add($aTxt,$aColor,$aPlotmark='',$aLinestyle=0,$csimtarget='',$csimalt='',$csimwintarget='') {
@@ -228,28 +232,34 @@ class Legend {
         }
 
         // Positioning of the legend box
-        if( $this->halign == 'left' )
-        $xp = $this->xabspos;
-        elseif( $this->halign == 'center' )
-        $xp = $this->xabspos - $abs_width/2;
-        else
-        $xp = $aImg->width - $this->xabspos - $abs_width;
+        if( $this->halign == 'left' ) {
+        	$xp = $this->xabspos;
+        }
+        elseif( $this->halign == 'center' ) {
+        	$xp = $this->xabspos - $abs_width/2;
+        }
+        else {
+        	$xp = $aImg->width - $this->xabspos - $abs_width;
+        }
 
         $yp=$this->yabspos;
-        if( $this->valign == 'center' )
-        $yp-=$abs_height/2;
-        elseif( $this->valign == 'bottom' )
-        $yp-=$abs_height;
-         
+        if( $this->valign == 'center' ) {
+        	$yp-=$abs_height/2;
+        }
+        elseif( $this->valign == 'bottom' ) {
+        	$yp-=$abs_height;
+        }
+
         // Stroke legend box
         $aImg->SetColor($this->color);
         $aImg->SetLineWeight($this->frameweight);
         $aImg->SetLineStyle('solid');
 
-        if( $this->shadow )
-        $aImg->ShadowRectangle($xp,$yp,$xp+$abs_width+$this->shadow_width,
-        $yp+$abs_height+$this->shadow_width,
-        $this->fill_color,$this->shadow_width,$this->shadow_color);
+        if( $this->shadow ) {
+        	$aImg->ShadowRectangle($xp,$yp,$xp+$abs_width+$this->shadow_width,
+        							$yp+$abs_height+$this->shadow_width,
+        							$this->fill_color,$this->shadow_width,$this->shadow_color);
+        }
         else {
             $aImg->SetColor($this->fill_color);
             $aImg->FilledRectangle($xp,$yp,$xp+$abs_width,$yp+$abs_height);

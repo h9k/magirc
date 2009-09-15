@@ -1,14 +1,14 @@
 <?php
 /*=======================================================================
- // File:        JPGRAPH_CONTOUR.PHP
- // Description: Contour plot
- // Created:     2009-03-08
- // Ver:         $Id: jpgraph_contour.php 1156 2009-04-13 08:54:05Z ljp $
- //
- // Copyright (c) Aditus Consulting. All rights reserved.
- //========================================================================
- */
-
+// File:        JPGRAPH_CONTOUR.PHP
+// Description: Contour plot
+// Created:     2009-03-08
+// Ver:         $Id$
+//
+// Copyright (c) Aditus Consulting. All rights reserved.
+//========================================================================
+*/
+require_once('jpgraph_meshinterpolate.inc.php');
 define('HORIZ_EDGE',0);
 define('VERT_EDGE',1);
 
@@ -27,13 +27,13 @@ class Contour {
     private $isobarValues = array();
     private $stack = null;
     private $isobarCoord = array();
-    private $nbrIsobars = 10, $isobarColors = null;
+    private $nbrIsobars = 10, $isobarColors = array();
     private $invert = true;
     private $highcontrast = false, $highcontrastbw = false;
 
     /**
      * Create a new contour level "algorithm machine".
-     * @param $aMatrix	The values to find the contour from
+     * @param $aMatrix    The values to find the contour from
      * @param $aIsobars Mixed. If integer it determines the number of isobars to be used. The levels are determined
      * automatically as equdistance between the min and max value of the matrice.
      * If $aIsobars is an array then this is interpretated as an array of values to be used as isobars in the
@@ -63,7 +63,7 @@ class Contour {
             }
         }
 
-        if( $aColors !== null ) {
+        if( $aColors !== null && count($aColors) > 0 ) {
 
             if( !is_array($aColors) ) {
                 JpGraphError::RaiseL(28001);
@@ -178,7 +178,7 @@ class Contour {
      * @param $aIsobar The value of the isobar to be checked
      */
     function determineIsobarEdgeCrossings($aIsobar) {
-         
+
         $ib = $this->isobarValues[$aIsobar];
 
         for ($i = 0; $i < $this->nbrRows-1; $i++) {
@@ -210,7 +210,7 @@ class Contour {
      * @return unknown_type
      */
     function getCrossingCoord($aRow,$aCol,$aEdgeDir,$aIsobarVal) {
-         
+
         // In order to avoid numerical problem when two vertices are very close
         // we have to check and avoid dividing by close to zero denumerator.
         if( $aEdgeDir == HORIZ_EDGE ) {
@@ -271,7 +271,7 @@ class Contour {
     function UseHighContrastColor($aFlg=true,$aBW=false) {
         $this->highcontrast = $aFlg;
         $this->highcontrastbw = $aBW;
-    }        
+    }
 
     /**
      * Calculate suitable colors for each defined isobar
@@ -282,15 +282,15 @@ class Contour {
             if ( $this->highcontrastbw ) {
                 for ($ib = 0; $ib < $this->nbrIsobars; $ib++) {
                     $this->isobarColors[$ib] = 'black';
-                }                
-            }    
+                }
+            }
             else {
                 // Use only blue/red scale
                 $step = round(255/($this->nbrIsobars-1));
                 for ($ib = 0; $ib < $this->nbrIsobars; $ib++) {
                     $this->isobarColors[$ib] = array($ib*$step, 50, 255-$ib*$step);
-                }                                
-            }        
+                }
+            }
         }
         else {
             $n = $this->nbrIsobars;
@@ -371,7 +371,10 @@ class Contour {
             }
         }
 
-        $this->CalculateColors();
+        if( count($this->isobarColors) == 0 ) {
+            // No manually specified colors. Calculate them automatically.
+            $this->CalculateColors();
+        }
         return array( $this->isobarCoord, $this->isobarValues, $this->isobarColors );
     }
 }
@@ -392,12 +395,13 @@ class ContourPlot extends Plot {
     private $isobar = 10;
     private $showLegend = false;
     private $highcontrast = false, $highcontrastbw = false;
-    
+    private $manualIsobarColors = array();
+
     /**
      * Construct a contour plotting algorithm. The end result of the algorithm is a sequence of
      * line segments for each isobar given as two vertices.
      *
-     * @param $aDataMatrix	The Z-data to be used
+     * @param $aDataMatrix    The Z-data to be used
      * @param $aIsobar A mixed variable, if it is an integer then this specified the number of isobars to use.
      * The values of the isobars are automatically detrmined to be equ-spaced between the min/max value of the
      * data. If it is an array then it explicetely gives the isobar values
@@ -408,42 +412,63 @@ class ContourPlot extends Plot {
      * @param $aHighContrastBW Use only black colors for contours
      * @return an instance of the contour plot algorithm
      */
-    function __construct($aDataMatrix, $aIsobar=10, $aFactor=1, $aInvert=false) {
-        
+    function __construct($aDataMatrix, $aIsobar=10, $aFactor=1, $aInvert=false, $aIsobarColors=array()) {
+
         $this->dataMatrix = $aDataMatrix;
         $this->flipData = $aInvert;
         $this->isobar = $aIsobar;
         $this->interpFactor = $aFactor;
-        
+
         if ( $this->interpFactor > 1 ) {
-            
+
             if( $this->interpFactor > 5 ) {
                 JpGraphError::RaiseL(28007);// ContourPlot interpolation factor is too large (>5)
             }
-            
-            $ip = new Interpolate();
-            $this->dataMatrix = $ip->Linear($this->dataMatrix, $this->interpFactor); 
-        }                        
-        
-        $this->contour = new Contour($this->dataMatrix,$this->isobar);
-                
+
+            $ip = new MeshInterpolate();
+            $this->dataMatrix = $ip->Linear($this->dataMatrix, $this->interpFactor);
+        }
+
+        $this->contour = new Contour($this->dataMatrix,$this->isobar,$aIsobarColors);
+
         if( is_array($aIsobar) )
             $this->nbrContours = count($aIsobar);
         else
             $this->nbrContours = $aIsobar;
     }
 
+
+    /**
+     * Flipe the data around the center
+     *
+     * @param $aFlg
+     *
+     */
+    function SetInvert($aFlg=true) {
+        $this->flipData = $aFlg;
+    }
+
+    /**
+     * Set the colors for the isobar lines
+     *
+     * @param $aColorArray
+     *
+     */
+    function SetIsobarColors($aColorArray) {
+        $this->manualIsobarColors = $aColorArray;
+    }
+
     /**
      * Show the legend
-     * 
+     *
      * @param $aFlg true if the legend should be shown
-     * 
+     *
      */
     function ShowLegend($aFlg=true) {
         $this->showLegend = $aFlg;
     }
-    
-    
+
+
     /**
      * @param $aFlg true if the legend should start with the lowest isobar on top
      * @return unknown_type
@@ -451,7 +476,7 @@ class ContourPlot extends Plot {
     function Invertlegend($aFlg=true) {
         $this->invertLegend = $aFlg;
     }
-    
+
     /* Internal method. Give the min value to be used for the scaling
      *
      */
@@ -465,16 +490,16 @@ class ContourPlot extends Plot {
     function Max() {
         return array(count($this->dataMatrix[0])-1,count($this->dataMatrix)-1);
     }
-     
+
     /**
      * Internal ramewrok method to setup the legend to be used for this plot.
      * @param $aGraph The parent graph class
      */
-    function Legend($aGraph) {       
-        
+    function Legend($aGraph) {
+
         if( ! $this->showLegend )
             return;
-        
+
         if( $this->invertLegend ) {
             for ($i = 0; $i < $this->nbrContours; $i++) {
                 $aGraph->legend->Add(sprintf('%.1f',$this->contourVal[$i]), $this->contourColor[$i]);
@@ -483,37 +508,40 @@ class ContourPlot extends Plot {
         else {
             for ($i = $this->nbrContours-1; $i >= 0 ; $i--) {
                 $aGraph->legend->Add(sprintf('%.1f',$this->contourVal[$i]), $this->contourColor[$i]);
-            }                        
+            }
         }
     }
-    
-    // Framework function
+
+
+    /**
+     *  Framework function which gets called before the Stroke() method is called
+     *
+     *  @see Plot#PreScaleSetup($aGraph)
+     *
+     */
     function PreScaleSetup($aGraph) {
         $xn = count($this->dataMatrix[0])-1;
         $yn = count($this->dataMatrix)-1;
-        
+
         $aGraph->xaxis->scale->Update($aGraph->img,0,$xn);
         $aGraph->yaxis->scale->Update($aGraph->img,0,$yn);
-        
-        //$aGraph->SetScale('intint',0,$yn,0,$xn);
-        
+
         $this->contour->SetInvert($this->flipData);
         list($this->contourCoord,$this->contourVal,$this->contourColor) = $this->contour->getIsobars();
-                        
     }
-        
+
     /**
      * Use high contrast color schema
-     * 
-     * @param $aFlg True, to use high contrast color 
+     *
+     * @param $aFlg True, to use high contrast color
      * @param $aBW True, Use only black and white color schema
      */
     function UseHighContrastColor($aFlg=true,$aBW=false) {
         $this->highcontrast = $aFlg;
         $this->highcontrastbw = $aBW;
-        $this->contour->UseHighContrastColor($this->highcontrast,$this->highcontrastbw);        
+        $this->contour->UseHighContrastColor($this->highcontrast,$this->highcontrastbw);
     }
-    
+
     /**
      * Internal method. Stroke the contour plot to the graph
      *
@@ -522,9 +550,16 @@ class ContourPlot extends Plot {
      * @param $yscale Instance of the yscale to use
      */
     function Stroke($img,$xscale,$yscale) {
-                                              
+
+        if( count($this->manualIsobarColors) > 0 ) {
+            $this->contourColor = $this->manualIsobarColors;
+            if( count($this->manualIsobarColors) != $this->nbrContours ) {
+                JpGraphError::RaiseL(28002);
+            }
+        }
+
         $img->SetLineWeight($this->line_weight);
-        
+
         for ($c = 0; $c < $this->nbrContours; $c++) {
 
             $img->SetColor( $this->contourColor[$c] );
@@ -547,89 +582,6 @@ class ContourPlot extends Plot {
     }
 
 }
-
-/**
- * Utility class to interpolate a given data matrice
- *
- */
-class Interpolate {
-    private $data = array();
-
-   /**
-    * Calculate the mid points of the given rectangle which has its top left
-    * corner at $row,$col. The $aFactordecides how many spliots should be done.
-    * i.e. how many more divisions should be done recursively
-    * 
-    * @param $row Top left corner of square to work with
-    * @param $col Top left corner of square to work with
-    * $param $aFactor In how many subsquare should we split this square. A value of 1 indicates that no action
-    */ 
-    function IntSquare( $aRow, $aCol, $aFactor ) {
-        if ( $aFactor <= 1 )
-            return;
-
-        $step = pow( 2, $aFactor-1 );
-
-        $v0 = $this->data[$aRow][$aCol];
-        $v1 = $this->data[$aRow][$aCol + $step];
-        $v2 = $this->data[$aRow + $step][$aCol];
-        $v3 = $this->data[$aRow + $step][$aCol + $step];
-
-        $this->data[$aRow][$aCol + $step / 2] = ( $v0 + $v1 ) / 2;
-        $this->data[$aRow + $step / 2][$aCol] = ( $v0 + $v2 ) / 2;
-        $this->data[$aRow + $step][$aCol + $step / 2] = ( $v2 + $v3 ) / 2;
-        $this->data[$aRow + $step / 2][$aCol + $step] = ( $v1 + $v3 ) / 2;
-        $this->data[$aRow + $step / 2][$aCol + $step / 2] = ( $v0 + $v1 + $v2 + $v3 ) / 4;
-
-        $this->IntSquare( $aRow, $aCol, $aFactor-1 );
-        $this->IntSquare( $aRow, $aCol + $step / 2, $aFactor-1 );
-        $this->IntSquare( $aRow + $step / 2, $aCol, $aFactor-1 );
-        $this->IntSquare( $aRow + $step / 2, $aCol + $step / 2, $aFactor-1 );
-    } 
-
-    /**
-     * Interpolate values in a matrice so that the total number of data points 
-     * in vert and horizontal axis are $aIntNbr more. For example $aIntNbr=2 will
-     * make the data matrice have tiwce as many vertical and horizontal dta points.
-     * 
-     * Note: This will blow up the matrcide in memory size in the order of $aInNbr^2
-     * 
-     * @param  $ &$aData The original data matricde
-     * @param  $aInNbr Interpolation factor
-     * @return the interpolated matrice
-     */
-    function Linear( &$aData, $aIntFactor ) {
-        $step = pow( 2, $aIntFactor-1 );
-
-        $orig_cols = count( $aData[0] );
-        $orig_rows = count( $aData ); 
-        // Number of new columns/rows
-        // N = (a-1) * 2^(f-1) + 1
-        $p = pow( 2, $aIntFactor-1 );
-        $new_cols = $p * ( $orig_cols - 1 ) + 1;
-        $new_rows = $p * ( $orig_rows - 1 ) + 1;
-
-        $this->data = array_fill( 0, $new_rows, array_fill( 0, $new_cols, 0 ) ); 
-        // Initialize the new matrix with the values that we know
-        for ( $i = 0; $i < $new_rows; $i++ ) {
-            for ( $j = 0; $j < $new_cols; $j++ ) {
-                $v = 0 ;
-                if ( ( $i % $step == 0 ) && ( $j % $step == 0 ) ) {
-                    $v = $aData[$i / $step][$j / $step];
-                } 
-                $this->data[$i][$j] = $v;
-            } 
-        } 
-
-        for ( $i = 0; $i < $new_rows-1; $i += $step ) {
-            for ( $j = 0; $j < $new_cols-1; $j += $step ) {
-                $this->IntSquare( $i, $j, $aIntFactor );
-            } 
-        } 
-
-        return $this->data;
-    } 
-} 
 
 // EOF
 ?>

@@ -3,7 +3,7 @@
 // File:        IMGDATA_DIAMONDS.INC
 // Description: Base64 encoded images for diamonds
 // Created:     2003-03-20
-// Ver:         $Id: imgdata_diamonds.inc.php 1106 2009-02-22 20:16:35Z ljp $
+// Ver:         $Id$
 //
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================

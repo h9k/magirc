@@ -42,7 +42,7 @@
 // | Author: Lukas Smith <smith@pooteeweet.org>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: mysqli.php,v 1.59 2007/03/29 18:18:06 quipo Exp $
+// $Id$
 //
 
 require_once 'MDB2/Driver/Reverse/Common.php';

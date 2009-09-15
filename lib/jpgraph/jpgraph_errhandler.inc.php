@@ -5,7 +5,7 @@
 //              error messages. All localized error messages are stored
 //              in a separate file under the "lang/" subdirectory.
 // Created:     2006-09-24
-// Ver:         $Id: jpgraph_errhandler.inc.php 1238 2009-05-25 22:48:06Z ljp $
+// Ver:         $Id$
 //
 // Copyright 2006 (c) Aditus Consulting. All rights reserved.
 //========================================================================
@@ -92,28 +92,94 @@ class ErrMsgText {
         return $msg;
     }
 }
-
+     
 //
 // A wrapper class that is used to access the specified error object
 // (to hide the global error parameter and avoid having a GLOBAL directive
 // in all methods.
 //
 class JpGraphError {
-    private static $__jpg_err;
-    public static function Install($aErrObject) {
-        self::$__jpg_err = new $aErrObject;
-    }
+    private static $__iImgFlg = true;
+    private static $__iLogFile = '';
+    private static $__iTitle = 'JpGraph Error: ';
     public static function Raise($aMsg,$aHalt=true){
-        self::$__jpg_err->Raise($aMsg,$aHalt);
+        throw new JpGraphException($aMsg);
     }
     public static function SetErrLocale($aLoc) {
         GLOBAL $__jpg_err_locale ;
         $__jpg_err_locale = $aLoc;
     }
     public static function RaiseL($errnbr,$a1=null,$a2=null,$a3=null,$a4=null,$a5=null) {
-        $t = new ErrMsgText();
-        $msg = $t->Get($errnbr,$a1,$a2,$a3,$a4,$a5);
-        self::$__jpg_err->Raise($msg);
+        throw new JpGraphExceptionL($errnbr,$a1,$a2,$a3,$a4,$a5);
+    }
+    public static function SetImageFlag($aFlg=true) {
+    	self::$__iImgFlg = $aFlg;
+    }
+    public static function GetImageFlag() {
+    	return self::$__iImgFlg;
+    }
+    public static function SetLogFile($aFile) {
+    	self::$__iLogFile = $aFile;
+    }
+    public static function GetLogFile() {
+    	return self::$__iLogFile;
+    }
+    public static function SetTitle($aTitle) {
+    	self::$__iTitle = $aTitle;
+    }
+    public static function GetTitle() {
+    	return self::$__iTitle;
+    }    
+}
+
+// Setup the default handler
+global $__jpg_OldHandler;
+$__jpg_OldHandler = set_exception_handler(array('JpGraphException','defaultHandler'));
+
+class JpGraphException extends Exception {
+    // Redefine the exception so message isn't optional
+    public function __construct($message, $code = 0) {
+        // make sure everything is assigned properly
+        parent::__construct($message, $code);
+    }
+    // custom string representation of object
+    public function _toString() {
+        return __CLASS__ . ": [{$this->code}]: {$this->message} at " . basename($this->getFile()) . ":" . $this->getLine() . "\n" . $this->getTraceAsString() . "\n";
+    }
+    // custom representation of error as an image
+    public function Stroke() {
+    	if( JpGraphError::GetImageFlag() ) {
+        	$errobj = new JpGraphErrObjectImg();
+        	$errobj->SetTitle(JpGraphError::GetTitle());
+    	}
+    	else {    		
+    		$errobj = new JpGraphErrObject();
+        	$errobj->SetTitle(JpGraphError::GetTitle());    		
+    		$errobj->SetStrokeDest(JpGraphError::GetLogFile());
+    	}
+        $errobj->Raise($this->getMessage());
+    }
+    static public function defaultHandler(Exception $exception) {
+        global $__jpg_OldHandler;
+        if( $exception instanceof JpGraphException ) {
+            $exception->Stroke();
+        }
+        else {
+            // Restore old handler
+            if( $__jpg_OldHandler !== NULL ) {
+                set_exception_handler($__jpg_OldHandler);
+            }
+            throw $exception;
+        }
+    }
+}
+
+class JpGraphExceptionL extends JpGraphException {
+   // Redefine the exception so message isn't optional
+    public function __construct($errcode,$a1=null,$a2=null,$a3=null,$a4=null,$a5=null) {
+        // make sure everything is assigned properly
+        $errtxt = new ErrMsgText();
+        parent::__construct($errtxt->Get($errcode,$a1,$a2,$a3,$a4,$a5), 0);
     }
 }
 
@@ -126,7 +192,7 @@ class JpGraphError {
 //=============================================================
 class JpGraphErrObject {
 
-    protected $iTitle = "JpGraph Error";
+    protected $iTitle = "JpGraph error: ";
     protected $iDest = false;
 
 
@@ -143,20 +209,33 @@ class JpGraphErrObject {
     }
 
     // If aHalt is true then execution can't continue. Typical used for fatal errors
-    function Raise($aMsg,$aHalt=true) {
-        $aMsg = $this->iTitle.' '.$aMsg;
-        if ($this->iDest) {
-            $f = @fopen($this->iDest,'a');
-            if( $f ) {
-                @fwrite($f,$aMsg);
-                @fclose($f);
-            }
+    function Raise($aMsg,$aHalt=false) {
+        if( $this->iDest != '' ) {
+        	if( $this->iDest == 'syslog' ) {
+        		error_log($this->iTitle.$aMsg);	
+        	} 
+        	else {
+        		$str = '['.date('r').'] '.$this->iTitle.$aMsg."\n";
+        		$f = @fopen($this->iDest,'a');
+    	        if( $f ) {            	
+        	        @fwrite($f,$str);
+            	    @fclose($f);
+            	}
+        	}
         }
         else {
-            echo $aMsg;
+        	$aMsg = $this->iTitle.$aMsg;        	
+        	// Check SAPI and if we are called from the command line
+        	// send the error to STDERR instead
+        	if( PHP_SAPI == 'cli' ) {
+        		fwrite(STDERR,$aMsg);
+        	}
+        	else {
+            	echo $aMsg;
+        	}
         }
         if( $aHalt )
-        die();
+        	exit(1);
     }
 }
 
@@ -164,6 +243,11 @@ class JpGraphErrObject {
 // An image based error handler
 //==============================================================
 class JpGraphErrObjectImg extends JpGraphErrObject {
+    
+    function __construct() {
+        parent::__construct();
+        // Empty. Reserved for future use
+    }
 
     function Raise($aMsg,$aHalt=true) {
         $img_iconerror =
@@ -271,18 +355,13 @@ class JpGraphErrObjectImg extends JpGraphErrObject {
             $img->Stream();
         }
         if( $aHalt )
-        die();
+            die();
     }
 }
 
 
-// Install the default error handler
-if( USE_IMAGE_ERROR_HANDLER ) {
-    JpGraphError::Install("JpGraphErrObjectImg");
-}
-else {
-    JpGraphError::Install("JpGraphErrObject");
-}
 
-
+if( ! USE_IMAGE_ERROR_HANDLER ) {
+	JpGraphError::SetImageFlag(false);
+}
 ?>

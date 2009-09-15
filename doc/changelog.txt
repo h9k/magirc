@@ -6,7 +6,11 @@ $Id$
 
 magirc v0.2.0-dev
 -----------------
-2009-08-02 -
+2009-09-15 JPGraph libs updated to latest version
+2009-09-15 PEAR libs updated to latest versions
+2009-09-15 phpmailer dumped in favor of PEAR:Mail
+2009-09-15 CKEditor updated to the latest release
+2009-09-15 Smarty irc2html plugin updated
 
 magirc v0.1.0-dev
 -----------------

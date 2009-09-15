@@ -3,7 +3,7 @@
  // File:        JPGRAPH_STOCK.PHP
  // Description: Stock plot extension for JpGraph
  // Created:     2003-01-27
- // Ver:         $Id: jpgraph_stock.php 1106 2009-02-22 20:16:35Z ljp $
+ // Ver:         $Id$
  //
  // Copyright (c) Aditus Consulting. All rights reserved.
  //========================================================================
@@ -87,16 +87,17 @@ class StockPlot extends Plot {
         for( $i=0; $i<$n; ++$i) {
 
             //If value is NULL, then don't draw a bar at all
-            if ($this->coords[0][$i] === null) continue;
+            if ($this->coords[0][$i*$ts] === null) continue;
 
             if( $exist_x ) {
                 $x=$this->coords[1][$i];
+				if ($x === null) continue;
             }
             else {
                 $x=$i;
             }
             $xt = $xscale->Translate($x);
-             
+
             $neg = $this->coords[0][$i*$ts] > $this->coords[0][$i*$ts+1] ;
             $yopen  = $yscale->Translate($this->coords[0][$i*$ts]);
             $yclose = $yscale->Translate($this->coords[0][$i*$ts+1]);
@@ -171,7 +172,7 @@ class StockPlot extends Plot {
 //===================================================
 class BoxPlot extends StockPlot {
     private $iPColor='black',$iNColor='white';
-    
+
     function __construct($datay,$datax=false) {
         $this->iTupleSize=5;
         parent::__construct($datay,$datax);

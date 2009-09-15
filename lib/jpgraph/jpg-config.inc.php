@@ -3,7 +3,7 @@
 // File:        JPG-CONFIG.INC
 // Description: Configuration file for JpGraph library
 // Created:     2004-03-27
-// Ver:         $Id: jpg-config.inc.php 1229 2009-05-24 16:31:26Z ljp $
+// Ver:         $Id$
 //
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================
@@ -27,7 +27,7 @@
 // UNIX:
 //   CACHE_DIR /tmp/jpgraph_cache/
 //   TTF_DIR   /usr/share/fonts/truetype/
-//   MBTTF_DIR /usr/share/fonts/ja/TrueType/
+//   MBTTF_DIR /usr/share/fonts/truetype/
 //
 // WINDOWS:
 //   CACHE_DIR $SERVER_TEMP/jpgraph_cache/
@@ -37,7 +37,7 @@
 //------------------------------------------------------------------------
 // define('CACHE_DIR','/tmp/jpgraph_cache/');
 // define('TTF_DIR','/usr/share/fonts/truetype/');
-// define('MBTTF_DIR','/usr/share/fonts/ja/TrueType/');
+// define('MBTTF_DIR','/usr/share/fonts/truetype/');
 
 //-------------------------------------------------------------------------
 // Cache directory specification for use with CSIM graphs that are
@@ -105,14 +105,6 @@ define('INSTALL_PHP_ERR_HANDLER',false);
 // (Useful to check if code is future proof.)
 define('ERR_DEPRECATED',true);
 
-// Should the time taken to generate each picture be branded to the lower
-// left in corner in each generated image? Useful for performace measurements
-// generating graphs
-define('BRAND_TIMING',false);
-
-// What format should be used for the timing string?
-define('BRAND_TIME_FORMAT','(%01.3fs)');
-
 //------------------------------------------------------------------------
 // The following constants should rarely have to be changed !
 //------------------------------------------------------------------------
@@ -127,12 +119,5 @@ define('CACHE_FILE_GROUP','wwwadmin');
 // What permissions should the cached file have
 // (Set to '' will give the default persmissions for the 'PHP-user')
 define('CACHE_FILE_MOD',0664);
-
-// Decide if we should use the bresenham circle algorithm or the
-// built in Arc(). Bresenham gives better visual apperance of circles
-// but is more CPU intensive and slower then the built in Arc() function
-// in GD. Turned off by default for speed
-define('USE_BRESENHAM',false);
-
 
 ?>

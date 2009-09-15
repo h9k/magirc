@@ -3,7 +3,7 @@
 // File:        GD_IMAGE.INC.PHP
 // Description: PHP Graph Plotting library. Low level image drawing routines
 // Created:     2001-01-08, refactored 2008-03-29
-// Ver:         $Id: gd_image.inc.php 1154 2009-04-03 02:54:28Z ljp $
+// Ver:         $Id$
 //
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================
@@ -17,7 +17,7 @@ define('LINESTYLE_DOTTED',2);
 define('LINESTYLE_DASHED',3);
 define('LINESTYLE_LONGDASH',4);
 
-// The DEFAULT_GFORMAT sets the default graphic encoding format, i.e. 
+// The DEFAULT_GFORMAT sets the default graphic encoding format, i.e.
 // PNG, JPG or GIF depending on what is installed on the target system
 // in that order.
 if( !DEFINED("DEFAULT_GFORMAT") ) {
@@ -85,6 +85,10 @@ class Image {
         else {
             JpGraphError::RaiseL(25128);//('The function imageantialias() is not available in your PHP installation. Use the GD version that comes with PHP and not the standalone version.')
         }
+    }
+
+    function GetAntiAliasing() {
+        return $this->use_anti_aliasing ;
     }
 
     function CreateRawCanvas($aWidth=0,$aHeight=0) {
@@ -175,7 +179,7 @@ class Image {
                 }
 
                 $tmpimg = @imagecreatetruecolor($toWidth, $toHeight);
-                
+
                 if( $tmpimg < 1 ) {
                     JpGraphError::RaiseL(25084);//('Failed to create temporary GD canvas. Out of memory ?');
                 }
@@ -229,7 +233,7 @@ class Image {
         $lm = min(40,$this->width/7);
         $rm = min(20,$this->width/10);
         $tm = max(5,$this->height/7);
-        $bm = max($min_bm,$this->height/7);
+        $bm = max($min_bm,$this->height/6);
         $this->SetMargin($lm,$rm,$tm,$bm);
     }
 
@@ -351,6 +355,9 @@ class Image {
                              $shadowcolor=false,$paragraph_align="left",
                              $xmarg=6,$ymarg=4,$cornerradius=0,$dropwidth=3) {
 
+		$oldx = $this->lastx;
+		$oldy = $this->lasty;
+
         if( !is_numeric($dir) ) {
             if( $dir=="h" ) $dir=0;
             elseif( $dir=="v" ) $dir=90;
@@ -371,7 +378,7 @@ class Image {
 
         if( $this->text_halign=="right" )      $x -= $width;
         elseif( $this->text_halign=="center" ) $x -= $width/2;
-        
+
         if( $this->text_valign=="bottom" )     $y -= $height;
         elseif( $this->text_valign=="center" ) $y -= $height/2;
 
@@ -417,6 +424,8 @@ class Image {
         $this->SetTextAlign($h,$v);
 
         $this->SetAngle($olda);
+		$this->lastx = $oldx;
+		$this->lasty = $oldy;
 
         return $bb;
     }
@@ -531,7 +540,7 @@ class Image {
         $bbox = $this->GetTTFBBox($aTxt,$aAngle);
 
         if( $aAngle==0 ) return $bbox;
-        
+
         if( $aAngle >= 0 ) {
             if(  $aAngle <= 90 ) { //<=0
                 $bbox = array($bbox[6],$bbox[1],$bbox[2],$bbox[1],
@@ -599,7 +608,7 @@ class Image {
             $txt = $this->AddTxtCR($txt);
 
             $bbox=$this->GetBBoxTTF($txt,$dir);
-             
+
             // Align x,y ot lower left corner of bbox
             $x -= $bbox[0];
             $y -= $bbox[1];
@@ -612,7 +621,7 @@ class Image {
             elseif( $this->text_halign=='center' ) {
                 $x -= ($bbox[2]-$bbox[0])/2;
             }
-             
+
             if( $this->text_valign=='top' ) {
                 $y += abs($bbox[5])+$bbox[1];
             }
@@ -685,7 +694,7 @@ class Image {
             elseif( $this->text_halign=='center' ) {
                 $x -= $dir==0 ? $w/2 : $h/2;
             }
-             
+
             if( $this->text_valign=='top' ) {
                 $y += $dir==0 ? $h : $w;
             }
@@ -773,7 +782,7 @@ class Image {
         if( !is_numeric($dir) ) {
             JpGraphError::RaiseL(25094);//(" Direction for text most be given as an angle between 0 and 90.");
         }
-         
+
         if( $this->font_family >= FF_FONT0 && $this->font_family <= FF_FONT2+1) {
             $this->_StrokeBuiltinFont($x,$y,$txt,$dir,$paragraph_align,$boundingbox,$debug);
         }
@@ -795,7 +804,8 @@ class Image {
         $this->plotheight=$this->height - $this->top_margin-$this->bottom_margin ;
         if( $this->width  > 0 && $this->height > 0 ) {
             if( $this->plotwidth < 0  || $this->plotheight < 0 ) {
-                JpGraphError::raise("To small plot area. ($lm,$rm,$tm,$bm : $this->plotwidth x $this->plotheight). With the given image size and margins there is to little space left for the plot. Increase the plot size or reduce the margins.");
+            	JpGraphError::RaiseL(25130, $this->plotwidth, $this->plotheight);
+                //JpGraphError::raise("To small plot area. ($lm,$rm,$tm,$bm : $this->plotwidth x $this->plotheight). With the given image size and margins there is to little space left for the plot. Increase the plot size or reduce the margins.");
             }
         }
     }
@@ -837,8 +847,10 @@ class Image {
 
 
     function SetLineWeight($weight) {
+    	$old = $this->line_weight;
         imagesetthickness($this->img,$weight);
         $this->line_weight = $weight;
+        return $old;
     }
 
     function SetStartPoint($x,$y) {
@@ -900,7 +912,7 @@ class Image {
     function Ellipse($xc,$yc,$w,$h) {
         $this->Arc($xc,$yc,$w,$h,0,360);
     }
-     
+
     function Circle($xc,$yc,$r) {
         imageellipse($this->img,round($xc),round($yc),$r*2,$r*2,$this->current_color);
     }
@@ -953,22 +965,36 @@ class Image {
         // Add error check since dashed line will only work if anti-alias is disabled
         // this is a limitation in GD
 
-        switch( $aStyle ) {
-            case 1:// Solid
-                $this->Line($x1,$y1,$x2,$y2);
-                break;
-            case 2: // Dotted
-                $this->DashedLine($x1,$y1,$x2,$y2,2,6);
-                break;
-            case 3: // Dashed
-                $this->DashedLine($x1,$y1,$x2,$y2,5,9);
-                break;
-            case 4: // Longdashes
-                $this->DashedLine($x1,$y1,$x2,$y2,9,13);
-                break;
-            default:
-                JpGraphError::RaiseL(25104,$this->line_style);//(" Unknown line style: $this->line_style ");
-                break;
+        if( $aStyle == 1 ) {
+            // Solid style. We can handle anti-aliasing for this
+            $this->Line($x1,$y1,$x2,$y2);
+        }
+        else {
+            // Since the GD routines doesn't handle AA for styled line
+            // we have no option than to turn it off to get any lines at
+            // all if the weight > 1
+            $oldaa = $this->GetAntiAliasing();
+            if( $oldaa && $this->line_weight > 1 ) {
+                 $this->SetAntiAliasing(false);
+            }
+
+            switch( $aStyle ) {
+                case 2: // Dotted
+                    $this->DashedLine($x1,$y1,$x2,$y2,2,6);
+                    break;
+                case 3: // Dashed
+                    $this->DashedLine($x1,$y1,$x2,$y2,5,9);
+                    break;
+                case 4: // Longdashes
+                    $this->DashedLine($x1,$y1,$x2,$y2,9,13);
+                    break;
+                default:
+                    JpGraphError::RaiseL(25104,$this->line_style);//(" Unknown line style: $this->line_style ");
+                    break;
+            }
+            if( $oldaa ) {
+                $this->SetAntiAliasing(true);
+            }
         }
     }
 
@@ -1272,7 +1298,7 @@ class Image {
     }
 
     // Clear resources used by image (this is normally not used since all resources are/should be
-    // returned when the script terminates 
+    // returned when the script terminates
     function Destroy() {
         imagedestroy($this->img);
     }
@@ -1505,42 +1531,44 @@ class ImgStreamCache {
 
     // Output image to browser and also write it to the cache
     function PutAndStream($aImage,$aCacheFileName,$aInline,$aStrokeFileName) {
-        // Some debugging code to brand the image with numbe of colors used
-        GLOBAL $gJpgBrandTiming;
 
-        if( $gJpgBrandTiming ) {
-            global $tim;
-            $t=$tim->Pop()/1000.0;
-            $c=$aImage->SetColor('black');
-            $t=sprintf(BRAND_TIME_FORMAT,round($t,3));
-            imagestring($aImage->img,2,5,$aImage->height-20,$t,$c);
-        }
-
-        // Check if we should stroke the image to an arbitrary file
+        // Check if we should always stroke the image to a file
         if( _FORCE_IMGTOFILE ) {
             $aStrokeFileName = _FORCE_IMGDIR.GenImgName();
         }
 
-        if( $aStrokeFileName!="" ) {
-            
+        if( $aStrokeFileName != '' ) {
+
             if( $aStrokeFileName == 'auto' ) {
                 $aStrokeFileName = GenImgName();
             }
-            
+
             if( file_exists($aStrokeFileName) ) {
-                // Delete the old file
+
+                // Wait for lock (to make sure no readers are trying to access the image)
+                $fd = fopen($aStrokeFileName,'w');
+                $lock = flock($fd, LOCK_EX);
+
+                // Since the image write routines only accepts a filename which must not
+                // exist we need to delete the old file first
                 if( !@unlink($aStrokeFileName) ) {
+                    $lock = flock($fd, LOCK_UN);
                     JpGraphError::RaiseL(25111,$aStrokeFileName);
                     //(" Can't delete cached image $aStrokeFileName. Permission problem?");
                 }
+                $aImage->Stream($aStrokeFileName);
+                $lock = flock($fd, LOCK_UN);
+                fclose($fd);
+
             }
-            
-            $aImage->Stream($aStrokeFileName);
-            
+            else {
+                $aImage->Stream($aStrokeFileName);
+            }
+
             return;
         }
 
-        if( $aCacheFileName != "" && USE_CACHE) {
+        if( $aCacheFileName != '' && USE_CACHE) {
 
             $aCacheFileName = $this->cache_dir . $aCacheFileName;
             if( file_exists($aCacheFileName) ) {
@@ -1555,11 +1583,20 @@ class ImgStreamCache {
                     }
                     if( $this->timeout>0 && ($diff <= $this->timeout*60) ) return;
                 }
+
+                // Wait for lock (to make sure no readers are trying to access the image)
+                $fd = fopen($aCacheFileName,'w');
+                $lock = flock($fd, LOCK_EX);
+
                 if( !@unlink($aCacheFileName) ) {
+                    $lock = flock($fd, LOCK_UN);
                     JpGraphError::RaiseL(25113,$aStrokeFileName);
                     //(" Can't delete cached image $aStrokeFileName. Permission problem?");
                 }
                 $aImage->Stream($aCacheFileName);
+                $lock = flock($fd, LOCK_UN);
+                fclose($fd);
+
             }
             else {
                 $this->MakeDirs(dirname($aCacheFileName));
@@ -1569,7 +1606,7 @@ class ImgStreamCache {
                 }
                 $aImage->Stream($aCacheFileName);
             }
-             
+
             $res=true;
             // Set group to specified
             if( CACHE_FILE_GROUP != '' ) {
@@ -1582,7 +1619,7 @@ class ImgStreamCache {
                 JpGraphError::RaiseL(25115,$aStrokeFileName);
                 //(" Can't set permission for cached image $aStrokeFileName. Permission problem?");
             }
-             
+
             $aImage->Destroy();
             if( $aInline ) {
                 if ($fh = @fopen($aCacheFileName, "rb") ) {
@@ -1607,15 +1644,18 @@ class ImgStreamCache {
     // image file doesn't exist or exists but is to old
     function GetAndStream($aImage,$aCacheFileName) {
         $aCacheFileName = $this->cache_dir.$aCacheFileName;
-        if ( USE_CACHE && file_exists($aCacheFileName) && $this->timeout>=0 ) {
+        if ( USE_CACHE && file_exists($aCacheFileName) && $this->timeout >= 0 ) {
             $diff=time()-filemtime($aCacheFileName);
             if( $this->timeout>0 && ($diff > $this->timeout*60) ) {
                 return false;
             }
             else {
-                if ($fh = @fopen($aCacheFileName, "rb")) {
+                if ($fh = @fopen($aCacheFileName, 'rb')) {
+                    $lock = flock($fh, LOCK_SH);
                     $aImage->Headers();
                     fpassthru($fh);
+                    $lock = flock($fh, LOCK_UN);
+                    fclose($fh);
                     return true;
                 }
                 else {
@@ -1631,8 +1671,10 @@ class ImgStreamCache {
     // Create all necessary directories in a path
     function MakeDirs($aFile) {
         $dirs = array();
-        while ( !(file_exists($aFile)) ) {
-            $dirs[] = $aFile;
+        // In order to better work when open_basedir is enabled
+        // we do not create directories in the root path
+        while ( $aFile != '/' && !(file_exists($aFile)) ) {
+            $dirs[] = $aFile.'/';
             $aFile = dirname($aFile);
         }
         for ($i = sizeof($dirs)-1; $i>=0; $i--) {
@@ -1655,6 +1697,5 @@ class ImgStreamCache {
         return true;
     }
 } // CLASS Cache
-
 
 ?>

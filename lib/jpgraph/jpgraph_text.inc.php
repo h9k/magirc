@@ -4,7 +4,7 @@
 // Description: Class to handle text as object in the graph.
 //              The low level text layout engine is handled by the GD class
 // Created:     2001-01-08 (Refactored to separate file 2008-08-01)
-// Ver:         $Id: jpgraph_text.inc.php 1106 2009-02-22 20:16:35Z ljp $
+// Ver:         $Id$
 //
 // Copyright (c) Aditus Consulting. All rights reserved.
 //========================================================================
@@ -130,7 +130,7 @@ class Text {
         $this->font_style=$aStyle;
         $this->font_size=$aSize;
     }
-     
+
     // Center the text between $left and $right coordinates
     function Center($aLeft,$aRight,$aYAbsPos=false) {
         $this->x = $aLeft + ($aRight-$aLeft )/2;
@@ -194,8 +194,7 @@ class Text {
     }
 
     function StrokeWithScale($aImg,$axscale,$ayscale) {
-        if( $this->iScalePosX === null ||
-        $this->iScalePosY === null ) {
+        if( $this->iScalePosX === null || $this->iScalePosY === null ) {
             $this->Stroke($aImg);
         }
         else {
@@ -240,11 +239,13 @@ class Text {
         if( $this->boxed ) {
             if( $this->fcolor=="nofill" )
             $this->fcolor=false;
-            $aImg->SetLineWeight(1);
+            $oldweight=$aImg->SetLineWeight(1);
             $bbox = $aImg->StrokeBoxedText($this->x,$this->y,$this->t,
             $this->dir,$this->fcolor,$this->bcolor,$this->shadow,
             $this->paragraph_align,5,5,$this->icornerradius,
             $this->ishadowwidth);
+
+            $aImg->SetLineWeight($oldweight);
         }
         else {
             $bbox = $aImg->StrokeText($this->x,$this->y,$this->t,$this->dir,$this->paragraph_align);

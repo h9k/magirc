@@ -1,78 +1,72 @@
 <?php
-// $Id: modifier.CloseTags.php 111 2009-04-24 13:26:39Z hosting9000.com $
+// $Id$
 
 /*
- * converts irc color codes to html, used by magirc
+ * converts irc text with control codes to xhtml, used by magirc
  */
 
+function translatecolorcode($matches) {
+	$color = array(
+		'#FFFFFF',
+		'#000000',
+		'#00007F',
+		'#009300',
+		'#FF0000',
+		'#7F0000',
+		'#9C009C',
+		'#FC7F00',
+		'#FFFF00',
+		'#00FC00',
+		'#009393',
+		'#00FFFF',
+		'#0000FC',
+		'#FF00FF',
+		'#7F7F7F',
+		'#D2D2D2'
+	);
+	$options = '';
+	
+	if($matches[2] != '') {
+		$bgcolor = trim(substr($matches[2],1));
+		$options .= 'background-color: ' . $color[(int)$bgcolor] . '; ';
+	}
+	
+	$forecolor = trim($matches[1]);
+	if($forecolor != '') {
+		$options .= 'color: ' . $color[(int)$forecolor] . ';';
+	}
+	
+	if($options != '') {
+		return '<span style="' . $options . '">' . $matches[3] . '</span>';
+	} else {
+		return $matches[3];
+	}
+}
+
 function smarty_modifier_irc2html($text) {
-	$color["color:0;"] = "color:#FFFFFF;";
-	$color["color:1;"] = "color:#000000;";
-	$color["color:2;"] = "color:#00007F;";
-	$color["color:3;"] = "color:#009300;";
-	$color["color:4;"] = "color:#FF0000;";
-	$color["color:5;"] = "color:#7F0000;";
-	$color["color:6;"] = "color:#9C009C;";
-	$color["color:7;"] = "color:#FC7F00;";
-	$color["color:8;"] = "color:#FFFF00;";
-	$color["color:9;"] = "color:#00FC00;";
-	$color["color:10;"]= "color:#009393;";
-	$color["color:11;"]= "color:#00FFFF;";
-	$color["color:12;"]= "color:#0000FC;";
-	$color["color:13;"]= "color:#FF00FF;";
-	$color["color:14;"]= "color:#7F7F7F;";
-	$color["color:15;"]= "color:#D2D2D2;";
+	global $charset;
+	$lines = explode("\n", $text);
+	$out = '';
 	
-	/* Wrap the text to avoid overflowing the layout */
-	$text = str_replace(chr(03), ' ' . chr(03), $text);
-	//$text = preg_replace('#([^\n\r ]{60})#i', '\\1', $text);
-	
-	/* Transform the text into xhtml */
-	$text = @htmlentities($text,ENT_COMPAT,'UTF-8');
-	$text = nl2br($text);
-	
-	$ctrl->k = chr(03);
-	while(ereg("$ctrl->k([0-9]{1,2}),([0-9]{1,2})([^$ctrl->k]*)$ctrl->k([:alpha:])",$text))
-	{
-		$text = ereg_replace("$ctrl->k([0-9]{1,2}),([0-9]{1,2})([^$ctrl->k]*)$ctrl->k","<span style=\"color:\\1; background-color:\\2;\">\\3</span>",$text);
+	foreach($lines as $line) {
+		$line = htmlentities($line,ENT_COMPAT,$charset);
+		// replace control codes
+		$line = preg_replace_callback('/[\003](\d{0,2})(,\d{1,2})?([^\003\x0F]*)(?:[\003](?!\d))?/','translatecolorcode',$line);
+		$line = preg_replace('/[\002]([^\002\x0F]*)(?:[\002])?/','<strong>$1</strong>',$line);
+		$line = preg_replace('/[\x1F]([^\x1F\x0F]*)(?:[\x1F])?/','<span style="text-decoration: underline;">$1</span>',$line);
+		$line = preg_replace('/[\x12]([^\x12\x0F]*)(?:[\x12])?/','<span style="text-decoration: line-through;">$1</span>',$line);
+		$line = preg_replace('/[\x16]([^\x16\x0F]*)(?:[\x16])?/','<span style="font-style: italic;">$1</span>',$line);
+		$line = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\S+]*(\?\S+)?)?)?)@', "<a href='$1' class='topic'>$1</a>", $line);	    
+		// remove dirt
+		$line = preg_replace('/[\x00-\x1F]/', '', $line);
+		$line = preg_replace('/[\x7F-\xFF]/', '', $line);
+		// append line
+		if($line != '') {
+			$out .= $line;
+		}
 	}
-	while(ereg("$ctrl->k([0-9]{1,2}),([0-9]{1,2})(.*)",$text))
-	{
-		$text = ereg_replace("$ctrl->k([0-9]{1,2}),([0-9]{1,2})(.*)","<span style=\"color:\\1; background-color:\\2;\">\\3</span>",$text);
-	}
-	while(ereg("$ctrl->k([0-9]{1,2})([^$ctrl->k]*)$ctrl->k([0-9]{1,2})",$text))
-	{
-		$text = ereg_replace("$ctrl->k([0-9]{1,2})([^$ctrl->k]*)$ctrl->k([0-9]{1,2})","<span style=\"color:\\1;\">\\2</span>$ctrl->k\\3",$text);
-	}
-	while(ereg("$ctrl->k([0-9]{1,2})([^$ctrl->k]*)$ctrl->k",$text))
-	{
-		$text = ereg_replace("$ctrl->k([0-9]{1,2})([^$ctrl->k]*)$ctrl->k","<span style=\"color:\\1;\">\\2</span>",$text);
-	}
-	while(ereg("$ctrl->k([0-9]{1,2})(.*)",$text))
-	{
-		$text = ereg_replace("$ctrl->k([0-9]{1,2})(.*)","<span style=\"color:\\1;\">\\2</span>",$text);
-	}
-	$text = strtr($text,$color);
 	
-	$ctrl_b = chr(02);
-	$text = ereg_replace("$ctrl_b([^\r$ctrl_b]*)[$ctrl_b]","<span style=\"font-weight: bold;\">\\1</span>",$text);
-	$text = ereg_replace("$ctrl_b([^\r$ctrl_b]*)","<span style=\"font-weight: bold;\">\\1</span>\r",$text);
-	$ctrl_u = chr(31);
-	$text = ereg_replace("$ctrl_u([^\r$ctrl_u]*)[$ctrl_u]","<span style=\"text-decoration: underline;\">\\1</span>",$text);
-	$text = ereg_replace("$ctrl_u([^\r$ctrl_u]*)","<span style=\"text-decoration: underline;\">\\1</span>\r",$text);
-	$ctrl_i = chr(22);
-	$text = ereg_replace("$ctrl_i([^\r$ctrl_i]*)[$ctrl_i]","<span style=\"font-style: italic;\">\\1</span>",$text);
-	$text = ereg_replace("$ctrl_i([^\r$ctrl_i]*)","<span style=\"font-style: italic;\">\\1</span>\r",$text);
-	$ctrl_s = chr(18);
-	$text = ereg_replace("$ctrl_s([^\r$ctrl_s]*)[$ctrl_s]","<span style=\"text-decoration: line-through;\">\\1</span>",$text);
-	$text = ereg_replace("$ctrl_s([^\r$ctrl_s]*)","<span style=\"text-decoration: line-through;\">\\1</span>\r",$text);
-	for ($i = 0; $i < 32; $i++)	{ $text = str_replace(chr($i), "", $text); }
-	for ($i = 127; $i < 256; $i++)	{ $text = str_replace(chr($i), "&nbsp;", $text); }
-	
-	$text = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]","<a href=\"\\0\" class=\"topic\">\\0</a>", $text);
-	$text = ereg_replace("(^| )(www([-]*[.]?[^<>[:space:]]+[[:alnum:]/])*)","\\1<a href=\"http://\\2\" class=\"topic\">\\2</a>", $text);
-	
-	return $text;
+	return $out;
 }
 
 ?>

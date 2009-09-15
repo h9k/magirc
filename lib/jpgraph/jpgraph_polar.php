@@ -3,7 +3,7 @@
  // File:        JPGRAPH_POLAR.PHP
  // Description: Polar plot extension for JpGraph
  // Created:     2003-02-02
- // Ver:         $Id: jpgraph_polar.php 1106 2009-02-22 20:16:35Z ljp $
+ // Ver:         $Id$
  //
  // Copyright (c) Aditus Consulting. All rights reserved.
  //========================================================================
@@ -128,8 +128,9 @@ class PolarPlot {
                 $this->mark->Stroke($img,$x1,$y1);
                 $this->csimareas .= $this->mark->GetCSIMAreas();
             }
-            else
-            $this->mark->Stroke($img,$x1,$y1);
+            else {
+            	$this->mark->Stroke($img,$x1,$y1);
+            }
 
             ++$i;
         }
@@ -405,8 +406,8 @@ class PolarAxis extends Axis {
                 }
                 if( $a != 0 && $a != 180 ) {
                     $t->Align($ha,$va);
-                    if( $this->show_angle_mark )
-                    $a .= '�';
+                    if( $this->show_angle_mark && $t->font_family > 4 )
+                    $a .= SymChar::Get('degree');
                     $t->Set($a);
                     $t->Stroke($this->img,$xt,$yt);
                     if( $this->show_angle_tick )
@@ -468,8 +469,9 @@ class PolarAxis extends Axis {
                     $y1=$y2=$yt;
                 }
                 $t->Align($ha,$va);
-                if( $this->show_angle_mark )
-                $a .= '�';
+                if( $this->show_angle_mark && $t->font_family > 4 ) {
+                	$a .= SymChar::Get('degree');
+                }
                 $t->Set($a);
                 $t->Stroke($this->img,$xt,$yt);
                 if( $this->show_angle_tick )
@@ -700,7 +702,7 @@ class PolarGraph extends Graph {
 
         // Start by adjusting the margin so that potential titles will fit.
         $this->AdjustMarginsForTitles();
-         
+
         // If the filename is the predefined value = '_csim_special_'
         // we assume that the call to stroke only needs to do enough
         // to correctly generate the CSIM maps.
@@ -746,11 +748,12 @@ class PolarGraph extends Graph {
             $this->img->left_margin = $t2;
         }
 
-        if( $this->iType ==  POLAR_180 )
-        $pos = $this->img->height - $this->img->bottom_margin;
-        else
-        $pos = $this->img->plotheight/2 + $this->img->top_margin;
-
+        if( $this->iType ==  POLAR_180 ) {
+        	$pos = $this->img->height - $this->img->bottom_margin;
+        }
+        else {
+        	$pos = $this->img->plotheight/2 + $this->img->top_margin;
+        }
 
         if( !$_csim ) {
             $this->StrokePlotArea();
@@ -816,11 +819,11 @@ class PolarGraph extends Graph {
 
             $this->StrokeTexts();
             $this->img->SetAngle($aa);
-             
+
             // Draw an outline around the image map
             if(_JPG_DEBUG)
-            $this->DisplayClientSideaImageMapAreas();
-             
+            	$this->DisplayClientSideaImageMapAreas();
+
             // If the filename is given as the special "__handle"
             // then the image handler is returned and the image is NOT
             // streamed back
@@ -829,8 +832,7 @@ class PolarGraph extends Graph {
             }
             else {
                 // Finally stream the generated picture
-                $this->cache->PutAndStream($this->img,$this->cache_name,$this->inline,
-                $aStrokeFileName);
+                $this->cache->PutAndStream($this->img,$this->cache_name,$this->inline,$aStrokeFileName);
             }
         }
     }

@@ -42,7 +42,7 @@
 // | Author: Lukas Smith <smith@pooteeweet.org>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Common.php,v 1.126 2007/03/28 16:49:43 quipo Exp $
+// $Id$
 
 require_once 'MDB2/LOB.php';
 
