@@ -2,11 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Magirc PROTOTYPE TESTING</title>
+<title>MagIRC PROTOTYPE TESTING</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="ROBOTS" content="INDEX, FOLLOW" />
-<meta name="Keywords" content="Magirc IRC Chat Statistics Denora stats phpDenora" />
-<meta name="Description" content="IRC Statistics powered by Magirc" />
+<meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />
+<meta name="Description" content="IRC Statistics powered by MagIRC" />
 <base href="{$smarty.const.BASE_URL}" />
 <link href="theme/default/css/yui/reset-fonts.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/yui/base-min.css" rel="stylesheet" type="text/css" />
@@ -15,7 +15,7 @@
 </head>
 <body>
 <div id="header">
-<h1><strong>Magi</strong><em>r</em><strong>c</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
+<h1><strong>MagIRC</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
 <div id="tabsH">
   <ul>
 	<li><a href="home/" title="Home"{if $get.section eq 'home' or !$get.section} class="active"{/if}><img src="theme/default/img/menu/home.png" alt="" height="16" width="16" /><span>&nbsp;Home</span></a></li>

@@ -11,9 +11,9 @@
 		<th>Operators</th>
 	</tr>
 	{foreach from=$serverlist item=item}
-	<tr onclick="document.location='{$smarty.const.BASE_URL}server/{$item.server}/'" class="{cycle values="row1 row1a,row2 row2a" advance="true"}">
+	<tr class="{cycle values="bg1, bg2" advance="true"}">
 		<td><img src="theme/default/img/status/{if $item.online}online{else}offline{/if}.png" /></td>
-		<td>{$item.server}{if $item.uline} (<span style="color:blue;">Ulined</span>){/if}</td>
+		<td><a href="server/{$item.server}/">{$item.server}</a>{if $item.uline} (<span style="color:blue;">Ulined</span>){/if}</td>
 		<td>{$item.comment}</td>
 		<td>{$item.currentusers}</td>
 		<td>{$item.opers}</td>

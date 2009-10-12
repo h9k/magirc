@@ -11,7 +11,7 @@
  */
 
 ini_set('display_errors','on');
-error_reporting(E_ALL);
+error_reporting(E_NOTICE);
 ini_set('default_charset','UTF-8');
 
 // load libs
