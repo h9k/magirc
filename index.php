@@ -4,14 +4,14 @@
 /* -------------------------------------- *
  *     Magirc - Let the Magirc begin!     *
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
- *  http://magirc.org/                    *
- *  (c) 2009 hal9000@denorastats.org      *
+ *  http://www.magirc.org/                *
+ *  (c) 2009-2010 hal9000@denorastats.org *
  *  GPL v2 License - see doc/COPYING      *
  * -------------------------------------- *
  */
 
 ini_set('display_errors','on');
-error_reporting(E_NOTICE);
+error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 
 // load libs
@@ -36,25 +36,9 @@ if ($magirc->cfg->getParam('debug_mode') < 1) {
 	error_reporting(E_ERROR);
 } else {
 	$magirc->tpl->force_compile = true;
-	$magirc->tpl->debugging = false;
+	$magirc->tpl->debugging = true;
 }
 
-// workaround fot $smarty var not working properly for some reason...
-$magirc->tpl->assign('get', @$_GET);
-$magirc->tpl->assign('post', @$_POST);
-
-$section = $magirc->getUrlParameter('section');
-$inc_file = 'inc/' . $section . '.inc.php';
-if (file_exists($inc_file)) {
-	require_once($inc_file);
-} else {
-	if ($content = $magirc->getPage($section)) {
-		$magirc->tpl->assign('content', $content);
-		$magirc->tpl->display('generic.tpl');
-	} else {
-		$magirc->displayError("The requested page '$section' does not exist");
-		exit;
-	}
-}
+$magirc->display();
 
 ?>

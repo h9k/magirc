@@ -48,6 +48,23 @@ class Magirc {
 		return stripslashes(htmlspecialchars(basename($param)));
 	}
 	
+	// Load the appropriate code based on the section parameter
+	function display() {
+		$section = $this->getUrlParameter('section');
+		$inc_file = 'inc/' . $section . '.inc.php';
+		if (file_exists($inc_file)) {
+			require_once($inc_file);
+		} else {
+			if ($content = $this->getPage($section)) {
+				$this->tpl->assign('content', $content);
+				$this->tpl->display('generic.tpl');
+			} else {
+				$this->displayError("The requested page '$section' does not exist");
+				exit;
+			}
+		}
+	}
+	
 	// Displays an error page with the given message
 	function displayError($err_msg) {
 		$this->tpl->assign('err_msg', $err_msg);

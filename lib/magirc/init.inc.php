@@ -31,7 +31,7 @@ class Magirc_DB extends DB {
 		if (file_exists('conf/magirc.cfg.php')) {
 			include('conf/magirc.cfg.php');
 		} else {
-			die ('magirc.cfg.php configuration file missing');
+			die ('<strong>MagIRC</strong> is not configured<br />Please run <a href="setup/">Setup</a>');
 		}
 		$dsn = sprintf("mysqli://%s:%s@%s/%s", $db['username'], $db['password'], $db['hostname'], $db['database']);
 		$this->connect($dsn) || die('Error opening Magirc database<br />'.$this->error);
@@ -43,7 +43,7 @@ class Denora_DB extends DB {
 		if (file_exists('conf/denora.cfg.php')) {
 			include('conf/denora.cfg.php');
 		} else {
-			die ('denora.cfg.php configuration file missing');
+			die ('<strong>MagIRC</strong> is not properly configured<br />Please run <a href="setup/">Setup</a>');
 		}
 		$dsn = sprintf("mysqli://%s:%s@%s/%s", $db['username'], $db['password'], $db['hostname'], $db['database']);
 		$this->connect($dsn) || die('Error opening Denora database<br />'.$this->error);

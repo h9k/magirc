@@ -1,32 +1,30 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-<pre>Checking Database consistency... 
-
-{if !$denoraver}
-	<span style="color:red">Failed</span><br />Please ensure that the Denora Stats Server is running and writing to the SQL database!</pre>
-{else}
-	<span style="color:green">Passed</span></pre>
-	<pre>Checking Denora version...
-	{if $denoranum < '1.4'}
-		<span style="color:red">Incompatible</span> ({$denoraver})<br />You need Denora 1.4.3 or greater to use this version of Magirc!</pre>
+<pre>Checking MagIRC database schema...
+{if !$check}
+	Creating...
+	{if !$result}
+		<span style="color:green;">Done</span></pre>
 	{else}
-		<span style="color:green">Supported</span> ({$denoraver})</pre>
-		<p>You must now login to Magirc using one of the Admin users specified in your Denora server configuration file</p>
-		<form id="login" method="post" action="?step=3">
-		  <table width="350" border="0" cellpadding="2" cellspacing="0">
-		    <tr>
-		      <td width="100"><label>User</label></td>
-		      <td width="150"><input type="text" name="username" id="username" tabindex="1" /></td>
-		      <td width="50" rowspan="2" align="center" valign="middle"><input type="submit" name="login" id="login" value="Login" tabindex="3" /></td>
-		    </tr>
-		    <tr>
-		      <td width="100"><label>Password</label></td>
-		      <td width="150"><input type="password" name="password" id="password" tabindex="2" /></td>
-		    </tr>
-		  </table>
-		</form>
+		<span style="color:red;">Failed</span></pre>
 	{/if}
+{else}
+	<span style="color:green;">OK</span> (version {$version})</pre>
+	<p>You must now create a MagIRC admin user</p>
+	<form id="login" method="post" action="?step=3">
+	  <table width="350" border="0" cellpadding="2" cellspacing="0">
+	    <tr>
+	      <td width="100"><label>User</label></td>
+	      <td width="150"><input type="text" name="username" id="username" tabindex="1" /></td>
+	      <td width="50" rowspan="2" align="center" valign="middle"><input type="submit" name="login" id="login" value="Login" tabindex="3" /></td>
+	    </tr>
+	    <tr>
+	      <td width="100"><label>Password</label></td>
+	      <td width="150"><input type="password" name="password" id="password" tabindex="2" /></td>
+	    </tr>
+	  </table>
+	</form>	
 {/if}
 
 {include file="_footer.tpl"}
