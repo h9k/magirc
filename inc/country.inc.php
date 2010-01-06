@@ -1,6 +1,6 @@
 <?php
 // $Id$
 
-$magirc->tpl->display('country.tpl');
+$this->tpl->display('country.tpl');
 
 ?>

@@ -43,6 +43,10 @@ class CanvasScale {
         $this->iymax = $ymax;
     }
 
+    function Get() {
+        return array($this->ixmin,$this->ixmax,$this->iymin,$this->iymax);
+    }
+
     function Translate($x,$y) {
         $xp = round(($x-$this->ixmin)/($this->ixmax - $this->ixmin) * $this->w);
         $yp = round(($y-$this->iymin)/($this->iymax - $this->iymin) * $this->h);
@@ -83,6 +87,10 @@ class Shape {
         list($x1,$y1) = $this->scale->Translate($x1,$y1);
         list($x2,$y2) = $this->scale->Translate($x2,$y2);
         $this->img->Line($x1,$y1,$x2,$y2);
+    }
+
+    function SetLineWeight($aWeight) {
+        $this->img->SetLineWeight($aWeight);
     }
 
     function Polygon($p,$aClosed=false) {

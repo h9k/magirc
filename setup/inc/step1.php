@@ -9,7 +9,9 @@ if (!$status['error']) {
 	if (!$new && file_exists($magirc_conf)) {
 		include($magirc_conf);
 		$setup->tpl->assign('db_magirc', $db);
-		$status['magirc_db'] = $setup->dbCheck($db);
+		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+		$setup->db->connect($dsn, $db['username'], $db['password']);
+		$status['magirc_db'] = $setup->db->error;
 		unset($db);
 	} else {
 		$setup->tpl->assign('db_magirc', array('hostname' => 'localhost', 'port' => 3306));

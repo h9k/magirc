@@ -1,6 +1,6 @@
 <?php
 // $Id$
 
-$magirc->tpl->display('evolution.tpl');
+$this->tpl->display('evolution.tpl');
 
 ?>

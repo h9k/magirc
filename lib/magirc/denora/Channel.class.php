@@ -10,7 +10,7 @@ class Channel extends Denora {
 	// return an array of all channels
 	function getChannels() {
 		$data = array(); $i = 0;
-		$chans = $this->db->select('chan', array('*'), NULL, 'channel', 'ASC');
+		$chans = $this->db->selectAll('chan', NULL, 'channel', 'ASC');
 		foreach ($chans as $chan) {
 			$data[$i]['id'] = $chan['chanid'];
 			$data[$i]['name'] = $chan['channel'];
@@ -28,9 +28,8 @@ class Channel extends Denora {
 	}
 	
 	function getChannel($name) {
-		$chan = $this->db->select('chan', array('*'), array('channel' => $name));
+		$chan = $this->db->selectOne('chan', array('channel' => $name));
 		if ($chan) {
-			$chan = $chan[0];
 			$this->id = $chan['chanid'];
 			$this->name = $chan['channel'];
 			$this->users = $chan['currentusers'];

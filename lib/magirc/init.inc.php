@@ -19,7 +19,6 @@ if (get_magic_quotes_gpc()) {
 
 include_once('lib/magirc/version.inc.php');
 require_once('lib/smarty/Smarty.class.php');
-require_once('lib/pear/MDB2.php');
 require_once('lib/magirc/DB.class.php');
 require_once('lib/magirc/Config.class.php');
 require_once('lib/magirc/Magirc.class.php');
@@ -33,8 +32,8 @@ class Magirc_DB extends DB {
 		} else {
 			die ('<strong>MagIRC</strong> is not configured<br />Please run <a href="setup/">Setup</a>');
 		}
-		$dsn = sprintf("mysqli://%s:%s@%s/%s", $db['username'], $db['password'], $db['hostname'], $db['database']);
-		$this->connect($dsn) || die('Error opening Magirc database<br />'.$this->error);
+		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Magirc database<br />'.$this->error);
 	}
 }
 
@@ -45,19 +44,8 @@ class Denora_DB extends DB {
 		} else {
 			die ('<strong>MagIRC</strong> is not properly configured<br />Please run <a href="setup/">Setup</a>');
 		}
-		$dsn = sprintf("mysqli://%s:%s@%s/%s", $db['username'], $db['password'], $db['hostname'], $db['database']);
-		$this->connect($dsn) || die('Error opening Denora database<br />'.$this->error);
-	}
-}
-
-// smarty configuration
-class Magirc_Smarty extends Smarty {
-	function Magirc_Smarty() {
-		$this->template_dir = 'theme/default/tpl'; // we change is later on
-		$this->config_dir = 'theme/default/cfg'; // we change is later on
-		$this->compile_dir = 'tmp/compiled';
-		$this->cache_dir = 'tmp/cache';
-		$this->plugins_dir[] = 'lib/smarty-plugins/';
+		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Denora database<br />'.$this->error);
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 // $Id$
 
-$magirc->tpl->display('operator.tpl');
+$this->tpl->display('operator.tpl');
 
 ?>

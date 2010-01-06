@@ -2,7 +2,7 @@
 // $Id$
 
 ini_set('display_errors','on');
-error_reporting(E_NOTICE);
+error_reporting(E_ALL); #E_NOTICE
 ini_set('default_charset','UTF-8');
 
 session_start();
@@ -36,11 +36,6 @@ if ($admin->cfg->getParam('debug_mode') < 1) {
 	$admin->tpl->force_compile = true;
 	//$admin->tpl->debugging = true;
 }
-
-// workaround fot $smarty var not working properly for some reason...
-$admin->tpl->assign('session', @$_SESSION);
-$admin->tpl->assign('get', @$_GET);
-$admin->tpl->assign('post', @$_POST);
 
 if (isset($_SESSION['loginUsername'])) {
 	$page = (isset($_GET['page'])) ? $_GET['page'] : 'home';

@@ -763,8 +763,7 @@ class GanttGraph extends Graph {
                         $txt =  "88";
                         break;
                     case DAYSTYLE_CUSTOM :
-                        $txt = date($this->scale->day->iLabelFormStr,
-                        strtotime('2003-12-20 18:00'));
+                        $txt = date($this->scale->day->iLabelFormStr,strtotime('2003-12-20 18:00'));
                         break;
                     case DAYSTYLE_ONELETTER :
                     default:
@@ -2593,16 +2592,16 @@ class GanttScale {
                 if( $day==6 || $day==0 ) {
                     $img->SetColor($this->day->iWeekendBackgroundColor);
                     if( $this->iUsePlotWeekendBackground && $doback)
-                    $img->FilledRectangle($x,$yt+$this->day->iFrameWeight,
-                    $x+$daywidth,$img->height-$img->bottom_margin);
+                        $img->FilledRectangle($x,$yt+$this->day->iFrameWeight,
+                                              $x+$daywidth,$img->height-$img->bottom_margin);
                     else
-                    $img->FilledRectangle($x,$yt+$this->day->iFrameWeight,
+                        $img->FilledRectangle($x,$yt+$this->day->iFrameWeight,
                     $x+$daywidth,$yb-$this->day->iFrameWeight);
                 }
 
                 $mn = strftime('%m',$datestamp);
                 if( $mn[0]=='0' )
-                $mn = $mn[1];
+                    $mn = $mn[1];
 
                 switch( $this->day->iStyle ) {
                     case DAYSTYLE_LONG:
@@ -2662,9 +2661,9 @@ class GanttScale {
                 }
 
                 if( $day==0 )
-                $img->SetColor($this->day->iSundayTextColor);
+                    $img->SetColor($this->day->iSundayTextColor);
                 else
-                $img->SetColor($this->day->iTextColor);
+                    $img->SetColor($this->day->iTextColor);
                 $img->StrokeText(round($x+$daywidth/2+1),
                 round($yb-$this->day->iTitleVertMargin),$txt);
                 $img->SetColor($this->day->grid->iColor);
@@ -2710,26 +2709,27 @@ class GanttScale {
                 $txtOffset = $weekwidth/2+1;
             }
             elseif( $this->week->iStyle==WEEKSTYLE_FIRSTDAY  ||
-            $this->week->iStyle==WEEKSTYLE_FIRSTDAY2 ||
-            $this->week->iStyle==WEEKSTYLE_FIRSTDAYWNBR ||
-            $this->week->iStyle==WEEKSTYLE_FIRSTDAY2WNBR ) {
+                    $this->week->iStyle==WEEKSTYLE_FIRSTDAY2 ||
+                    $this->week->iStyle==WEEKSTYLE_FIRSTDAYWNBR ||
+                    $this->week->iStyle==WEEKSTYLE_FIRSTDAY2WNBR ) {
                 $img->SetTextAlign("left");
                 $txtOffset = 3;
             }
-            else
-            JpGraphError::RaiseL(6021);
-            //("Unknown formatting style for week.");
+            else {
+                JpGraphError::RaiseL(6021);
+                //("Unknown formatting style for week.");
+            }
 
             for($i=0; $i<$this->GetNumberOfDays()/7; ++$i, $x+=$weekwidth) {
                 $img->PushColor($this->week->iTextColor);
 
                 if( $this->week->iStyle==WEEKSTYLE_WNBR )
-                $txt = sprintf($this->week->iLabelFormStr,$weeknbr);
+                    $txt = sprintf($this->week->iLabelFormStr,$weeknbr);
                 elseif( $this->week->iStyle==WEEKSTYLE_FIRSTDAY ||
-                $this->week->iStyle==WEEKSTYLE_FIRSTDAYWNBR )
-                $txt = date("j/n",$week);
+                        $this->week->iStyle==WEEKSTYLE_FIRSTDAYWNBR )
+                    $txt = date("j/n",$week);
                 elseif( $this->week->iStyle==WEEKSTYLE_FIRSTDAY2 ||
-                $this->week->iStyle==WEEKSTYLE_FIRSTDAY2WNBR ) {
+                        $this->week->iStyle==WEEKSTYLE_FIRSTDAY2WNBR ) {
                     $monthnbr = date("n",$week)-1;
                     $shortmonth = $this->iDateLocale->GetShortMonthName($monthnbr);
                     $txt = Date("j",$week)." ".$shortmonth;
@@ -2811,7 +2811,7 @@ class GanttScale {
             $year = 0+strftime("%Y",$this->iStartDate);
             $img->SetTextAlign("center");
             if( $this->GetMonthNbr($this->iStartDate) == $this->GetMonthNbr($this->iEndDate)
-            && $this->GetYear($this->iStartDate)==$this->GetYear($this->iEndDate) ) {
+                && $this->GetYear($this->iStartDate)==$this->GetYear($this->iEndDate) ) {
                 $monthwidth=$this->GetDayWidth()*($this->GetMonthDayNbr($this->iEndDate) - $this->GetMonthDayNbr($this->iStartDate) + 1);
             }
             else {
@@ -2838,9 +2838,9 @@ class GanttScale {
                 $monthName = $this->GetMonthLabel($monthnbr,$year);
                 $monthwidth=$this->GetDayWidth()*$this->GetNumDaysInMonth($monthnbr,$year);
                 if( $x + $monthwidth < $xb )
-                $w = $monthwidth;
+                    $w = $monthwidth;
                 else
-                $w = $xb-$x;
+                    $w = $xb-$x;
                 if( $w >= 1.2*$img->GetTextWidth($monthName) ) {
                     $img->SetColor($this->month->iTextColor);
                     $img->StrokeText(round($x+$w/2+1),
@@ -2876,17 +2876,17 @@ class GanttScale {
             $img->SetLineWeight($this->year->grid->iWeight);
             $img->SetTextAlign("center");
             if( $year == $this->GetYear($this->iEndDate) )
-            $yearwidth=$this->GetDayWidth()*($this->GetYearDayNbr($this->iEndDate)-$this->GetYearDayNbr($this->iStartDate)+1);
+                $yearwidth=$this->GetDayWidth()*($this->GetYearDayNbr($this->iEndDate)-$this->GetYearDayNbr($this->iStartDate)+1);
             else
-            $yearwidth=$this->GetDayWidth()*($this->GetNumDaysInYear($year)-$this->GetYearDayNbr($this->iStartDate)+1);
+                $yearwidth=$this->GetDayWidth()*($this->GetNumDaysInYear($year)-$this->GetYearDayNbr($this->iStartDate)+1);
 
             // The space for a year must be at least 20% bigger than the actual text
             // so we allow 10% margin on each side
             if( $yearwidth >= 1.20*$img->GetTextWidth("".$year) ) {
                 $img->SetColor($this->year->iTextColor);
                 $img->StrokeText(round($xt+$yearwidth/2+1),
-                round($yb-$this->year->iTitleVertMargin),
-                $year);
+                                 round($yb-$this->year->iTitleVertMargin),
+                                 $year);
             }
             $x = $xt + $yearwidth;
             while( $x < $xb ) {
@@ -2896,14 +2896,14 @@ class GanttScale {
                 $year += 1;
                 $yearwidth=$this->GetDayWidth()*$this->GetNumDaysInYear($year);
                 if( $x + $yearwidth < $xb )
-                $w = $yearwidth;
+                    $w = $yearwidth;
                 else
-                $w = $xb-$x;
+                    $w = $xb-$x;
                 if( $w >= 1.2*$img->GetTextWidth("".$year) ) {
                     $img->SetColor($this->year->iTextColor);
                     $img->StrokeText(round($x+$w/2+1),
-                    round($yb-$this->year->iTitleVertMargin),
-                    $year);
+                                     round($yb-$this->year->iTitleVertMargin),
+                                     $year);
                 }
                 $x += $yearwidth;
             }

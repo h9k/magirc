@@ -1,6 +1,6 @@
 <?php
 // $Id$
 
-$magirc->tpl->display('client.tpl');
+$this->tpl->display('client.tpl');
 
 ?>

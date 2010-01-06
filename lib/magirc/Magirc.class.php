@@ -8,11 +8,16 @@ class Magirc {
 	var $denora = null;
 
 	function Magirc() {
-		$this->db = new Magirc_DB;
+		$this->tpl = new Smarty;
+		$this->tpl->template_dir = 'theme/default/tpl'; // we change is later on
+		$this->tpl->config_dir = 'theme/default/cfg'; // we change is later on
+		$this->tpl->compile_dir = 'tmp/compiled';
+		$this->tpl->cache_dir = 'tmp/cache';
+		$this->tpl->plugins_dir[] = 'lib/smarty-plugins/';
 		
+		$this->db = new Magirc_DB;
 		$query = "SHOW TABLES LIKE 'magirc_config'";
 		$this->db->query($query, SQL_INIT);
-		$this->tpl = new Magirc_Smarty;
 		if (!$this->db->record) {
 			$this->displayError('Database table missing. Please run setup.');
 		}
@@ -52,6 +57,7 @@ class Magirc {
 	function display() {
 		$section = $this->getUrlParameter('section');
 		$inc_file = 'inc/' . $section . '.inc.php';
+		
 		if (file_exists($inc_file)) {
 			require_once($inc_file);
 		} else {

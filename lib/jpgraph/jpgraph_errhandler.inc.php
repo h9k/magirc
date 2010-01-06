@@ -179,6 +179,7 @@ class JpGraphExceptionL extends JpGraphException {
     public function __construct($errcode,$a1=null,$a2=null,$a3=null,$a4=null,$a5=null) {
         // make sure everything is assigned properly
         $errtxt = new ErrMsgText();
+        JpGraphError::SetTitle('JpGraph Error: '.$errcode);
         parent::__construct($errtxt->Get($errcode,$a1,$a2,$a3,$a4,$a5), 0);
     }
 }
@@ -335,14 +336,14 @@ class JpGraphErrObjectImg extends JpGraphErrObject {
 
         // Window title
         $m = floor($w/2-5);
-        $l = 100;
+        $l = 110;
         $img->SetColor("lightgray:1.3");
         $img->FilledRectangle($m-$l,2,$m+$l,16);
 
         // Stroke text
         $img->SetColor("darkred");
         $img->SetFont(FF_FONT2,FS_BOLD);
-        $img->StrokeText($m-50,15,$this->iTitle);
+        $img->StrokeText($m-90,15,$this->iTitle);
         $img->SetColor("black");
         $img->SetFont(FF_FONT1,FS_NORMAL);
         $txt = new Text($aMsg,52,25);

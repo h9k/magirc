@@ -587,7 +587,9 @@ class  SymChar {
         array('para','00A7'),
         array('tm','2122'),   /* Trademark symbol */
         array('rtm','00AE'),   /* Registered trademark */
-        array('degree','00b0')
+        array('degree','00b0'),
+        array('lte','2264'), /* Less than or equal */
+        array('gte','2265'), /* Greater than or equal */
 
         );
 
@@ -601,13 +603,13 @@ class  SymChar {
         if( $found ) {
             $ca = $iSymbols[--$i];
             if( $aCapital && count($ca)==3 )
-            $s = $ca[2];
+                $s = $ca[2];
             else
-            $s = $ca[1];
+                $s = $ca[1];
             return sprintf('&#%04d;',hexdec($s));
         }
         else
-        return '';
+            return '';
     }
 }
 

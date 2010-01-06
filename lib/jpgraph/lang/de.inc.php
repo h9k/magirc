@@ -404,6 +404,7 @@ HTTP header wurden bereits gesendet.<br>Fehler in der Datei <b>%s</b> in der Zei
 25129 => array('Anti-alias can not be used with dashed lines. Please disable anti-alias or use solid lines.',0),
 25130 => array('Too small plot area. (%d x %d). With the given image size and margins there is to little space left for the plot. Increase the plot size or reduce the margins.',2),
 
+25131 => array('StrokeBoxedText2() only supports TTF fonts and not built-in bitmap fonts.',0),
 
 /*
 **  jpgraph_led
@@ -525,13 +526,16 @@ HTTP header wurden bereits gesendet.<br>Fehler in der Datei <b>%s</b> in der Zei
 /*
  * jpgraph_matrix and colormap
 */
-29201 => array('Min range value must be less or equal to max range value for colormaps'),
-29202 => array('The distance between min and max value is too small for numerical precision'),
+29201 => array('Min range value must be less or equal to max range value for colormaps',0),
+29202 => array('The distance between min and max value is too small for numerical precision',0),
 29203 => array('Number of color quantification level must be at least %d',1),
 29204 => array('Number of colors (%d) is invalid for this colormap. It must be a number that can be written as: %d + k*%d',3),
 29205 => array('Colormap specification out of range. Must be an integer in range [0,%d]',1),
-29206 => array('Invalid object added to MatrixGraph'),
-29207 => array('Empty input data specified for MatrixPlot'),
+29206 => array('Invalid object added to MatrixGraph',0),
+29207 => array('Empty input data specified for MatrixPlot',0),
+29208 => array('Unknown side specifiction for matrix labels "%s"',1),
+29209 => array('CSIM Target matrix must be the same size as the data matrix (csim=%d x %d, data=%d x %d)',4),
+29210 => array('CSIM Target for matrix labels does not match the number of labels (csim=%d, labels=%d)',2),
 
 );
 

@@ -73,7 +73,7 @@ class LinePlot extends Plot{
     }
 
     function SetFillColor($aColor,$aFilled=true) {
-    	$this->color = $aColor;
+    	//$this->color = $aColor;
         $this->fill_color=$aColor;
         $this->filled=$aFilled;
     }
@@ -375,9 +375,13 @@ class LinePlot extends Plot{
                 $img->SetColor($this->fill_color);
                 $img->FilledPolygon($cord);
             }
-            if( $this->line_weight > 0 ) {
+            if( $this->weight > 0 ) { 
+                $img->SetLineWeight($this->weight);
                 $img->SetColor($this->color);
-                $img->Polygon($cord);
+                // Remove first and last coordinate before drawing the line
+                // sine we otherwise get the vertical start and end lines which
+                // doesn't look appropriate
+                $img->Polygon(array_slice( array_slice($cord,2), count($cord)-4 ));
             }
         }
 

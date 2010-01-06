@@ -203,7 +203,7 @@ class BarPlot extends Plot {
     }
 
     function SetFillColor($aColor) {
-        // Do an extra error check if the color is specified as an RG array triple
+        // Do an extra error check if the color is specified as an RGB array triple
         // In that case convert it to a hex string since it will otherwise be
         // interpretated as an array of colors for each individual bar.
 

@@ -8,7 +8,11 @@ class Admin {
 	var $cfg = null;
 	
 	function Admin() {
-		$this->tpl = new Admin_Smarty();
+		$this->tpl = new Smarty();
+		$this->tpl->template_dir = 'tpl';
+		$this->tpl->compile_dir = 'tmp';
+		$this->tpl->config_dir = '../conf';
+		$this->tpl->cache_dir = 'tmp';
 		$this->db = new Magirc_DB();
 		$this->denora = new Denora();
 		$this->cfg = new Config();

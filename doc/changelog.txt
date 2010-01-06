@@ -4,11 +4,16 @@ $Id$
  MAGIRC CHANGELOG
 ==================
 
+magirc v0.4.0-dev
+-----------------
+2010-01-06 Upgraded JpGraph to v3.0.6
+2010-01-06 Upgraded Smarty to v3.0 beta 5
+2010-01-06 Switched from PEAR MDB2 to PHP5 PDO
+
 magirc v0.3.0-dev
 -----------------
 2009-10-15 Adapted setup and admin panel
 2009-10-15 More user-friendly on first install
-2009-10-15 Switched from PEAR MDB2 to PHP5 PDO
 2009-10-15 Switched Smarty template engine to version 3.0-alpha
 
 magirc v0.2.0-dev

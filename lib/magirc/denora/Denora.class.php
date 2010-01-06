@@ -20,7 +20,7 @@ class Denora {
 		if (!isset($username) || !isset($password))
 			return false;
 		
-		return $this->db->select('admin', array('uname'), array('uname' => $username, 'passwd' => md5(trim($password)), 'level' => 1));
+		return $this->db->selectOne('admin', array('uname' => $username, 'passwd' => md5(trim($password)), 'level' => 1));
 	}
 	
 	// Returns the Denora version
@@ -63,7 +63,7 @@ class Denora {
 	
 	// return an array of all servers
 	function getServers() {
-		return $this->db->select('server', array('*'), NULL, 'server', 'ASC');
+		return $this->db->selectAll('server', NULL, 'server', 'ASC');
 	}
 	
 }

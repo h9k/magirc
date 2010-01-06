@@ -6,9 +6,19 @@ class Setup {
 	var $tpl = null;
 
 	function Setup() {
-		$this->tpl = new Setup_Smarty;
+		$this->tpl = new Smarty;
+		$this->tpl->template_dir = 'tpl';
+		$this->tpl->compile_dir = 'tmp';
+		$this->db = new DB;
+		// We skip db connection in the first step for check purposes
 		if (@$_GET['step'] > 1) {
-			#$this->db = new Magirc_DB;
+			if (file_exists('../conf/magirc.cfg.php')) {
+				include('../conf/magirc.cfg.php');
+			} else {
+				die ('magirc.cfg.php configuration file missing');
+			}
+			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+			$this->db->connect($dsn, $db['username'], $db['password']) or die('Error opening MagIRC database<br />'.$this->db->error);
 		}
 	}
 	
@@ -24,11 +34,11 @@ class Setup {
 			$status['php'] = false;
 			$status['error'] = true;
 		}
-		
-		if (extension_loaded('mysqli') == 1) {
-			$status['mysqli'] = true;
+	    
+		if (in_array('mysql', PDO::getAvailableDrivers())) {
+			$status['pdo'] = true;
 		} else {
-			$status['mysqli'] = false;
+			$status['pdo'] = false;
 			$status['error'] = true;
 		}
 		
@@ -107,23 +117,8 @@ class Setup {
 	
 	// Gets the Database schema version
 	function getDbVersion(){
-		$result = $this->db->select('magirc_config', array('value'), array('parameter' => 'db_version'));
-		return $result[0]['value'];
-	}
-	
-	// Tests the Database connection
-	function dbCheck($db) {	
-		$host = $db['port'] ? $db['hostname'] . ":" . $db['port'] : $db['hostname'];
-		$link_id = mysql_connect($host, $db['username'], $db['password']);
-		if (!$link_id) {
-		    return 'ERROR: Failed to connect to the database : ' . mysql_error();
-		}
-		mysql_query("set names 'utf8'");
-		$db_selected = mysql_select_db($db['database'], $link_id);
-		if (!$db_selected) {
-		    return 'ERROR: Failed to select the '.$db['database'].' database : ' . mysql_error();
-		}
-		return NULL;
+		$result = $this->db->selectOne('magirc_config', array('parameter' => 'db_version'));
+		return $result['value'];
 	}
 
 	/* Loads the configuration table schema to the Denora database */

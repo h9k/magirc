@@ -13,7 +13,7 @@ class Config {
 	function loadConfig() {
 		$db = new Magirc_DB;
 		$config = array();
-		$data = $db->select('magirc_config', array('parameter', 'value'));
+		$data = $db->selectAll('magirc_config');
 		foreach ($data as $item) {
 			$config[$item['parameter']] = $item['value'];
 		}

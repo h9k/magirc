@@ -8,8 +8,8 @@ if (isset($_POST['username'])) { $username = htmlspecialchars($_POST['username']
 if (isset($_POST['password'])) { $password = htmlspecialchars($_POST['password']); }
 
 $result = $setup->denora->login(@$username, @$password);
-$setup->tpl->assign('login', @$result[0]['uname'] == $username);
-if (@$result[0]['uname'] == $username) {
+$setup->tpl->assign('login', @$result['uname'] == $username);
+if (@$result['uname'] == $username) {
 	$check = $setup->configCheck();
 	$setup->tpl->assign('check', $check);
 	if (!$check) { // Dump file to db
