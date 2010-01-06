@@ -7,6 +7,7 @@ if (isset($_POST['button'])) {
 	if (isset($_POST['list_limit'])) { $admin->saveConfig('list_limit',$_POST['list_limit']); }
 	if (isset($_POST['top_limit'])) { $admin->saveConfig('hide_secret',$_POST['top_limit']); }
 	if (isset($_POST['search_min_chars'])) { $admin->saveConfig('search_min_chars',$_POST['search_min_chars']); }
+	$admin->tpl->assign('success', true);
 }
 
 $admin->tpl->assign('config', $admin->cfg->config);

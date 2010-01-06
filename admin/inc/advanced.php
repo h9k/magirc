@@ -7,6 +7,7 @@ if (isset($_POST['button'])) {
 	else { $admin->saveConfig('show_exec_time',0); }
 	if (isset($_POST['show_validators'])) { $admin->saveConfig('show_validators',1); }
 	else { $admin->saveConfig('show_validators',0); }
+	$admin->tpl->assign('success', true);
 }
 
 $admin->tpl->assign('config', $admin->cfg->config);

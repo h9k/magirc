@@ -20,6 +20,7 @@ if (isset($_POST['button'])) {
 	else { $admin->saveConfig('webchat_url',''); }
 	if (isset($_POST['remote'])) { $admin->saveConfig('remote',1); }
 	else { $admin->saveConfig('remote',0); }
+	$admin->tpl->assign('success', true);
 }
 
 $admin->tpl->assign('config', $admin->cfg->config);

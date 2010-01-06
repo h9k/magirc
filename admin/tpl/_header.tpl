@@ -29,4 +29,4 @@
     <tr>
       <td align="left" valign="top" class="menu">{if $smarty.session.loginUsername}{include file="_menu.tpl"}{/if}</td>
       <td align="left" valign="top">
-      {if $smarty.post.button}<div class="configsave">Configuration saved</div>{/if}
+      {if $success}<div class="configsave">Configuration saved</div>{/if}

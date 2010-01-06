@@ -14,6 +14,7 @@ if (isset($_POST['button'])) {
 	else { $admin->saveConfig('bar_cache_time',''); }
 	if (isset($_POST['gzip'])) { $admin->saveConfig('gzip',1); }
 	else { $admin->saveConfig('gzip',0); }
+	$admin->tpl->assign('success', true);
 }
 
 $admin->tpl->assign('config', $admin->cfg->config);

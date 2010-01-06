@@ -22,6 +22,7 @@ if (isset($_POST['button'])) {
 	else { $admin->saveConfig('adsense_id',''); }
 	if (isset($_POST['adsense_channel'])) { $admin->saveConfig('adsense_channel',$_POST['adsense_channel']); }
 	else { $admin->saveConfig('adsense_channel',''); }
+	$admin->tpl->assign('success', true);
 }
 
 $admin->tpl->assign('config', $admin->cfg->config);

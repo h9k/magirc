@@ -9,6 +9,7 @@ if (isset($_POST['button'])) {
 	else { $admin->saveConfig('hide_servers',''); }
 	if (isset($_POST['hide_chans'])) { $admin->saveConfig('hide_chans',$_POST['hide_chans']); }
 	else { $admin->saveConfig('hide_chans',''); }
+	$admin->tpl->assign('success', true);
 }
 $config = $admin->cfg->config;
 $ircds = array();

@@ -26,15 +26,14 @@
     </tr>
   </table>
   <pre>The configuration file <em>{$db_config_file}</em> is {if $writable}<span style="color:green;">writable</span>
-  {else}<span style="color:red;">not writable</span><br />Please ensure that the <em>{$db_config_file}</em> file has enough write permissions. Try chmod 0666 or 0777.<br />
-  Alternatively, please copy the following text and paste it into the $db_config_file file:<br />
+  {else}<span style="color:red;">not writable</span><br />Please ensure that it has enough write permissions. Try chmod 0666 or 0777.
+  {if $smarty.post.button}
+  <br />Alternatively, please copy the following text<br />and paste it into the {$db_config_file} file:<br />
   <textarea name="sql_buffer" cols="64" rows="10" readonly="readonly">{$db_buffer}</textarea>
   {/if}
+  {/if}
   </pre>
-  <p align="right"><span style="color:red;">Warning:</span> you may break your MagIRC if you put wrong settings in here!<br />
-    In that case you will need to edit the <em>{$db_config_file}</em> configuration file manually.<br />
-    <input type="submit" name="button" id="button" value="Save" tabindex="7" />
-    </p>
+  <p align="right"><input type="submit" name="button" id="button" value="Save" tabindex="7" /></p>
 </form>
 
 {include file="_footer.tpl"}

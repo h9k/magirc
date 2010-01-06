@@ -8,6 +8,7 @@ if (isset($_POST['button'])) {
 	if (isset($_POST['lang'])) { $admin->saveConfig('lang',$_POST['lang']); }
 	if (isset($_POST['msg_welcome'])) { $admin->saveConfig('msg_welcome',$_POST['msg_welcome']); }
 	else { $admin->saveConfig('msg_welcome',''); }
+	$admin->tpl->assign('success', true);
 }
 
 $admin->tpl->assign('config', $admin->cfg->config);
