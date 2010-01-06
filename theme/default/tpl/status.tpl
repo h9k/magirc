@@ -1,7 +1,7 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-<div class="box" style="width:170px; height:220px;">
+<div class="box" style="width:170px; height:220px; float:left;">
 <div class="boxtitle">Current Status</div>
 <table border="0" cellspacing="0" cellpadding="0" class="status">
 	<tr>
@@ -23,7 +23,7 @@
 </table>
 </div>
 
-<div class="box" style="width:380px; height:220px;">
+<div class="box" style="width:380px; height:220px; float:left;">
 <div class="boxtitle">Peak Values</div>
 <table border="0" cellspacing="0" cellpadding="0" class="status">
 	<tr>
@@ -66,22 +66,22 @@
 <img src="graph/line/?mode=servers&amp;size=small" alt="" />
 </div>
 
-<div class="box">
+<div class="box" style="float:left;">
 <div class="boxtitle">Biggest Channels</div>
 testing
 </div>
 
-<div class="box">
+<div class="box" style="float:left;">
 <div class="boxtitle">Biggest Servers</div>
 testing
 </div>
 
-<div class="box">
+<div class="box" style="float:left;">
 <div class="boxtitle">Top 10 Channels Today</div>
 testing
 </div>
 
-<div class="box">
+<div class="box" style="float:left;">
 <div class="boxtitle">Top 10 Users Today</div>
 testing
 </div>

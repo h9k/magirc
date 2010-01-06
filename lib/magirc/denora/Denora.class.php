@@ -66,6 +66,15 @@ class Denora {
 		return $this->db->selectAll('server', NULL, 'server', 'ASC');
 	}
 	
+	// return the mode formatted for sql
+	function getSqlMode($mode) {
+		if (strtoupper($mode) === $mode) {
+			return "mode_u".strtolower($mode);
+		} else {
+			return "mode_l".strtolower($mode);
+		}
+	}
+	
 }
 
 ?>

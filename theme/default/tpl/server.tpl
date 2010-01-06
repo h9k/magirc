@@ -24,8 +24,9 @@
 	{/foreach}
 </table>
 
-<h2>Servers <strong>today</strong> | last week | last month | last year</h2>
-
-[graph]
+<div class="box">
+<div class="boxtitle">Servers - <strong>today</strong> | last week | last month | last year</div>
+<img src="graph/line/?mode=servers&ey={$smarty.now|date_format:"%Y"}&em={$smarty.now|date_format:"%m"}&ed={$smarty.now|date_format:"%d"}" alt="" /><br />
+</div>
 
 {include file="_footer.tpl"}

@@ -42,11 +42,13 @@ $np_db_maxd = 10; $i=0; $buf=0; $sum=0;
 // Do the appropriate query
 if ($mode == "version" && $chan == "global") {
 	$a1 = ""; $a2 = "";
-	if ($this->denora->ircd->services_protection_mode) {
-		$a1 = "AND ".$this->denora->ircd->services_protection_mode."=\"N\"";
-		$a2 = "AND `user`.".$this->denora->ircd->services_protection_mode."=\"N\" ";
+	$pmode = $this->denora->ircd->services_protection_mode;
+	if ($pmode) {
+		$a1 = "AND ".$this->denora->getSqlMode($pmode)."=\"N\"";
+		$a2 = "AND `user`.".$this->denora->getSqlMode($pmode)."=\"N\" ";
 	}
-	$r = $this->denora->db->query("SELECT COUNT(nickid) FROM `user` WHERE online=\"Y\" ".$a1.";", SQL_INIT);
+	$query = "SELECT COUNT(nickid) FROM `user` WHERE online=\"Y\" ".$a1.";";
+	$r = $this->denora->db->query($query, SQL_INIT);
 	$sum = $r[0];
 	$this->denora->db->query("SELECT `user`.ctcpversion, COUNT(*) AS version_count ".
 		"FROM `user` ".
