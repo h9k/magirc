@@ -6,6 +6,7 @@ $Id$
 
 magirc v0.4.0-dev
 -----------------
+2010-01-06 Ported graphs from phpDenora
 2010-01-06 Upgraded JpGraph to v3.0.6
 2010-01-06 Upgraded Smarty to v3.0 beta 5
 2010-01-06 Switched from PEAR MDB2 to PHP5 PDO

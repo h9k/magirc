@@ -1,5 +1,4 @@
 {* $Id$ *}
 {include file="_header.tpl"}
-Hello, World! :)<br />
-This page has been generated with Smarty
+{$welcome}
 {include file="_footer.tpl"}

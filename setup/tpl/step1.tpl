@@ -1,7 +1,7 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 <div class="page_title">Welcome to the MagIRC Setup!</div>
-<p>Please follow the on-screen instructions to install Magirc</p>
+<p>Please follow the on-screen instructions to install MagIRC</p>
 
 <pre>Checking PHP version...{if $status.php} <span style="color:green">Supported</span> ({$phpversion})</pre>
 {else} <span style="color:red">Not Supported</span> ({$phpversion}) ><br />You need at least version 5.2.0</pre>{/if}
@@ -10,13 +10,13 @@
 {else} <span style="color:green;">Disabled</span></pre>{/if}
 
 <pre>Checking PHP PDO mysql driver... {if $status.pdo}<span style="color:green">Present</span></pre>
-{else} <span style="color:red">Missing!</span><br />This component is required to run Magirc. Please contact your Administrator.</pre>{/if}
+{else} <span style="color:red">Missing!</span><br />This component is required to run MagIRC. Please contact your Administrator.</pre>{/if}
 
 <pre>Checking PHP GD extension... {if $status.gd}<span style="color:green">Present</span></pre>
-{else} <span style="color:red">Missing!</span><br />This component is required to run Magirc. Please contact your Administrator.</pre>{/if}
+{else} <span style="color:red">Missing!</span><br />This component is required to run MagIRC. Please contact your Administrator.</pre>{/if}
 
 <pre>Checking SQL configuration file...{if $status.writable} <span style="color:green;">Writable</span></pre>
-{else} <span style="color:orange;">Not writable</span><br />Please ensure that the $magirc_conf file has enough write permissions.<br />Try chmod 0666 or 0777. If it still doesn't work don't worry, you can continue anyway.</pre>{/if}
+{else} <span style="color:orange;">Not writable</span><br />Please ensure that the $MagIRC_conf file has enough write permissions.<br />Try chmod 0666 or 0777. If it still doesn't work don't worry, you can continue anyway.</pre>{/if}
 
 <pre>Checking if <em>tmp/compiled</em> is writable... {if $status.compiled} <span style="color:green;">Writable</span></pre>
 {else} <span style="color:red;">Not writable</span><br />Please chmod the directory to 0777</pre>{/if}
@@ -26,17 +26,17 @@
 
 {if !$status.error}
 
-	<pre>Testing Magirc Database connection... {if !$status.magirc_db}<span style="color:green;">Passed</span></pre>
-	{elseif $status.magirc_db == 'new'}<span style="color:orange;">Unconfigured</span></pre>
+	<pre>Testing MagIRC Database connection... {if !$status.MagIRC_db}<span style="color:green;">Passed</span></pre>
+	{elseif $status.MagIRC_db == 'new'}<span style="color:orange;">Unconfigured</span></pre>
 		{include file="_db_form.tpl"}
-	{else}<span style="color:red">{$status.magirc_db}</span>
+	{else}<span style="color:red">{$status.MagIRC_db}</span>
 		{include file="_db_form.tpl"}
 	{/if}
 	{if $smarty.post.savedb}
 		{if $status.writable}
 		<div class="configsave">Configuration saved</div>
 		{else}
-		<p><strong>Please replace the contents of the $magirc_conf file with the text below:</strong></p>
+		<p><strong>Please replace the contents of the $MagIRC_conf file with the text below:</strong></p>
 		<textarea name="sql_buffer" cols="64" rows="10" readonly="readonly">{$db_buffer}</textarea>
 		<p>When you are done please <a href="?step=1">repeat this step</a></p>
 		{/if}

@@ -17,11 +17,11 @@
       <td align="left"><input name="hide_ulined" type="checkbox" id="hide_ulined" tabindex="2" {if $config.hide_ulined}checked="checked" {/if}/></td>
     </tr>
     <tr>
-      <td align="right">Servers you don't want phpDenora to show. Separate with commas without spaces, example: &quot;hub.mynet.tld,hub2.mynet.tld&quot;</td>
+      <td align="right">Servers you don't want MagIRC to show. Separate with commas without spaces, example: &quot;hub.mynet.tld,hub2.mynet.tld&quot;</td>
       <td align="left"><input name="hide_servers" type="text" id="hide_servers" value="{$config.hide_servers}" size="32" maxlength="1024" tabindex="3" /></td>
     </tr>
     <tr>
-      <td align="right">Channels you don't want phpDenora to show. Separate with commas without spaces</td>
+      <td align="right">Channels you don't want MagIRC to show. Separate with commas without spaces</td>
       <td align="left"><input name="hide_chans" type="text" id="hide_chans" value="{$config.hide_chans}" size="32" maxlength="1024" tabindex="5" /></td>
     </tr>
   </table>

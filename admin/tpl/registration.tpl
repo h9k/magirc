@@ -12,11 +12,11 @@
           <td>{$config.net_url}</td>
         </tr>
         <tr>
-          <td align="right"><strong>Magirc URL: </strong></td>
+          <td align="right"><strong>MagIRC URL: </strong></td>
           <td>http://{$magirc_url}</td>
         </tr>
         <tr>
-          <td align="right"><strong>Magirc Version: </strong></td>
+          <td align="right"><strong>MagIRC Version: </strong></td>
           <td>{$smarty.const.VERSION_FULL}</td>
         </tr>
         <tr>

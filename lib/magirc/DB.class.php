@@ -128,17 +128,18 @@ class DB {
 	function update($table, $array, $where) {
 		$data = null;
 		foreach($array as $key => $value) {
-			$data .= sprintf("`%s` = '%s', ", $this->escape($key), str_replace('\r\n', '', $this->escape($value)));
+			$data .= sprintf("`%s` = %s, ", $key, str_replace('\r\n', '', $this->escape($value)));
 		}
 		$data = substr($data, 0, -2);
 
 		$conditions = null;
 		foreach($where as $key => $value) {
-			$conditions .= sprintf("`%s` = '%s' AND ", $this->escape($key), $this->escape($value));
+			$conditions .= sprintf("`%s` = %s AND ", $key, $this->escape($value));
 		}
 		$conditions = substr($conditions, 0, -5);
 
 		$query = sprintf("UPDATE `%s` SET %s WHERE %s", $table, $data, $conditions);
+		
 		return $this->query($query);
 	}
 

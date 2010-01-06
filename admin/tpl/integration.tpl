@@ -53,7 +53,7 @@
       <td align="left"><input name="adsense_id" type="text" id="adsense_id" value="{$config.adsense_id}" size="32" maxlength="1024" tabindex="9" />      </td>
     </tr>
     <tr>
-      <td colspan="2" align="left"><em>If you would like to support phpDenora you can use &quot;pub-2514457845805307&quot; ;)</em></td>
+      <td colspan="2" align="left"><em>If you would like to support MagIRC you can use &quot;pub-2514457845805307&quot; ;)</em></td>
     </tr>
     <tr>
       <td align="right">Set the <strong>Ad Channel</strong> (optional)</td>

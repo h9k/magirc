@@ -7,8 +7,7 @@ if (!$denora_version) { $denora_version = "unknown"; }
 $version = array(
 	'denora' => $denora_version,
 	'php' => phpversion(),
-	'sql_client' => @mysqli_get_client_info(),
-	'sql_server' => @mysqli_get_server_info()
+	'sql_client' => @mysqli_get_client_info()
 );
 
 $admin->tpl->assign('setup', file_exists('../setup/'));
