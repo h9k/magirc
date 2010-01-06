@@ -155,11 +155,11 @@ if ($this->cfg->getParam('debug_mode') < 2) {
 
 // Initialize the graph
 if ($size == "small") {
-	$graph = new Graph(190, 125, "{$filename}.png", $this->cfg->getParam('graph_cache'));
+	$graph = new Graph(190, 125, "{$filename}.png", $this->cfg->getParam('net_cache_time'));
 	$graph->SetMargin(40,10,25,35);
 }
 else {
-	$graph = new Graph(560, 230, "{$filename}.png", $this->cfg->getParam('graph_cache'));
+	$graph = new Graph(560, 230, "{$filename}.png", $this->cfg->getParam('net_cache_time'));
 	$graph->SetMargin(40,40,10,80);
 }
 

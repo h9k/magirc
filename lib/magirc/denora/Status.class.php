@@ -24,12 +24,12 @@ class Status extends Denora {
 		
 	}
 	
-	function getCurrent() {
+	private function getCurrent() {
 		$current = $this->db->selectAll('current');
 		return @$current;
 	}
 	
-	function getMax() {
+	private function getMax() {
 		$max = $this->db->selectAll('maxvalues');
 		return @$max;
 	}

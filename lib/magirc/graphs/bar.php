@@ -1,115 +1,66 @@
 <?php
 // $Id: bar.php 392 2009-10-16 07:27:33Z hal9000 $
 
-define( '_VALID_PARENT', 1 );
-
-ini_set('display_errors','on');
-error_reporting(E_ALL);
-
-require ("../../../phpdenora.cfg.php");	# Load phpDenora configuration file
-
-if ($pd_debug < 2)
-{
-	ini_set('display_errors','off');
-	error_reporting(E_ERROR);
-}
-
-date_default_timezone_set($pd_timezone) or die("Configuration error");
-
-require_once("../sql.php");			# Load SQL library
-
 // Load the JPGraph libraries
-require_once("../../jpgraph/jpgraph.php");
-require_once("../../jpgraph/jpgraph_bar.php");
+require_once("lib/jpgraph/jpgraph.php");
+require_once("lib/jpgraph/jpgraph_bar.php");
 
-// Compensate missing configuration parameters
-if (!isset($np_db_host)) { $np_db_host = "localhost"; }
-if (!isset($np_db_port)) { $np_db_port = "3306"; }
-if (!isset($pd_style)) { $pd_style = "modern"; }
-if (!isset($pd_lang)) { $pd_lang = "en"; }
-if (!isset($denora_cstats_db)) { $denora_cstats_db = "cstats"; }
-if (!isset($denora_ustats_db)) { $denora_ustats_db = "ustats"; }
-if (!isset($pd_cache_bar)) { $pd_cache_bar = 0; }
-
-$link = sql_db_connect();
+$denora_format_short = "%m/%d/%y %I:%M:%S %p";
 
 // Load the appropriate theme file
-$theme = isset($_GET['theme']) ? htmlspecialchars($_GET['theme']) : $pd_style;
-$themefile = "../../../themes/".$theme."/theme.php";
-if (file_exists($themefile))
-{
+$themefile = "theme/".$this->cfg->getParam('theme')."/cfg/graphs.php";
+if (file_exists($themefile)) {
 	require ($themefile);
+} else {
+	require ( 'theme/default/cfg/graphs.php' );
 }
-else
-{
-	$theme = "futura";
-	require ( '../../../themes/futura/theme.php' );
-}
-
-// Load appropriate language file
-$lang = isset($_GET['lang']) ? htmlspecialchars($_GET['lang']) : $pd_lang;
-$langfile = "../../../lang/".$lang."/lang.php";
-if (file_exists($langfile))
-{
-	include ($langfile);
-}
-else {
-	$lang = "en";
-	include ( '../../../lang/en/lang.php' );
-}
-
-// Set the language encoding
-if (!isset($charset)) { $charset = "utf-8"; }
-ini_set('default_charset',$charset);
 
 // Get the needed variables from URL
-$mode = isset($_GET['mode']) ? sql_escape_string($_GET['mode']) : NULL;
+$mode = isset($_GET['mode']) ? $_GET['mode'] : NULL;
 $type = isset($_GET['type']) ? $_GET['type'] : 0;
 settype($type, 'integer');
 if ($type == 4) { $type = 0; }
-$user = isset($_GET['user']) ? sql_escape_string(stripslashes($_GET['user'])) : NULL;
-$chan = isset($_GET['chan']) ? sql_escape_string(stripslashes($_GET['chan'])) : "global";
+$user = isset($_GET['user']) ? stripslashes($_GET['user']) : NULL;
+$chan = isset($_GET['chan']) ? stripslashes($_GET['chan']) : "global";
 if ($chan != "global" && $chan{0} != "#") { $chan = "#" . $chan; }
 
 // Set the image filename
+$filename = null;
 if ($mode == "chan") {
-	$filename = sprintf("bar_%s-t%s_%s_%s",$chan,$type,$theme,$lang);
-}
-elseif ($mode == "user") {
-	$filename = sprintf("bar_%s-%s-t%s_%s_%s",$user,$chan,$type,$theme,$lang);
+	$filename = sprintf("bar_%s-t%s",$chan,$type);
+} elseif ($mode == "user") {
+	$filename = sprintf("bar_%s-%s-t%s",$user,$chan,$type);
 }
 
 // HTTP Header definitions
-if ($pd_debug < 2) {
+if ($this->cfg->getParam('debug_mode') < 2) {
 	header("Content-Type: image/png");
 	header("Content-Disposition: attachment; filename=$filename");
 }
 
 // Initialize the graph
-$graph = new Graph(560,200,$filename . ".png",$pd_cache_bar);
+$graph = new Graph(560,200,$filename . ".png",$this->cfg->getParam('bar_cache_time'));
 
 // Some variables initialization
 $data = array(); $labels = array();
 
 // Do the appropriate query
 if ($mode == "chan") {
-	$q = sql_query("SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23 FROM ".$denora_cstats_db." WHERE chan=\"".$chan."\" AND type=\"".$type."\";");
+	$this->denora->db->query("SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23 FROM `cstats` WHERE chan=".$this->denora->db->escape($chan)." AND type=".$this->denora->db->escape($type).";");
 }
 elseif ($mode == "user") {
-	$q = sql_query("SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23 FROM ".$denora_ustats_db." WHERE uname=\"".$user."\" AND chan=\"".$chan."\" AND type=\"".$type."\";");
+	$this->denora->db->query("SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23 FROM `ustats` WHERE uname=".$this->denora->db->escape($user)." AND chan=".$this->denora->db->escape($chan)." AND type=".$this->denora->db->escape($type).";");
 }
 else {
-	die("Invalid mode parameter. Must die!");
+	$this->displayError("Invalid mode parameter");
 }
 
 // Parse the collected data
-$r = sql_fetch_array($q);
+$r = $this->denora->db->next();
 for ($i=0; $i < 24; $i++) {
 	$data[$i] = $r[$i];
 	$labels[$i] = $i;
 }
-
-sql_db_close($link);
 
 // Generate the graph
 $graph->SetScale("textlin");
@@ -117,8 +68,8 @@ $graph->yaxis->scale->SetGrace(20);
 
 $graph->img->SetMargin(50,50,20,20);
 $graph->xaxis->SetTickLabels($labels);
-$graph->xaxis->SetTitle(_GD_HOUR,'high'); 
-$graph->yaxis->SetTitle(_GD_LINES,'low');
+$graph->xaxis->SetTitle("Hour",'high'); 
+$graph->yaxis->SetTitle("Lines",'low');
 $graph->yaxis->SetTitlemargin(35);
 
 $bplot = new BarPlot($data);
