@@ -13,7 +13,7 @@ define('SQL_OBJ', PDO::FETCH_OBJ);
 
 class DB {
 
-	var $db = null;
+	var $pdo = null;
 	var $result = null;
 	var $error = null;
 	var $record = null;
@@ -22,7 +22,7 @@ class DB {
 
 	function connect($dsn, $username, $password) {
 		try {
-			$this->db = new PDO($dsn, $username, $password);
+			$this->pdo = new PDO($dsn, $username, $password);
 			return true;
 		} catch(PDOException $e) {
 			$this->error = $e->getMessage();
@@ -31,7 +31,7 @@ class DB {
 	}
 
 	function disconnect() {
-		$this->db = null;
+		$this->pdo = null;
 	}
 
 	function numRows() {
@@ -44,7 +44,7 @@ class DB {
 
 	function query($query, $type = SQL_NONE, $format = SQL_INDEX) {
 		try {
-			$this->result = $this->db->query($query);
+			$this->result = $this->pdo->query($query);
 			switch ($type) {
 				case SQL_ALL:
 					$this->record = $this->result->fetchAll($format);
@@ -65,18 +65,18 @@ class DB {
 
 	function next($format = SQL_INDEX) {
 		if ($this->record = $this->result->fetch($format)) {
-			return true;
+			return $this->record;
 		} else {
 			return false;
 		}
 	}
 
 	function escape($input) {
-		return $this->db->quote($input);
+		return $this->pdo->quote($input);
 	}
 
 	function lastInsertID() {
-		return $this->db->lastInsertId();
+		return $this->pdo->lastInsertId();
 	}
 
 	private function select($table, $where = NULL, $sort = NULL, $order = 'ASC', $limit = 0, $type = SQL_ALL, $format = SQL_ASSOC) {

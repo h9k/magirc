@@ -35,9 +35,11 @@
 //   MBTTF_DIR $SERVER_SYSTEMROOT/fonts/
 //
 //------------------------------------------------------------------------
-// define('CACHE_DIR','/tmp/jpgraph_cache/');
-// define('TTF_DIR','/usr/share/fonts/truetype/');
-// define('MBTTF_DIR','/usr/share/fonts/truetype/');
+// define("CACHE_DIR","/tmp/jpgraph_cache/");
+define("CACHE_DIR", $this->cfg->getParam('graph_cache_path'));
+// define("TTF_DIR","/usr/share/fonts/truetype/");
+define("TTF_DIR","lib/ttf/");
+// define("MBTTF_DIR","/usr/share/fonts/truetype/");
 
 //-------------------------------------------------------------------------
 // Cache directory specification for use with CSIM graphs that are
@@ -74,7 +76,12 @@ define('DEFAULT_GFORMAT','auto');
 // false will still create the image in the cache directory
 // just not use it. By setting USE_CACHE=false no files will even
 // be generated in the cache directory.
-define('USE_CACHE',false);
+if ($this->cfg->getParam('graph_cache')) {
+	define("USE_CACHE",true);
+}
+else {
+	define("USE_CACHE",false);
+}
 
 // Should we try to find an image in the cache before generating it?
 // Set this define to false to bypass the reading of the cache and always
@@ -123,7 +130,7 @@ define('USE_LIBRARY_IMAGETTFBBOX',true);
 // Please note that the Apache user must be a member of the
 // specified group since otherwise it is impossible for Apache
 // to set the specified group.
-define('CACHE_FILE_GROUP','www');
+define('CACHE_FILE_GROUP','');
 
 // What permissions should the cached file have
 // (Set to '' will give the default persmissions for the 'PHP-user')

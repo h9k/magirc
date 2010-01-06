@@ -19,26 +19,30 @@ include('lib/magirc/init.inc.php');
 
 $magirc = new Magirc;
 
-if ($ircd = $magirc->cfg->getParam('ircd_type')) {
-	$magirc->denora->loadProtocol($ircd);
-} else {
-	$magirc->displayError("Unable to load config");
-	exit;
+try {
+	if ($ircd = $magirc->cfg->getParam('ircd_type')) {
+		$magirc->denora->loadProtocol($ircd);
+	} else {
+		$magirc->displayError("Unable to load config");
+		exit;
+	}
+	
+	define('DEBUG', $magirc->cfg->getParam('debug_mode'));
+	define('BASE_URL', $magirc->cfg->getParam('base_url'));
+	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
+	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
+	
+	if ($magirc->cfg->getParam('debug_mode') < 1) {
+		ini_set('display_errors','off');
+		error_reporting(E_ERROR);
+	} else {
+		$magirc->tpl->force_compile = true;
+		$magirc->tpl->debugging = true;
+	}
+	// Little dirty hack
+	if (!isset($_GET['section'])) { $_GET['section'] = 'home'; }
+	$magirc->display();
+} catch (Exception $e) {
+	$magirc->displayError($e->getMessage());
 }
-
-define('DEBUG', $magirc->cfg->getParam('debug_mode'));
-define('BASE_URL', $magirc->cfg->getParam('base_url'));
-$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
-$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
-
-if ($magirc->cfg->getParam('debug_mode') < 1) {
-	ini_set('display_errors','off');
-	error_reporting(E_ERROR);
-} else {
-	$magirc->tpl->force_compile = true;
-	$magirc->tpl->debugging = true;
-}
-
-$magirc->display();
-
 ?>

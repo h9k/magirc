@@ -18,7 +18,7 @@
 <h1><strong>MagIRC</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
 <div id="tabsH">
   <ul>
-	<li><a href="home/" title="Home"{if $smarty.get.section eq 'home' or !$smarty.get.section} class="active"{/if}><img src="theme/default/img/menu/home.png" alt="" height="16" width="16" /><span>&nbsp;Home</span></a></li>
+	<li><a href="home/" title="Home"{if $smarty.get.section eq 'home'} class="active"{/if}><img src="theme/default/img/menu/home.png" alt="" height="16" width="16" /><span>&nbsp;Home</span></a></li>
 	<li><a href="status/" title="Status"{if $smarty.get.section eq 'status'} class="active"{/if}><img src="theme/default/img/menu/status.png" alt="" height="16" width="16" /><span>&nbsp;Status</span></a></li>
 	<li><a href="evolution/" title="Evolution"{if $smarty.get.section eq 'evolution'} class="active"{/if}><img src="theme/default/img/menu/evolution.png" alt="" height="16" width="16" /><span>&nbsp;Evolution</span></a></li>
     <li><a href="server/" title="Servers"{if $smarty.get.section eq 'server'} class="active"{/if}><img src="theme/default/img/menu/servers.png" alt="" height="16" width="16" /><span>&nbsp;Servers</span></a></li>

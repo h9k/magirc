@@ -1,38 +1,91 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-{*
-    [ircd] => 
-    [current_users] => 183
-    [current_users_time] => 1249223088
-    [current_chans] => 94
-    [current_chans_time] => 1249222687
-    [current_daily_users] => 184
-    [current_daily_users_time] => 1249223080
-    [current_servers] => 11
-    [current_servers_time] => 1249201942
-    [current_opers] => 43
-    [current_opers_time] => 1249201942
-    [max_users] => 234
-    [max_users_time] => 1247747168
-    [max_channels] => 105
-    [max_channels_time] => 1247001473
-    [max_servers] => 16
-    [max_servers_time] => 1245118524
-    [max_opers] => 204
-    [max_opers_time] => 1243323703
-*}
+<div class="box" style="width:170px; height:220px;">
+<div class="boxtitle">Current Status</div>
+<table border="0" cellspacing="0" cellpadding="0" class="status">
+	<tr>
+		<th><img src="theme/default/img/icons/user.png" alt="" title="" /> Users</th>
+		<td>{$status->current_users}</td>
+	</tr>
+	<tr>
+		<th><img src="theme/default/img/icons/channel.png" alt="" title="" /> Channels</th>
+		<td>{$status->current_chans}</td>
+	</tr>
+	<tr>
+		<th><img src="theme/default/img/icons/server.png" alt="" title="" /> Servers</th>
+		<td>{$status->current_servers}</td>
+	</tr>
+	<tr>
+		<th><img src="theme/default/img/icons/oper.png" alt="" title="" /> Opers</th>
+		<td>{$status->current_opers}</td>
+	</tr>
+</table>
+</div>
 
-<h2>Current Status</h2>
-Users: {$status->current_users} (today's peak: {$status->current_daily_users} at {$status->current_daily_users_time|date_format:"%H:%M"})<br />
-Channels: {$status->current_chans}<br />
-Servers: {$status->current_servers}<br />
-Opers: {$status->current_opers}<br />
+<div class="box" style="width:380px; height:220px;">
+<div class="boxtitle">Peak Values</div>
+<table border="0" cellspacing="0" cellpadding="0" class="status">
+	<tr>
+		<th><img src="theme/default/img/icons/user.png" alt="" /> Users</th>
+		<td>{$status->max_users}</td>
+		<th><img src="theme/default/img/icons/calendar.png" alt="on" title="" /></th>
+		<td>{$status->max_users_time|date_format:"%Y-%m-%d %H:%M"}</td>
+	</tr>
+	<tr>
+		<th><img src="theme/default/img/icons/user.png" alt="" /> Users today</th>
+		<td>{$status->current_daily_users}</td>
+		<th><img src="theme/default/img/icons/clock.png" alt="at" title="" /></th>
+		<td>{$status->current_daily_users_time|date_format:"%H:%M"}</td>
+	</tr>	
+	<tr>
+		<th><img src="theme/default/img/icons/channel.png" alt="" /> Channels</th>
+		<td>{$status->max_channels}</td>
+		<th><img src="theme/default/img/icons/calendar.png" alt="on" title="" /></th>
+		<td>{$status->max_channels_time|date_format:"%Y-%m-%d %H:%M"}</td>
+	</tr>
+	<tr>
+		<th><img src="theme/default/img/icons/server.png" alt="" title="" /> Servers</th>
+		<td>{$status->max_servers}</td>
+		<th><img src="theme/default/img/icons/calendar.png" alt="on" /></th>
+		<td>{$status->max_servers_time|date_format:"%Y-%m-%d %H:%M"}</td>
+	</tr>
+	<tr>
+		<th><img src="theme/default/img/icons/oper.png" alt="" title="" /> Opers</th>
+		<td>{$status->max_opers}</td>
+		<th><img src="theme/default/img/icons/calendar.png" alt="on" /></th>
+		<td>{$status->max_opers_time|date_format:"%Y-%m-%d %H:%M"}</td>
+	</tr>
+</table>
+</div>
 
-<h2>Peak Values</h2>
-Users: {$status->max_users} on {$status->max_users_time|date_format:"%Y-%m-%d %H:%M"}<br />
-Channels: {$status->max_channels} on {$status->max_channels_time|date_format:"%Y-%m-%d %H:%M"}<br />
-Servers: {$status->max_servers} on {$status->max_servers_time|date_format:"%Y-%m-%d %H:%M"}<br />
-Opers: {$status->max_opers} on {$status->max_opers_time|date_format:"%Y-%m-%d %H:%M"}<br />
+<div class="box" style="float:right;">
+<div class="boxtitle">Today</div>
+<img src="graph/line/?mode=users&amp;size=small" alt="" /><br />
+<img src="graph/line/?mode=channels&amp;size=small" alt="" /><br />
+<img src="graph/line/?mode=servers&amp;size=small" alt="" />
+</div>
+
+<div class="box">
+<div class="boxtitle">Biggest Channels</div>
+testing
+</div>
+
+<div class="box">
+<div class="boxtitle">Biggest Servers</div>
+testing
+</div>
+
+<div class="box">
+<div class="boxtitle">Top 10 Channels Today</div>
+testing
+</div>
+
+<div class="box">
+<div class="boxtitle">Top 10 Users Today</div>
+testing
+</div>
+
+<div class="clear"></div>
 
 {include file="_footer.tpl"}

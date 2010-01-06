@@ -8,11 +8,11 @@
 
 <h3>Currently <strong>{if $server->online}<span style="color:green;">Online</span>{else}<span style="color:red;">Offline</span>{/if}</strong></h3>
 {if $server->online}
-	Running <em>{$server->version}</em>{if $server->uline} (ulined){/if} for <em>{$server-uptime|date_format:"%e days, %H hours and %M minutes"}</em><br />
+	Running <em>{$server->version}</em>{if $server->uline} (ulined){/if} for <em>{$server->uptime|date_format:"%e days, %H hours and %M minutes"}</em><br />
 	Connected on <em>{$server->connecttime|date_format:"%Y-%m-%d %H:%M"}</em>
 	{if $server->lastsplit}Last split on <em>{$server->lastsplit|date_format:"%Y-%m-%d %H:%M"}</em>{/if}
 {else}
-	Running <em>{$server->version}</em> for <em>{$server-uptime|date_format:"%d days, %H hours and %M minutes"}</em><br />
+	Running <em>{$server->version}</em> for <em>{$server->uptime|date_format:"%d days, %H hours and %M minutes"}</em><br />
 	Connected on <em>{$server->connecttime|date_format:"%Y-%m-%d %H:%M"}</em>
 	{if $server->lastsplit}and split on <em>{$server->lastsplit|date_format:"%Y-%m-%d %H:%M"}</em>{/if}
 {/if}

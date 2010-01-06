@@ -91,6 +91,28 @@ div#footer a:hover, div#footer a:active {
 	text-decoration: none;
 }
 
+div.clear { clear:both; }
+
+div.box {
+	background-color:#F8F8F8;
+	padding:4px;
+	margin:5px;
+	float:left;
+	text-align:center;
+}
+
+div.boxtitle {
+	margin:3px;
+	padding:5px;
+	background-color:white;
+	font-size:small;
+	font-weight:bold;
+	color:#333333;
+	text-transform:uppercase;
+	border-top:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+}
+
 table.list { width:100%; }
 table.list th { text-align:left; }
 table.list td div {
@@ -101,3 +123,12 @@ table.list td div {
 }
 table.list tr.bg1 {	background-color:#F3F3F3; }
 table.list tr.bg2 { background-color:#FFFFFF; }
+
+table.status th {
+	text-align:left;
+}
+table.status td {
+	font-size:small;
+	color:blue;
+	text-align:right;
+}
