@@ -1,6 +1,8 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
+<div id="content">
+
 <div class="box" style="width:170px; height:220px; float:left;">
 <div class="boxtitle">Current Status</div>
 <table border="0" cellspacing="0" cellpadding="0" class="status">
@@ -87,5 +89,7 @@ testing
 </div>
 
 <div class="clear"></div>
+
+</div>
 
 {include file="_footer.tpl"}

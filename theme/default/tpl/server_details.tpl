@@ -1,6 +1,8 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
+<div id="content">
+
 <h2><a href="server/">Servers</a> &raquo; Server Details</h2>
 
 <h3>{$server->name}</h3>
@@ -32,6 +34,8 @@ This server issued <em>{$server->serverkills}</em> kills<br />
 <h3>Message of the day (MOTD)</h3>
 <div style="background-color:#F0F0F0; border:1px solid #CCCCCC; padding: 5px; margin: 10px;">
 {if $server->motd}<pre>{$server->motd|irc2html}</pre>{else}<em>MOTD not available for this server</em>{/if}
+</div>
+
 </div>
 
 {include file="_footer.tpl"}

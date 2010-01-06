@@ -1,6 +1,8 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
+<div id="content">
+
 <h2>Server list</h2>
 <table border="0" cellpadding="0" cellspacing="0" class="list">
 	<tr>
@@ -27,6 +29,8 @@
 <div class="box">
 <div class="boxtitle">Servers - <strong>today</strong> | last week | last month | last year</div>
 <img src="graph/line/?mode=servers&ey={$smarty.now|date_format:"%Y"}&em={$smarty.now|date_format:"%m"}&ed={$smarty.now|date_format:"%d"}" alt="" /><br />
+</div>
+
 </div>
 
 {include file="_footer.tpl"}

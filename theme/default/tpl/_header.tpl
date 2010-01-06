@@ -8,15 +8,16 @@
 <meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />
 <meta name="Description" content="IRC Statistics powered by MagIRC" />
 <base href="{$smarty.const.BASE_URL}" />
-<link href="theme/default/css/yui/reset-fonts.css" rel="stylesheet" type="text/css" />
-<link href="theme/default/css/yui/base-min.css" rel="stylesheet" type="text/css" />
+<link href="js/yui/reset-fonts/reset-fonts.css" rel="stylesheet" type="text/css" />
+<link href="js/yui/base/base-min.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/default.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/menu.css" rel="stylesheet" type="text/css" />
+<link href="theme/default/css/submenu.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="header">
 <h1><strong>MagIRC</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
-<div id="tabsH">
+<div id="menu">
   <ul>
 	<li><a href="home/" title="Home"{if $smarty.get.section eq 'home'} class="active"{/if}><img src="theme/default/img/menu/home.png" alt="" height="16" width="16" /><span>&nbsp;Home</span></a></li>
 	<li><a href="status/" title="Status"{if $smarty.get.section eq 'status'} class="active"{/if}><img src="theme/default/img/menu/status.png" alt="" height="16" width="16" /><span>&nbsp;Status</span></a></li>
@@ -32,4 +33,3 @@
 </div>
 </div>
 <div id="main">
-<div id="content">

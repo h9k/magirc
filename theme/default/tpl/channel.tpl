@@ -1,6 +1,8 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
+<div id="content">
+
 <table class="list">
 	<tr>
 		<th>Channel</th>
@@ -27,5 +29,7 @@
 	</tr>
 {/foreach}
 </table>
+
+</div>
 
 {include file="_footer.tpl"}
