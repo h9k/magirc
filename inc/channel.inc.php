@@ -17,14 +17,26 @@ $this->tpl->assign('mirc', $this->cfg->getParam('mirc_url'));
 $this->tpl->assign('webchat', $this->cfg->getParam('webchat_url'));
 
 switch($_GET['action']) {
+	case 'list':
+		$this->tpl->assign('chanlist', $c->getChannels());
+		$this->tpl->display('channel_list.tpl');
+		break;
 	case 'details':
 		$this->tpl->assign('channel', $c->getChannel(urldecode($_GET['channel'])));
 		$this->tpl->display('channel_details.tpl');
 		break;
-	case 'list':
-		$this->tpl->assign('chanlist', $c->getChannels());
-		$this->tpl->display('channel.tpl');
+	case 'users':
+		$this->tpl->display('channel_users.tpl');
 		break;
+	case 'countries':
+		$this->tpl->display('channel_countries.tpl');
+		break;
+	case 'clients':
+		$this->tpl->display('channel_clients.tpl');
+		break;
+	case 'activity':
+		$this->tpl->display('channel_activity.tpl');
+		break;		
 	default:
 		$this->displayError("Unknown action");
 }

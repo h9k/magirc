@@ -48,8 +48,8 @@ if ($mode == "version" && $chan == "global") {
 		$a2 = "AND `user`.".$this->denora->getSqlMode($pmode)."=\"N\" ";
 	}
 	$query = "SELECT COUNT(nickid) FROM `user` WHERE online=\"Y\" ".$a1.";";
-	$r = $this->denora->db->query($query, SQL_INIT);
-	$sum = $r[0];
+	$this->denora->db->query($query);
+	$sum = $this->denora->db->result->fetchColumn();
 	$this->denora->db->query("SELECT `user`.ctcpversion, COUNT(*) AS version_count ".
 		"FROM `user` ".
 		"WHERE `user`.online=\"Y\" ".
@@ -62,20 +62,20 @@ if ($mode == "version" && $chan == "global") {
 		"WHERE `chan`.chanid = `ison`.chanid ".
 		"AND `user`.nickid = `ison`.nickid ".
 		"AND `user`.online=\"Y\" ".
-		"AND LOWER(channel)=LOWER(\"".sql_escape_string($chan)."\");");
+		"AND LOWER(channel)=LOWER(".$this->denora->db->escape($chan).");");
 	$sum = $this->denora->db->numRows();
 	$this->denora->db->query("SELECT `user`.ctcpversion, COUNT(*) AS version_count ".
 		"FROM `user`, `chan`, `ison` ".
 		"WHERE `user`.nickid=`ison`.nickid ".
 		"AND `ison`.chanid=`chan`.chanid ".
-		"AND LOWER(`chan`.channel)=LOWER(\"".sql_escape_string($chan)."\") ".
+		"AND LOWER(`chan`.channel)=LOWER(".$this->denora->db->escape($chan).") ".
 		"AND `user`.online=\"Y\" ".
 		$a1.
 		"GROUP by `user`.ctcpversion ".
 		"ORDER BY version_count DESC;");
 } elseif ($mode == "country" && $chan == "global") {
-	$r = $this->denora->db->query("SELECT SUM(`tld`.count) FROM `tld` WHERE `tld`.count != 0;", SQL_INIT);
-	$sum = $r[0];
+	$this->denora->db->query("SELECT SUM(`tld`.`count`) AS 'sum' FROM `tld` WHERE `tld`.`count` > 0;");
+	$sum = $this->denora->db->result->fetchColumn();
 	$this->denora->db->query("SELECT `tld`.country, `tld`.count ".
 		"FROM `tld` WHERE `tld`.count != 0 ".
 		"ORDER BY `tld`.count DESC;");
