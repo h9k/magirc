@@ -3,6 +3,11 @@
 
 <div id="content">
 
+<div class="box">
+<div class="boxtitle">Channels - <strong>today</strong> | last week | last month | last year</div>
+<img src="graph/line/?mode=channels&ey={$smarty.now|date_format:"%Y"}&em={$smarty.now|date_format:"%m"}&ed={$smarty.now|date_format:"%d"}" alt="" /><br />
+</div>
+
 <table class="list">
 	<tr>
 		<th>Channel</th>
