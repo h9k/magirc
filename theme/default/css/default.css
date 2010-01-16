@@ -139,9 +139,18 @@ table.list tr.bg2 { background-color:#FFFFFF; }
 
 table.status th {
 	text-align:left;
+	white-space:nowrap;
 }
 table.status td {
 	font-size:small;
 	color:blue;
 	text-align:right;
+	white-space:nowrap;
+}
+
+div.topic {
+	margin:5px;
+	padding:5px;
+	border:1px solid #CCCCCC;
+	background-color:#FFFFFF;
 }

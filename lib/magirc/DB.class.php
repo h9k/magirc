@@ -11,6 +11,10 @@ define('SQL_ASSOC', PDO::FETCH_ASSOC);
 define('SQL_INDEX', PDO::FETCH_NUM);
 define('SQL_OBJ', PDO::FETCH_OBJ);
 
+// define the parameter formats
+define('SQL_INT', PDO::PARAM_INT);
+define('SQL_STR', PDO::PARAM_STR);
+
 class DB {
 
 	var $pdo = null;
@@ -23,6 +27,9 @@ class DB {
 	function connect($dsn, $username, $password) {
 		try {
 			$this->pdo = new PDO($dsn, $username, $password);
+			$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->pdo->query("SET NAMES utf8");
 			return true;
 		} catch(PDOException $e) {
 			$this->error = $e->getMessage();
@@ -33,13 +40,15 @@ class DB {
 	function disconnect() {
 		$this->pdo = null;
 	}
-
-	function numRows() {
-		try {
-			return $this->result->rowCount();
-		} catch(PDOException $e) {
-			die($e->getMessage());
-		}
+	
+	function getTables() {
+		$query = "SHOW TABLES";
+		$this->query($query, SQL_ALL, SQL_INDEX);
+		return $this->record;
+	}
+	
+	function prepare($query) {
+		return $this->pdo->prepare($query);
 	}
 
 	function query($query, $type = SQL_NONE, $format = SQL_INDEX) {
@@ -77,6 +86,14 @@ class DB {
 
 	function lastInsertID() {
 		return $this->pdo->lastInsertId();
+	}
+	
+	function numRows() {
+		try {
+			return $this->result->rowCount();
+		} catch(PDOException $e) {
+			die($e->getMessage());
+		}
 	}
 
 	private function select($table, $where = NULL, $sort = NULL, $order = 'ASC', $limit = 0, $type = SQL_ALL, $format = SQL_ASSOC) {
@@ -143,8 +160,16 @@ class DB {
 		return $this->query($query);
 	}
 
-	function delete($table, $id) {
-		$query = sprintf("DELETE FROM `%s` WHERE `id` = %d", $table, $this->escape($id));
+	function delete($table, $data) {
+		if (is_array($data)) {
+			$query = "DELETE FROM `{$table}` WHERE ";
+			foreach($data as $key => $value) {
+				$query .= sprintf("`%s` = %s AND ", $key, $this->escape($value));
+			}
+			$query = substr($query, 0, -5);
+		} else {
+			$query = sprintf("DELETE FROM `%s` WHERE `id` = %d", $table, $this->escape($id));
+		}
 		return $this->query($query);
 	}
 

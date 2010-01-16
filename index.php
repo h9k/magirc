@@ -20,13 +20,6 @@ include('lib/magirc/init.inc.php');
 $magirc = new Magirc;
 
 try {
-	if ($ircd = $magirc->cfg->getParam('ircd_type')) {
-		$magirc->denora->loadProtocol($ircd);
-	} else {
-		$magirc->displayError("Unable to load config");
-		exit;
-	}
-	
 	define('DEBUG', $magirc->cfg->getParam('debug_mode'));
 	define('BASE_URL', $magirc->cfg->getParam('base_url'));
 	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';

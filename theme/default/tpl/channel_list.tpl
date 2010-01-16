@@ -18,7 +18,7 @@
 {foreach from=$chanlist item=item}
 	{if $item.topic}<tr class="{cycle values="bg1, bg2" advance=false}">
 	{else}<tr class="{cycle values="bg1, bg2" advance=true}">{/if}
-		<td><a href="channel/?channel={$item.name|escape:'url'}">{$item.name}</a></td>
+		<td style="white-space:nowrap;"><a href="channel/?channel={$item.name|escape:'url'}">{$item.name}</a></td>
 		<td>{$item.users}</td>
 		<td>{$item.users_max}</td>
 		<td>{if $item.modes}+{$item.modes}{else}&nbsp;{/if}</td>

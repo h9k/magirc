@@ -6,11 +6,8 @@ class Denora {
 	var $db = null;
 	var $ircd = null;
 
-	function Denora() {
+	function Denora($ircd) {
 		$this->db = new Denora_DB();
-	}
-	
-	function loadProtocol($ircd) {
 		require("lib/magirc/denora/protocol/$ircd.inc.php");
 		$this->ircd = new Protocol;
 	}

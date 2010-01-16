@@ -22,7 +22,7 @@ class Magirc {
 			$this->displayError('Database table missing. Please run setup.');
 		}
 		$this->cfg = new Config();
-		$this->denora = new Denora;
+		$this->denora = new Denora($this->cfg->getParam('ircd_type'));
 	}
 	
 	// Returns session status

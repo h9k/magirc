@@ -165,21 +165,18 @@ else {
 
 // Fetch data from database
 try {
-	$this->denora->db->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-	$stmt = $this->denora->db->pdo->prepare("SELECT `id` FROM `{$table}` WHERE `year` = :year AND month = :month AND day = :day");
-	$stmt->bindParam(':year', $start['year'], PDO::PARAM_INT);
-	$stmt->bindParam(':month', $start['month'], PDO::PARAM_INT);
-	$stmt->bindParam(':day', $start['day'], PDO::PARAM_INT);
+	$stmt = $this->denora->db->prepare("SELECT `id` FROM `{$table}` WHERE `year` = :year AND month = :month AND day = :day");
+	$stmt->bindParam(':year', $start['year'], SQL_INT);
+	$stmt->bindParam(':month', $start['month'], SQL_INT);
+	$stmt->bindParam(':day', $start['day'], SQL_INT);
 	$stmt->execute();
 	$sid = $stmt->fetchColumn();
 
-	$stmt->bindParam(':year', $end['year'], PDO::PARAM_INT);
-	$stmt->bindParam(':month', $end['month'], PDO::PARAM_INT);
-	$stmt->bindParam(':day', $end['day'], PDO::PARAM_INT);
+	$stmt->bindParam(':year', $end['year'], SQL_INT);
+	$stmt->bindParam(':month', $end['month'], SQL_INT);
+	$stmt->bindParam(':day', $end['day'], SQL_INT);
 	$stmt->execute();
 	$eid = $stmt->fetchColumn();
-	#echo "<pre>Start $sid End $eid"; exit;
 } catch(PDOException $e) {
 	$this->displayError($e->getMessage());
 }
