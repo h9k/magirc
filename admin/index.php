@@ -13,9 +13,6 @@ $denora_conf = '../conf/denora.cfg.php';
 if (!file_exists($magirc_conf)) {
 	die('Please configure conf/magirc.cfg.dist.php and rename it to conf/magirc.cfg.php');
 }
-if (!file_exists($denora_conf)) {
-	die('Please configure conf/denora.cfg.dist.php and rename it to conf/denora.cfg.php');
-}
 if (!is_writable('tmp/')) {
 	die("The 'admin/tmp/' directory is not writable. Please chmod it to 0777.");
 }
@@ -46,7 +43,7 @@ if (isset($_SESSION['loginUsername'])) {
 if ($page == 'login' && isset($_POST['login'])) {
 	$username = $_POST['username'];
 	$password = $_POST['password'];
-	if ($admin->denora->login($username, $password)) {
+	if ($admin->login($username, $password)) {
 		$_SESSION['loginUsername'] = $username;
 		$_SESSION['loginIP'] = $_SERVER['REMOTE_ADDR'];
 		$page = 'home';

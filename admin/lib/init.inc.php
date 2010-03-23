@@ -2,11 +2,10 @@
 // $Id$
 
 if (get_magic_quotes_gpc()) {
-    function stripslashes_deep($value)
-    {
+    function stripslashes_deep($value) {
         $value = is_array($value) ?
-                    array_map('stripslashes_deep', $value) :
-                    stripslashes($value);
+                array_map('stripslashes_deep', $value) :
+                stripslashes($value);
 
         return $value;
     }
@@ -25,27 +24,27 @@ require('../lib/magirc/denora/Denora.class.php');
 
 // database configuration
 class Magirc_DB extends DB {
-	function Magirc_DB() {
-		if (file_exists('../conf/magirc.cfg.php')) {
-			include('../conf/magirc.cfg.php');
-		} else {
-			die ('magirc.cfg.php configuration file missing');
-		}
-		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Magirc database<br />'.$this->error);
-	}
+    function Magirc_DB() {
+        if (file_exists('../conf/magirc.cfg.php')) {
+            include('../conf/magirc.cfg.php');
+        } else {
+            die ('magirc.cfg.php configuration file missing');
+        }
+        $dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+        $this->connect($dsn, $db['username'], $db['password']) || die('Error opening Magirc database<br />'.$this->error);
+    }
 }
 
 class Denora_DB extends DB {
-	function Denora_DB() {
-		if (file_exists('../conf/denora.cfg.php')) {
-			include('../conf/denora.cfg.php');
-		} else {
-			die ('denora.cfg.php configuration file missing');
-		}
-		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Denora database<br />'.$this->error);
-	}
+    function Denora_DB() {
+        if (file_exists('../conf/denora.cfg.php')) {
+            include('../conf/denora.cfg.php');
+        } else {
+            die ('denora.cfg.php configuration file missing');
+        }
+        $dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+        $this->connect($dsn, $db['username'], $db['password']) || die('Error opening Denora database<br />'.$this->error);
+    }
 }
 
 ?>

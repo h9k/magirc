@@ -26,10 +26,10 @@
 
 {if !$status.error}
 
-	<pre>Testing MagIRC Database connection... {if !$status.MagIRC_db}<span style="color:green;">Passed</span></pre>
-	{elseif $status.MagIRC_db == 'new'}<span style="color:orange;">Unconfigured</span></pre>
+	<pre>Testing MagIRC Database connection... {if !$status.magirc_db}<span style="color:green;">Passed</span></pre>
+	{elseif $status.magirc_db == 'new'}<span style="color:orange;">Unconfigured</span></pre>
 		{include file="_db_form.tpl"}
-	{else}<span style="color:red">{$status.MagIRC_db}</span>
+	{else}<span style="color:red">{$status.magirc_db}</span>
 		{include file="_db_form.tpl"}
 	{/if}
 	{if $smarty.post.savedb}

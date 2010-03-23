@@ -64,3 +64,18 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('show_exec_time', '0'),
 ('show_validators', '0'),
 ('base_url', '');
+
+--
+-- Table structure for table `magirc_admin`
+--
+
+CREATE TABLE IF NOT EXISTS `magirc_admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(16) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `realname` varchar(32) NOT NULL,
+  `email` varchar(32) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
