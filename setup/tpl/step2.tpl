@@ -17,7 +17,7 @@
 	    <tr>
 	      <td width="100"><label>User</label></td>
 	      <td width="150"><input type="text" name="username" id="username" tabindex="1" /></td>
-	      <td width="50" rowspan="2" align="center" valign="middle"><input type="submit" name="login" id="login" value="Login" tabindex="3" /></td>
+	      <td width="50" rowspan="2" align="center" valign="middle"><input type="submit" name="login" id="login" value="Create" tabindex="3" /></td>
 	    </tr>
 	    <tr>
 	      <td width="100"><label>Password</label></td>

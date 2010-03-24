@@ -14,28 +14,18 @@
 		<th scope="col">Modes</th>
 		<th scope="col">Mask</th>
 	</tr>
-	{foreach from=$users item=user}
+	{foreach from=$users item=user name=users}
 	<tr>
-		<td valign="middle"><strong>%s</strong></td>
-		<td valign="middle">%s</td>
-		<td valign="middle">%s</td>
-		<td><a href="#">%s</a></td>
-		<td>%s</td>
-		<td>%s</td>
+		<td valign="middle"><strong>{$smarty.foreach.users.iteration}.</strong></td>
+		<td valign="middle"></td>
+		<td valign="middle"></td>
+		<td align="left"><a href="#">{$user.nick}</a></td>
+		<td align="left">{$user.modes}</td>
+		<td align="left">{$user.username}@{$user.host}</td>
 	</tr>
 	<tr>
 		<td colspan="4"></td>
 	</tr>
-	{*
-	$x + 1,
-	$user_status,
-	$countryflag,
-	urlencode(html_entity_decode($chan)),
-	$whoinlist[$x]['nick'],
-	$whoinlist[$x]['nick'],
-	$whoinlist[$x]['modes'],
-	$whoinlist[$x]['username']."@".$whoinlist[$x]['host'])
-	*}
 	{/foreach}
 </table>
 
