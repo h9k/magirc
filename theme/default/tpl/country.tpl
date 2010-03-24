@@ -7,7 +7,7 @@
 
 <div class="box">
 <div class="boxtitle">Country statistics</div>
-<img src="graph/pie/?mode=country&chan=global" alt="" /><br />
+<img src="?section=graph&amp;graph=pie&amp;mode=country&chan=global" alt="" /><br />
 </div>
 
 </div>

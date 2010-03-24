@@ -64,7 +64,7 @@ class CanvasGraph extends Graph {
 
             // Should we do any final image transformation
             if( $this->iImgTrans ) {
-                if( !class_exists('ImgTrans') ) {
+                if( !class_exists('ImgTrans',false) ) {
                     require_once('jpgraph_imgtrans.php');
                 }
 

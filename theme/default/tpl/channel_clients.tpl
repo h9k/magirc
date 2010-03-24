@@ -6,7 +6,7 @@
 
 <div class="box">
 <div class="boxtitle">Client Statistics</div>
-<img src="graph/pie/?mode=version&amp;chan={$smarty.get.channel|escape:"url"}" alt="" />
+<img src="?section=graph&amp;graph=pie&amp;mode=version&amp;chan={$smarty.get.channel|escape:"url"}" alt="" />
 </div>
 
 <pre>Under construction...</pre>

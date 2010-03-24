@@ -18,7 +18,7 @@ require_once('jpgraph_legend.inc.php');
 require_once('gd_image.inc.php');
 
 // Version info
-define('JPG_VERSION','3.0.6');
+define('JPG_VERSION','3.0.7');
 
 // Minimum required PHP version
 define('MIN_PHPVERSION','5.1.0');
@@ -724,7 +724,7 @@ class Graph {
         }
 
         if( $cl instanceof Text ) $this->AddText($aPlot);
-        elseif( class_exists('PlotLine') && ($cl instanceof PlotLine) )  $this->AddLine($aPlot);
+        elseif( class_exists('PlotLine',false) && ($cl instanceof PlotLine) )  $this->AddLine($aPlot);
         elseif( class_exists('PlotBand',false) && ($cl instanceof PlotBand) ) $this->AddBand($aPlot);
         elseif( class_exists('IconPlot',false) && ($cl instanceof IconPlot) ) $this->AddIcon($aPlot);
         elseif( class_exists('GTextTable',false) && ($cl instanceof GTextTable) ) $this->AddTable($aPlot);
@@ -1363,7 +1363,7 @@ class Graph {
                 // to be converted to real arguments.
                 $tmp = str_replace('?','%3f',$baseimg);
                 $htmlwrap = $this->GetHTMLImageMap($aCSIMName)."\n".
-                            '<img src="'.CSIMCACHE_HTTP_DIR.$tmp.'" ismap="ismap" usemap="#'.$aCSIMName.'" border="'.$aBorder.'" width="'.$this->img->width.'" height="'.$this->img->height."\" alt=\"".$this->iCSIMImgAlt."\" />\n";
+                            '<img src="'.CSIMCACHE_HTTP_DIR.$tmp.'" ismap="ismap" usemap="#'.$aCSIMName.' width="'.$this->img->width.'" height="'.$this->img->height."\" alt=\"".$this->iCSIMImgAlt."\" />\n";
 
                 if($fh =  @fopen($basecsim,'w') ) {
                     fwrite($fh,$htmlwrap);
@@ -1398,7 +1398,7 @@ class Graph {
             $aScriptName=basename($_SERVER['PHP_SELF']);
         }
         $urlarg = $this->GetURLArguments(true);
-        return "<img src=\"".$aScriptName.'?'.$urlarg."\" ismap=\"ismap\" usemap=\"#".$aCSIMName.'" border="'.$aBorder.'" width="'.$this->img->width.'" height="'.$this->img->height."\" alt=\"".$this->iCSIMImgAlt."\" />\n";
+        return "<img src=\"".$aScriptName.'?'.$urlarg."\" ismap=\"ismap\" usemap=\"#".$aCSIMName.'" height="'.$this->img->height."\" alt=\"".$this->iCSIMImgAlt."\" />\n";
     }
 
     function GetTextsYMinMax($aY2=false) {

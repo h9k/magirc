@@ -381,7 +381,7 @@ class LinePlot extends Plot{
                 // Remove first and last coordinate before drawing the line
                 // sine we otherwise get the vertical start and end lines which
                 // doesn't look appropriate
-                $img->Polygon(array_slice( array_slice($cord,2), count($cord)-4 ));
+                $img->Polygon(array_slice($cord,2,count($cord)-4));
             }
         }
 

@@ -11,6 +11,8 @@
 	{/if}
 {else}
 	<span style="color:green;">OK</span> (version {$version})</pre>
+{/if}
+{if $check || !$result}
 	<p>You must now create a MagIRC admin user</p>
 	<form id="login" method="post" action="?step=3">
 	  <table width="350" border="0" cellpadding="2" cellspacing="0">

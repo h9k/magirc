@@ -41,7 +41,7 @@ class Denora_DB extends DB {
         if (file_exists('conf/denora.cfg.php')) {
             include('conf/denora.cfg.php');
         } else {
-            die ('<strong>MagIRC</strong> is not properly configured<br />Please run <a href="setup/">Setup</a>');
+            die ('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
         }
         $dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
         $this->connect($dsn, $db['username'], $db['password']) || die('Error opening Denora database<br />'.$this->error);

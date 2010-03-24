@@ -63,9 +63,9 @@
 
 <div class="box" style="float:right;">
 <div class="boxtitle">Today</div>
-<img src="graph/line/?mode=users&amp;size=small" alt="" /><br />
-<img src="graph/line/?mode=channels&amp;size=small" alt="" /><br />
-<img src="graph/line/?mode=servers&amp;size=small" alt="" />
+<img src="?section=graph&amp;graph=line&amp;mode=users&amp;size=small" alt="" /><br />
+<img src="?section=graph&amp;graph=line&amp;mode=channels&amp;size=small" alt="" /><br />
+<img src="?section=graph&amp;graph=line&amp;mode=servers&amp;size=small" alt="" />
 </div>
 
 <div class="box" style="float:left;">

@@ -594,7 +594,7 @@ class PiePlot {
                 // The CakeSlice method draws a full circle in case of start angle = end angle
                 // for pie slices we want this in case the slice have a value larger than 99% of the
                 // total sum
-                if( abs($_ea-$_sa) > 0.1 || $d > 0 ) {
+                if( abs($_ea-$_sa) >= 1 || $d == $sum ) {
                     $img->CakeSlice($xcm,$ycm,$radius-1,$radius-1,$_sa,$_ea,$slicecolor,$arccolor);
                 }
             }
@@ -1275,7 +1275,8 @@ class PieGraph extends Graph {
         foreach($this->plots as $p ) {
             $csim .= $p->GetCSIMareas();
         }
-        //$csim.= $this->legend->GetCSIMareas();
+        
+        $csim.= $this->legend->GetCSIMareas();
         if (preg_match_all("/area shape=\"(\w+)\" coords=\"([0-9\, ]+)\"/", $csim, $coords)) {
             $this->img->SetColor($this->csimcolor);
             $n = count($coords[0]);

@@ -132,10 +132,6 @@ class JpGraphError {
     }    
 }
 
-// Setup the default handler
-global $__jpg_OldHandler;
-$__jpg_OldHandler = set_exception_handler(array('JpGraphException','defaultHandler'));
-
 class JpGraphException extends Exception {
     // Redefine the exception so message isn't optional
     public function __construct($message, $code = 0) {
@@ -183,6 +179,10 @@ class JpGraphExceptionL extends JpGraphException {
         parent::__construct($errtxt->Get($errcode,$a1,$a2,$a3,$a4,$a5), 0);
     }
 }
+
+// Setup the default handler
+global $__jpg_OldHandler;
+$__jpg_OldHandler = set_exception_handler(array('JpGraphException','defaultHandler'));
 
 //
 // First of all set up a default error handler
