@@ -2,12 +2,12 @@
 // $Id$
 
 class Admin {
-    var $tpl = null;
-    var $db = null;
-    var $denora = null;
-    var $cfg = null;
+    public $tpl;
+    public $db;
+    public $denora;
+    public $cfg;
 
-    function Admin() {
+    function __construct() {
         $this->tpl = new Smarty();
         $this->tpl->template_dir = 'tpl';
         $this->tpl->compile_dir = 'tmp';
@@ -16,6 +16,35 @@ class Admin {
         $this->db = new Magirc_DB();
         #$this->denora = new Denora();
         $this->cfg = new Config();
+        $this->ckeditor = new CKEditor();
+        $this->ckeditor->basePath = '../js/ckeditor/';
+        $this->ckeditor->returnOutput = true;
+        $this->ckeditor->config['height'] = 300;
+        $this->ckeditor->config['width'] = 740;
+        #$this->ckeditor->config['baseHref'] = URL_FRONTEND;
+       # $this->ckeditor->config['contentsCss'] = array(URL_FRONTEND.'css/default.css', URL_FRONTEND.'css/editor.css');
+        $this->ckeditor->config['docType'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+        $this->ckeditor->config['emailProtection'] = 'encode';
+        $this->ckeditor->config['entities'] = true;
+        $this->ckeditor->config['forcePasteAsPlainText'] = true;
+        $this->ckeditor->config['language'] = 'en';
+        $this->ckeditor->config['resizeEnabled'] = true;
+        $this->ckeditor->config['toolbar'] = array(
+            array('Maximize','ShowBlocks','Preview','Templates'),
+            array('Cut','Copy','PasteText','-','Print','Scayt'),
+            array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'),
+            #array('Source'),
+            #'/',
+            array('Link','Unlink','Anchor'),
+            array('Image','Table','HorizontalRule','Smiley','SpecialChar'),
+            '/',
+            array('Format','FontSize','TextColor','BGColor'),
+            array('Bold','Italic','Underline','Strike','-','Subscript','Superscript'),
+            #'/',
+            array('NumberedList','BulletedList','-','Outdent','Indent','Blockquote'),
+            array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock')
+        );
+        #CKFinder::SetupCKEditor($this->ckeditor, '../js/ckfinder/');
     }
 
     // login function
@@ -28,11 +57,11 @@ class Admin {
 
     // Returns session status
     function sessionStatus() {
-        if (!isset($_SESSION["loginUsername"])) {
+        if (!isset($_SESSION["username"])) {
             $_SESSION["message"] = "Access denied";
             return false;
         }
-        if (!isset($_SESSION["loginIP"]) || ($_SESSION["loginIP"] != $_SERVER["REMOTE_ADDR"])) {
+        if (!isset($_SESSION["ip"]) || ($_SESSION["ip"] != $_SERVER["REMOTE_ADDR"])) {
             $_SESSION["message"] = "Access denied";
             return false;
         }

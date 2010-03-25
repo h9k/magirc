@@ -1,0 +1,19 @@
+/* $Id: yui_override.css 226 2010-02-27 21:07:42Z hosting9000.com $ */
+
+@CHARSET "UTF-8";
+
+#autocomplete{float:right; margin:0 10px; padding:0;}
+#autocomplete img{vertical-align:middle;}
+#dt_input{position:static;width:300px;}
+#dt_ac_container{display:none;}
+#dynamicdata a, a:visited{color:#000099;text-decoration:underline;}
+#dynamicdata a:hover, a:active{color:#000033;text-decoration:none;}
+div#main h2 a{display:inline;}
+div.yuimenu.bd{zoom:normal;}
+#calendarmenu{position:absolute;}
+#calendarcontainer{padding:10px;}
+#personalinfo{border:solid 1px #666;padding:.5em;}
+#calendarpicker{vertical-align:baseline;}
+div.field{padding:.25em;}
+input#year{width:4em;}
+#tabs img{vertical-align:middle;}

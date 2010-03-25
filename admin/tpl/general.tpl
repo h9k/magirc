@@ -1,7 +1,7 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-<div class="page_title">General Settings</div>
+<h2>General Settings</h2>
 <form id="general" name="general" method="post" action="">
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
@@ -21,9 +21,7 @@
       <td align="left"><em>English</em></td>
     </tr>
   </table>
-  <p><strong>Welcome Message</strong><br />You can welcome your users, describe your network, and put whatever information you want in there.<br />
-    <textarea name="msg_welcome" cols="64" rows="16" id="msg_welcome" tabindex="5">{$config.msg_welcome}</textarea>
-  </p>
+  <p><strong>Welcome Message</strong><br />You can welcome your users, describe your network, and put whatever information you want in there.<br />{$editor}</p>
   <p align="right">
     <input type="submit" name="button" id="button" value="Save" tabindex="6" />
   </p>

@@ -17,10 +17,11 @@ pre {
 }
 
 div#header {
-	height: 50px;
+	height: 75px;
 	border-bottom: 2px solid #0066CC;
 	background:#FFFFFF url("../img/header_bg.png") no-repeat right;
-	padding-bottom: 3px;
+	margin:0;
+        padding:0;
 }
 
 div#content {

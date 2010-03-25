@@ -2,7 +2,7 @@
 {include file="_header.tpl"}
 
 {if $message}<pre>{$message}</pre>{/if}
-<div class="page_title">Login to MagIRC</div>
+<h2>Login to MagIRC</h2>
 <form id="login" method="post" action="?page=login">
   <table width="350" border="0" cellpadding="2" cellspacing="0">
     <tr>

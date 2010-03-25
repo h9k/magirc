@@ -1,7 +1,7 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-<div class="page_title">Welcome, {$smarty.session.loginUsername}</div>
+<h2>Welcome, {$smarty.session.username}</h2>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td valign="top"><img src="img/screenshot.png" alt="" width="175" height="287" /></td>

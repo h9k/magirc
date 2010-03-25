@@ -1,6 +1,7 @@
 {* $Id$ *}
 {include file="_header.tpl"}
-<div class="page_title">Product Registration</div>
+
+<h2>Product Registration</h2>
 <form id="registration" method="post" action="http://denorastats.org/register.php">
       <table border="0" cellspacing="2" cellpadding="2">
         <tr>

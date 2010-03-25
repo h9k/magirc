@@ -1,7 +1,7 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-<div class="page_title">Documentation</div>
+<h2>Documentation</h2>
 <pre>{$text}</pre>
 
 {include file="_footer.tpl"}

@@ -9,8 +9,8 @@
 </head>
 <body>
 <div id="header">
-  <div style="width:750px; margin:0 auto; padding-top:12px; text-align:center; font-size:x-large;">
-    <strong>MagIRC</strong> Setup
+  <div style="width:750px; margin:0 auto; text-align:center; font-size:x-large;">
+    <img alt="MagIRC" src="img/magirc.png" />
   </div>
 </div>
 <div id="content">

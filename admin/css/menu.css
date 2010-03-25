@@ -1,0 +1,70 @@
+/* $Id: menu.css 227 2010-02-28 09:33:41Z hosting9000.com $ */
+
+@CHARSET "UTF-8";
+
+div.menu_title {
+    color: white;
+    margin: 5px 0 0 5px;
+}
+
+div.menu ul.level1, div.menu ul.level2, div.menu ul.level3 {
+	padding:0;
+	margin:0;
+	list-style-type:none;
+}
+div.menu ul.level1 li, div.menu ul.level2 li, div.menu ul.level3 li {
+	padding:0;
+	margin:0;
+	list-style-type:none;
+}
+div.menu ul.level1 li.active {
+	background-color:#F0F0F0;
+}
+div.menu ul.level1 a, div.menu ul.level2 a, div.menu ul.level3 a {
+	display:block;
+	text-decoration:none;
+	color:#666666;
+}
+div.menu ul.level1 a {
+	padding:4px 0px 4px 5px;
+	border-top:1px solid silver;
+}
+div.menu ul.level2 a {
+	padding:2px 0px 2px 25px;
+	background-color:#F0F0F0;
+}
+div.menu ul.level3 a {
+	padding:2px 0px 2px 45px;
+	background-color:#F0F0F0;
+}
+div.menu ul.level1 a:hover, div.menu ul.level2 a:hover, div.menu ul.level3 a:hover {
+	color:black;
+	background-color:#E6F2FF;
+}
+div.menu img{vertical-align:middle;}
+
+
+div#toolbar ul {
+	padding:0;
+	margin:0;
+	list-style-type:none;
+}
+div#toolbar ul li {
+        padding:0;
+        margin:0;
+        float: left;
+        list-style-type:none;
+}
+div#toolbar ul a {
+	display:block;
+	text-decoration:none;
+	color:#666666;
+        padding:5px;
+        height:20px;
+	border-right:1px dashed #CCCCCC;
+}
+div#toolbar ul a:hover {
+	color:black;
+	background-color:#E6F2FF;
+}
+div#toolbar img{vertical-align:middle;}

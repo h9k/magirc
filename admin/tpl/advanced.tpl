@@ -1,7 +1,7 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-<div class="page_title">Advanced Settings</div>
+<h2>Advanced Settings</h2>
 <form id="advanced" name="advanced" method="post" action="">
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>

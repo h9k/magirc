@@ -34,7 +34,7 @@ if ($admin->cfg->getParam('debug_mode') < 1) {
 	//$admin->tpl->debugging = true;
 }
 
-if (isset($_SESSION['loginUsername'])) {
+if (isset($_SESSION['username'])) {
 	$page = (isset($_GET['page'])) ? $_GET['page'] : 'home';
 } else {
 	$page = (isset($_GET['page'])) ? $_GET['page'] : 'login';
@@ -44,8 +44,8 @@ if ($page == 'login' && isset($_POST['login'])) {
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	if ($admin->login($username, $password)) {
-		$_SESSION['loginUsername'] = $username;
-		$_SESSION['loginIP'] = $_SERVER['REMOTE_ADDR'];
+		$_SESSION['username'] = $username;
+		$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
 		$page = 'home';
 	} else {
 		$_SESSION['message'] = "Could not connect to the admin panel as '{$username}'";
@@ -56,9 +56,9 @@ if ($page == 'login' && isset($_POST['login'])) {
 
 if ($page == 'logout') {
 	$message = "";
-	if (isset($_SESSION["loginUsername"])) {
-		$message .= "{$_SESSION["loginUsername"]}, thanks for using phpDenora.";
-		unset($_SESSION["loginUsername"]);
+	if (isset($_SESSION["username"])) {
+		$message .= "{$_SESSION["username"]}, thanks for using phpDenora.";
+		unset($_SESSION["username"]);
 	}
 	if (isset($_SESSION["message"])) {
 		$message .= $_SESSION["message"];
