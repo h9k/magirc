@@ -25,7 +25,8 @@ require_once('lib/magirc/denora/Denora.class.php');
 
 // database configuration
 class Magirc_DB extends DB {
-    function Magirc_DB() {
+    function __construct() {
+        parent::__construct();
         if (file_exists('conf/magirc.cfg.php')) {
             include('conf/magirc.cfg.php');
         } else {
@@ -37,7 +38,8 @@ class Magirc_DB extends DB {
 }
 
 class Denora_DB extends DB {
-    function Denora_DB() {
+    function __construct() {
+        parent::__construct();
         if (file_exists('conf/denora.cfg.php')) {
             include('conf/denora.cfg.php');
         } else {

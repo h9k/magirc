@@ -17,12 +17,12 @@ define('SQL_STR', PDO::PARAM_STR);
 
 class DB {
 
-    var $pdo = null;
-    var $result = null;
-    var $error = null;
-    var $record = null;
+    private $pdo;
+    private $result;
+    public $error;
+    public $record;
 
-    function DB() {
+    function __construct() {
 
     }
 
@@ -95,6 +95,13 @@ class DB {
     function numRows() {
         try {
             return $this->result->rowCount();
+        } catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+    function fetchColumn() {
+        try {
+            return $this->result->fetchColumn();
         } catch(PDOException $e) {
             die($e->getMessage());
         }

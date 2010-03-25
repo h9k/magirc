@@ -49,7 +49,7 @@ if ($mode == "version" && $chan == "global") {
 	}
 	$query = "SELECT COUNT(nickid) FROM `user` WHERE online=\"Y\" ".$a1.";";
 	$this->denora->db->query($query);
-	$sum = $this->denora->db->result->fetchColumn();
+	$sum = $this->denora->db->fetchColumn();
 	$this->denora->db->query("SELECT `user`.ctcpversion, COUNT(*) AS version_count ".
 		"FROM `user` ".
 		"WHERE `user`.online=\"Y\" ".
@@ -75,7 +75,7 @@ if ($mode == "version" && $chan == "global") {
 		"ORDER BY version_count DESC;");
 } elseif ($mode == "country" && $chan == "global") {
 	$this->denora->db->query("SELECT SUM(`tld`.`count`) AS 'sum' FROM `tld` WHERE `tld`.`count` > 0;");
-	$sum = $this->denora->db->result->fetchColumn();
+	$sum = $this->denora->db->fetchColumn();
 	$this->denora->db->query("SELECT `tld`.country, `tld`.count ".
 		"FROM `tld` WHERE `tld`.count != 0 ".
 		"ORDER BY `tld`.count DESC;");

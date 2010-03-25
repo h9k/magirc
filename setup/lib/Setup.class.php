@@ -2,10 +2,10 @@
 // $Id$
 
 class Setup {
-    var $db = null;
-    var $tpl = null;
+    public $db;
+    public $tpl;
 
-    function Setup() {
+    function __construct() {
         $this->tpl = new Smarty;
         $this->tpl->template_dir = 'tpl';
         $this->tpl->compile_dir = 'tmp';
