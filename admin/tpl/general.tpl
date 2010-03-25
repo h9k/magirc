@@ -3,6 +3,14 @@
 
 <h2>General Settings</h2>
 <form id="general" name="general" method="post" action="">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="general" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.general.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
       <td align="right">The <strong>name of your Network</strong></td>
@@ -21,10 +29,7 @@
       <td align="left"><em>English</em></td>
     </tr>
   </table>
-  <p><strong>Welcome Message</strong><br />You can welcome your users, describe your network, and put whatever information you want in there.<br />{$editor}</p>
-  <p align="right">
-    <input type="submit" name="button" id="button" value="Save" tabindex="6" />
-  </p>
+  <p><strong>Welcome Message</strong><br />You can welcome your users, describe your network, and put whatever information you want in there.<br /></p>{$editor}
 </form>
 
 {include file="_footer.tpl"}

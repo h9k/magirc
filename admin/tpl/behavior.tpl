@@ -3,6 +3,14 @@
 
 <h2>Behavior Settings</h2>
 <form id="behavior" name="behavior" method="post" action="">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="behavior" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.behavior.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
       <td align="right">Set the <strong>default ordering column</strong> for user/channel stat tables</td>
@@ -39,9 +47,6 @@
       <td align="left"><input name="search_min_chars" type="text" id="search_min_chars" value="{$config.search_min_chars}" size="2" maxlength="1" tabindex="5" /></td>
     </tr>
   </table>
-  <p align="right">
-    <input type="submit" name="button" id="button" value="Save" tabindex="6" />
-    </p>
 </form>
 
 {include file="_footer.tpl"}

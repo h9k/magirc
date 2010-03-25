@@ -3,6 +3,14 @@
 
 <h2>Integration Settings</h2>
 <form id="integration" name="integration" method="post" action="">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="integration" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.integration.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
       <td align="right">The <strong>URL parameter for the Netsplit.de features</strong>, usually your network name. </td>
@@ -60,9 +68,6 @@
       <td align="left"><input name="adsense_channel" type="text" id="adsense_channel" value="{$config.adsense_channel}" size="32" maxlength="1024" tabindex="10" /></td>
     </tr>
   </table>
-  <p align="right">
-    <input type="submit" name="button" id="button" value="Save" tabindex="11" />
-    </p>
 </form>
 
 {include file="_footer.tpl"}

@@ -3,6 +3,14 @@
 
 <h2>Advanced Settings</h2>
 <form id="advanced" name="advanced" method="post" action="">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="advanced" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.advanced.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
       <td align="right">Debug mode</td>
@@ -21,9 +29,6 @@
       <td align="left"><input name="show_validators" type="checkbox" id="show_validators" tabindex="3"{if $config.show_validators} checked="checked" {/if}/></td>
     </tr>
   </table>
-  <p align="right">
-    <input type="submit" name="button" id="button" value="Save" tabindex="22" />
-    </p>
 </form>
 
 {include file="_footer.tpl"}

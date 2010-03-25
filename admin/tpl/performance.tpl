@@ -3,6 +3,14 @@
 
 <h2>Performance Settings</h2>
 <form id="performance" name="performance" method="post" action="">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="performance" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.performance.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
       <td align="right">Enable the <strong>caching of graph images</strong>. This speeds up things a bit. </td>
@@ -38,9 +46,6 @@
       <td align="left"><input name="gzip" type="checkbox" id="gzip" tabindex="6" {if $config.gzip}checked="checked" {/if}/></td>
     </tr>
   </table>
-  <p align="right">
-    <input type="submit" name="button" id="button" value="Save" tabindex="7" />
-    </p>
 </form>
 
 {include file="_footer.tpl"}

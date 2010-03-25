@@ -20,22 +20,21 @@
       </div>
         <p>MagIRC version: <em>{$smarty.const.VERSION_FULL}</em><br />
         IRCd protocol: <em>{$config.ircd_type}</em><br />
-        Denora version: <em>{$version.denora}</em><br />
+        {*Denora version: <em>{$version.denora}</em><br />*}
         PHP version: <em>{$version.php}</em><br />
         Smarty version: <em>{$smarty.version}</em><br />
         MySQL client version: <em>{$version.sql_client}</em><br />
         </p>
-        <p>
+        {*<p>
         {if $version.denora eq 'unknown'}
 	  		Denora seems to be <span style="color:red;">down</span>. Please start your Denora server!
 		{else}
 			Denora seems to be <span style="color:green;">up</span>.
 		{/if}
-        </p>
+        </p>*}
       <table width="100%" cellpadding="5" cellspacing="2">
   <tr>
-    <td width="25%"
-     align="center" valign="bottom" bgcolor="#F0F0F0"><a href="?page=registration"><img src="img/register.png" alt="Product Registration" width="32" height="32" /><br />
+    <td width="25%" align="center" valign="bottom" bgcolor="#F0F0F0"><a href="?page=registration"><img src="img/register.png" alt="Product Registration" width="32" height="32" /><br />
       Register</a></td>
     <td width="25%" align="center" valign="bottom" bgcolor="#F0F0F0"><a href="http://www.magirc.org/"><img src="img/homepage.png" alt="Project Homepage" width="32" height="32" /><br />
       Homepage</a></td>

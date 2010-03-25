@@ -3,6 +3,14 @@
 
 <h2>Database Settings</h2>
 <form id="sql" name="sql" method="post" action="">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="sql" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.sql.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
       <td align="right">Username</td>
@@ -33,7 +41,6 @@
   {/if}
   {/if}
   </pre>
-  <p align="right"><input type="submit" name="button" id="button" value="Save" tabindex="7" /></p>
 </form>
 
 {include file="_footer.tpl"}

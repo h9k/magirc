@@ -21,8 +21,8 @@ class Admin {
         $this->ckeditor->returnOutput = true;
         $this->ckeditor->config['height'] = 300;
         $this->ckeditor->config['width'] = 740;
-        #$this->ckeditor->config['baseHref'] = URL_FRONTEND;
-       # $this->ckeditor->config['contentsCss'] = array(URL_FRONTEND.'css/default.css', URL_FRONTEND.'css/editor.css');
+        $this->ckeditor->config['baseHref'] = '../';
+        $this->ckeditor->config['contentsCss'] = array('../theme/'.$this->cfg->getParam('theme').'/css/styles.css', '../theme/'.$this->cfg->getParam('theme').'/css/editor.css');
         $this->ckeditor->config['docType'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
         $this->ckeditor->config['emailProtection'] = 'encode';
         $this->ckeditor->config['entities'] = true;
@@ -34,13 +34,11 @@ class Admin {
             array('Cut','Copy','PasteText','-','Print','Scayt'),
             array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'),
             #array('Source'),
-            #'/',
             array('Link','Unlink','Anchor'),
             array('Image','Table','HorizontalRule','Smiley','SpecialChar'),
             '/',
             array('Format','FontSize','TextColor','BGColor'),
             array('Bold','Italic','Underline','Strike','-','Subscript','Superscript'),
-            #'/',
             array('NumberedList','BulletedList','-','Outdent','Indent','Blockquote'),
             array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock')
         );

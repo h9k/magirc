@@ -18,13 +18,13 @@
 </head>
 <body class="yui-skin-sam">
 
-<div id="header"{if $smarty.session.ERR} style="background-color:#FFA0A0;"{elseif $smarty.session.MSG} style="background-color:#CCEEDD;"{/if}>
+<div id="header"{if $error} style="background-color:#FFA0A0;"{elseif $success} style="background-color:#CCEEDD;"{/if}>
 	<div id="top">
 		<a href="home/"><img alt="" src="img/magirc.png" /></a>
-                {if $smarty.session.ERR}
-                <div class="error"><h1>Failed</h1>{$smarty.session.ERR}</div>
-                {elseif $smarty.session.MSG}
-                <div class="success"><h1>Succeeded</h1>{$smarty.session.MSG}</div>
+                {if $error}
+                <div class="error"><h1>Failed</h1>Something wicked happened</div>
+                {elseif $success}
+                <div class="success"><h1>Succeeded</h1>The settings have been saved</div>
                 {/if}
 		<div style="float:right; padding-top:25px;">
 			<a href="{$config.net_url}" target="_blank">{$config.net_name}</a><br />

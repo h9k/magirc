@@ -1,4 +1,4 @@
-/* $Id: default.css 240 2010-03-06 17:24:02Z hosting9000.com $ */
+/* $Id$ */
 
 @CHARSET "UTF-8";
 
@@ -20,9 +20,7 @@ body {
     font-size:11px/1.5em;
 }
 
-img {
-    border:0px;
-}
+img{border:0;}
 
 h1 {
     font-family:"Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", Sans-Serif;
@@ -93,13 +91,16 @@ div#toolbar {
 div#content {
     float:left;
     width:750px;
-    min-height:500px;
+    min-height:600px;
     background-image:url('../img/bg_path.png');
     background-repeat:repeat-x;
     background-color:white;
     border:thin gray solid;
     padding:5px;
     margin:5px;
+}
+div#content a {
+    text-decoration:none;
 }
 
 div#login {
@@ -131,6 +132,17 @@ div.config {
     padding:10px;
     border:1px dashed #CCCCCC;
     background-color:#FCFCFC;
+}
+
+div.warning {
+    width: 300px;
+    background-image:url('../img/warning.png');
+    background-repeat:no-repeat;
+    background-position: 2% 50%;
+    background-color:#ffffc0;
+    padding: 5px 5px 5px 45px;
+    margin: 10px auto;
+    border-bottom: 1px solid orange;
 }
 
 div.clear{clear:both;}
@@ -291,43 +303,6 @@ div.box {
     margin:auto;
     text-align:center;
 }
-
-div.choiceh {
-    border:1px solid #CCCCCC;
-    margin:5px 0px 0px 0px;
-    padding:3px;
-    background-color:#E6F2FF;
-}
-div.choiceb {
-    border-right:1px solid #CCCCCC;
-    border-bottom:1px solid #CCCCCC;
-    border-left:1px solid #CCCCCC;
-    margin:0px 0px 5px 0px;
-    padding:5px;
-}
-
-table.buy {
-    width:500px;
-}
-table.buy th {
-    white-space:nowrap;
-    text-align:right;
-    width:100px;
-}
-
-div.thumb {
-    float:left;
-    margin:5px 10px 5px 10px;
-    padding:5px;
-    display:block;
-    background-color:#F0F0F0;
-    text-align:center;
-    width:220px;
-    /*height:150px;*/
-    font-size:8pt;
-}
-div.thumb:hover {background-color:#E6F2FF;}
-div.thumb a {display:inline;}
 
 .field_error {
     border-bottom: 2px solid red;

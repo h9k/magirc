@@ -3,6 +3,14 @@
 
 <h2>Product Registration</h2>
 <form id="registration" method="post" action="http://denorastats.org/register.php">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="registration" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.registration.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
       <table border="0" cellspacing="2" cellpadding="2">
         <tr>
           <td align="right"><strong>Network Name:</strong></td>
@@ -32,7 +40,7 @@
 		  <input type="hidden" name="homepage" value="http://{$server.HTTP_HOST}{$server.REQUEST_URI}" />
 		  <input type="hidden" name="version" value="{$smarty.const.VERSION_FULL}" />
 		  <input type="hidden" name="ircd" value="{$config.ircd_type}" />
-            <input type="submit" name="Submit" value="Submit" /></td>
+          </td>
         </tr>
       </table>
     </form>

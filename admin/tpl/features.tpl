@@ -3,6 +3,14 @@
 
 <h2>Feature Settings</h2>
 <form id="features" name="features" method="post" action="">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="features" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.features.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
       <td align="right">Enables <strong>online status and country lookups</strong> in user listings. This will require an additional query for each user, set this to false if you want to keep sql load low</td>
@@ -41,9 +49,6 @@
       <td align="left"><input name="remote" type="checkbox" id="remote" tabindex="12" {if $config.remote}checked="checked" {/if}/></td>
     </tr>
   </table>
-  <p align="right">
-    <input type="submit" name="button" id="button" value="Save" tabindex="13" />
-    </p>
 </form>
 
 {include file="_footer.tpl"}

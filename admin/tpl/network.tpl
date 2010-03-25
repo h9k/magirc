@@ -3,6 +3,14 @@
 
 <h2>Network Settings</h2>
 <form id="network" name="network" method="post" action="">
+
+<div id="toolbar">
+    <input type="hidden" name="form" value="network" />
+    <ul>
+        <li><a href="#" onclick="javascript:document.network.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+    </ul>
+</div>
+
   <table width="100%" border="0" cellspacing="0" cellpadding="5">
     <tr>
       <td align="right"><strong>IRCd Server Type</strong></td>
@@ -25,9 +33,6 @@
       <td align="left"><input name="hide_chans" type="text" id="hide_chans" value="{$config.hide_chans}" size="32" maxlength="1024" tabindex="5" /></td>
     </tr>
   </table>
-  <p align="right">
-    <input type="submit" name="button" id="button" value="Save" tabindex="6" />
-    </p>
 </form>
 
 {include file="_footer.tpl"}
