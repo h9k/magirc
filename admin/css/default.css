@@ -136,6 +136,7 @@ div.config {
 
 div.warning {
     width: 300px;
+    min-height:35px;
     background-image:url('../img/warning.png');
     background-repeat:no-repeat;
     background-position: 2% 50%;

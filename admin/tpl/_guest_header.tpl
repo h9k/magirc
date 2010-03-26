@@ -1,4 +1,4 @@
-{* $Id$ *}
+{* $Id: _header.tpl 65 2010-03-25 22:42:26Z hal9000 $ *}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -34,13 +34,11 @@
 	</div>
 </div>
 
-<div id="bottom"{if !$smarty.session.username} style="width:400px;"{/if}>
-{if $smarty.session.username}
+<div id="bottom">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
   <tr>
     <td width="185" valign="top">
 	{include file="_menu.tpl"}
     </td>
     <td valign="top">
-{/if}
-	<div id="content"{if !$smarty.session.username} style="width:100%; min-height:200px;"{/if}>
+	<div id="content">
