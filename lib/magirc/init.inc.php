@@ -21,6 +21,7 @@ require_once('lib/smarty/Smarty.class.php');
 require_once('lib/magirc/DB.class.php');
 require_once('lib/magirc/Config.class.php');
 require_once('lib/magirc/Magirc.class.php');
+require_once('lib/magirc/anope/Anope.class.php');
 require_once('lib/magirc/denora/Denora.class.php');
 
 // database configuration
@@ -34,6 +35,19 @@ class Magirc_DB extends DB {
         }
         $dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
         $this->connect($dsn, $db['username'], $db['password']) || die('Error opening Magirc database<br />'.$this->error);
+    }
+}
+
+class Anope_DB extends DB {
+    function __construct() {
+        parent::__construct();
+        if (file_exists('conf/anope.cfg.php')) {
+            include('conf/anope.cfg.php');
+        } else {
+            die ('<strong>MagIRC</strong> is not properly configured<br />Please configure the Anope database in the <a href="admin/">Admin Panel</a>');
+        }
+        $dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+        $this->connect($dsn, $db['username'], $db['password']) || die('Error opening Anope database<br />'.$this->error);
     }
 }
 

@@ -5,6 +5,7 @@ class Magirc {
     public $db;
     public $cfg;
     public $tpl;
+    public $anope;
     public $denora;
 
     function __construct() {
@@ -22,6 +23,7 @@ class Magirc {
             $this->displayError('Database table missing. Please run setup.');
         }
         $this->cfg = new Config();
+        $this->anope = new Anope($this->cfg->getParam('ircd_type'));
         $this->denora = new Denora($this->cfg->getParam('ircd_type'));
     }
 
@@ -61,7 +63,8 @@ class Magirc {
         if (file_exists($inc_file)) {
             require_once($inc_file);
         } else {
-            if ($content = $this->getPage($section)) {
+            $content = $this->getPage($section);
+            if ($content) {
                 $this->tpl->assign('content', $content);
                 $this->tpl->display('generic.tpl');
             } else {
