@@ -28,9 +28,16 @@ require_once('lib/magirc/denora/Denora.class.php');
 class Magirc_DB extends DB {
     function __construct() {
         parent::__construct();
+        $error = false;
         if (file_exists('conf/magirc.cfg.php')) {
             include('conf/magirc.cfg.php');
         } else {
+            $error = true;
+        }
+        if (!isset($db)) {
+            $error = true;
+        }
+        if ($error) {
             die ('<strong>MagIRC</strong> is not configured<br />Please run <a href="setup/">Setup</a>');
         }
         $dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
@@ -41,9 +48,16 @@ class Magirc_DB extends DB {
 class Anope_DB extends DB {
     function __construct() {
         parent::__construct();
+        $error = false;
         if (file_exists('conf/anope.cfg.php')) {
             include('conf/anope.cfg.php');
         } else {
+            $error = true;
+        }
+        if (!isset($db)) {
+            $error = true;
+        }
+        if ($error) {
             die ('<strong>MagIRC</strong> is not properly configured<br />Please configure the Anope database in the <a href="admin/">Admin Panel</a>');
         }
         $dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
@@ -54,9 +68,16 @@ class Anope_DB extends DB {
 class Denora_DB extends DB {
     function __construct() {
         parent::__construct();
+        $error = false;
         if (file_exists('conf/denora.cfg.php')) {
             include('conf/denora.cfg.php');
         } else {
+            $error = true;
+        }
+        if (!isset($db)) {
+            $error = true;
+        }
+        if ($error) {
             die ('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
         }
         $dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
