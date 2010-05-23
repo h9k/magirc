@@ -36,8 +36,7 @@ class Server extends Denora {
     }
 
     private function getServer($name) {
-        $server = $this->db->selectOne('server', array('server' => $name));
-        return @$server;
+        return $this->db->selectOne('server', array('server' => $name));
     }
 
     /*function getServers() {

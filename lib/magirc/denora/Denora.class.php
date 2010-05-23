@@ -8,8 +8,8 @@ class Denora {
     
     function __construct($ircd) {
         $this->db = new Denora_DB();
-        require("lib/magirc/denora/protocol/{$ircd}.inc.php");
-        $this->ircd = new Protocol;
+        require_once("lib/magirc/denora/protocol/{$ircd}.inc.php");
+        $this->ircd = new Protocol();
     }
 
     // login function
