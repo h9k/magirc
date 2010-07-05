@@ -39,5 +39,6 @@ if (isset($_POST['form'])) {
 $admin->tpl->assign('db_config_file', $db_config_file);
 $admin->tpl->assign('writable', is_writable($db_config_file));
 $admin->tpl->assign('db', $db);
+
 $admin->tpl->display('database.tpl');
 ?>

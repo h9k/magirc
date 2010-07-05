@@ -2,12 +2,12 @@
 {include file="_header.tpl"}
 
 <h2>Integration Settings</h2>
-<form id="integration" name="integration" method="post" action="">
+<form id="integration" method="post" action="">
 
 <div id="toolbar">
     <input type="hidden" name="form" value="integration" />
     <ul>
-        <li><a href="#" onclick="javascript:document.integration.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['integration'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 

@@ -2,12 +2,12 @@
 {include file="_header.tpl"}
 
 <h2>Database Settings</h2>
-<form id="sql" name="sql" method="post" action="">
+<form id="sql" method="post" action="">
 
 <div id="toolbar">
     <input type="hidden" name="form" value="sql" />
     <ul>
-        <li><a href="#" onclick="javascript:document.sql.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['sql'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 

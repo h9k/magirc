@@ -2,12 +2,12 @@
 {include file="_header.tpl"}
 
 <h2>Network Settings</h2>
-<form id="network" name="network" method="post" action="">
+<form id="network" method="post" action="">
 
 <div id="toolbar">
     <input type="hidden" name="form" value="network" />
     <ul>
-        <li><a href="#" onclick="javascript:document.network.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['network'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 

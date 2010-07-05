@@ -2,12 +2,12 @@
 {include file="_header.tpl"}
 
 <h2>Advanced Settings</h2>
-<form id="advanced" name="advanced" method="post" action="">
+<form id="advanced" method="post" action="">
 
 <div id="toolbar">
     <input type="hidden" name="form" value="advanced" />
     <ul>
-        <li><a href="#" onclick="javascript:document.advanced.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['advanced'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 

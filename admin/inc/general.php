@@ -12,6 +12,5 @@ if (isset($_POST['form'])) {
 }
 
 $admin->tpl->assign('editor', $admin->ckeditor->editor('msg_welcome', $admin->cfg->getParam('msg_welcome')));
-$admin->tpl->assign('config', $admin->cfg->config);
 $admin->tpl->display('general.tpl');
 ?>

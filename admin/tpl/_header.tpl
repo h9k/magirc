@@ -27,7 +27,7 @@
                 <div class="success"><h1>Succeeded</h1>The settings have been saved</div>
                 {/if}
 		<div style="float:right; padding-top:25px;">
-			<a href="{$config.net_url}" target="_blank">{$config.net_name}</a><br />
+			<a href="{$config.net_url}">{$config.net_name}</a><br />
 			{$smarty.now|date_format:"%d.%m.%Y %H:%M"} - IP: {$smarty.server.REMOTE_ADDR}<br />
 			{if $smarty.session.username}Logged in as <strong>{$smarty.session.username}</strong> - <a href="?page=logout">Logout</a>{/if}
 		</div>
@@ -38,7 +38,7 @@
 {if $smarty.session.username}
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
   <tr>
-    <td width="185" valign="top">
+    <td style="width:185px;" valign="top">
 	{include file="_menu.tpl"}
     </td>
     <td valign="top">

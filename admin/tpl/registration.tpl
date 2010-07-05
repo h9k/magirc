@@ -7,7 +7,7 @@
 <div id="toolbar">
     <input type="hidden" name="form" value="registration" />
     <ul>
-        <li><a href="#" onclick="javascript:document.registration.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['registration'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 

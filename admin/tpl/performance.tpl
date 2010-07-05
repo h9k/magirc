@@ -2,12 +2,12 @@
 {include file="_header.tpl"}
 
 <h2>Performance Settings</h2>
-<form id="performance" name="performance" method="post" action="">
+<form id="performance" method="post" action="">
 
 <div id="toolbar">
     <input type="hidden" name="form" value="performance" />
     <ul>
-        <li><a href="#" onclick="javascript:document.performance.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['performance'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 

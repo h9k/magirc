@@ -25,6 +25,5 @@ if (isset($_POST['form'])) {
     $admin->tpl->assign('success', true);
 }
 
-$admin->tpl->assign('config', $admin->cfg->config);
 $admin->tpl->display('integration.tpl');
 ?>

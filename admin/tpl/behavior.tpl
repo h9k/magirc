@@ -2,12 +2,12 @@
 {include file="_header.tpl"}
 
 <h2>Behavior Settings</h2>
-<form id="behavior" name="behavior" method="post" action="">
+<form id="behavior" method="post" action="">
 
 <div id="toolbar">
     <input type="hidden" name="form" value="behavior" />
     <ul>
-        <li><a href="#" onclick="javascript:document.behavior.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['behavior'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 

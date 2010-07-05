@@ -18,10 +18,10 @@
             </div>
             <table width="100%" cellpadding="5" cellspacing="2">
                 <tr>
-                    <td width="25%" align="center" valign="bottom" bgcolor="#F0F0F0"><a href="?page=registration"><img src="img/register.png" alt="Product Registration" width="32" height="32" /><br />Register</a></td>
-                    <td width="25%" align="center" valign="bottom" bgcolor="#F0F0F0"><a href="http://www.magirc.org/"><img src="img/homepage.png" alt="Project Homepage" width="32" height="32" /><br />Homepage</a></td>
-                    <td width="25%" align="center" valign="bottom" bgcolor="#F0F0F0"><a href="http://www.denorastats.org/support/"><img src="img/support.png" alt="Product Support" width="32" height="32" /><br />Support</a></td>
-                    <td width="25%" align="center" valign="bottom" bgcolor="#F0F0F0">
+                    <td align="center" valign="bottom"><a href="?page=registration"><img src="img/register.png" alt="Product Registration" width="32" height="32" /><br />Register</a></td>
+                    <td align="center" valign="bottom"><a href="http://www.magirc.org/"><img src="img/homepage.png" alt="Project Homepage" width="32" height="32" /><br />Homepage</a></td>
+                    <td align="center" valign="bottom"><a href="http://www.denorastats.org/support/"><img src="img/support.png" alt="Product Support" width="32" height="32" /><br />Support</a></td>
+                    <td align="center" valign="bottom">
                         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="width:100px;">
                         <div>
                         <input type="hidden" name="cmd" value="_s-xclick" />

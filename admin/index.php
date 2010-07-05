@@ -40,6 +40,8 @@ if (isset($_SESSION['username'])) {
     $page = (isset($_GET['page'])) ? $_GET['page'] : 'login';
 }
 
+$admin->tpl->assign('config', $admin->cfg->config);
+
 if ($page == 'login' && isset($_POST['form'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];

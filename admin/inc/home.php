@@ -14,7 +14,7 @@ $version = array(
 
 $admin->tpl->assign('setup', file_exists('../setup/'));
 $admin->tpl->assign('version', $version);
-$admin->tpl->assign('config', $admin->cfg->config);
+
 $admin->tpl->display('home.tpl');
 
 ?>

@@ -11,7 +11,7 @@ if (isset($_POST['form'])) {
     else $admin->saveConfig('hide_chans','');
     $admin->tpl->assign('success', true);
 }
-$config = $admin->cfg->config;
+
 $ircds = array();
 foreach (glob("../lib/magirc/denora/protocol/*") as $filename) {
     if ($filename != "../lib/magirc/denora/protocol/index.php") {
@@ -22,7 +22,6 @@ foreach (glob("../lib/magirc/denora/protocol/*") as $filename) {
 }
 
 $admin->tpl->assign('ircds', $ircds);
-$admin->tpl->assign('config', $config);
 $admin->tpl->display('network.tpl');
 
 ?>

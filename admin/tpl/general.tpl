@@ -2,12 +2,12 @@
 {include file="_header.tpl"}
 
 <h2>General Settings</h2>
-<form id="general" name="general" method="post" action="">
+<form id="general" method="post" action="">
 
 <div id="toolbar">
     <input type="hidden" name="form" value="general" />
     <ul>
-        <li><a href="#" onclick="javascript:document.general.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['general'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 
@@ -29,7 +29,7 @@
       <td align="left"><em>English</em></td>
     </tr>
   </table>
-  <p><strong>Welcome Message</strong><br />You can welcome your users, describe your network, and put whatever information you want in there.<br /></p>{$editor}
+  <p><strong>Welcome Message</strong><br />You can welcome your users, describe your network, and put whatever information you want in there.<br />{$editor}</p>
 </form>
 
 {include file="_footer.tpl"}

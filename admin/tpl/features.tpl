@@ -2,12 +2,12 @@
 {include file="_header.tpl"}
 
 <h2>Feature Settings</h2>
-<form id="features" name="features" method="post" action="">
+<form id="features" method="post" action="">
 
 <div id="toolbar">
     <input type="hidden" name="form" value="features" />
     <ul>
-        <li><a href="#" onclick="javascript:document.features.submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
+        <li><a href="#" onclick="javascript:document.forms['features'].submit();return false"><img src="img/save.png" alt="" /> Save</a></li>
     </ul>
 </div>
 
@@ -33,7 +33,7 @@
       <td align="left"><input name="mirc" type="checkbox" id="mirc" tabindex="8" {if $config.mirc}checked="checked" {/if}/></td>
     </tr>
     <tr>
-      <td align="right">The URL for the mIRC icon, including trailing slash<strong></strong></td>
+      <td align="right">The URL for the mIRC icon, including trailing slash</td>
       <td align="left"><input name="mirc_url" type="text" id="mirc_url" value="{$config.mirc_url}" size="32" maxlength="1024" tabindex="9" />      </td>
     </tr>
     <tr>
