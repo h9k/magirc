@@ -7,7 +7,7 @@
 
 <div class="box">
 <div class="boxtitle">Client statistics</div>
-<img src="?section=graph&amp;graph=pie&amp;mode=version&chan=global" alt="" /><br />
+<img src="?section=graph&amp;graph=pie&amp;mode=version&amp;chan=global" alt="" /><br />
 </div>
 
 </div>

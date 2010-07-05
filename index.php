@@ -35,8 +35,8 @@ try {
         error_reporting(E_ERROR);
     } else {
         $magirc->tpl->force_compile = true;
-        if ($magirc->cfg->getParam('debug_mode') > 1)
-            $magirc->tpl->debugging = true;
+        /*if ($magirc->cfg->getParam('debug_mode') > 1)
+            $magirc->tpl->debugging = true;*/
     }
     // Little dirty hack
     if (!isset($_GET['section'])) {

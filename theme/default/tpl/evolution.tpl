@@ -7,17 +7,17 @@
 
 <div class="box">
 <div class="boxtitle">Users - Last Month</div>
-<img src="?section=graph&amp;graph=line&amp;mode=users&ey={$smarty.now|date_format:"%Y"}&em={$smarty.now|date_format:"%m"}&ed={$smarty.now|date_format:"%d"}" alt="" /><br />
+<img src="?section=graph&amp;graph=line&amp;mode=users&amp;ey={$smarty.now|date_format:"%Y"}&amp;em={$smarty.now|date_format:"%m"}&amp;ed={$smarty.now|date_format:"%d"}" alt="" /><br />
 </div>
 
 <div class="box">
 <div class="boxtitle">Channels - Last Month</div>
-<img src="?section=graph&amp;graph=line&amp;mode=channels&ey={$smarty.now|date_format:"%Y"}&em={$smarty.now|date_format:"%m"}&ed={$smarty.now|date_format:"%d"}" alt="" /><br />
+<img src="?section=graph&amp;graph=line&amp;mode=channels&amp;ey={$smarty.now|date_format:"%Y"}&amp;em={$smarty.now|date_format:"%m"}&amp;ed={$smarty.now|date_format:"%d"}" alt="" /><br />
 </div>
 
 <div class="box">
 <div class="boxtitle">Servers - Last Month</div>
-<img src="?section=graph&amp;graph=line&amp;mode=servers&ey={$smarty.now|date_format:"%Y"}&em={$smarty.now|date_format:"%m"}&ed={$smarty.now|date_format:"%d"}" alt="" /><br />
+<img src="?section=graph&amp;graph=line&amp;mode=servers&amp;ey={$smarty.now|date_format:"%Y"}&amp;em={$smarty.now|date_format:"%m"}&amp;ed={$smarty.now|date_format:"%d"}" alt="" /><br />
 </div>
 
 </div>
