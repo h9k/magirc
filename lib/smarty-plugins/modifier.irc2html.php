@@ -6,7 +6,7 @@
  */
 
 function translatecolorcode($matches) {
-	$color = array(
+	$colors = array(
 		'#FFFFFF',
 		'#000000',
 		'#00007F',
@@ -23,31 +23,33 @@ function translatecolorcode($matches) {
 		'#FF00FF',
 		'#7F7F7F',
 		'#D2D2D2'
-	);
-	$options = '';
-	
-	if($matches[2] != '') {
-		$bgcolor = trim(substr($matches[2],1));
-		$options .= 'background-color: ' . $color[(int)$bgcolor] . '; ';
-	}
-	
-	$forecolor = trim($matches[1]);
-	if($forecolor != '') {
-		$options .= 'color: ' . $color[(int)$forecolor] . ';';
-	}
-	
-	if($options != '') {
-		return '<span style="' . $options . '">' . $matches[3] . '</span>';
-	} else {
-		return $matches[3];
-	}
+		);
+		$options = '';
+
+		if($matches[2] != '') {
+			$bgcolor = trim(substr($matches[2],1));
+			if ((int)$bgcolor < count($colors)) {
+				$options .= 'background-color: ' . $colors[(int)$bgcolor] . '; ';
+			}
+		}
+
+		$forecolor = trim($matches[1]);
+		if($forecolor != '' && (int)$forecolor < count($colors)) {
+			$options .= 'color: ' . $colors[(int)$forecolor] . ';';
+		}
+
+		if($options != '') {
+			return '<span style="' . $options . '">' . $matches[3] . '</span>';
+		} else {
+			return $matches[3];
+		}
 }
 
 function smarty_modifier_irc2html($text) {
 	global $charset;
-	$lines = explode("\n", $text);
+	$lines = explode("\n", utf8_decode($text));
 	$out = '';
-	
+
 	foreach($lines as $line) {
 		$line = nl2br(htmlentities($line,ENT_COMPAT,$charset));
 		// replace control codes
@@ -56,7 +58,7 @@ function smarty_modifier_irc2html($text) {
 		$line = preg_replace('/[\x1F]([^\x1F\x0F]*)(?:[\x1F])?/','<span style="text-decoration: underline;">$1</span>',$line);
 		$line = preg_replace('/[\x12]([^\x12\x0F]*)(?:[\x12])?/','<span style="text-decoration: line-through;">$1</span>',$line);
 		$line = preg_replace('/[\x16]([^\x16\x0F]*)(?:[\x16])?/','<span style="font-style: italic;">$1</span>',$line);
-		$line = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\S+]*(\?\S+)?)?)?)@', "<a href='$1' class='topic'>$1</a>", $line);	    
+		$line = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\S+]*(\?\S+)?)?)?)@', "<a href='$1' class='topic'>$1</a>", $line);
 		// remove dirt
 		$line = preg_replace('/[\x00-\x1F]/', '', $line);
 		$line = preg_replace('/[\x7F-\xFF]/', '', $line);
@@ -65,7 +67,7 @@ function smarty_modifier_irc2html($text) {
 			$out .= $line;
 		}
 	}
-	
+
 	return $out;
 }
 

@@ -8,8 +8,8 @@
 <meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />
 <meta name="Description" content="IRC Statistics powered by MagIRC" />
 <base href="{$smarty.const.BASE_URL}" />
-<link href="js/yui/reset-fonts/reset-fonts.css" rel="stylesheet" type="text/css" />
-<link href="js/yui/base/base-min.css" rel="stylesheet" type="text/css" />
+{*<link href="js/yui/reset-fonts/reset-fonts.css" rel="stylesheet" type="text/css" />
+<link href="js/yui/base/base-min.css" rel="stylesheet" type="text/css" />*}
 <link href="theme/default/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/menu.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/submenu.css" rel="stylesheet" type="text/css" />
