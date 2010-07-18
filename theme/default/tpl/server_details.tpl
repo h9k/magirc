@@ -3,7 +3,7 @@
 
 <div id="content">
 
-<h2><a href="server/">Servers</a> &raquo; Server Details</h2>
+<h2><a href="?section=server">Servers</a> &raquo; Server Details</h2>
 
 <h3>{$server->name}</h3>
 <p>{$server->description}</p>
