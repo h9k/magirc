@@ -4,14 +4,17 @@
 <div id="content">
 
 <h2>Server list</h2>
-<table border="0" cellpadding="0" cellspacing="0" class="list">
+<table border="0" cellpadding="0" cellspacing="0" class="display">
+<thead>
 	<tr>
-		<th>&nbsp;</th>
+		<th>Status</th>
 		<th>Server</th>
 		<th>Description</th>
 		<th>Users</th>
 		<th>Operators</th>
 	</tr>
+</thead>
+<tbody>
 	{foreach from=$serverlist item=item}
 	<tr class="{cycle values="bg1, bg2" advance="true"}">
 		<td><img src="theme/default/img/status/{if $item.online}online{else}offline{/if}.png" alt="{if $item.online}online{else}offline{/if}" title="{if $item.online}online{else}offline{/if}" /></td>
@@ -20,10 +23,8 @@
 		<td>{$item.currentusers}</td>
 		<td>{$item.opers}</td>
 	</tr>
-	{foreachelse}
-	<tr>
-		<td colspan="5"><em>no servers to display</em></td>
 	{/foreach}
+</tbody>
 </table>
 
 <div class="box">
@@ -32,5 +33,16 @@
 </div>
 
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.display').dataTable({
+		"bJQueryUI": true,
+		"bAutoWidth": true,
+		"bProcessing": true,
+		"sPaginationType": "full_numbers"
+	});
+} );
+</script>
 
 {include file="_footer.tpl"}

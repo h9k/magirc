@@ -127,7 +127,7 @@ div.boxtitle {
 }
 
 table.list { width:100%; }
-table.list th { text-align:left; }
+table.list th { text-align:left; white-space:nowrap; }
 table.list td div {
 	border:1px solid #CCCCCC;
 	background-color:#FFFFFF;

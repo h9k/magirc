@@ -36,4 +36,6 @@
 
 </div>
 
+</div>
+
 {include file="_footer.tpl"}

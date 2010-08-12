@@ -4,6 +4,10 @@ $Id$
  MAGIRC CHANGELOG
 ==================
 
+magirc v0.6.0-dev
+-----------------
+2010-08-12 Added jQuery, jQuery-UI and Datatables
+
 magirc v0.5.0-dev
 -----------------
 2010-07-05 HTML validation fixes

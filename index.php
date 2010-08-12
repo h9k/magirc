@@ -19,11 +19,6 @@ include('lib/magirc/init.inc.php');
 
 $magirc = new Magirc;
 
-if (date('m') == 4 && date('d') == 1) {
-	$magirc->displayError("Eggs not found");
-	exit;
-}
-
 try {
     define('DEBUG', $magirc->cfg->getParam('debug_mode'));
     define('BASE_URL', $magirc->cfg->getParam('base_url'));
@@ -35,8 +30,9 @@ try {
         error_reporting(E_ERROR);
     } else {
         $magirc->tpl->force_compile = true;
-        /*if ($magirc->cfg->getParam('debug_mode') > 1)
-            $magirc->tpl->debugging = true;*/
+        if ($magirc->cfg->getParam('debug_mode') > 1) {
+            #$magirc->tpl->debugging = true;
+        }
     }
     // Little dirty hack
     if (!isset($_GET['section'])) {
