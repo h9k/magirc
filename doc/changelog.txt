@@ -6,6 +6,7 @@ $Id$
 
 magirc v0.6.0-dev
 -----------------
+2010-08-12 Added Open Flash Chart libraries
 2010-08-12 Added jQuery, jQuery-UI and Datatables
 
 magirc v0.5.0-dev
