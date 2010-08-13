@@ -42,6 +42,21 @@ class Server extends Denora {
     /*function getServers() {
             return $this->db->selectAll('server', NULL, 'server', 'ASC');
     }*/
+    
+    function jsonList() {
+    	require_once('lib/ofc/OFC_Chart.php');
+
+		$title = new OFC_Elements_Title( date("D M d Y") );
+		
+		$line_dot = new OFC_Charts_Line();
+		$line_dot->set_values( array(9,8,7,6,5,4,3,2,1) );
+		
+		$chart = new OFC_Chart();
+		$chart->set_title( $title );
+		$chart->add_element( $line_dot );
+		
+		return $chart->toPrettyString();
+    }
 
 }
 

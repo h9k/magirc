@@ -18,14 +18,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-require_once('OFC/Elements/OFC_Elements_Base.php');
-require_once('OFC/Elements/OFC_Elements_Axis.php');
-require_once('OFC/Elements/Axis/OFC_Elements_Axis_X.php');
-require_once('OFC/Elements/Axis/OFC_Elements_Axis_X_Label.php');
-require_once('OFC/Elements/Axis/OFC_Elements_Axis_X_Label_Set.php');
-require_once('OFC/Elements/Axis/OFC_Elements_Axis_Y.php');
-require_once('OFC/Elements/Axis/OFC_Elements_Axis_Y_Right.php');
-require_once('OFC/Elements/Legend/OFC_Elements_Legend_X.php');
-require_once('OFC/Elements/Legend/OFC_Elements_Legend_Y.php');
-require_once('OFC/Elements/OFC_Elements_Title.php');
+require_once('lib/ofc/Elements/OFC_Elements_Base.php');
+require_once('lib/ofc/Elements/OFC_Elements_Axis.php');
+require_once('lib/ofc/Elements/Axis/OFC_Elements_Axis_X.php');
+require_once('lib/ofc/Elements/Axis/OFC_Elements_Axis_X_Label.php');
+require_once('lib/ofc/Elements/Axis/OFC_Elements_Axis_X_Label_Set.php');
+require_once('lib/ofc/Elements/Axis/OFC_Elements_Axis_Y.php');
+require_once('lib/ofc/Elements/Axis/OFC_Elements_Axis_Y_Right.php');
+require_once('lib/ofc/Elements/Legend/OFC_Elements_Legend_X.php');
+require_once('lib/ofc/Elements/Legend/OFC_Elements_Legend_Y.php');
+require_once('lib/ofc/Elements/OFC_Elements_Title.php');
 

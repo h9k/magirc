@@ -20,27 +20,27 @@
 
 if (! function_exists('json_encode'))
 {
-    require_once('OFC/JSON.php');
+    require_once('lib/ofc/JSON.php');
 }
 
-require_once('OFC/JSON_Format.php');
+require_once('lib/ofc/JSON_Format.php');
 
-require_once('OFC/OFC_Elements.php');
+require_once('lib/ofc/OFC_Elements.php');
 
-require_once('OFC/Charts/OFC_Charts_Area.php');
-require_once('OFC/Charts/OFC_Charts_Bar.php');
-require_once('OFC/Charts/OFC_Charts_Line.php');
-require_once('OFC/Charts/OFC_Charts_Pie.php');
-require_once('OFC/Charts/OFC_Charts_Scatter.php');
-require_once('OFC/Charts/Area/OFC_Charts_Area_Hollow.php');
-require_once('OFC/Charts/Bar/OFC_Charts_Bar_Filled.php');
-require_once('OFC/Charts/Bar/OFC_Charts_Bar_3d.php');
-require_once('OFC/Charts/Bar/OFC_Charts_Bar_Glass.php');
-require_once('OFC/Charts/Bar/OFC_Charts_Bar_Horizontal.php');
-require_once('OFC/Charts/Bar/OFC_Charts_Bar_Sketch.php');
-require_once('OFC/Charts/Bar/OFC_Charts_Bar_Stack.php');
-require_once('OFC/Charts/Line/OFC_Charts_Line_Dot.php');
-require_once('OFC/Charts/Line/OFC_Charts_Line_Hollow.php');
+require_once('lib/ofc/Charts/OFC_Charts_Area.php');
+require_once('lib/ofc/Charts/OFC_Charts_Bar.php');
+require_once('lib/ofc/Charts/OFC_Charts_Line.php');
+require_once('lib/ofc/Charts/OFC_Charts_Pie.php');
+require_once('lib/ofc/Charts/OFC_Charts_Scatter.php');
+require_once('lib/ofc/Charts/Area/OFC_Charts_Area_Hollow.php');
+require_once('lib/ofc/Charts/Bar/OFC_Charts_Bar_Filled.php');
+require_once('lib/ofc/Charts/Bar/OFC_Charts_Bar_3d.php');
+require_once('lib/ofc/Charts/Bar/OFC_Charts_Bar_Glass.php');
+require_once('lib/ofc/Charts/Bar/OFC_Charts_Bar_Horizontal.php');
+require_once('lib/ofc/Charts/Bar/OFC_Charts_Bar_Sketch.php');
+require_once('lib/ofc/Charts/Bar/OFC_Charts_Bar_Stack.php');
+require_once('lib/ofc/Charts/Line/OFC_Charts_Line_Dot.php');
+require_once('lib/ofc/Charts/Line/OFC_Charts_Line_Hollow.php');
 
 class OFC_Chart
 {

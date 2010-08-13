@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-require_once('OFC/Elements/OFC_Elements_Base.php');
+require_once('lib/ofc/Elements/OFC_Elements_Base.php');
 
 class OFC_Elements_Legend_X extends OFC_Elements_Base
 {
