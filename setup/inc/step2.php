@@ -11,7 +11,7 @@ if (!$check) { // Dump file to db
     $result = $setup->configDump();
     $protocol = @$_SERVER['HTTPS'] ? 'https://' : 'http://';
     $base_url = $protocol.$_SERVER['SERVER_NAME'].str_replace('setup/index.php', '', $_SERVER['PHP_SELF']);
-    $query = sprintf("UPDATE `magirc_config` SET `value` = '%s' WHERE `parameter` = 'base_url'", $base_url[0]);
+    $query = sprintf("UPDATE `magirc_config` SET `value` = '%s' WHERE `parameter` = 'base_url'", $base_url);
     $setup->db->query($query, SQL_NONE);
     $setup->tpl->assign('result', $result);
     if ($result != 0) {
