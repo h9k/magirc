@@ -1,15 +1,10 @@
 {* $Id$ *}
 {include file="_header.tpl"}
 
-<script type="text/javascript" src="js/swfobject.js"></script>
-<script type="text/javascript">
-swfobject.embedSWF("swf/open-flash-chart.swf", "my_chart", "800", "220", "9.0.0", "expressInstall.swf", { "data-file":"?section=server%26action=json" });
-</script>
-
 <div id="content">
 
 <h2>Servers today</h2>
-<div id="my_chart"></div>
+chart goes here...
 
 <h2>Server list</h2>
 <table border="0" cellpadding="0" cellspacing="0" class="display">

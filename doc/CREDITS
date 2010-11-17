@@ -6,8 +6,9 @@ Magirc originates from phpDenora, but is a complete rewrite.
 Magirc comes with makes use of the following products
 developed by 3rd parties: 
 
+- jquery
+- jquery-ui
+- jquery datatables
+- jquery highcharts
 - ckeditor
-- jpgraph
-- smarty template engine
-- dejavu ttf fonts
-- yahoo ui libs
+- smarty3 template engine

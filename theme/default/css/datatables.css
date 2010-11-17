@@ -1,6 +1,6 @@
 /*
  *  File:         demo_table_jui.css
- *  CVS:          $Id$
+ *  CVS:          $Id: datatables.css 86 2010-11-04 18:35:52Z hosting9000.com $
  *  Description:  CSS descriptions for DataTables demo pages
  *  Author:       Allan Jardine
  *  Created:      Tue May 12 06:47:22 BST 2009
@@ -23,7 +23,7 @@
  *     ensure that you either have "example_alt_pagination" as a body class name, or better yet,
  *     modify that selector.
  *   Note that the path used for Images is relative. All images are by default located in
- *     ../images/ - relative to this CSS file.
+ *     images/ - relative to this CSS file.
  */
 
 
@@ -31,23 +31,28 @@
  * jQuery UI specific styling
  */
 
-.paging_two_button .fg-button {
+.paging_two_button .ui-button {
 	float: left;
 	cursor: pointer;
 	* cursor: hand;
 }
 
-.paging_full_numbers .fg-button {
+.paging_full_numbers .ui-button {
 	padding: 2px 6px;
+	margin: 0;
 	cursor: pointer;
 	* cursor: hand;
+}
+
+.ui-buttonset .ui-button {
+	margin-right: -0.1em !important;
 }
 
 .paging_full_numbers {
 	width: 350px !important;
 }
 
-.fg-toolbar {
+.ui-toolbar {
 	padding: 5px;
 }
 
@@ -55,11 +60,34 @@
 	width: auto;
 }
 
+.dataTables_info {
+	padding-top: 3px;
+}
+
 table.display thead th {
 	padding: 3px 0px 3px 10px;
 	cursor: pointer;
 	* cursor: hand;
 }
+
+
+/*
+ * Sort arrow icon positioning
+ */
+table.display thead th div.DataTables_sort_wrapper {
+	position: relative;
+	padding-right: 20px;
+	padding-right: 20px;
+}
+
+table.display thead th div.DataTables_sort_wrapper span {
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+	right: 0;
+}
+
+
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -77,7 +105,7 @@ table.display thead th {
 
 .dataTables_wrapper {
 	position: relative;
-	min-height: 302px;
+	/*min-height: 302px;*/
 	_height: 302px;
 	clear: both;
 }
@@ -125,19 +153,19 @@ table.display thead th {
 }
 
 .paginate_disabled_previous {
-	background-image: url('../images/back_disabled.jpg');
+	background-image: url('images/back_disabled.jpg');
 }
 
 .paginate_enabled_previous {
-	background-image: url('../images/back_enabled.jpg');
+	background-image: url('images/back_enabled.jpg');
 }
 
 .paginate_disabled_next {
-	background-image: url('../images/forward_disabled.jpg');
+	background-image: url('images/forward_disabled.jpg');
 }
 
 .paginate_enabled_next {
-	background-image: url('../images/forward_enabled.jpg');
+	background-image: url('images/forward_enabled.jpg');
 }
 
 
@@ -177,15 +205,15 @@ table.display td.center {
  */
 
 .sorting_asc {
-	background: url('../images/sort_asc.jpg') no-repeat center right;
+	background: url('images/sort_asc.jpg') no-repeat center right;
 }
 
 .sorting_desc {
-	background: url('../images/sort_desc.jpg') no-repeat center right;
+	background: url('images/sort_desc.jpg') no-repeat center right;
 }
 
 .sorting {
-	background: url('../images/sort_both.jpg') no-repeat center right;
+	background: url('images/sort_both.jpg') no-repeat center right;
 }
 
 
@@ -468,14 +496,12 @@ tr.even.gradeU td.sorting_3 {
 	background-color: #e2e2e2;
 }
 
-
-/*
- * Row highlighting example
- */
-.ex_highlight #example tbody tr.even:hover, #example tbody tr.even td.highlighted {
+.display tbody tr.even:hover td {
+	cursor: pointer;
 	background-color: #ECFFB3;
 }
 
-.ex_highlight #example tbody tr.odd:hover, #example tbody tr.odd td.highlighted {
+.display tbody tr.odd:hover td {
+	cursor: pointer;
 	background-color: #E6FF99;
 }

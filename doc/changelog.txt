@@ -6,6 +6,10 @@ $Id$
 
 magirc v0.6.0-dev
 -----------------
+2010-11-17 Updated SVN path to smarty3 release repo
+2010-11-17 Removed jpGraph, Pear and unused ttf font
+2010-11-17 Replaced OFC with jQuery Highcharts
+2010-11-17 Updated jQuery, jQuery-UI and Datatables
 2010-08-13 Added JSON support
 2010-08-12 Added Open Flash Chart libraries
 2010-08-12 Added jQuery, jQuery-UI and Datatables

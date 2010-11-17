@@ -9,17 +9,18 @@
 <meta name="Description" content="IRC Statistics powered by MagIRC" />
 <base href="{$smarty.const.BASE_URL}" />
 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.1/build/cssreset/reset-min.css" />
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.1/build/cssbase/base-min.css" />
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.1/build/cssfonts/fonts-min.css" /> 
+<link href="theme/default/css/reset.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/menu.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/submenu.css" rel="stylesheet" type="text/css" />
-<link href="theme/default/css/jquery-ui-1.8.4.custom.css" rel="stylesheet" type="text/css" />
+<link href="theme/default/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/datatables.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery.datatables.min.js"></script>
+<script type="text/javascript" src="js/datatables.plugins.js"></script>
+<script type="text/javascript" src="js/highcharts.js"></script>
 
 </head>
 <body>
