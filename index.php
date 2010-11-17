@@ -2,7 +2,7 @@
 // $Id$
 
 /* -------------------------------------- *
- *     MagIRC - Let the Magirc begin!     *
+ *     MagIRC - Let the magirc begin!     *
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
  *  http://www.magirc.org/                *
  *  (c) 2009-2010 hal9000@denorastats.org *

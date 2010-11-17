@@ -18,11 +18,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-if (! function_exists('json_encode'))
-{
-    require_once('lib/ofc/JSON.php');
-}
-
 require_once('lib/ofc/JSON_Format.php');
 
 require_once('lib/ofc/OFC_Elements.php');
