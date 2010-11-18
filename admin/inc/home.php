@@ -3,7 +3,7 @@
 
 #$denora_version = @$admin->denora->getVersion('num');
 if (!@$denora_version) {
-    $denora_version = "unknown";
+	$denora_version = "unknown";
 }
 
 $version = array(

@@ -8,7 +8,7 @@
  *  (c) 2009-2010 hal9000@denorastats.org *
  *  GPL v2 License - see doc/COPYING      *
  * -------------------------------------- *
-*/
+ */
 
 ini_set('display_errors','on');
 error_reporting(E_ALL);
@@ -20,26 +20,26 @@ include('lib/magirc/init.inc.php');
 $magirc = new Magirc;
 
 try {
-    define('DEBUG', $magirc->cfg->getParam('debug_mode'));
-    define('BASE_URL', $magirc->cfg->getParam('base_url'));
-    $magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
-    $magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
+	define('DEBUG', $magirc->cfg->getParam('debug_mode'));
+	define('BASE_URL', $magirc->cfg->getParam('base_url'));
+	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
+	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
 
-    if ($magirc->cfg->getParam('debug_mode') < 1) {
-        ini_set('display_errors','off');
-        error_reporting(E_ERROR);
-    } else {
-        $magirc->tpl->force_compile = true;
-        if ($magirc->cfg->getParam('debug_mode') > 1) {
-            #$magirc->tpl->debugging = true;
-        }
-    }
-    // Little dirty hack
-    if (!isset($_GET['section'])) {
-        $_GET['section'] = 'home';
-    }
-    $magirc->display();
+	if ($magirc->cfg->getParam('debug_mode') < 1) {
+		ini_set('display_errors','off');
+		error_reporting(E_ERROR);
+	} else {
+		$magirc->tpl->force_compile = true;
+		if ($magirc->cfg->getParam('debug_mode') > 1) {
+			#$magirc->tpl->debugging = true;
+		}
+	}
+	// Little dirty hack
+	if (!isset($_GET['section'])) {
+		$_GET['section'] = 'home';
+	}
+	$magirc->display();
 } catch (Exception $e) {
-    $magirc->displayError($e->getMessage());
+	$magirc->displayError($e->getMessage());
 }
 ?>

@@ -8,11 +8,11 @@ $username = isset($_POST['username']) ? htmlspecialchars($_POST['username']) : N
 $password = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : NULL;
 
 if ($username && $password) {
-    $query = sprintf("INSERT INTO `magirc_admin` SET `username` = %s, `password` = MD5(%s)",
-            $setup->db->escape($username), $setup->db->escape($password));
-    $setup->db->query($query);
+	$query = sprintf("INSERT INTO `magirc_admin` SET `username` = %s, `password` = MD5(%s)",
+		$setup->db->escape($username), $setup->db->escape($password));
+	$setup->db->query($query);
 } else {
-    $error = true;
+	$error = true;
 }
 
 $setup->tpl->assign('error', $error);

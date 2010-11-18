@@ -29,7 +29,7 @@ switch(@$_GET['action']) {
 		$server = new Server(null);
 		echo $server->jsonStats();
 		break;
-	default:	
+	default:
 }
 
 ?>
