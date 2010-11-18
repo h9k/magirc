@@ -22,7 +22,7 @@ switch(@$_GET['action']) {
 	case 'list':
 		$server = new Server(null);
 		$data = $server->jsonList();
-		include('lib/json/json_proxy.php');
+		#todo
 		break;
 	case 'json':
 		#header('Content-type: application/json');

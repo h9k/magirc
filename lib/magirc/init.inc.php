@@ -14,7 +14,6 @@ if (get_magic_quotes_gpc()) {
 
 include_once('lib/magirc/version.inc.php');
 require_once('lib/smarty/Smarty.class.php');
-require_once('lib/json/JSON.php');
 require_once('lib/magirc/DB.class.php');
 require_once('lib/magirc/Config.class.php');
 require_once('lib/magirc/Magirc.class.php');

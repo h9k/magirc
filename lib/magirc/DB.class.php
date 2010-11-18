@@ -191,6 +191,122 @@ class DB {
                 $user_id, $_SERVER['REMOTE_ADDR'], $type, $level, $this->escape($event));
         return $this->query($query);
     }
+    
+   /**
+    * Generates output in JSON-format for use with JQuery DataTables
+    * @param string $sTable
+    * @param array $aColumns
+    * @param string $sIndexColumn
+    */
+   function jsonList($sTable, $aColumns, $sIndexColumn, $aWhere = null) {   	
+    	// Paging
+    	$sLimit = "";
+    	if (isset($_GET['iDisplayStart']) && isset($_GET['iDisplayLength']) && $_GET['iDisplayLength'] != '-1') {
+    		$sLimit = "LIMIT ".$this->escape($_GET['iDisplayStart']).", ".
+    		$this->escape($_GET['iDisplayLength']);
+    	}
+    	// Ordering
+    	$sOrder = "";
+    	if (isset($_GET['iSortCol_0'])) {
+    		$sOrder = "ORDER BY  ";
+    		for ($i=0 ; $i<intval(@$_GET['iSortingCols']) ; $i++) {
+    			if (@$_GET['bSortable_'.intval(@$_GET['iSortCol_'.$i])] == "true") {
+    				$sOrder .= "`".$aColumns[intval(@$_GET['iSortCol_'.$i])]."`
+				 	".$this->escape(@$_GET['sSortDir_'.$i]) .", ";
+    			}
+    		}
+    		$sOrder = substr_replace($sOrder, "", -2);
+    		if ($sOrder == "ORDER BY") {
+    			$sOrder = "";
+    		}
+    	}
+    	// Filtering
+    	$sWhere = "";
+    	if (@$_GET['sSearch'] != "") {
+    		$sWhere = "WHERE (";
+    		for ($i=0 ; $i<count($aColumns) ; $i++) {
+    			$sWhere .= $aColumns[$i]." LIKE '%".$this->escape($_GET['sSearch'])."%' OR ";
+    		}
+    		$sWhere = substr_replace($sWhere, "", -3);
+    		$sWhere .= ')';
+    	}
+    	// Individual column filtering
+    	for ($i=0 ; $i<count($aColumns) ; $i++) {
+    		if (@$_GET['bSearchable_'.$i] == "true" && @$_GET['sSearch_'.$i] != '') {
+    			if ($sWhere == "") {
+    				$sWhere = "WHERE ";
+    			} else {
+    				$sWhere .= " AND ";
+    			}
+    			$sWhere .= $aColumns[$i]." LIKE '%".$this->escape($_GET['sSearch_'.$i])."%' ";
+    		}
+    	}
+       	if ($aWhere) {
+    		foreach ($aWhere as $key => $val) {
+    			if ($sWhere == "") {
+    				$sWhere = "WHERE ";
+    			} else {
+    				$sWhere .= " AND ";
+    			}
+    			$sWhere .= $key ." = '".$val."' ";
+    		}
+    	}
+    	
+    	// Query
+    	$sQuery = "SELECT SQL_CALC_FOUND_ROWS `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable $sWhere $sOrder $sLimit";
+    	$aResult = $this->query($sQuery, SQL_ALL, SQL_ASSOC);
+		// Data set length after filtering
+		$sQuery = "SELECT FOUND_ROWS()";
+		$aResultFilterTotal = $this->query($sQuery, SQL_INIT, SQL_INDEX);
+		$iFilteredTotal = $aResultFilterTotal[0];
+		// Total data set length
+		$sQuery = "SELECT COUNT(".$sIndexColumn.") FROM $sTable";
+		$aResultTotal = $this->query($sQuery, SQL_INIT, SQL_INDEX);
+		$iTotal = $aResultTotal[0];
+		
+		// JSON Output
+		$sOutput = '{';
+		$sOutput .= '"sEcho": '.intval(@$_GET['sEcho']).', ';
+		$sOutput .= '"iTotalRecords": '.$iTotal.', ';
+		$sOutput .= '"iTotalDisplayRecords": '.$iFilteredTotal.', ';
+		$sOutput .= '"aaData": [ ';
+		foreach ($aResult as $aRow) {
+			$sOutput .= "[";
+			for ($i=0 ; $i<count($aColumns) ; $i++) {
+				if ($aColumns[$i] == 'created' || $aColumns[$i] == 'updated') {
+					$sOutput .= '"'.str_replace('"', '\"', date('d.m.Y H:i', strtotime($aRow[$aColumns[$i]]))).'",';
+				} elseif ($aColumns[$i] != ' ') {
+					$sOutput .= '"'.str_replace('"', '\"', $aRow[$aColumns[$i]]).'",';
+				}
+			}
+			$sOutput = substr_replace($sOutput, "", -1);
+			$sOutput = str_replace("\n", "\\n", $sOutput);
+			$sOutput .= "],";
+		}
+		$sOutput = substr_replace($sOutput, "", -1);
+		$sOutput .= '] }';
+		
+		header('Content-type: application/json');
+		echo $sOutput;
+		exit;
+    }
+    
+	/**
+    * Generates output in JSON-format for a single record
+    * @param string $sTable
+    * @param array $aColumns
+    * @param integer $id
+    */
+   function jsonItem($sTable, $aColumns, $id) {
+    	// Query
+    	$sQuery = "SELECT `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable WHERE id = $id";
+    	$aRow = $this->query($sQuery, SQL_INIT, SQL_ASSOC);
+		
+    	// JSON output
+    	header('Content-type: application/json');
+		echo json_encode($aRow);
+		exit;
+    }
 
 }
 
