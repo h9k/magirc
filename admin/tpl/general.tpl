@@ -1,5 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
+{extends file="components/main.tpl"}
+{block name="content"}
 
 <h2>General Settings</h2>
 <form id="general" method="post" action="">
@@ -32,4 +33,4 @@
   <p><strong>Welcome Message</strong><br />You can welcome your users, describe your network, and put whatever information you want in there.<br />{$editor}</p>
 </form>
 
-{include file="_footer.tpl"}
+{/block}

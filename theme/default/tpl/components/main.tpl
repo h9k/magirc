@@ -2,28 +2,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>MagIRC PROTOTYPE TESTING</title>
+<title>{block name="title"}MagIRC PROTOTYPE TESTING{/block}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="ROBOTS" content="INDEX, FOLLOW" />
 <meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />
 <meta name="Description" content="IRC Statistics powered by MagIRC" />
 <base href="{$smarty.const.BASE_URL}" />
-
+{block name="css"}
 <link href="theme/default/css/reset.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/menu.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/submenu.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/datatables.css" rel="stylesheet" type="text/css" />
-
+{/block}
+{block name="js"}
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/jquery.datatables.min.js"></script>
 <script type="text/javascript" src="js/datatables.plugins.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
-
+{/block}
 </head>
 <body>
+{block name="body"}
 <div id="header">
 <h1><strong>MagIRC</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
 <div id="menu">
@@ -42,3 +44,13 @@
 </div>
 </div>
 <div id="main">
+{block name="content"}
+[content placeholder]
+{/block}
+</div>
+<div id="footer">
+<div style="float:left;"><em>login</em></div>
+powered by <span style="font-size:12px;"><strong>MagIRC</strong></span> v{$smarty.const.VERSION_FULL}</div>
+{/block}
+</body>
+</html>

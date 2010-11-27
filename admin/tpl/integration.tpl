@@ -1,5 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
+{extends file="components/main.tpl"}
+{block name="content"}
 
 <h2>Integration Settings</h2>
 <form id="integration" method="post" action="">
@@ -70,4 +71,4 @@
   </table>
 </form>
 
-{include file="_footer.tpl"}
+{/block}

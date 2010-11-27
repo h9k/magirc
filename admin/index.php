@@ -41,6 +41,8 @@ if (isset($_SESSION['username'])) {
 }
 
 $admin->tpl->assign('config', $admin->cfg->config);
+$admin->tpl->assign('success', false);
+$admin->tpl->assign('error', false);
 
 if ($page == 'login' && isset($_POST['form'])) {
 	$username = $_POST['username'];

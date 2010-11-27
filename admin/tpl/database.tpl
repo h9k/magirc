@@ -1,5 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
+{extends file="components/main.tpl"}
+{block name="content"}
 
 <h2>Database Settings</h2>
 <form id="sql" method="post" action="">
@@ -43,4 +44,4 @@
   </pre>
 </form>
 
-{include file="_footer.tpl"}
+{/block}

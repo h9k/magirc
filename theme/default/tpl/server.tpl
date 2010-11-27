@@ -1,6 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
-
+{extends file="components/main.tpl"}
+{block name="content"}
 <div id="content">
 
 <h2>Servers today</h2>
@@ -36,5 +36,4 @@ $(document).ready(function() {
 	});
 } );
 </script>
-
-{include file="_footer.tpl"}
+{/block}

@@ -1,6 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
-
+{extends file="components/main.tpl"}
+{block name="content"}
 <div id="content">
 
 <h2><a href="?section=server">Servers</a> &raquo; Server Details</h2>
@@ -37,5 +37,4 @@ This server issued <em>{$server->serverkills}</em> kills<br />
 </div>
 
 </div>
-
-{include file="_footer.tpl"}
+{/block}

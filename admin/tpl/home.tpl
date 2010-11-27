@@ -1,5 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
+{extends file="components/main.tpl"}
+{block name="content"}
 
 <h2>Welcome, {$smarty.session.username}</h2>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -47,4 +48,4 @@
     </tr>
 </table>
 
-{include file="_footer.tpl"}
+{/block}

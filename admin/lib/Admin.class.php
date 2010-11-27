@@ -13,6 +13,7 @@ class Admin {
 		$this->tpl->compile_dir = 'tmp';
 		$this->tpl->config_dir = '../conf';
 		$this->tpl->cache_dir = 'tmp';
+		$this->tpl->error_reporting = E_ALL & ~E_NOTICE;
 		$this->db = new Magirc_DB();
 		#$this->denora = new Denora();
 		$this->cfg = new Config();

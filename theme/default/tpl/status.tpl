@@ -1,6 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
-
+{extends file="components/main.tpl"}
+{block name="content"}
 <div id="content">
 
 <div class="box" style="width:170px; height:220px; float:left;">
@@ -91,5 +91,4 @@ testing
 <div class="clear"></div>
 
 </div>
-
-{include file="_footer.tpl"}
+{/block}

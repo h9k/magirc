@@ -1,5 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
+{extends file="components/main.tpl"}
+{block name="content"}
 
 <h2>Login to MagIRC</h2>
 
@@ -27,4 +28,4 @@
 
 </form>
 
-{include file="_footer.tpl"}
+{/block}

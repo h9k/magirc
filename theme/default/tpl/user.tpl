@@ -1,6 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
-
+{extends file="components/main.tpl"}
+{block name="content"}
 <div id="content">
 
 <div class="box">
@@ -11,5 +11,4 @@
 <pre>Under construction...</pre>
 
 </div>
-
-{include file="_footer.tpl"}
+{/block}

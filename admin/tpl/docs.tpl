@@ -1,7 +1,8 @@
 {* $Id$ *}
-{include file="_header.tpl"}
+{extends file="components/main.tpl"}
+{block name="content"}
 
 <h2>Documentation</h2>
 <pre>{$text}</pre>
 
-{include file="_footer.tpl"}
+{/block}

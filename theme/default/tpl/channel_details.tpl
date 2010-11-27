@@ -1,7 +1,7 @@
 {* $Id$ *}
-{include file="_header.tpl"}
-{include file="_menu_channel.tpl"}
-
+{extends file="components/main.tpl"}
+{include file="components/_menu_channel.tpl"}
+{block name="content"}
 <div id="content">
 
 <div class="box">
@@ -37,5 +37,4 @@
 </div>
 
 </div>
-
-{include file="_footer.tpl"}
+{/block}

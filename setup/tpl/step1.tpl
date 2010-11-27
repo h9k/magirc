@@ -1,5 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
+{extends file="components/main.tpl"}
+{block name="content"}
 <div class="page_title">Welcome to the MagIRC Setup!</div>
 <p>Please follow the on-screen instructions to install MagIRC</p>
 
@@ -28,9 +29,9 @@
 
 	<pre>Testing MagIRC Database connection... {if !$status.magirc_db}<span style="color:green;">Passed</span></pre>
 	{elseif $status.magirc_db == 'new'}<span style="color:orange;">Unconfigured</span></pre>
-		{include file="_db_form.tpl"}
+		{include file="components/_db_form.tpl"}
 	{else}<span style="color:red">{$status.magirc_db}</span>
-		{include file="_db_form.tpl"}
+		{include file="components/_db_form.tpl"}
 	{/if}
 	{if $smarty.post.savedb}
 		{if $status.writable}
@@ -44,5 +45,4 @@
 	
 	{if !$status.magirc_db}<p>Continue to the <a href="?step=2">next step</a></p>{/if}
 {/if}
-
-{include file="_footer.tpl"}
+{/block}

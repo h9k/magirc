@@ -1,5 +1,6 @@
 {* $Id$ *}
-{include file="_header.tpl"}
+{extends file="components/main.tpl"}
+{block name="content"}
 
 <h2>Product Registration</h2>
 <form id="registration" method="post" action="http://denorastats.org/register.php">
@@ -44,4 +45,5 @@
         </tr>
       </table>
     </form>
-{include file="_footer.tpl"}
+
+{/block}
