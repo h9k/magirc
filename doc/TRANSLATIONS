@@ -1,0 +1,11 @@
+$Id$
+
+Instructions for translating MagIRC
+-----------------------------------
+
+Use a gettext language file editor, such as POedit.
+Create a new catalog using locale/smarty.c as source, or copy an existing language file.
+Create a new directory for your locale, which also needs to contain a directory named LC_MESSAGES.
+The language file must be named messages.mo
+
+TODO: I know, these instructions suck, but will improve soon.
