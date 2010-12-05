@@ -9,22 +9,38 @@ class Magirc {
 	public $denora;
 
 	function __construct() {
+		// Setup the template engine
 		$this->tpl = new Smarty;
-		$this->tpl->template_dir = 'theme/default/tpl'; // we change is later on
-		$this->tpl->config_dir = 'theme/default/cfg'; // we change is later on
+		$this->tpl->template_dir = 'theme/default/tpl';
+		$this->tpl->config_dir = 'theme/default/cfg';
 		$this->tpl->compile_dir = 'tmp/compiled';
 		$this->tpl->cache_dir = 'tmp/cache';
 		$this->tpl->plugins_dir[] = 'lib/smarty-plugins/';
-
+		
+		// Setup the database
 		$this->db = new Magirc_DB;
 		$query = "SHOW TABLES LIKE 'magirc_config'";
 		$this->db->query($query, SQL_INIT);
 		if (!$this->db->record) {
 			$this->displayError('Database table missing. Please run setup.');
 		}
+		
+		// Get the configuration
 		$this->cfg = new Config();
+		
+		// Initialize modules
 		$this->anope = new Anope($this->cfg->getParam('ircd_type'));
 		$this->denora = new Denora($this->cfg->getParam('ircd_type'));
+		
+		// Set the locale
+		$locale = $this->cfg->getParam('locale');
+		$domain = "messages";
+		putenv("LC_ALL={$locale}.utf8");
+		setlocale(LC_ALL, $locale);
+		bindtextdomain($domain, './locale/');
+		bind_textdomain_codeset($domain, "UTF-8");
+		textdomain($domain);
+		#define('LANG', substr($locale, 0, 2));
 	}
 
 	// Returns session status

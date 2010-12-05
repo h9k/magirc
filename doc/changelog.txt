@@ -6,6 +6,7 @@ $Id$
 
 magirc v0.6.0-dev
 -----------------
+2010-12-05 Implemented gettext-based multilanguage support
 2010-11-27 Templates now make use of smarty3 blocks
 2010-11-17 Updated SVN path to smarty3 release repo
 2010-11-17 Removed jpGraph, Pear and unused ttf font
