@@ -1,6 +1,6 @@
 /*
  *  File:         demo_table_jui.css
- *  CVS:          $Id: datatables.css 86 2010-11-04 18:35:52Z hosting9000.com $
+ *  CVS:          $Id$
  *  Description:  CSS descriptions for DataTables demo pages
  *  Author:       Allan Jardine
  *  Created:      Tue May 12 06:47:22 BST 2009
@@ -68,6 +68,10 @@ table.display thead th {
 	padding: 3px 0px 3px 10px;
 	cursor: pointer;
 	* cursor: hand;
+}
+
+div.dataTables_wrapper .ui-widget-header {
+	font-weight: normal;
 }
 
 
