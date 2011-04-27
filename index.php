@@ -5,7 +5,7 @@
  *     MagIRC - Let the magirc begin!     *
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
  *  http://www.magirc.org/                *
- *  (c) 2009-2010 hal9000@denorastats.org *
+ *  (c) 2009-2011 hal9000@denorastats.org *
  *  GPL v2 License - see doc/COPYING      *
  * -------------------------------------- *
  */
