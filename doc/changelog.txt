@@ -4,6 +4,11 @@ $Id$
  MAGIRC CHANGELOG
 ==================
 
+magirc v0.6.1-dev
+-----------------
+2011-12-12 CKEditor v3.6.2
+2011-12-12 Smarty template engine v3.1.6
+
 magirc v0.6.0-dev
 -----------------
 2011-02-01 Updated js libs to latest versions
