@@ -15,7 +15,7 @@ class Magirc {
 		$this->tpl->config_dir = 'theme/default/cfg';
 		$this->tpl->compile_dir = 'tmp/compiled';
 		$this->tpl->cache_dir = 'tmp/cache';
-		$this->tpl->plugins_dir[] = 'lib/smarty-plugins/';
+		$this->tpl->addPluginsDir('lib/smarty-plugins/');
 		
 		// Setup the database
 		$this->db = new Magirc_DB;
