@@ -6,6 +6,11 @@ $Id$
 
 magirc v0.6.1-dev
 -----------------
+2011-12-12 Highstock v1.0.2
+2011-12-12 Highcharts v2.1.9
+2011-12-12 DataTables v1.8.2
+2011-12-12 jQueryUI v1.8.16
+2011-12-12 jQuery v1.7.1
 2011-12-12 CKEditor v3.6.2
 2011-12-12 Smarty template engine v3.1.6
 
