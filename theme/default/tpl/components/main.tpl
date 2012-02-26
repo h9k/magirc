@@ -27,7 +27,7 @@
 <body>
 {block name="body"}
 <div id="header">
-<h1><strong>MagIRC</strong> <span style="color:#C0C0C0;">Prototype testing...</span></h1>
+<a href="#"><img src="theme/default/img/logo.png" alt="" id="logo" /></a>
 <div id="menu">
   <ul>
 	<li><a href="?section=home" title="Home"{if $smarty.get.section eq 'home'} class="active"{/if}><img src="theme/default/img/menu/home.png" alt="" height="16" width="16" /><span>&nbsp;Home</span></a></li>
@@ -49,7 +49,6 @@
 {/block}
 </div>
 <div id="footer">
-<div style="float:left;"><em>login</em></div>
 powered by <span style="font-size:12px;"><strong>MagIRC</strong></span> v{$smarty.const.VERSION_FULL}</div>
 {/block}
 </body>

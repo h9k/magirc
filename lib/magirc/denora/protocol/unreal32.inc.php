@@ -4,19 +4,19 @@
 // Unreal 3.2 protocol file for Denora support on Magirc
 
 class Protocol {
-	public $oper_hidden_mode = 'U';
-	public $helper_mode = 'h';
-	public $bot_mode = 'B';
-	public $services_protection_mode = 'S';
-	public $chan_hide_mode = 'p';
-	public $chan_secret_mode = 's';
-	public $chan_public_mode = 'p';
+	private $oper_hidden_mode = 'U';
+	private $helper_mode = 'h';
+	private $bot_mode = 'B';
+	private $services_protection_mode = 'S';
+	private $chan_hide_mode = 'p';
+	private $chan_secret_mode = 's';
+	private $chan_private_mode = 'p';
 
-	public $chan_exception = 1;
-	public $chan_invites = 1;
-	public $line_sq = 0;
-	public $line_g = 1;
-	public $host_cloaking = 1;
+	private $chan_exception = 1;
+	private $chan_invites = 1;
+	private $line_sq = 0;
+	private $line_g = 1;
+	private $host_cloaking = 1;
 
 	function __construct() {
 		;

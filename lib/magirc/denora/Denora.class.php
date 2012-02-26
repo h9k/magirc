@@ -1,14 +1,36 @@
 <?php
 // $Id$
 
+class Denora_DB extends DB {
+	function __construct() {
+		parent::__construct();
+		$error = false;
+		if (file_exists('conf/denora.cfg.php')) {
+			include('conf/denora.cfg.php');
+		} elseif (file_exists('../conf/denora.cfg.php')) {
+			include('../conf/denora.cfg.php');
+		} else {
+			$error = true;
+		}
+		if (!isset($db)) {
+			$error = true;
+		}
+		if ($error) {
+			die ('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
+		}
+		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Denora database<br />'.$this->error);
+	}
+}
+
 class Denora {
 
 	public $db;
 	public $ircd;
 
-	function __construct($ircd) {
+	function __construct() {
 		$this->db = new Denora_DB();
-		require_once("lib/magirc/denora/protocol/{$ircd}.inc.php");
+		require_once(PATH_ROOT."lib/magirc/denora/protocol/".IRCD.".inc.php");
 		$this->ircd = new Protocol();
 	}
 
@@ -66,11 +88,95 @@ class Denora {
 
 	// return the mode formatted for sql
 	function getSqlMode($mode) {
-		if (strtoupper($mode) === $mode) {
+		if (!$mode) {
+			return null;
+		} elseif (strtoupper($mode) === $mode) {
 			return "mode_u".strtolower($mode);
 		} else {
 			return "mode_l".strtolower($mode);
 		}
+	}
+	
+	// CTCP statistics
+	function getClientStats($chan = "global") {
+		$sql_mode = $this->getSqlMode($this->ircd->getParam("services_protection_mode"));
+		$query = "SELECT COUNT(nickid) FROM user WHERE online='Y'";
+		if ($sql_mode) {
+			$query .= " AND {$sql_mode}='N'";
+		}
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		$sum = $stmt->fetch(PDO::FETCH_COLUMN);
+		
+		if ($sql_mode) {
+			$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y' AND {$sql_mode}='N' GROUP by ctcpversion ORDER BY count DESC";
+		} else {
+			$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y' GROUP by ctcpversion ORDER BY count DESC";
+		}
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $this->makeData($result, $sum);
+	}
+	
+	function getCountryStats($chan = "global") {
+		$query = "SELECT SUM(count) FROM tld WHERE count != 0;";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		$sum = $stmt->fetch(PDO::FETCH_COLUMN);
+		
+		$query = "SELECT country AS name, count FROM tld WHERE count != 0 ORDER BY count DESC;";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $this->makeData($result, $sum);
+	}
+	
+	private function makeData($result, $sum) {
+		$data = array();
+		$unknown = 0;
+		$other = 0;
+		foreach ($result as $val) {
+			$percent = round($val["count"] / $sum * 100, 2);
+			if ($percent < 2) {
+				$other += $val["count"];
+			} elseif ($val["name"] == null) {
+				$unknown += $val["count"];
+			} else {
+				$data[] = array($val["name"], $percent);
+			}
+		}
+		if ($unknown > 0) {
+			$data[] = array("Unknown", round($unknown / $sum * 100, 2));
+		}
+		if ($other > 0) {
+			$data[] = array("Other", round($other / $sum * 100, 2));
+		}
+		return $data;
+	}
+	
+	function getHourlyServers() {
+		$query = "SELECT * FROM serverstats ORDER BY year ASC, month ASC, day ASC";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$data = array();
+		foreach ($result as $val) {
+			$date = "{$val['year']}-{$val['month']}-{$val['day']}";
+			for ($i = 0; $i < 24; $i++) {
+				$data[] = array(strtotime("{$date} {$i}:00:00") * 1000, (int) $val["time_".$i]);
+			}
+		}
+		return $data;
+	}
+	
+	function getServerList() {
+		$query = "SELECT server, online, comment, currentusers, opers FROM server";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 }

@@ -5,7 +5,7 @@
  *     MagIRC - Let the magirc begin!     *
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
  *  http://www.magirc.org/                *
- *  (c) 2009-2011 hal9000@denorastats.org *
+ *  (c) 2009-2012 hal9000@denorastats.org *
  *  GPL v2 License - see doc/COPYING      *
  * -------------------------------------- *
  */
@@ -13,9 +13,16 @@
 ini_set('display_errors','on');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
+if (get_magic_quotes_gpc()) die('Disable magic_quotes_gpc in your php.ini');
 
 // load libs
-include('lib/magirc/init.inc.php');
+include_once('lib/magirc/version.inc.php');
+require_once('lib/smarty/Smarty.class.php');
+require_once('lib/magirc/DB.class.php');
+require_once('lib/magirc/Config.class.php');
+require_once('lib/magirc/Magirc.class.php');
+require_once('lib/magirc/anope/Anope.class.php');
+require_once('lib/magirc/denora/Denora.class.php');
 
 $magirc = new Magirc;
 
