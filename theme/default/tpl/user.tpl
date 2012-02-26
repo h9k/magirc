@@ -3,12 +3,43 @@
 {block name="content"}
 <div id="content">
 
-<div class="box">
-<div class="boxtitle">Users - <strong>today</strong> | last week | last month | last year</div>
-<img src="?section=graph&amp;graph=line&amp;mode=users&amp;ey={$smarty.now|date_format:"%Y"}&amp;em={$smarty.now|date_format:"%m"}&amp;ed={$smarty.now|date_format:"%d"}" alt="" /><br />
-</div>
+<script type="text/javascript" src="js/highstock.js"></script>
+<div id="container" style="height: 350px; min-width: 700px"></div>
 
 <pre>Under construction...</pre>
 
 </div>
+<script type="text/javascript">
+<!--
+$(document).ready(function() {
+    $.getJSON('rest/denora.php/users/hourlystats', function(data) {
+        window.chart = new Highcharts.StockChart({
+            chart: {
+                renderTo: 'container'
+            },
+			xAxis: {
+				ordinal: false // Firefox hang workaround
+			},
+			yAxis: {
+				min: 0
+			},
+            rangeSelector: {
+                selected: 1
+            },
+            title: {
+                text: 'Users History'
+            },
+            series: [{
+                name: 'Users online',
+                data: data,
+                step: false,
+                tooltip: {
+                    valueDecimals: 0
+                }
+            }]
+        });
+    });
+});
+-->
+</script>
 {/block}

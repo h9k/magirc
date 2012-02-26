@@ -157,8 +157,8 @@ class Denora {
 		return $data;
 	}
 	
-	function getHourlyServers() {
-		$query = "SELECT * FROM serverstats ORDER BY year ASC, month ASC, day ASC";
+	function getHourlyStats($table) {
+		$query = "SELECT * FROM {$table} ORDER BY year ASC, month ASC, day ASC";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
