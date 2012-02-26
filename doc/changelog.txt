@@ -6,6 +6,7 @@ $Id$
 
 magirc v0.7.0-dev
 -----------------
+2012-02-26 Smarty template engine v3.1.8
 2012-02-25 Implemented some DataTables and HighCharts with data loaded from the RESTful API
 2012-02-25 RESTful API partly implemented
 
