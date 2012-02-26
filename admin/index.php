@@ -4,11 +4,11 @@
 ini_set('display_errors','on');
 error_reporting(E_ALL); #E_NOTICE
 ini_set('default_charset','UTF-8');
+if (get_magic_quotes_gpc()) die('Disable magic_quotes_gpc in your php.ini');
 
 session_start();
 
 $magirc_conf = '../conf/magirc.cfg.php';
-$denora_conf = '../conf/denora.cfg.php';
 
 if (!file_exists($magirc_conf)) {
 	die('Please configure conf/magirc.cfg.dist.php and rename it to conf/magirc.cfg.php');
@@ -17,7 +17,11 @@ if (!is_writable('tmp/')) {
 	die("The 'admin/tmp/' directory is not writable. Please chmod it to 0777.");
 }
 
-require_once('lib/init.inc.php');
+include_once('../lib/magirc/version.inc.php');
+require_once('../lib/smarty/Smarty.class.php');
+require_once('../lib/magirc/DB.class.php');
+require_once('../lib/magirc/Config.class.php');
+include_once('../lib/ckeditor/ckeditor.php');
 require_once('lib/Admin.class.php');
 
 $admin = new Admin();

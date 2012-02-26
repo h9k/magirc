@@ -1,10 +1,22 @@
 <?php
 // $Id$
 
+// database configuration
+class Magirc_DB extends DB {
+	function Magirc_DB() {
+		if (file_exists('../conf/magirc.cfg.php')) {
+			include('../conf/magirc.cfg.php');
+		} else {
+			die ('magirc.cfg.php configuration file missing');
+		}
+		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Magirc database<br />'.$this->error);
+	}
+}
+
 class Admin {
 	public $tpl;
 	public $db;
-	public $denora;
 	public $cfg;
 
 	function __construct() {
@@ -15,7 +27,6 @@ class Admin {
 		$this->tpl->cache_dir = 'tmp';
 		$this->tpl->error_reporting = E_ALL & ~E_NOTICE;
 		$this->db = new Magirc_DB();
-		#$this->denora = new Denora();
 		$this->cfg = new Config();
 		$this->ckeditor = new CKEditor();
 		$this->ckeditor->basePath = '../js/ckeditor/';
