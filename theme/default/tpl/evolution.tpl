@@ -3,22 +3,56 @@
 {block name="content"}
 <div id="content">
 
-<pre>To be implemented...</pre>
-
-<div class="box">
-<div class="boxtitle">Users - Last Month</div>
-<img src="?section=graph&amp;graph=line&amp;mode=users&amp;ey={$smarty.now|date_format:"%Y"}&amp;em={$smarty.now|date_format:"%m"}&amp;ed={$smarty.now|date_format:"%d"}" alt="" /><br />
-</div>
-
-<div class="box">
-<div class="boxtitle">Channels - Last Month</div>
-<img src="?section=graph&amp;graph=line&amp;mode=channels&amp;ey={$smarty.now|date_format:"%Y"}&amp;em={$smarty.now|date_format:"%m"}&amp;ed={$smarty.now|date_format:"%d"}" alt="" /><br />
-</div>
-
-<div class="box">
-<div class="boxtitle">Servers - Last Month</div>
-<img src="?section=graph&amp;graph=line&amp;mode=servers&amp;ey={$smarty.now|date_format:"%Y"}&amp;em={$smarty.now|date_format:"%m"}&amp;ed={$smarty.now|date_format:"%d"}" alt="" /><br />
-</div>
+<script type="text/javascript" src="js/highstock.js"></script>
+<div id="container" style="height: 350px; min-width: 700px"></div>
 
 </div>
+
+<script type="text/javascript">
+<!--
+$(function() {
+    var seriesOptions = [],
+        yAxisOptions = [],
+        seriesCounter = 0,
+        names = ['Servers', 'Channels', 'Users'],
+        colors = Highcharts.getOptions().colors;
+
+    $.each(names, function(i, name) {
+        $.getJSON('rest/denora.php/'+ name.toLowerCase() +'/hourlystats', function(data) {
+            seriesOptions[i] = {
+                name: name,
+                data: data
+            };
+            seriesCounter++;
+            if (seriesCounter == names.length) {
+                createChart();
+            }
+        });
+    });
+	
+    function createChart() {
+        chart = new Highcharts.StockChart({
+            chart: {
+                renderTo: 'container'
+            },
+            rangeSelector: {
+                selected: 4
+            },
+			xAxis: {
+				ordinal: false // Firefox hang workaround
+			},
+            yAxis: {
+				min: 0
+            },
+            tooltip: {
+                pointFormat: '{literal}<span style="color:{series.color}">{series.name}<\/span>: <b>{point.y}<\/b><br\/>{/literal}',
+                valueDecimals: 0
+            },
+            series: seriesOptions
+        });
+    }
+
+});
+-->
+</script>
 {/block}
