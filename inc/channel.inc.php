@@ -18,7 +18,7 @@ $this->tpl->assign('webchat', $this->cfg->getParam('webchat_url'));
 
 switch($_GET['action']) {
 	case 'list':
-		$this->tpl->assign('chanlist', $c->getChannels());
+		#$this->tpl->assign('chanlist', $c->getChannels());
 		$this->tpl->display('channel_list.tpl');
 		break;
 	case 'details':

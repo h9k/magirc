@@ -178,6 +178,64 @@ class Denora {
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+	
+	// return an array of all channels
+	function getChannelList($datatables = false) {
+		$data = array();
+		$i = 0;
+		if ($datatables) {
+			$chans = $this->db->jsonList('chan', array('channel', 'currentusers', 'maxusers', 'topic'), 'channel');
+			echo json_encode($chans); exit;
+		}
+		$chans = $this->db->selectAll('chan', NULL, 'channel', 'ASC');
+		foreach ($chans as $chan) {
+			$data[$i]['id'] = $chan['chanid'];
+			$data[$i]['name'] = $chan['channel'];
+			$data[$i]['users'] = $chan['currentusers'];
+			$data[$i]['users_max'] = $chan['maxusers'];
+			$data[$i]['users_max_time'] = $chan['maxusertime'];
+			$data[$i]['topic'] = $chan['topic'];
+			$data[$i]['topic_author'] = $chan['topicauthor'];
+			$data[$i]['topic_time'] = strtotime($chan['topictime']);
+			$data[$i]['kicks'] = $chan['kickcount'];
+			$data[$i]['modes'] = $this->getModes($chan);
+			$i++;
+		}
+		return $data;
+	}
+	
+	private function getModes($chan) {
+		$modes = "";
+		$j = 97;
+		while ($j <= 122) {
+			if (@$chan['mode_l'.chr($j)] == "Y") {
+				$modes .= chr($j);
+			}
+			if (@$chan['mode_u'.chr($j)] == "Y") {
+				$modes .= chr($j-32);
+			}
+			$j++;
+		}
+		if (@$chan['mode_lf_data'] != NULL) {
+			$modes .= " ".$chan['mode_lf_data'];
+		}
+		if (@$chan['mode_lj_data'] != NULL) {
+			$modes .= " ".$chan['mode_lj_data'];
+		}
+		if (@$chan['mode_ll_data'] > 0) {
+			$modes .= " ".$chan['mode_ll_data'];
+		}
+		if (@$chan['mode_uf_data'] != NULL) {
+			$modes .= " ".$chan['mode_uf_data'];
+		}
+		if (@$chan['mode_uj_data'] > 0) {
+			$modes .= " ".$chan['mode_uj_data'];
+		}
+		if (@$chan['mode_ul_data'] != NULL) {
+			$modes .= " ".$chan['mode_ul_data'];
+		}
+		return $modes;
+	}
 
 }
 

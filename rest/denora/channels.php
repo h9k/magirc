@@ -5,7 +5,7 @@ class Channels extends Magirc {
     }
     function index() {
 		if (@$_GET['format'] == 'datatables') {
-			return array('aaData' => $this->denora->getChannelList());
+			return $this->denora->getChannelList(true);
 		}
 		return $this->denora->getChannelList();
     }

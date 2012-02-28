@@ -202,8 +202,8 @@ class DB {
 		// Paging
 		$sLimit = "";
 		if (isset($_GET['iDisplayStart']) && isset($_GET['iDisplayLength']) && $_GET['iDisplayLength'] != '-1') {
-			$sLimit = "LIMIT ".$this->escape($_GET['iDisplayStart']).", ".
-			$this->escape($_GET['iDisplayLength']);
+			$sLimit = "LIMIT ".  mysql_real_escape_string($_GET['iDisplayStart']).", ".
+			mysql_real_escape_string($_GET['iDisplayLength']);
 		}
 		// Ordering
 		$sOrder = "";
@@ -212,7 +212,7 @@ class DB {
 			for ($i=0 ; $i<intval(@$_GET['iSortingCols']) ; $i++) {
 				if (@$_GET['bSortable_'.intval(@$_GET['iSortCol_'.$i])] == "true") {
 					$sOrder .= "`".$aColumns[intval(@$_GET['iSortCol_'.$i])]."`
-				 	".$this->escape(@$_GET['sSortDir_'.$i]) .", ";
+				 	".mysql_real_escape_string(@$_GET['sSortDir_'.$i]) .", ";
 				}
 			}
 			$sOrder = substr_replace($sOrder, "", -2);
@@ -255,40 +255,26 @@ class DB {
 		// Query
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable $sWhere $sOrder $sLimit";
 		$aResult = $this->query($sQuery, SQL_ALL, SQL_ASSOC);
+		$aaData = $this->record;
 		// Data set length after filtering
 		$sQuery = "SELECT FOUND_ROWS()";
-		$aResultFilterTotal = $this->query($sQuery, SQL_INIT, SQL_INDEX);
+		$this->query($sQuery, SQL_INIT, SQL_INDEX);
+		$aResultFilterTotal = $this->record;
 		$iFilteredTotal = $aResultFilterTotal[0];
 		// Total data set length
 		$sQuery = "SELECT COUNT(".$sIndexColumn.") FROM $sTable";
-		$aResultTotal = $this->query($sQuery, SQL_INIT, SQL_INDEX);
+		$this->query($sQuery, SQL_INIT, SQL_INDEX);
+		$aResultTotal = $this->record;
 		$iTotal = $aResultTotal[0];
 
 		// JSON Output
-		$sOutput = '{';
-		$sOutput .= '"sEcho": '.intval(@$_GET['sEcho']).', ';
-		$sOutput .= '"iTotalRecords": '.$iTotal.', ';
-		$sOutput .= '"iTotalDisplayRecords": '.$iFilteredTotal.', ';
-		$sOutput .= '"aaData": [ ';
-		foreach ($aResult as $aRow) {
-			$sOutput .= "[";
-			for ($i=0 ; $i<count($aColumns) ; $i++) {
-				if ($aColumns[$i] == 'created' || $aColumns[$i] == 'updated') {
-					$sOutput .= '"'.str_replace('"', '\"', date('d.m.Y H:i', strtotime($aRow[$aColumns[$i]]))).'",';
-				} elseif ($aColumns[$i] != ' ') {
-					$sOutput .= '"'.str_replace('"', '\"', $aRow[$aColumns[$i]]).'",';
-				}
-			}
-			$sOutput = substr_replace($sOutput, "", -1);
-			$sOutput = str_replace("\n", "\\n", $sOutput);
-			$sOutput .= "],";
-		}
-		$sOutput = substr_replace($sOutput, "", -1);
-		$sOutput .= '] }';
-
-		header('Content-type: application/json');
-		echo $sOutput;
-		exit;
+		$aOutput = array(
+			'sEcho' => intval(@$_GET['sEcho']),
+			'iTotalRecords' => $iTotal,
+			'iTotalDisplayRecords' => $iFilteredTotal,
+			'aaData' => $aaData
+		);
+		return $aOutput;
 	}
 
 	/**
@@ -300,12 +286,8 @@ class DB {
 	function jsonItem($sTable, $aColumns, $id) {
 		// Query
 		$sQuery = "SELECT `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable WHERE id = $id";
-		$aRow = $this->query($sQuery, SQL_INIT, SQL_ASSOC);
-
-		// JSON output
-		header('Content-type: application/json');
-		echo json_encode($aRow);
-		exit;
+		$this->query($sQuery, SQL_INIT, SQL_ASSOC);
+		return $this->record;
 	}
 
 }

@@ -6,31 +6,17 @@
 <script type="text/javascript" src="js/highstock.js"></script>
 <div id="container" style="height: 350px; min-width: 700px"></div>
 
-<table class="list">
-	<tr>
-		<th>Channel</th>
-		<th>Users</th>
-		<th>Max</th>
-		<th style="width:100%">Modes</th>
-	<tr>
-{foreach from=$chanlist item=item}
-	{if $item.topic}<tr class="{cycle values="bg1, bg2" advance=false}">
-	{else}<tr class="{cycle values="bg1, bg2" advance=true}">{/if}
-		<td style="white-space:nowrap;"><a href="?section=channel&amp;channel={$item.name|escape:'url'}">{$item.name}</a></td>
-		<td>{$item.users}</td>
-		<td>{$item.users_max}</td>
-		<td>{if $item.modes}+{$item.modes}{else}&nbsp;{/if}</td>
-	</tr>
-	{if $item.topic}
-	<tr class="{cycle advance=true}">
-		<td colspan="4"><div>{$item.topic|irc2html}</div></td>
-	</tr>
-	{/if}
-{foreachelse}
-	<tr>
-		<td colspan="4">No channels to list</td>
-	</tr>
-{/foreach}
+<table class="display">
+	<thead>
+		<tr>
+			<th>Channel</th>
+			<th>Current users</th>
+			<th>Max users</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td colspan="3">Loading...</td></tr>
+	</tbody>
 </table>
 
 </div>
@@ -65,6 +51,28 @@ $(document).ready(function() {
             }]
         });
     });
+	
+	$('.display').dataTable({
+		"bJQueryUI": true,
+		"bAutoWidth": false,
+		"bProcessing": true,
+		"bFilter": true,
+		"bInfo": true,
+		"bLengthChange": true,
+		"bPaginate": true,
+		"bSort": true,
+		"bStateSave": false,
+		"bServerSide": true,
+		"iDisplayLength": 10,
+		"sPaginationType": "full_numbers",
+		"aaSorting": [[ 1, "asc" ]],
+		"sAjaxSource": "rest/denora.php/channels/?format=datatables",
+		"aoColumns": [
+			{ "mDataProp": "channel" },
+			{ "mDataProp": "currentusers" },
+			{ "mDataProp": "maxusers" }
+		]
+	});
 });
 -->
 </script>
