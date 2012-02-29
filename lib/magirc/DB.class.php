@@ -55,7 +55,6 @@ class DB {
 
 	function query($query, $type = SQL_NONE, $format = SQL_INDEX) {
 		try {
-			#echo "<pre>$query</pre>";
 			$this->result = $this->pdo->query($query);
 			switch ($type) {
 				case SQL_ALL:
@@ -84,8 +83,12 @@ class DB {
 		}
 	}
 
-	function escape($input) {
-		return $this->pdo->quote($input);
+	function escape($input, $quotes = true) {
+		if ($quotes) {
+			return $this->pdo->quote($input);
+		} else {
+			return substr($this->pdo->quote($input), 1, -1);
+		}
 	}
 
 	function lastInsertID() {
@@ -111,7 +114,7 @@ class DB {
 		$query = "SELECT * FROM `{$table}`";
 
 		if ($where) {
-			$conditions = NULL;
+			$conditions = "";
 			foreach($where as $key => $value) {
 				$conditions .= sprintf("`%s` = %s AND ", $key, $this->escape($value));
 			}
@@ -127,7 +130,6 @@ class DB {
 		}
 
 		$this->query($query, $type, $format);
-
 		return $this->record;
 	}
 
@@ -202,8 +204,8 @@ class DB {
 		// Paging
 		$sLimit = "";
 		if (isset($_GET['iDisplayStart']) && isset($_GET['iDisplayLength']) && $_GET['iDisplayLength'] != '-1') {
-			$sLimit = "LIMIT ".  mysql_real_escape_string($_GET['iDisplayStart']).", ".
-			mysql_real_escape_string($_GET['iDisplayLength']);
+			$sLimit = "LIMIT ".  $this->escape($_GET['iDisplayStart'], false).", ".
+			$this->escape($_GET['iDisplayLength'], false);
 		}
 		// Ordering
 		$sOrder = "";
@@ -212,7 +214,7 @@ class DB {
 			for ($i=0 ; $i<intval(@$_GET['iSortingCols']) ; $i++) {
 				if (@$_GET['bSortable_'.intval(@$_GET['iSortCol_'.$i])] == "true") {
 					$sOrder .= "`".$aColumns[intval(@$_GET['iSortCol_'.$i])]."`
-				 	".mysql_real_escape_string(@$_GET['sSortDir_'.$i]) .", ";
+				 	".$this->escape(@$_GET['sSortDir_'.$i], false) .", ";
 				}
 			}
 			$sOrder = substr_replace($sOrder, "", -2);
@@ -225,7 +227,7 @@ class DB {
 		if (@$_GET['sSearch'] != "") {
 			$sWhere = "WHERE (";
 			for ($i=0 ; $i<count($aColumns) ; $i++) {
-				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch'])."%' OR ";
+				$sWhere .= $aColumns[$i]." LIKE '%".$this->escape($_GET['sSearch'], false)."%' OR ";
 			}
 			$sWhere = substr_replace($sWhere, "", -3);
 			$sWhere .= ')';
@@ -238,7 +240,7 @@ class DB {
 				} else {
 					$sWhere .= " AND ";
 				}
-				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
+				$sWhere .= $aColumns[$i]." LIKE '%".$this->escape($_GET['sSearch_'.$i], false)."%' ";
 			}
 		}
 		if ($aWhere) {
@@ -254,7 +256,7 @@ class DB {
 		 
 		// Query
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable $sWhere $sOrder $sLimit";
-		$aResult = $this->query($sQuery, SQL_ALL, SQL_ASSOC);
+		$this->query($sQuery, SQL_ALL, SQL_ASSOC);
 		$aaData = $this->record;
 		// Data set length after filtering
 		$sQuery = "SELECT FOUND_ROWS()";
@@ -267,7 +269,7 @@ class DB {
 		$aResultTotal = $this->record;
 		$iTotal = $aResultTotal[0];
 
-		// JSON Output
+		// Output array, to be converted in JSON
 		$aOutput = array(
 			'sEcho' => intval(@$_GET['sEcho']),
 			'iTotalRecords' => $iTotal,
@@ -283,12 +285,13 @@ class DB {
 	 * @param array $aColumns
 	 * @param integer $id
 	 */
-	function jsonItem($sTable, $aColumns, $id) {
-		// Query
-		$sQuery = "SELECT `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable WHERE id = $id";
-		$this->query($sQuery, SQL_INIT, SQL_ASSOC);
-		return $this->record;
-	}
+	/*function jsonItem($sTable, $aColumns, $id) {
+		$sQuery = "SELECT `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable WHERE id = :id";
+		$ps = $this->prepare($sQuery);
+		$ps->bindParam(':id', $id, PDO::PARAM_INT);
+		$ps->exec();
+		return $ps->fetch(PDO::FETCH_ASSOC);
+	}*/
 
 }
 
