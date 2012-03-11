@@ -142,7 +142,7 @@ class Denora {
 			$percent = round($val["count"] / $sum * 100, 2);
 			if ($percent < 2) {
 				$other += $val["count"];
-			} elseif ($val["name"] == null) {
+			} elseif ($val["name"] == null || $val["name"] == "Unknown") {
 				$unknown += $val["count"];
 			} else {
 				$data[] = array($val["name"], $percent);
