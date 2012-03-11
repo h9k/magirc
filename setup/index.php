@@ -1,8 +1,8 @@
 <?php
 // $Id$
 
-ini_set('display_errors','on');
-error_reporting(E_ALL); # E_NOTICE
+ini_set('display_errors','off');
+error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 
 $_GET['step'] = (isset($_GET['step'])) ? htmlspecialchars($_GET['step']) : 1;

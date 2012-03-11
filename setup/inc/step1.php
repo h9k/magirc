@@ -20,6 +20,7 @@ if (!$status['error']) {
 }
 
 $setup->tpl->assign('phpversion', phpversion());
+$setup->tpl->assign('magirc_conf', $magirc_conf);
 $setup->tpl->assign('status', $status);
 $setup->tpl->assign('config', $config);
 

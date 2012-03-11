@@ -16,8 +16,8 @@
 <pre>Checking PHP GD extension... {if $status.gd}<span style="color:green">Present</span></pre>
 {else} <span style="color:red">Missing!</span><br />This component is required to run MagIRC. Please contact your Administrator.</pre>{/if}
 
-<pre>Checking SQL configuration file...{if $status.writable} <span style="color:green;">Writable</span></pre>
-{else} <span style="color:orange;">Not writable</span><br />Please ensure that the $MagIRC_conf file has enough write permissions.<br />Try chmod 0666 or 0777. If it still doesn't work don't worry, you can continue anyway.</pre>{/if}
+<pre>Checking SQL configuration files...{if $status.writable} <span style="color:green;">Writable</span></pre>
+{else} <span style="color:orange;">Not writable</span><br />Please copy the conf/*.cfg.dist.php files to conf/*.cfg.php and chmod them to 0666.<br />Alternatively, chmod the conf/ directory to 0777.<br />If it still doesn't work don't worry, you can continue anyway.</pre>{/if}
 
 <pre>Checking if <em>tmp/compiled</em> is writable... {if $status.compiled} <span style="color:green;">Writable</span></pre>
 {else} <span style="color:red;">Not writable</span><br />Please chmod the directory to 0777</pre>{/if}
@@ -37,7 +37,7 @@
 		{if $status.writable}
 		<div class="configsave">Configuration saved</div>
 		{else}
-		<p><strong>Please replace the contents of the $MagIRC_conf file with the text below:</strong></p>
+		<p><strong>Please replace the contents of the {$magirc_conf} file with the text below:</strong></p>
 		<textarea name="sql_buffer" cols="64" rows="10" readonly="readonly">{$db_buffer}</textarea>
 		<p>When you are done please <a href="?step=1">repeat this step</a></p>
 		{/if}
