@@ -21,7 +21,7 @@ require_once('lib/smarty/Smarty.class.php');
 require_once('lib/magirc/DB.class.php');
 require_once('lib/magirc/Config.class.php');
 require_once('lib/magirc/Magirc.class.php');
-require_once('lib/magirc/anope/Anope.class.php');
+#require_once('lib/magirc/anope/Anope.class.php');
 require_once('lib/magirc/denora/Denora.class.php');
 
 $magirc = new Magirc;

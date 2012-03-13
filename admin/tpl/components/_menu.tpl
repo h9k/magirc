@@ -21,12 +21,12 @@
     </ul>
 </div>
 
-<div class="menu_title"><img src="img/config.png" alt="" width="16" height="16" /> Anope</div>
+{*<div class="menu_title"><img src="img/config.png" alt="" width="16" height="16" /> Anope</div>
 <div class="menu">
     <ul class="level1">
         <li><a href="?service=anope&amp;page=database">Database</a></li>
     </ul>
-</div>
+</div>*}
 
 <div class="menu_title"><img src="img/help.png" alt="" width="16" height="16" /> Support</div>
 <div class="menu">

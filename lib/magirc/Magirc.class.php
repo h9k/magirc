@@ -29,7 +29,7 @@ class Magirc {
 	public $db;
 	public $cfg;
 	public $tpl;
-	public $anope;
+	#public $anope;
 	public $denora;
 
 	function __construct($api_mode = "web") {
@@ -42,7 +42,7 @@ class Magirc {
 			$this->tpl->cache_dir = 'tmp/cache';
 			$this->tpl->addPluginsDir('lib/smarty-plugins/');
 		}
-		
+
 		// Setup the database
 		$this->db = new Magirc_DB;
 		$query = "SHOW TABLES LIKE 'magirc_config'";
@@ -50,19 +50,19 @@ class Magirc {
 		if (!$this->db->record) {
 			$this->displayError('Database table missing. Please run setup.', $api_mode);
 		}
-		
+
 		// Get the configuration
 		$this->cfg = new Config();
-		
+
 		// Initialize modules
 		define('IRCD', $this->cfg->getParam('ircd_type'));
-		if ($api_mode == "web" || $api_mode == "anope") {
+		/*if ($api_mode == "web" || $api_mode == "anope") {
 			$this->anope = new Anope();
-		}
+		}*/
 		if ($api_mode == "web" || $api_mode == "denora") {
 			$this->denora = new Denora();
 		}
-		
+
 		if ($api_mode == "web") {
 			// Set the locale
 			$locale = $this->cfg->getParam('locale');

@@ -8,10 +8,10 @@
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
 <meta name="generator" content="MagIRC" />
 
-<link rel="stylesheet" type="text/css" href="../js/yui/reset/reset-min.css" />
+{*<link rel="stylesheet" type="text/css" href="../js/yui/reset/reset-min.css" />
 <link rel="stylesheet" type="text/css" href="../js/yui/base/base-min.css" />
 <link rel="stylesheet" type="text/css" href="../js/yui/fonts/fonts-min.css" />
-<link rel="stylesheet" type="text/css" href="css/yui_override.css" />
+<link rel="stylesheet" type="text/css" href="css/yui_override.css" />*}
 <link rel="stylesheet" type="text/css" href="css/default.css" />
 <link rel="stylesheet" type="text/css" href="css/menu.css" />
 

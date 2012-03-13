@@ -34,7 +34,7 @@ class Admin {
 		$this->ckeditor->config['height'] = 300;
 		$this->ckeditor->config['width'] = 740;
 		$this->ckeditor->config['baseHref'] = '../';
-		$this->ckeditor->config['contentsCss'] = array('../theme/'.$this->cfg->getParam('theme').'/css/styles.css', '../theme/'.$this->cfg->getParam('theme').'/css/editor.css');
+		$this->ckeditor->config['contentsCss'] = array('theme/'.$this->cfg->getParam('theme').'/css/styles.css', 'theme/'.$this->cfg->getParam('theme').'/css/editor.css');
 		$this->ckeditor->config['docType'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 		$this->ckeditor->config['emailProtection'] = 'encode';
 		$this->ckeditor->config['entities'] = true;
