@@ -28,7 +28,8 @@ $magirc = new Magirc;
 
 try {
 	define('DEBUG', $magirc->cfg->getParam('debug_mode'));
-	define('BASE_URL', $magirc->cfg->getParam('base_url'));
+	$protocol = @$_SERVER['HTTPS'] ? 'https://' : 'http://';
+	define('BASE_URL', $protocol.$_SERVER['SERVER_NAME'].str_replace('index.php', '', $_SERVER['PHP_SELF']));
 	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
 	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
 
