@@ -1,15 +1,15 @@
 {* $Id$ *}
 
 <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
-<div id="container" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
+<div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <script type="text/javascript">
 <!--
 $(document).ready(function() {
     $.getJSON('rest/denora.php/clientstats', function(data) {
-        window.chart = new Highcharts.Chart({
+        new Highcharts.Chart({
 			chart: {
-				renderTo: 'container',
+				renderTo: 'chart-clients',
 				plotBackgroundColor: null,
 				plotBorderWidth: null,
 				plotShadow: false

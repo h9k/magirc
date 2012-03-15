@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <script type="text/javascript" src="js/highstock.js"></script>
-<div id="container" style="height: 350px; min-width: 700px"></div>
+<div id="chart-evolution" style="height: 350px; min-width: 700px"></div>
 
 <script type="text/javascript">
 <!--
@@ -28,7 +28,7 @@ $(function() {
     function createChart() {
         chart = new Highcharts.StockChart({
             chart: {
-                renderTo: 'container'
+                renderTo: 'chart-evolution'
             },
             rangeSelector: {
                 selected: 4
