@@ -14,6 +14,11 @@
 <!--
 $(function() {
 	var refresh = 5; // seconds
+	Highcharts.setOptions({
+		global: {
+			useUTC: false
+		}
+	});
 	$.getJSON('rest/denora.php/network/status', function(result) {
 		new Highcharts.Chart({
 			chart: {
