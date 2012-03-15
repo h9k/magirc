@@ -107,10 +107,14 @@ class Magirc {
 	// Load the appropriate code based on the section parameter
 	function display() {
 		$section = $this->getUrlParameter('section');
+		$action = $this->getUrlParameter('action');
 		$inc_file = 'inc/' . $section . '.inc.php';
+		$tpl_file = 'theme/' . $this->cfg->getParam("theme") . '/tpl/' . $section . '_' . $action . '.tpl';
 
 		if (file_exists($inc_file)) {
 			require_once($inc_file);
+		} elseif (file_exists($tpl_file)) {
+			$this->tpl->display($tpl_file);
 		} else {
 			$content = $this->getPage($section);
 			if ($content) {

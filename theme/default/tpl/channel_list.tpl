@@ -51,7 +51,7 @@ $(document).ready(function() {
             }]
         });
     });
-	
+
 	$('.display').dataTable({
 		"bJQueryUI": true,
 		"bAutoWidth": false,
@@ -66,7 +66,7 @@ $(document).ready(function() {
 		"iDisplayLength": 10,
 		"sPaginationType": "full_numbers",
 		"aaSorting": [[ 1, "asc" ]],
-		"sAjaxSource": "rest/denora.php/channels/?format=datatables",
+		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel" },
 			{ "mDataProp": "currentusers" },

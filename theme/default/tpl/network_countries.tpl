@@ -1,17 +1,12 @@
 {* $Id$ *}
-{extends file="components/main.tpl"}
-{block name="content"}
-<div id="content">
 
 <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 <div id="container" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
-</div>
-
 <script type="text/javascript">
 <!--
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/clientstats', function(data) {
+    $.getJSON('rest/denora.php/countrystats', function(data) {
         window.chart = new Highcharts.Chart({
 			chart: {
 				renderTo: 'container',
@@ -20,7 +15,7 @@ $(document).ready(function() {
 				plotShadow: false
 			},
 			title: {
-				text: 'Current Client Statistics'
+				text: 'Current Country Statistics'
 			},
 			tooltip: {
 				formatter: function() {
@@ -43,7 +38,7 @@ $(document).ready(function() {
 			},
 			series: [{
 				type: 'pie',
-				name: 'Client Statistics',
+				name: 'Country Statistics share',
 				data: data
 			}]
 		});
@@ -51,4 +46,3 @@ $(document).ready(function() {
 });
 -->
 </script>
-{/block}

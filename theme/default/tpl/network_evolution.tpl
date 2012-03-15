@@ -1,12 +1,7 @@
 {* $Id$ *}
-{extends file="components/main.tpl"}
-{block name="content"}
-<div id="content">
 
 <script type="text/javascript" src="js/highstock.js"></script>
 <div id="container" style="height: 350px; min-width: 700px"></div>
-
-</div>
 
 <script type="text/javascript">
 <!--
@@ -29,7 +24,7 @@ $(function() {
             }
         });
     });
-	
+
     function createChart() {
         chart = new Highcharts.StockChart({
             chart: {
@@ -55,4 +50,3 @@ $(function() {
 });
 -->
 </script>
-{/block}
