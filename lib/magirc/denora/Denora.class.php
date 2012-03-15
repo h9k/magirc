@@ -81,6 +81,15 @@ class Denora {
 		}
 	}
 
+	function getCurrentStatus() {
+		$data = $this->db->selectAll('current');
+		$status = array();
+		foreach ($data as $row) {
+			$status[$row["type"]] = (int) $row["val"];
+		}
+		return $status;
+	}
+
 	// return an array of all servers
 	function getServers() {
 		return $this->db->selectAll('server', NULL, 'server', 'ASC');
@@ -96,7 +105,7 @@ class Denora {
 			return "mode_l".strtolower($mode);
 		}
 	}
-	
+
 	// CTCP statistics
 	function getClientStats($chan = "global") {
 		$sql_mode = $this->getSqlMode($this->ircd->getParam("services_protection_mode"));
@@ -107,7 +116,7 @@ class Denora {
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		$sum = $stmt->fetch(PDO::FETCH_COLUMN);
-		
+
 		if ($sql_mode) {
 			$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y' AND {$sql_mode}='N' GROUP by ctcpversion ORDER BY count DESC";
 		} else {
@@ -116,24 +125,24 @@ class Denora {
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		
+
 		return $this->makeData($result, $sum);
 	}
-	
+
 	function getCountryStats($chan = "global") {
 		$query = "SELECT SUM(count) FROM tld WHERE count != 0;";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		$sum = $stmt->fetch(PDO::FETCH_COLUMN);
-		
+
 		$query = "SELECT country AS name, count FROM tld WHERE count != 0 ORDER BY count DESC;";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		
+
 		return $this->makeData($result, $sum);
 	}
-	
+
 	private function makeData($result, $sum) {
 		$data = array();
 		$unknown = 0;
@@ -156,7 +165,7 @@ class Denora {
 		}
 		return $data;
 	}
-	
+
 	function getHourlyStats($table) {
 		$query = "SELECT * FROM {$table} ORDER BY year ASC, month ASC, day ASC";
 		$stmt = $this->db->prepare($query);
@@ -171,14 +180,14 @@ class Denora {
 		}
 		return $data;
 	}
-	
+
 	function getServerList() {
 		$query = "SELECT server, online, comment, currentusers, opers FROM server";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
+
 	// return an array of all channels
 	function getChannelList($datatables = false) {
 		$data = array();
@@ -203,7 +212,7 @@ class Denora {
 		}
 		return $data;
 	}
-	
+
 	private function getModes($chan) {
 		$modes = "";
 		$j = 97;
