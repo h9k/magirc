@@ -1,10 +1,13 @@
-@CHARSET "UTF-8";
 /* $Id$ */
 
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:500,700");
+
 html {
-	background-color: #000022;
-	background-image: url(../img/bg_bottom.png);
-	background-repeat: repeat-x;
+	background: black url("../img/bg.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 body {
@@ -14,45 +17,66 @@ body {
 }
 
 img,td,th{border:0}
-
-h1 {
-	font: 18px Verdana, Arial, Helvetica, sans-serif;
-	margin: 0px;
-	padding: 0px 0px 0px 0px;
-}
-h2 {
-	font: 16px Verdana, Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	color: #000000;
-	border-bottom: 1px solid #CCCCCC;
-	padding-left: 5px;
-	padding-bottom: 2px;
-	letter-spacing: 1.0px;
-	font-variant:small-caps;
-	margin-top: 0px;
-}
-h3 {
-	font: 14px Verdana, Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	color: #000000;
-}
+img#logo{padding:25px 25px 0px 5px;float:left;}
+h1,h2,h3,h4,h5,h6{font-family: 'Share', cursive;color:#333;}
 
 div#header {
-	padding: 5px 0px 0px 0px;
-	margin: 10px auto 0px auto;
-	width: 800px;
-	color: #FCFCFC;
+	padding: 0 10px;
+	margin: 0px auto 15px auto;
+	width: 890px;
+	height: 75px;
+	background-color: #666666;
+	background: -webkit-linear-gradient(top, #666666, #000000);
+	background: -moz-linear-gradient(top, #666666, #000000);
+	background: -ms-linear-gradient(top, #666666, #000000);
+	background: -o-linear-gradient(top, #666666, #000000);
+	border-radius: 0 0 6px 6px;
+}
+
+div#menu {
+	float:left;
+	margin:0;
+	padding:0;
+}
+div#menu ul {
+	list-style: none;
+	margin:0;
+	padding:0;
+}
+div#menu li {
+	display: inline;
+	margin:0;
+	padding:0;
+}
+div#menu a {
+	float: left;
+	height:30px;
+	width:120px;
+	padding-top:45px;
+	text-decoration: none;
+	color:white;
+	font-family: 'Share', cursive;
+	font-size:18px;
+	display:block;
+}
+div#menu a:hover {
+	color:orange;
+	background-color: #CCCCCC;
+	background: -webkit-linear-gradient(top, #CCCCCC, #666666);
+	background: -moz-linear-gradient(top, #CCCCCC, #666666);
+	background: -ms-linear-gradient(top, #CCCCCC, #666666);
+	background: -o-linear-gradient(top, #CCCCCC, #666666);
 }
 
 div#main {
-	background-color: #FFFFFF;
-	margin: 0px;
-	padding: 0px 10px 10px 10px;
-	clear:both;
-	border-top: 2px solid #666666;
-	border-bottom: 2px solid #666666;
+	width:890px;
+	margin: 5px auto;
+	padding: 10px;
+	background-color: white;
+	background-color: rgba(255,255,255,0.6);
+	border-radius: 6px;
+	min-height:500px;
 }
-
 div#main a, div#main a:visited {
 	color: #000099;
 }
@@ -61,95 +85,20 @@ div#main a:hover, div#main a:active {
 	text-decoration: none;
 }
 
-div#title {
-	background-color:#F8F8F8;
-	color:#333333;
-	border-bottom:3px solid #CCCCCC;
-	border-left:3px solid #CCCCCC;
-	border-right:3px solid #CCCCCC;
-	padding:3px;
-	margin:0px auto 5px auto;
-	width: 800px;
-	height:35px;
-}
-div#title h1 {
-	margin:0 5px 8px 0;
-	padding:0;
-}
-
-div#content {
-	width: 800px;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 10px 10px 5px 10px;
-	border-left: 1px dotted #CCCCCC;
-	border-right: 1px dotted #CCCCCC;
-	min-height: 400px;
-}
-
 div#footer {
 	text-align: right;
 	font-size: x-small;
-	color: #666666;
+	color: #FCFCFC;
 	padding: 0px 5px 10px 5px;
 	margin: 0px auto 10px auto;
-	width: 800px;
+	width: 890px;
 }
-
 div#footer a, div#footer a:visited {
-	color: #666666;
+	color: #FCFCFC;
 }
 div#footer a:hover, div#footer a:active {
-	color: #FCFCFC;
+	color: #FFFFFF;
 	text-decoration: none;
 }
 
 div.clear { clear:both; }
-
-div.box {
-	background-color:#F8F8F8;
-	padding:4px;
-	margin:5px;
-	text-align:center;
-}
-
-div.boxtitle {
-	margin:3px;
-	padding:5px;
-	background-color:white;
-	font-size:small;
-	font-weight:bold;
-	color:#333333;
-	text-transform:uppercase;
-	border-top:1px solid #CCCCCC;
-	border-bottom:1px solid #CCCCCC;
-}
-
-table.list { width:100%; }
-table.list th { text-align:left; white-space:nowrap; }
-table.list td div {
-	border:1px solid #CCCCCC;
-	background-color:#FFFFFF;
-	padding:5px;
-	margin:5px;
-}
-table.list tr.bg1 {	background-color:#F3F3F3; }
-table.list tr.bg2 { background-color:#FFFFFF; }
-
-table.status th {
-	text-align:left;
-	white-space:nowrap;
-}
-table.status td {
-	font-size:small;
-	color:blue;
-	text-align:right;
-	white-space:nowrap;
-}
-
-div.topic {
-	margin:5px;
-	padding:5px;
-	border:1px solid #CCCCCC;
-	background-color:#FFFFFF;
-}

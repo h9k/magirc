@@ -1,13 +1,12 @@
 {* $Id$ *}
 {extends file="components/main.tpl"}
-{block name="content"}
-<div id="content">
 
-{*<h2>Servers today</h2>*}
+{block name="content"}
+<h1>Server history</h1>
 <script type="text/javascript" src="js/highstock.js"></script>
 <div id="container" style="height: 350px; min-width: 700px"></div>
 
-{*<h2>Server list</h2>*}
+<h1>Server list</h1>
 <table border="0" cellpadding="0" cellspacing="0" class="display">
 <thead>
 	<tr>
@@ -22,16 +21,17 @@
 	<tr><td colspan="5">Loading...</td></tr>
 </tbody>
 </table>
+{/block}
 
-</div>
-
+{block name="js" append}
 <script type="text/javascript">
 <!--
 $(document).ready(function() {
     $.getJSON('rest/denora.php/servers/hourlystats', function(data) {
         window.chart = new Highcharts.StockChart({
             chart: {
-                renderTo: 'container'
+                renderTo: 'container',
+				backgroundColor: 'transparent'
             },
 			xAxis: {
 				ordinal: false // Firefox hang workaround
@@ -42,9 +42,13 @@ $(document).ready(function() {
             rangeSelector: {
                 selected: 1
             },
-            title: {
-                text: 'Servers History'
-            },
+            /*title: {
+				align: 'left',
+                text: 'Servers History',
+				style: {
+					fontFamily: 'Share'
+				}
+            },*/
             series: [{
                 name: 'Servers online',
                 data: data,

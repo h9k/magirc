@@ -3,10 +3,8 @@
 {block name="content"}
 <div id="content">
 
-<script type="text/javascript" src="js/highstock.js"></script>
+<h1>User history</h1>
 <div id="container" style="height: 350px; min-width: 700px"></div>
-
-<pre>Under construction...</pre>
 
 </div>
 <script type="text/javascript">
@@ -15,7 +13,8 @@ $(document).ready(function() {
     $.getJSON('rest/denora.php/users/hourlystats', function(data) {
         window.chart = new Highcharts.StockChart({
             chart: {
-                renderTo: 'container'
+                renderTo: 'container',
+				backgroundColor: 'transparent'
             },
 			xAxis: {
 				ordinal: false // Firefox hang workaround
@@ -26,9 +25,9 @@ $(document).ready(function() {
             rangeSelector: {
                 selected: 1
             },
-            title: {
+            /*title: {
                 text: 'Users History'
-            },
+            },*/
             series: [{
                 name: 'Users online',
                 data: data,

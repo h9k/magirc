@@ -1,11 +1,11 @@
 {* $Id$ *}
 {extends file="components/main.tpl"}
 {block name="content"}
-<div id="content">
 
-<script type="text/javascript" src="js/highstock.js"></script>
+<h1>Channel history</h1>
 <div id="container" style="height: 350px; min-width: 700px"></div>
 
+<h1>Channel list</h1>
 <table class="display">
 	<thead>
 		<tr>
@@ -27,7 +27,8 @@ $(document).ready(function() {
     $.getJSON('rest/denora.php/channels/hourlystats', function(data) {
         window.chart = new Highcharts.StockChart({
             chart: {
-                renderTo: 'container'
+                renderTo: 'container',
+				backgroundColor: 'transparent'
             },
 			xAxis: {
 				ordinal: false // Firefox hang workaround
@@ -38,9 +39,9 @@ $(document).ready(function() {
             rangeSelector: {
                 selected: 1
             },
-            title: {
+            /*title: {
                 text: 'Channels History'
-            },
+            },*/
             series: [{
                 name: 'Channels online',
                 data: data,

@@ -1,6 +1,5 @@
 {* $Id$ *}
 
-<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 <div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <script type="text/javascript">
@@ -10,6 +9,7 @@ $(document).ready(function() {
         new Highcharts.Chart({
 			chart: {
 				renderTo: 'chart-clients',
+				backgroundColor: 'transparent',
 				plotBackgroundColor: null,
 				plotBorderWidth: null,
 				plotShadow: false

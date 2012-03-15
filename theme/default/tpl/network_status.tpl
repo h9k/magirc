@@ -1,6 +1,5 @@
 {* $Id$ *}
 
-<script type="text/javascript" src="js/highcharts.js"></script>
 <div id="container" style="height: 350px; min-width: 700px"></div>
 
 <script type="text/javascript">
@@ -17,6 +16,7 @@ $(function() {
 		new Highcharts.Chart({
 			chart: {
 				renderTo: 'container',
+				backgroundColor: 'transparent',
 				type: 'spline',
 				marginRight: 10,
 				events: {
