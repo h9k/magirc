@@ -6,6 +6,8 @@ $Id$
 
 magirc v0.7.0-dev
 -----------------
+2012-03-15 Highstock v1.1.5
+2012-03-15 Highcharts v2.2.1
 2012-03-15 Implemented live updating network status graph
 2012-03-11 Small improvements and fixes to setup routine
 2012-02-27 Implemented HighCharts with multiple data sources
