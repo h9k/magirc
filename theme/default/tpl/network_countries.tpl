@@ -1,5 +1,6 @@
 {* $Id$ *}
 
+<h1>Current Country Statistics</h1>
 <div id="chart-countries" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <script type="text/javascript">
@@ -14,8 +15,11 @@ $(document).ready(function() {
 				plotBorderWidth: null,
 				plotShadow: false
 			},
+			credits: {
+				enabled: false
+			},
 			title: {
-				text: 'Current Country Statistics'
+				text: ''
 			},
 			tooltip: {
 				formatter: function() {

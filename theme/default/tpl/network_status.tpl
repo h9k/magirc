@@ -1,5 +1,6 @@
 {* $Id$ *}
 
+<h1>Current Network Status</h1>
 <div id="container" style="height: 350px; min-width: 700px"></div>
 
 <script type="text/javascript">
@@ -33,8 +34,11 @@ $(function() {
 					}
 				}
 			},
+			credits: {
+				enabled: false
+			},
 			title: {
-				text: 'Current Network Status'
+				text: ''
 			},
 			xAxis: {
 				type: 'datetime',

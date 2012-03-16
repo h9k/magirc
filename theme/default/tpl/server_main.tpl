@@ -33,6 +33,9 @@ $(document).ready(function() {
                 renderTo: 'container',
 				backgroundColor: 'transparent'
             },
+			credits: {
+				enabled: false
+			},
 			xAxis: {
 				ordinal: false // Firefox hang workaround
 			},

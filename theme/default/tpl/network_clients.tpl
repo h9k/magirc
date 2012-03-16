@@ -1,5 +1,6 @@
 {* $Id$ *}
 
+<h1>Current Client Statistics</h1>
 <div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <script type="text/javascript">
@@ -14,8 +15,11 @@ $(document).ready(function() {
 				plotBorderWidth: null,
 				plotShadow: false
 			},
+			credits: {
+				enabled: false
+			},
 			title: {
-				text: 'Current Client Statistics'
+				text: ''
 			},
 			tooltip: {
 				formatter: function() {

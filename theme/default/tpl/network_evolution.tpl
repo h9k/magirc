@@ -1,5 +1,6 @@
 {* $Id$ *}
 
+<h1>Network Usage Evolution</h1>
 <div id="chart-evolution" style="height: 350px; min-width: 700px"></div>
 
 <script type="text/javascript">
@@ -30,6 +31,9 @@ $(function() {
                 renderTo: 'chart-evolution',
 				backgroundColor: 'transparent'
             },
+			credits: {
+				enabled: false
+			},
             rangeSelector: {
                 selected: 4
             },
