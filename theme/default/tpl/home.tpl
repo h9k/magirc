@@ -6,5 +6,4 @@
 {$welcome}
 
 </div>
-
 {/block}

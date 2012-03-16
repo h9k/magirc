@@ -1,7 +1,7 @@
 {* $Id$ *}
 {extends file="components/main.tpl"}
 {block name="content"}
-
+<div id="content">
 <h1>Channel history</h1>
 <div id="container" style="height: 350px; min-width: 700px"></div>
 
