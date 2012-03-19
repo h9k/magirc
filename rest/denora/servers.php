@@ -9,6 +9,9 @@ class Servers extends Magirc {
 		}
 		return $this->denora->getServerList();
     }
+	function server($server = null) {
+		return $this->denora->getServer($server);
+	}
 	function hourlystats() {
 		return $this->denora->getHourlyStats('serverstats');
     }

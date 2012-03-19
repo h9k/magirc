@@ -91,9 +91,9 @@ class Denora {
 	}
 
 	// return an array of all servers
-	function getServers() {
+	/*function getServers() {
 		return $this->db->selectAll('server', NULL, 'server', 'ASC');
-	}
+	}*/
 
 	// return the mode formatted for sql
 	function getSqlMode($mode) {
@@ -186,6 +186,16 @@ class Denora {
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	function getServer($server) {
+		$query = "SELECT server, online, comment, connecttime, lastsplit, version,
+			uptime, motd, currentusers, maxusers, maxusertime, ping, highestping,
+			maxpingtime, opers, maxopers, maxopertime FROM server WHERE server = :server";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindParam(':server', $server, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
 	// return an array of all channels

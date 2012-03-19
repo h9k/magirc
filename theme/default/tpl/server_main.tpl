@@ -8,7 +8,7 @@
 <div id="container" style="height: 350px; min-width: 700px"></div>
 
 <h1>Server list</h1>
-<table border="0" cellpadding="0" cellspacing="0" class="display">
+<table id="tbl_servers" class="display">
 <thead>
 	<tr>
 		<th>Status</th>
@@ -22,6 +22,10 @@
 	<tr><td colspan="5">Loading...</td></tr>
 </tbody>
 </table>
+</div>
+
+<div id="dialog-server" title="Server">
+	-
 </div>
 {/block}
 
@@ -64,7 +68,7 @@ $(document).ready(function() {
             }]
         });
     });
-	$('.display').dataTable({
+	$('#tbl_servers').dataTable({
 		"bJQueryUI": true,
 		"bAutoWidth": false,
 		"bProcessing": true,
@@ -89,6 +93,33 @@ $(document).ready(function() {
 			{ "mDataProp": "opers" }
 		]
 	});
+	$("#tbl_servers").live("click", function(event) {
+		var server = $($(event.target.parentNode)[0].cells[1].innerHTML).text();
+		showServerDiag(server);
+	});
+	// Server dialog
+	$("#dialog-server").dialog({
+		bgiframe: true,
+		autoOpen: false,
+		height: 590,
+		width: 450,
+		modal: true,
+		buttons: {
+			"Close": function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+	function showServerDiag(server) {
+		$.getJSON("rest/denora.php/servers/server/"+server, function(data){
+			if (data) {
+				//TODO: set data
+				$("#dialog-server").dialog("open");
+			} else {
+				//$('#failure').fadeIn(500).delay(2000).fadeOut(1000);
+			}
+		}, "json");
+	}
 });
 -->
 </script>
