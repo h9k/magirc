@@ -15,9 +15,7 @@
 $(function() {
 	$( "#tabs" ).tabs({
 		cache: true,
-		/*load: function(event, ui) {
-
-		},*/
+		spinner: 'Loading...',
 		ajaxOptions: {
 			error: function( xhr, status, index, anchor ) {
 				$( anchor.hash ).html("Unable to load contents");

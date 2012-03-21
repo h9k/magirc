@@ -25,11 +25,13 @@ class Denora_DB extends DB {
 
 class Denora {
 
-	public $db;
-	public $ircd;
+	private $db;
+	private $ircd;
+	private $cfg;
 
 	function __construct() {
 		$this->db = new Denora_DB();
+		$this->cfg = new Config();
 		require_once(PATH_ROOT."lib/magirc/denora/protocol/".IRCD.".inc.php");
 		$this->ircd = new Protocol();
 	}
@@ -96,7 +98,7 @@ class Denora {
 	}*/
 
 	// return the mode formatted for sql
-	function getSqlMode($mode) {
+	private function getSqlMode($mode) {
 		if (!$mode) {
 			return null;
 		} elseif (strtoupper($mode) === $mode) {
@@ -197,6 +199,43 @@ class Denora {
 		$stmt->bindParam(':server', $server, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+	
+	function getOperatorList() {
+		$array = array();
+		$ho = $this->ircd->getParam('oper_hidden_mode') ? "AND user.".$this->getSqlMode($this->ircd->getParam('oper_hidden_mode'))." = 'N'" : NULL;
+		$hu = $this->cfg->getParam('hide_ulined') ? "AND server.uline = '0'" : NULL;
+		$hs = $this->ircd->getParam('services_protection_mode') ? "AND user.".$this->getSqlMode($this->ircd->getParam('services_protection_mode'))." = 'N'" : NULL;
+		if (IRCD == "unreal32") {
+			$query = "SELECT user.*,server.uline FROM user,server WHERE (user.mode_un = 'Y' OR user.mode_ua = 'Y' OR user.mode_la = 'Y' OR user.mode_uc = 'Y' OR user.mode_lo = 'Y')
+				AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.mode_un,user.mode_ua,user.mode_la,user.mode_uc,user.mode_lo,user.nick ASC";
+		} else {
+			$query = "SELECT user.*,server.uline FROM user,server WHERE user.mode_lo = 'Y' AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.nick ASC";
+		}
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+			$data = array();
+			$data['nick'] = $row['nick'];
+			$data['server'] = $row['server'];
+			$data['connecttime'] = $row['connecttime'] ? $row['connecttime'] : NULL;
+			$data['away'] = $row['away'] == "Y" ? true : false;
+			if (IRCD == "unreal32") {
+				if ($row['mode_un'] == "Y") $level = "Network Admin";
+				elseif ($row['mode_ua'] == "Y") $level = "Server Admin";
+				elseif ($row['mode_la'] == "Y") $level = "Services Admin";
+				elseif ($row['mode_uc'] == "Y") $level = "Co-Admin";
+				elseif ($row['mode_lo'] == "Y") $level = "Global Operator";
+			} else {
+				$level = "Operator";
+			}
+			$data['level'] = $level;
+			$data['bot'] = $this->ircd->getParam('bot_mode') && $row[$this->getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y';
+			$data['helper'] = $this->ircd->getParam('helper_mode') && $row[$this->getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
+			$data['uline'] = $row['uline'] ? true : false;
+			$array[] = $data;
+		}
+		return $array;
 	}
 
 	// return an array of all channels

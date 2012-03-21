@@ -22,6 +22,7 @@
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
 <script type="text/javascript" src="js/date.js"></script>
+<script type="text/javascript">var url_base = '{$smarty.const.BASE_URL}';</script>
 {/block}
 </head>
 <body>

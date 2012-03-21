@@ -12,6 +12,7 @@ require_once 'denora/network.php';
 require_once 'denora/clientstats.php';
 require_once 'denora/countrystats.php';
 require_once 'denora/servers.php';
+require_once 'denora/operators.php';
 require_once 'denora/users.php';
 require_once 'denora/channels.php';
 
@@ -22,6 +23,7 @@ $r->addAPIClass('Network');
 $r->addAPIClass('ClientStats');
 $r->addAPIClass('CountryStats');
 $r->addAPIClass('Servers');
+$r->addAPIClass('Operators');
 $r->addAPIClass('Users');
 $r->addAPIClass('Channels');
 $r->handle();
