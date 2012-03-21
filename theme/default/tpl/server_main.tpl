@@ -25,7 +25,27 @@
 </div>
 
 <div id="dialog-server" title="Server">
-	-
+	<div class="halfleft">
+		<table class="details">
+			<tr><th>Description:</th><td><span id="srv_description" class="val"></span></td></tr>
+			<tr><th>Online:</th><td><span id="srv_online" class="val"></span></td></tr>
+			<tr><th>Version:</th><td><span id="srv_version" class="val"></span></td></tr>
+			<tr><th>Uptime:</th><td><span id="srv_uptime" class="val"></span> hours</td></tr>
+			<tr><th>Connected since:</th><td><span id="srv_connecttime" class="val"></span></td></tr>
+			<tr><th>Last split:</th><td><span id="srv_lastsplit" class="val"></span></td></tr>
+		</table>
+	</div>
+	<div class="halfright">
+		<table class="details">
+			<tr><th>Last ping:</th><td><span id="srv_ping" class="val"></span></td></tr>
+			<tr><th>Highest ping:</th><td><span id="srv_maxping" class="val"></span> on <span id="srv_maxpingtime"></td></tr>
+			<tr><th>Current users:</th><td><span id="srv_users" class="val"></span></td></tr>
+			<tr><th>Max users:</th><td><span id="srv_maxusers" class="val"></span> on <span id="srv_maxusertime"></td></tr>
+			<tr><th>Current opers:</th><td><span id="srv_opers" class="val"></span></td></tr>
+			<tr><th>Max opers:</th><td><span id="srv_maxopers" class="val"></span> on <span id="srv_maxopertime"></td></tr>
+		</table>
+	</div>
+	<div class="motd clear" title="MOTD"><pre id="srv_motd"></pre></div>
 </div>
 {/block}
 
@@ -51,13 +71,6 @@ $(document).ready(function() {
             rangeSelector: {
                 selected: 1
             },
-            /*title: {
-				align: 'left',
-                text: 'Servers History',
-				style: {
-					fontFamily: 'Share'
-				}
-            },*/
             series: [{
                 name: 'Servers online',
                 data: data,
@@ -93,16 +106,38 @@ $(document).ready(function() {
 			{ "mDataProp": "opers" }
 		]
 	});
-	$("#tbl_servers").live("click", function(event) {
-		var server = $($(event.target.parentNode)[0].cells[1].innerHTML).text();
-		showServerDiag(server);
+	$("#tbl_servers tbody tr").live("click", function() {
+		$.getJSON("rest/denora.php/servers/server/"+this.id, function(data){
+			if (data) {
+				$("#dialog-server").dialog("option", "title", data.server);
+				$("#srv_description").html(data.comment);
+				$("#srv_online").html(data.online == 'Y' ? "Yes" : "No");
+				$("#srv_version").html(data.version);
+				$("#srv_uptime").html(Math.round(data.uptime / 3600));
+				$("#srv_connecttime").html(data.connecttime);
+				$("#srv_lastsplit").html(data.lastsplit);
+				$("#srv_ping").html(data.ping);
+				$("#srv_maxping").html(data.highestping);
+				$("#srv_maxpingtime").html(data.maxpingtime);
+				$("#srv_users").html(data.currentusers);
+				$("#srv_maxusers").html(data.maxusers);
+				$("#srv_maxusertime").html(data.maxusertime);
+				$("#srv_opers").html(data.opers);
+				$("#srv_maxopers").html(data.maxopers);
+				$("#srv_maxopertime").html(data.maxopertime);
+				$("#srv_motd").html(data.motd ? data.motd : "MOTD not available for this server");
+				$("#dialog-server").dialog("open");
+			} else {
+				alert("Failed");
+			}
+		}, "json");
 	});
 	// Server dialog
 	$("#dialog-server").dialog({
 		bgiframe: true,
 		autoOpen: false,
-		height: 590,
-		width: 450,
+		height: 540,
+		width: 700,
 		modal: true,
 		buttons: {
 			"Close": function() {
@@ -110,16 +145,6 @@ $(document).ready(function() {
 			}
 		}
 	});
-	function showServerDiag(server) {
-		$.getJSON("rest/denora.php/servers/server/"+server, function(data){
-			if (data) {
-				//TODO: set data
-				$("#dialog-server").dialog("open");
-			} else {
-				//$('#failure').fadeIn(500).delay(2000).fadeOut(1000);
-			}
-		}, "json");
-	}
 });
 -->
 </script>

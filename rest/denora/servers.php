@@ -5,7 +5,11 @@ class Servers extends Magirc {
     }
     function index() {
 		if (@$_GET['format'] == 'datatables') {
-			return array('aaData' => $this->denora->getServerList());
+			$servers = $this->denora->getServerList();
+			foreach ($servers as $key => $val) {
+				$servers[$key]["DT_RowId"] = $val["server"];
+			}
+			return array('aaData' => $servers);
 		}
 		return $this->denora->getServerList();
     }

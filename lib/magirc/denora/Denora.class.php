@@ -190,8 +190,9 @@ class Denora {
 
 	function getServer($server) {
 		$query = "SELECT server, online, comment, connecttime, lastsplit, version,
-			uptime, motd, currentusers, maxusers, maxusertime, ping, highestping,
-			maxpingtime, opers, maxopers, maxopertime FROM server WHERE server = :server";
+			uptime, motd, currentusers, maxusers, FROM_UNIXTIME(maxusertime) AS maxusertime, ping, highestping,
+			FROM_UNIXTIME(maxpingtime) AS maxpingtime, opers, maxopers, FROM_UNIXTIME(maxopertime) AS maxopertime
+			FROM server WHERE server = :server";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindParam(':server', $server, PDO::PARAM_STR);
 		$stmt->execute();

@@ -21,6 +21,7 @@
 <script type="text/javascript" src="js/datatables.plugins.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
+<script type="text/javascript" src="js/date.js"></script>
 {/block}
 </head>
 <body>
