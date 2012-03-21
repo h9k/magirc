@@ -121,7 +121,7 @@ class Magirc {
 				$this->tpl->assign('content', $content);
 				$this->tpl->display('generic.tpl');
 			} else {
-				$this->displayError("The requested page '$section' does not exist");
+				$this->displayError("Unable to handle this request");
 				exit;
 			}
 		}

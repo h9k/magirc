@@ -5,7 +5,11 @@ class Channels extends Magirc {
     }
     function index() {
 		if (@$_GET['format'] == 'datatables') {
-			return $this->denora->getChannelList(true);
+			$chans = $this->denora->getChannelList(true);
+			foreach ($chans as $key => $val) {
+				$chans[$key]["DT_RowId"] = $val["channel"];
+			}
+			return array('aaData' => $chans);
 		}
 		return $this->denora->getChannelList();
     }

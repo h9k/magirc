@@ -50,7 +50,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_operators tbody tr").live("click", function() {
-		window.location = url_base + '?section=user&nick=' + this.id;
+		window.location = url_base + '?section=user&action=profile&nick=' + escape(this.id);
 	});
 });
 -->
