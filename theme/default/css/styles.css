@@ -24,15 +24,15 @@ h1,h2,h3,h4,h5,h6{font-family:'Share', cursive;color:#333;}
 
 div#header {
 	padding:0 10px;
-	margin:0px auto 15px auto;
+	margin:0px auto 5px auto;
 	width:880px;
 	height:75px;
-	background-color : #225599;
+	/*background-color : #225599;
 	background:-webkit-linear-gradient(top, #2d4160, #000000);
 	background:-moz-linear-gradient(top, #225599, #336699);
 	background:-ms-linear-gradient(top, #2d4160, #000000);
 	background:-o-linear-gradient(top, #2d4160, #000000);
-	border-radius:0 0 6px 6px;
+	border-radius:0 0 6px 6px;*/
 }
 
 div#menu {
@@ -63,11 +63,12 @@ div#menu a {
 }
 div#menu a:hover {
 	color:orange;
-	background-color:#CCCCCC;
+	background-color:rgba(255,255,255,0.2);
+	/*background-color:#CCCCCC;
 	background:-webkit-linear-gradient(top, #CCCCCC, #666666);
 	background:-moz-linear-gradient(top, #CCCCCC, #666666);
 	background:-ms-linear-gradient(top, #CCCCCC, #666666);
-	background:-o-linear-gradient(top, #CCCCCC, #666666);
+	background:-o-linear-gradient(top, #CCCCCC, #666666);*/
 }
 div#menu a.active {
 	color:orange;

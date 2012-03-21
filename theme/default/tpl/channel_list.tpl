@@ -69,7 +69,7 @@ $(document).ready(function() {
 		"bServerSide": true,
 		"iDisplayLength": 10,
 		"sPaginationType": "full_numbers",
-		"aaSorting": [[ 1, "asc" ]],
+		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel" },
