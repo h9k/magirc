@@ -1,9 +1,7 @@
 /* $Id:styles.css 122 2012-03-15 20:29:19Z pimpmylinux $ */
 
-@import url("https://fonts.googleapis.com/css?family=Ubuntu:500,700");
-
 html {
-	background:black url("../img/bg.jpg") no-repeat center center fixed;
+	background:black url("../img/bg.jpg") no-repeat center top fixed;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
 	-o-background-size:cover;
