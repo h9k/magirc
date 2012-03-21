@@ -28,7 +28,7 @@ $(document).ready(function() {
 		"bPaginate": true,
 		"bSort": true,
 		"bStateSave": false,
-		"iDisplayLength": 10,
+		"iDisplayLength": 25,
 		"sPaginationType": "full_numbers",
 		"aaSorting": [[ 0, "asc" ]],
 		//TODO

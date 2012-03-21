@@ -1,5 +1,6 @@
 {* $Id$ *}
 {extends file="components/main.tpl"}
+
 {block name="content"}
 <div id="tabs">
 	<ul>
@@ -10,8 +11,10 @@
 		<li><a href="?section=network&amp;action=operators">Operators</a></li>
 	</ul>
 </div>
+{/block}
 
-<script>
+{block name="js" append}
+<script type="text/javascript">
 $(function() {
 	$( "#tabs" ).tabs({
 		cache: true,
