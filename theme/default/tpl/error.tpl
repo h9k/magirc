@@ -1,5 +1,5 @@
 {* $Id$ *}
-{extends file="components/main.tpl"}
+{extends file="_main.tpl"}
 {block name="css"}<link href="theme/default/css/bsod.css" rel="stylesheet" type="text/css" />{/block}
 {block name="body"}
 *** STOP: {$err_msg}

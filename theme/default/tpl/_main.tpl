@@ -22,7 +22,18 @@
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
 <script type="text/javascript" src="js/date.js"></script>
-<script type="text/javascript">var url_base = '{$smarty.const.BASE_URL}';</script>
+<script type="text/javascript">
+<!--
+var url_base = '{$smarty.const.BASE_URL}';
+$(document).ready(function() {
+	$("#loading").ajaxStart(function(){
+		$(this).show();
+	}).ajaxStop(function(){
+		$(this).hide();
+	});
+});
+-->
+</script>
 {/block}
 </head>
 <body>
@@ -40,8 +51,9 @@
 		</ul>
 	</div>
 </div>
- 
+
 <div id="main">
+	<div id="loading"><img src="theme/default/img/ajax-loader.gif" alt="loading..." /></div>
 {block name="content"}
 [content placeholder]
 {/block}

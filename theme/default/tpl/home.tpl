@@ -1,5 +1,5 @@
 {* $Id$ *}
-{extends file="components/main.tpl"}
+{extends file="_main.tpl"}
 {block name="content"}
 <div id="content">
 
