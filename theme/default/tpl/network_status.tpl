@@ -2,60 +2,75 @@
 
 <h1>Live Network Status</h1>
 
-<table class="details">
+<table class="details" style="width:100%;">
 	<tr>
-		<th>Users:</th>
-		<td><span id="net_users" class="val"></span></td>
-		<th>Peak:</th>
-		<td><span id="net_users_max" class="val"></span> on <span id="net_users_max_time"></span></td>
+		<th colspan="2"><h3>Users</h3></th>
+		<th colspan="2"><h3>Channels</h3></th>
+		<th colspan="2"><h3>Operators</h3></th>
+		<th colspan="2"><h3>Servers</h3></th>
 	</tr>
 	<tr>
-		<th colspan="2">&nbsp;</th>
-		<th>Today:</th>
-		<td><span id="net_users_today" class="val"></span> on <span id="net_users_today_time"></span></td>
+		<th>Current:</th><td><span id="net_users" class="val"></span></td>
+		<th>Current:</th><td><span id="net_chans" class="val"></span></td>
+		<th>Current:</th><td><span id="net_opers" class="val"></span></td>
+		<th>Current:</th><td><span id="net_servers" class="val"></span></td>
 	</tr>
 	<tr>
-		<th>Channels:</th>
-		<td><span id="net_chans" class="val"></span></td>
-		<th>Peak:</th>
-		<td><span id="net_chans_max" class="val"></span> on <span id="net_chans_max_time"></span></td>
+		<th>Peak:</th><td><span id="net_users_max" class="val"></span> on <span id="net_users_max_time"></span></td>
+		<th>Peak:</th><td><span id="net_chans_max" class="val"></span> on <span id="net_chans_max_time"></span></td>
+		<th>Peak:</th><td><span id="net_opers_max" class="val"></span> on <span id="net_opers_max_time"></span></td>
+		<th>Peak:</th><td><span id="net_servers_max" class="val"></span> on <span id="net_servers_max_time"></span></td>
 	</tr>
 	<tr>
-		<th>Opers:</th>
-		<td><span id="net_opers" class="val"></span></td>
-		<th>Peak:</th>
-		<td><span id="net_opers_max" class="val"></span> on <span id="net_opers_max_time"></span></td>
-	</tr>
-	<tr>
-		<th>Servers:</th>
-		<td><span id="net_servers" class="val"></span></td>
-		<th>Peak:</th>
-		<td><span id="net_servers_max" class="val"></span> on <span id="net_servers_max_time"></span></td>
+		<th>Today:</th><td><span id="net_users_today" class="val"></span> on <span id="net_users_today_time"></span></td>
+		<td colspan="2" rowspan="3">&nbsp;</td>
 	</tr>
 </table>
 
-<h2>Live graph</h2>
-<div id="container" style="height: 300px; min-width: 700px;"></div>
+<table>
+	<tr>
+		<td><div id="chart_users" style="height: 175px; width: 280px;"></div></td>
+		<td><div id="chart_chans" style="height: 175px; width: 280px;"></div></td>
+		<td><div id="chart_servers" style="height: 175px; width: 280px;"></div></td>
+	</tr>
+</table>
+
+<table class="details" style="width:100%;">
+	<tr>
+		<th><h3>Current 10 Biggest Chans</h3></th>
+		<th><h3>Top 10 Channels Today</h3></th>
+		<th><h3>Top 10 Users Today</h3></th>
+	</tr>
+	<tr>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+	</tr>
+</table>
 
 <script type="text/javascript">
 <!--
 $(function() {
 	//TODO: make refresh configurable and do not run if the tab is not active
-	var status_refresh = 5; // seconds
-	var max_refresh = 30;
-	var chart;
+	var status_refresh = 10; // seconds
+	var max_refresh = 30; // seconds
+	var chart_users, chart_chans, chart_servers;
+	var count = 0;
 	function startCron() {
-		updateStatus();
-		updateMax();
-		setInterval(updateStatus, status_refresh * 1000);
-		setInterval(updateMax, max_refresh * 1000); //TODO: replace with internal logic based on status
+		count++;
+		if (count >= 2) {
+			updateStatus();
+			updateMax();
+			setInterval(updateStatus, status_refresh * 1000);
+			setInterval(updateMax, max_refresh * 1000); //TODO: replace with internal logic based on status
+		}
 	}
 	function updateStatus() {
 		$.getJSON('rest/denora.php/network/status', function(result) {
 			var x = (new Date()).getTime();
-			chart.series[0].addPoint([x, result.users.val], true, true);
-			chart.series[1].addPoint([x, result.chans.val], true, true);
-			chart.series[2].addPoint([x, result.servers.val], true, true);
+			chart_users.series[0].addPoint([x, result.users.val], true, true);
+			chart_chans.series[0].addPoint([x, result.chans.val], true, true);
+			chart_servers.series[0].addPoint([x, result.servers.val], true, true);
 			$("#net_users").html(result.users.val);
 			$("#net_users_today").html(result.daily_users.val);
 			$("#net_users_today_time").html(result.daily_users.time);
@@ -83,32 +98,25 @@ $(function() {
 		}
 	});
 	$.getJSON('rest/denora.php/network/status', function(result) {
-		chart = new Highcharts.Chart({
+		chart_users = new Highcharts.Chart({
+			colors: ['#89A54E'],
 			chart: {
-				renderTo: 'container',
+				renderTo: 'chart_users',
 				backgroundColor: 'transparent',
 				type: 'spline',
 				marginRight: 10,
-				events: {
-					load: function() {
-						startCron();
-					}
-				}
+				style: { fontFamily: 'Share, cursive' },
+				events: { load: startCron() }
 			},
-			credits: {
-				enabled: false
-			},
-			title: {
-				text: ''
-			},
+			credits: { enabled: false },
+			title: { text: '' },
 			xAxis: {
 				type: 'datetime',
 				tickPixelInterval: 150
 			},
 			yAxis: {
-				title: {
-					text: 'Amount'
-				},
+				title: { text: 'Users' },
+				allowDecimals: false,
 				plotLines: [{
 					value: 0,
 					width: 1,
@@ -122,12 +130,29 @@ $(function() {
 						Highcharts.numberFormat(this.y, 0);
 				}
 			},
-			legend: {
-				enabled: false
-			},
-			exporting: {
-				enabled: false
-			},
+			legend: { enabled: false },
+			exporting: { enabled: false },
+			plotOptions: {
+                spline: {
+                    lineWidth: 4,
+                    states: {
+                        hover: {
+                            lineWidth: 5
+                        }
+                    },
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                symbol: 'circle',
+                                radius: 5,
+                                lineWidth: 1
+                            }
+                        }
+                    }
+                }
+            },
 			// TODO: cleanup
 			series: [{
 				name: 'Users',
@@ -143,7 +168,64 @@ $(function() {
                     }
                     return data;
                 })()
-			},{
+			}]
+		});
+		chart_chans = new Highcharts.Chart({
+			colors: ['#AA4643'],
+			chart: {
+				renderTo: 'chart_chans',
+				backgroundColor: 'transparent',
+				type: 'spline',
+				marginRight: 10,
+				events: { load: startCron() }
+			},
+			credits: { enabled: false },
+			title: { text: '' },
+			xAxis: {
+				type: 'datetime',
+				tickPixelInterval: 150
+			},
+			yAxis: {
+				title: { text: 'Channels' },
+				allowDecimals: false,
+				plotLines: [{
+					value: 0,
+					width: 1,
+					color: '#808080'
+				}]
+			},
+			tooltip: {
+				formatter: function() {
+						return '<b>'+ this.series.name +'</b><br/>'+
+						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+						Highcharts.numberFormat(this.y, 0);
+				}
+			},
+			legend: { enabled: false },
+			exporting: { enabled: false },
+			plotOptions: {
+                spline: {
+                    lineWidth: 4,
+                    states: {
+                        hover: {
+                            lineWidth: 5
+                        }
+                    },
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                symbol: 'circle',
+                                radius: 5,
+                                lineWidth: 1
+                            }
+                        }
+                    }
+                }
+            },
+			// TODO: cleanup
+			series: [{
 				name: 'Channels',
 				data: (function() {
 					var data = [],
@@ -157,7 +239,64 @@ $(function() {
                     }
                     return data;
                 })()
-			},{
+			}]
+		});
+		chart_servers = new Highcharts.Chart({
+			colors: ['#4572A7'],
+			chart: {
+				renderTo: 'chart_servers',
+				backgroundColor: 'transparent',
+				type: 'spline',
+				marginRight: 10,
+				events: { load: startCron() }
+			},
+			credits: { enabled: false },
+			title: { text: '' },
+			xAxis: {
+				type: 'datetime',
+				tickPixelInterval: 150
+			},
+			yAxis: {
+				title: { text: 'Servers' },
+				allowDecimals: false,
+				plotLines: [{
+					value: 0,
+					width: 1,
+					color: '#808080'
+				}]
+			},
+			tooltip: {
+				formatter: function() {
+						return '<b>'+ this.series.name +'</b><br/>'+
+						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+						Highcharts.numberFormat(this.y, 0);
+				}
+			},
+			legend: { enabled: false },
+			exporting: { enabled: false },
+			plotOptions: {
+                spline: {
+                    lineWidth: 4,
+                    states: {
+                        hover: {
+                            lineWidth: 5
+                        }
+                    },
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                symbol: 'circle',
+                                radius: 5,
+                                lineWidth: 1
+                            }
+                        }
+                    }
+                }
+            },
+			// TODO: cleanup
+			series: [{
 				name: 'Servers',
 				data: (function() {
 					var data = [],
