@@ -58,7 +58,7 @@ $(function() {
 	var count = 0;
 	function startCron() {
 		count++;
-		if (count >= 2) {
+		if (count >= 3) {
 			updateStatus();
 			updateMax();
 			setInterval(updateStatus, status_refresh * 1000);
