@@ -6,6 +6,7 @@ $Id$
 
 magirc v0.7.0-dev
 -----------------
+2012-03-22 Implemented Top10 biggest chans / most active chans / most active users tables
 2012-03-21 Implemented operator list
 2012-03-21 Implemented server details dialog
 2012-03-19 RESTler v2.1.4
