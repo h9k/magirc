@@ -254,26 +254,94 @@ class Denora {
 	// return an array of all channels
 	function getChannelList($datatables = false) {
 		$data = array();
-		$i = 0;
+		$secret_mode = $this->ircd->getParam('chan_secret_mode');
+		$private_mode = $this->ircd->getParam('chan_private_mode');
+		
 		if ($datatables) {
+			//TODO: check for invisible chans etc.
 			$chans = $this->db->jsonList('chan', array('channel', 'currentusers', 'maxusers', 'topic'), 'channel');
 			echo json_encode($chans); exit;
 		}
-		$chans = $this->db->selectAll('chan', NULL, 'channel', 'ASC');
-		foreach ($chans as $chan) {
-			$data[$i]['id'] = $chan['chanid'];
-			$data[$i]['name'] = $chan['channel'];
-			$data[$i]['users'] = $chan['currentusers'];
-			$data[$i]['users_max'] = $chan['maxusers'];
-			$data[$i]['users_max_time'] = $chan['maxusertime'];
-			$data[$i]['topic'] = $chan['topic'];
-			$data[$i]['topic_author'] = $chan['topicauthor'];
-			$data[$i]['topic_time'] = strtotime($chan['topictime']);
-			$data[$i]['kicks'] = $chan['kickcount'];
-			$data[$i]['modes'] = $this->getModes($chan);
-			$i++;
+		
+		$query = "SELECT * FROM chan WHERE currentusers > 0";
+		if ($secret_mode) {
+			$query .= sprintf(" AND %s='N'", $this->getSqlMode($secret_mode));
+		}
+		if ($private_mode) {
+			$query .= sprintf(" AND %s='N'", $this->getSqlMode($private_mode));
+		}
+		$hide_chans = explode(",",$this->cfg->getParam('hide_chans'));
+		for ($i = 0; $i < count($hide_chans); $i++) {
+			$query .= " AND LOWER(channel) NOT LIKE ".$this->db->escape(strtolower($hide_chans[$i]));
+		}
+		$query .= " ORDER BY `channel` ASC";
+		$ps = $this->db->prepare($query);
+		$ps->execute();
+		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
+			$data[] = array(
+				'id' => $row['chanid'],
+				'name' => $row['channel'],
+				'users' => $row['currentusers'],
+				'users_max' => $row['maxusers'],
+				'users_max_time' => $row['maxusertime'],
+				'topic' => $row['topic'],
+				//'topic_html' => $row['topic'],
+				'topic_author' => $row['topicauthor'],
+				'topic_time' => strtotime($row['topictime']),
+				'kicks' => $row['kickcount'],
+				'modes' => $this->getModes($row)
+			);
 		}
 		return $data;
+	}
+	
+	function getChannelBiggest($limit = 10) {
+		$secret_mode = $this->ircd->getParam('chan_secret_mode');
+		$private_mode = $this->ircd->getParam('chan_private_mode');
+		$query = "SELECT * FROM chan WHERE currentusers > 0";
+		if ($secret_mode) {
+			$query .= sprintf(" AND %s='N'", $this->getSqlMode($secret_mode));
+		}
+		if ($private_mode) {
+			$query .= sprintf(" AND %s='N'", $this->getSqlMode($private_mode));
+		}
+		$hide_chans = explode(",",$this->cfg->getParam('hide_chans'));
+		for ($i = 0; $i < count($hide_chans); $i++) {
+			$query .= " AND LOWER(channel) NOT LIKE ".$this->db->escape(strtolower($hide_chans[$i]));
+		}
+		$query .= " ORDER BY currentusers DESC LIMIT :limit";
+		$ps = $this->db->prepare($query);
+		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	function getChannelTop($limit = 10) {
+		$secret_mode = $this->ircd->getParam('chan_secret_mode');
+		$private_mode = $this->ircd->getParam('chan_private_mode');
+		$query = "SELECT chan, line FROM cstats, chan WHERE BINARY LOWER(cstats.chan)=LOWER(chan.channel) AND cstats.type=1 AND cstats.line >= 1";
+		if ($secret_mode) {
+			$query .= sprintf(" AND chan.%s='N'", $this->getSqlMode($secret_mode));
+		}
+		if ($private_mode) {
+			$query .= sprintf(" AND chan.%s='N'", $this->getSqlMode($private_mode));
+		}
+		$hide_chans = explode(",",$this->cfg->getParam('hide_chans'));
+		for ($i = 0; $i < count($hide_chans); $i++) {
+			$query .= " AND cstats.chan NOT LIKE ".$this->db->escape(strtolower($hide_chans[$i]));
+		}
+		$query .= " ORDER BY cstats.line DESC LIMIT :limit";
+		$ps = $this->db->prepare($query);
+		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	function getUsersTop($limit = 10) {
+		$ps = $this->db->prepare("SELECT uname, line FROM ustats WHERE type = 1 AND chan='global' AND line >= 1 ORDER BY line DESC LIMIT :limit");
+		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	function getChannel($name) {

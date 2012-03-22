@@ -37,14 +37,56 @@
 
 <table class="details" style="width:100%;">
 	<tr>
-		<th><h3>Current 10 Biggest Chans</h3></th>
-		<th><h3>Top 10 Channels Today</h3></th>
-		<th><h3>Top 10 Users Today</h3></th>
+		<th style="width:33%;"><h3>Current 10 Biggest Chans</h3></th>
+		<th style="width:33%;"><h3>Top 10 Channels Today</h3></th>
+		<th style="width:33%;"><h3>Top 10 Users Today</h3></th>
 	</tr>
 	<tr>
-		<td>-</td>
-		<td>-</td>
-		<td>-</td>
+		<td valign="top">
+			<table id="tbl_biggestchans" class="display">
+				<thead>
+					<tr>
+						<th>Channel</th>
+						<th>Users</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2">Loading...</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+		<td valign="top">
+			<table id="tbl_top10chans" class="display">
+				<thead>
+					<tr>
+						<th>Channel</th>
+						<th>Lines</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2">Loading...</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+		<td valign="top">
+			<table id="tbl_top10users" class="display">
+				<thead>
+					<tr>
+						<th>User</th>
+						<th>Lines</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2">Loading...</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
 	</tr>
 </table>
 
@@ -54,6 +96,7 @@ $(function() {
 	//TODO: make refresh configurable and do not run if the tab is not active
 	var status_refresh = 10; // seconds
 	var max_refresh = 30; // seconds
+	var tbl_refresh = 15; // seconds
 	var chart_users, chart_chans, chart_servers;
 	var count = 0;
 	function startCron() {
@@ -63,6 +106,7 @@ $(function() {
 			updateMax();
 			setInterval(updateStatus, status_refresh * 1000);
 			setInterval(updateMax, max_refresh * 1000); //TODO: replace with internal logic based on status
+			setInterval(updateTables, tbl_refresh * 1000);
 		}
 	}
 	function updateStatus() {
@@ -91,6 +135,11 @@ $(function() {
 			$("#net_servers_max_time").html(result.servers.time);
 			$("#net_opers_max_time").html(result.opers.time);
 		});
+	}
+	function updateTables() {
+		oTable1.fnReloadAjax();
+		oTable2.fnReloadAjax();
+		oTable3.fnReloadAjax();
 	}
 	Highcharts.setOptions({
 		global: {
@@ -312,6 +361,69 @@ $(function() {
                 })()
 			}]
 		});
+	});
+	oTable1 = $("#tbl_biggestchans").dataTable({
+		"bProcessing": true,
+		"bServerSide": false,
+		"bJQueryUI": true,
+		"bAutoWidth": false,
+		"bFilter": false,
+		"bInfo": false,
+		"bLengthChange": false,
+		"bPaginate": false,
+		"bSort": false,
+		"bEscapeRegex": false,
+		"sAjaxSource": "rest/denora.php/channels/biggest/10?format=datatables",
+		"aoColumns": [
+			{ "mDataProp": "channel" },
+			{ "mDataProp": "currentusers" }
+		]
+	});
+	$("#tbl_biggestchans tbody tr").live("click", function(event) {
+		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
+		window.location = url_base + '?section=channel&action=profile&chan=' + escape(chan);
+	});
+	oTable2 = $("#tbl_top10chans").dataTable({
+		"bProcessing": true,
+		"bServerSide": false,
+		"bJQueryUI": true,
+		"bAutoWidth": false,
+		"bFilter": false,
+		"bInfo": false,
+		"bLengthChange": false,
+		"bPaginate": false,
+		"bSort": false,
+		"bEscapeRegex": false,
+		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
+		"aoColumns": [
+			{ "mDataProp": "chan" },
+			{ "mDataProp": "line" }
+		]
+	});
+	$("#tbl_top10chans tbody tr").live("click", function(event) {
+		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
+		window.location = url_base + '?section=channel&action=stats&chan=' + escape(chan);
+	});
+	oTable3 = $("#tbl_top10users").dataTable({
+		"bProcessing": true,
+		"bServerSide": false,
+		"bJQueryUI": true,
+		"bAutoWidth": false,
+		"bFilter": false,
+		"bInfo": false,
+		"bLengthChange": false,
+		"bPaginate": false,
+		"bSort": false,
+		"bEscapeRegex": false,
+		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
+		"aoColumns": [
+			{ "mDataProp": "uname" },
+			{ "mDataProp": "line" }
+		]
+	});
+	$("#tbl_top10users tbody tr").live("click", function(event) {
+		var user = $(event.target.parentNode)[0].cells[0].innerHTML;
+		window.location = url_base + '?section=user&action=stats&user=' + escape(user);
 	});
 });
 -->

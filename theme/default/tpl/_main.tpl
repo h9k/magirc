@@ -19,6 +19,7 @@
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/jquery.datatables.min.js"></script>
 <script type="text/javascript" src="js/datatables.plugins.js"></script>
+<script type="text/javascript" src="js/datatables.fnReloadAjax.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
 <script type="text/javascript" src="js/date.js"></script>
@@ -50,10 +51,10 @@ $(document).ready(function() {
 			<li><a href="?section=user" title="Users"{if $smarty.get.section eq 'user'} class="active"{/if}><span>&nbsp;Users</span></a></li>
 		</ul>
 	</div>
+	<div id="loading"><img src="theme/default/img/loading.png" alt="loading..." /></div>
 </div>
 
 <div id="main">
-	<div id="loading"><img src="theme/default/img/ajax-loader.gif" alt="loading..." /></div>
 {block name="content"}
 [content placeholder]
 {/block}

@@ -51,7 +51,7 @@ div#footer {
 }
 div#footer a, div#footer a:visited { color:#FCFCFC; }
 div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:none; }
-div#loading { display:none; position:absolute; top:320px; left:50%; text-align:center; z-index:9999; }
+div#loading { display:none; float:right; margin-top:25px; }
 
 div.halfleft { width:49%; float:left; }
 div.halfright { width:49%; float:right; }
