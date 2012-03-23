@@ -363,7 +363,7 @@ $(function() {
 		});
 	});
 	oTable1 = $("#tbl_biggestchans").dataTable({
-		"bProcessing": true,
+		"bProcessing": false,
 		"bServerSide": false,
 		"bJQueryUI": true,
 		"bAutoWidth": false,
@@ -384,7 +384,7 @@ $(function() {
 		window.location = url_base + '?section=channel&action=profile&chan=' + escape(chan);
 	});
 	oTable2 = $("#tbl_top10chans").dataTable({
-		"bProcessing": true,
+		"bProcessing": false,
 		"bServerSide": false,
 		"bJQueryUI": true,
 		"bAutoWidth": false,
@@ -405,7 +405,7 @@ $(function() {
 		window.location = url_base + '?section=channel&action=stats&chan=' + escape(chan);
 	});
 	oTable3 = $("#tbl_top10users").dataTable({
-		"bProcessing": true,
+		"bProcessing": false,
 		"bServerSide": false,
 		"bJQueryUI": true,
 		"bAutoWidth": false,

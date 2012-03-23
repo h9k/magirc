@@ -4,14 +4,7 @@ class Channels extends Magirc {
         parent::__construct('denora');
     }
     function index() {
-		if (@$_GET['format'] == 'datatables') {
-			$chans = $this->denora->getChannelList(true);
-			foreach ($chans as $key => $val) {
-				$chans[$key]["DT_RowId"] = $val["channel"];
-			}
-			return array('aaData' => $chans);
-		}
-		return $this->denora->getChannelList();
+		return $this->denora->getChannelList(@$_GET['format'] == 'datatables');
     }
 	function hourlystats() {
 		return $this->denora->getHourlyStats('channelstats');

@@ -109,6 +109,11 @@ class DB {
 			die($e->getMessage());
 		}
 	}
+	function foundRows() {
+		$ps = $this->prepare("SELECT FOUND_ROWS()");
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN);
+	}
 
 	private function select($table, $where = NULL, $sort = NULL, $order = 'ASC', $limit = 0, $type = SQL_ALL, $format = SQL_ASSOC) {
 		$query = "SELECT * FROM `{$table}`";
@@ -194,23 +199,27 @@ class DB {
 		return $this->query($query);
 	}
 
-	/**
-	 * Generates output in JSON-format for use with JQuery DataTables
-	 * @param string $sTable
-	 * @param array $aColumns
-	 * @param string $sIndexColumn
-	 */
-	function jsonList($sTable, $aColumns, $sIndexColumn, $aWhere = null) {
-		// Paging
+	// Total data set length
+	function datatablesTotal($sFrom, $sWhere) {
+		$sQuery = "SELECT COUNT(*) FROM $sFrom WHERE $sWhere";
+		$this->query($sQuery, SQL_INIT, SQL_INDEX);
+		$aResultTotal = $this->record;
+		return $aResultTotal[0];
+	}
+
+	function datatablesPaging() {
 		$sLimit = "";
 		if (isset($_GET['iDisplayStart']) && isset($_GET['iDisplayLength']) && $_GET['iDisplayLength'] != '-1') {
 			$sLimit = "LIMIT ".  $this->escape($_GET['iDisplayStart'], false).", ".
 			$this->escape($_GET['iDisplayLength'], false);
 		}
-		// Ordering
+		return $sLimit;
+	}
+
+	function datatablesOrdering($aColumns) {
 		$sOrder = "";
 		if (isset($_GET['iSortCol_0'])) {
-			$sOrder = "ORDER BY  ";
+			$sOrder = "ORDER BY ";
 			for ($i=0 ; $i<intval(@$_GET['iSortingCols']) ; $i++) {
 				if (@$_GET['bSortable_'.intval(@$_GET['iSortCol_'.$i])] == "true") {
 					$sOrder .= "`".$aColumns[intval(@$_GET['iSortCol_'.$i])]."`
@@ -222,76 +231,31 @@ class DB {
 				$sOrder = "";
 			}
 		}
-		// Filtering
+		return $sOrder;
+	}
+
+	function datatablesFiltering($aColumns) {
 		$sWhere = "";
 		if (@$_GET['sSearch'] != "") {
-			$sWhere = "WHERE (";
+			$sWhere .= " (";
 			for ($i=0 ; $i<count($aColumns) ; $i++) {
 				$sWhere .= $aColumns[$i]." LIKE '%".$this->escape($_GET['sSearch'], false)."%' OR ";
 			}
 			$sWhere = substr_replace($sWhere, "", -3);
 			$sWhere .= ')';
 		}
-		// Individual column filtering
-		for ($i=0 ; $i<count($aColumns) ; $i++) {
-			if (@$_GET['bSearchable_'.$i] == "true" && @$_GET['sSearch_'.$i] != '') {
-				if ($sWhere == "") {
-					$sWhere = "WHERE ";
-				} else {
-					$sWhere .= " AND ";
-				}
-				$sWhere .= $aColumns[$i]." LIKE '%".$this->escape($_GET['sSearch_'.$i], false)."%' ";
-			}
-		}
-		if ($aWhere) {
-			foreach ($aWhere as $key => $val) {
-				if ($sWhere == "") {
-					$sWhere = "WHERE ";
-				} else {
-					$sWhere .= " AND ";
-				}
-				$sWhere .= $key ." = '".$val."' ";
-			}
-		}
-		 
-		// Query
-		$sQuery = "SELECT SQL_CALC_FOUND_ROWS `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable $sWhere $sOrder $sLimit";
-		$this->query($sQuery, SQL_ALL, SQL_ASSOC);
-		$aaData = $this->record;
-		// Data set length after filtering
-		$sQuery = "SELECT FOUND_ROWS()";
-		$this->query($sQuery, SQL_INIT, SQL_INDEX);
-		$aResultFilterTotal = $this->record;
-		$iFilteredTotal = $aResultFilterTotal[0];
-		// Total data set length
-		$sQuery = "SELECT COUNT(".$sIndexColumn.") FROM $sTable";
-		$this->query($sQuery, SQL_INIT, SQL_INDEX);
-		$aResultTotal = $this->record;
-		$iTotal = $aResultTotal[0];
-
-		// Output array, to be converted in JSON
-		$aOutput = array(
-			'sEcho' => intval(@$_GET['sEcho']),
-			'iTotalRecords' => $iTotal,
-			'iTotalDisplayRecords' => $iFilteredTotal,
-			'aaData' => $aaData
-		);
-		return $aOutput;
+		return $sWhere;
 	}
 
-	/**
-	 * Generates output in JSON-format for a single record
-	 * @param string $sTable
-	 * @param array $aColumns
-	 * @param integer $id
-	 */
-	/*function jsonItem($sTable, $aColumns, $id) {
-		$sQuery = "SELECT `".str_replace(" , ", " ", implode("`, `", $aColumns))."` FROM $sTable WHERE id = :id";
-		$ps = $this->prepare($sQuery);
-		$ps->bindParam(':id', $id, PDO::PARAM_INT);
-		$ps->exec();
-		return $ps->fetch(PDO::FETCH_ASSOC);
-	}*/
+	// Output array, to be converted in JSON
+	function datatablesOutput($iTotal, $iFilteredTotal, $aaData) {
+		return array(
+			'sEcho' => (int) @$_GET['sEcho'],
+			'iTotalRecords' => (int) $iTotal,
+			'iTotalDisplayRecords' => (int) $iFilteredTotal,
+			'aaData' => $aaData
+		);
+	}
 
 }
 

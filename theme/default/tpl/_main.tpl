@@ -44,11 +44,11 @@ $(document).ready(function() {
 	<a href="#"><img src="theme/default/img/logo.png" alt="" id="logo" /></a>
 	<div id="menu">
 		<ul>
-			<li><a href="?section=home" title="Home"{if $smarty.get.section eq 'home'} class="active"{/if}><span>&nbsp;Home</span></a></li>
-			<li><a href="?section=network" title="Network"{if $smarty.get.section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>
-			<li><a href="?section=server" title="Servers"{if $smarty.get.section eq 'server'} class="active"{/if}><span>&nbsp;Servers</span></a></li>
-			<li><a href="?section=channel" title="Channels"{if $smarty.get.section eq 'channel'} class="active"{/if}><span>&nbsp;Channels</span></a></li>
-			<li><a href="?section=user" title="Users"{if $smarty.get.section eq 'user'} class="active"{/if}><span>&nbsp;Users</span></a></li>
+			<li><a href="?section=home"{if $smarty.get.section eq 'home'} class="active"{/if}><span>&nbsp;Home</span></a></li>
+			<li><a href="?section=network"{if $smarty.get.section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>
+			<li><a href="?section=server"{if $smarty.get.section eq 'server'} class="active"{/if}><span>&nbsp;Servers</span></a></li>
+			<li><a href="?section=channel"{if $smarty.get.section eq 'channel'} class="active"{/if}><span>&nbsp;Channels</span></a></li>
+			<li><a href="?section=user"{if $smarty.get.section eq 'user'} class="active"{/if}><span>&nbsp;Users</span></a></li>
 		</ul>
 	</div>
 	<div id="loading"><img src="theme/default/img/loading.gif" alt="loading..." /></div>

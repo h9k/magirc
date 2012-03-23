@@ -33,9 +33,9 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel" },
-			{ "mDataProp": "currentusers" },
-			{ "mDataProp": "maxusers" }
+			{ "mDataProp": "name" },
+			{ "mDataProp": "users" },
+			{ "mDataProp": "users_max" }
 		]
 	});
 	$("#tbl_channels tbody tr").live("click", function(event) {

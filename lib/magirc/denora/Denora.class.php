@@ -197,7 +197,19 @@ class Denora {
 	}
 
 	function getServerList() {
-		$query = "SELECT server, online, comment, currentusers, opers FROM server";
+		$sWhere = "";
+		$hide_servers = $this->cfg->getParam('hide_servers');
+		if ($hide_servers) {
+			$hide_servers = explode(",",$hide_servers);
+			foreach ($hide_servers as $key => $server) {
+				$hide_servers[$key] = $this->db->escape(trim($server));
+			}
+			$sWhere .= sprintf("%s LOWER(server) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(',', $hide_servers));
+		}
+		if ($this->cfg->getParam('hide_ulined')) {
+			$sWhere .= $sWhere ? " AND uline = 0" : "WHERE uline = 0";
+		}
+		$query = "SELECT server, online, comment, currentusers, opers FROM server $sWhere";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -253,32 +265,37 @@ class Denora {
 
 	// return an array of all channels
 	function getChannelList($datatables = false) {
-		$data = array();
+		$aaData = array();
 		$secret_mode = $this->ircd->getParam('chan_secret_mode');
 		$private_mode = $this->ircd->getParam('chan_private_mode');
-		
-		if ($datatables) {
-			//TODO: check for invisible chans etc.
-			$chans = $this->db->jsonList('chan', array('channel', 'currentusers', 'maxusers', 'topic'), 'channel');
-			echo json_encode($chans); exit;
-		}
-		
-		$query = "SELECT * FROM chan WHERE currentusers > 0";
+
+		$sWhere = "currentusers > 0";
 		if ($secret_mode) {
-			$query .= sprintf(" AND %s='N'", $this->getSqlMode($secret_mode));
+			$sWhere .= sprintf(" AND %s='N'", $this->getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$query .= sprintf(" AND %s='N'", $this->getSqlMode($private_mode));
+			$sWhere .= sprintf(" AND %s='N'", $this->getSqlMode($private_mode));
 		}
-		$hide_chans = explode(",",$this->cfg->getParam('hide_chans'));
-		for ($i = 0; $i < count($hide_chans); $i++) {
-			$query .= " AND LOWER(channel) NOT LIKE ".$this->db->escape(strtolower($hide_chans[$i]));
+		$hide_channels = $this->cfg->getParam('hide_chans');
+		if ($hide_channels) {
+			$hide_channels = explode(",",$hide_channels);
+			foreach ($hide_channels as $key => $channel) {
+				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
+			}
+			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(',', $hide_channels));
 		}
-		$query .= " ORDER BY `channel` ASC";
-		$ps = $this->db->prepare($query);
+
+		$sQuery = sprintf("SELECT * FROM chan WHERE %s ORDER BY `channel` ASC", $sWhere);
+		if ($datatables) {
+			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
+			$sOrdering = $this->db->datatablesOrdering(array('channel', 'currentusers', 'maxusers'));
+			$sPaging = $this->db->datatablesPaging();
+			$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS * FROM chan WHERE %s %s %s %s", $sWhere, $sFiltering ? "AND ".$sFiltering : "", $sOrdering, $sPaging);
+		}
+		$ps = $this->db->prepare($sQuery);
 		$ps->execute();
 		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
-			$data[] = array(
+			$aData = array(
 				'id' => $row['chanid'],
 				'name' => $row['channel'],
 				'users' => $row['currentusers'],
@@ -291,10 +308,19 @@ class Denora {
 				'kicks' => $row['kickcount'],
 				'modes' => $this->getModes($row)
 			);
+			if ($datatables) {
+				$aData["DT_RowId"] = $row['channel'];
+			}
+			$aaData[] = $aData;
 		}
-		return $data;
+		if ($datatables) {
+			$iTotal = $this->db->foundRows();
+			$iFilteredTotal = $this->db->datatablesTotal('chan', $sWhere);
+			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+		}
+		return $aaData;
 	}
-	
+
 	function getChannelBiggest($limit = 10) {
 		$secret_mode = $this->ircd->getParam('chan_secret_mode');
 		$private_mode = $this->ircd->getParam('chan_private_mode');
@@ -315,7 +341,7 @@ class Denora {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
+
 	function getChannelTop($limit = 10) {
 		$secret_mode = $this->ircd->getParam('chan_secret_mode');
 		$private_mode = $this->ircd->getParam('chan_private_mode');
@@ -336,7 +362,7 @@ class Denora {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
+
 	function getUsersTop($limit = 10) {
 		$ps = $this->db->prepare("SELECT uname, line FROM ustats WHERE type = 1 AND chan='global' AND line >= 1 ORDER BY line DESC LIMIT :limit");
 		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
