@@ -32,6 +32,51 @@ $(document).ready(function() {
 	}).ajaxStop(function(){
 		$(this).hide();
 	});
+	Highcharts.setOptions({
+		global: { useUTC: false },
+		chart: {
+			backgroundColor: 'transparent',
+			type: 'spline',
+			marginRight: 10,
+			style: { fontFamily: 'Share, cursive' }
+		},
+		title: { text: '' },
+		xAxis: {
+			type: 'datetime',
+			tickPixelInterval: 150
+		},
+		yAxis: {
+			title: { align: 'low' },
+			allowDecimals: false,
+			plotLines: [{
+				value: 0,
+				width: 1,
+				color: '#808080'
+			}]
+		},
+		tooltip: { valueDecimals: 0 },
+		legend: { enabled: false },
+		exporting: { enabled: false },
+		plotOptions: {
+			spline: {
+				lineWidth: 2,
+				states: { hover: { lineWidth: 3 } },
+				marker: {
+					enabled: false,
+					states: {
+						hover: {
+							enabled: true,
+							symbol: 'circle',
+							radius: 5,
+							lineWidth: 1
+						}
+					}
+				}
+			}
+		},
+		rangeSelector: { selected: 4 },
+		credits: { enabled: false }
+	});
 });
 -->
 </script>

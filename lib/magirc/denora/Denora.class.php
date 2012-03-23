@@ -190,7 +190,7 @@ class Denora {
 		foreach ($result as $val) {
 			$date = "{$val['year']}-{$val['month']}-{$val['day']}";
 			for ($i = 0; $i < 24; $i++) {
-				$data[] = array(strtotime("{$date} {$i}:00:00") * 1000, (int) $val["time_".$i]);
+				$data[] = array(strtotime("{$date} {$i}:00:00") * 1000, $val["time_".$i] ? (int) $val["time_".$i] : null);
 			}
 		}
 		return $data;

@@ -94,8 +94,7 @@
 <!--
 $(function() {
 	//TODO: make refresh configurable and do not run if the tab is not active
-	var status_refresh = 10; // seconds
-	var max_refresh = 30; // seconds
+	var status_refresh = 15; // seconds
 	var tbl_refresh = 15; // seconds
 	var chart_users, chart_chans, chart_servers;
 	var count = 0;
@@ -105,7 +104,6 @@ $(function() {
 			updateStatus();
 			updateMax();
 			setInterval(updateStatus, status_refresh * 1000);
-			setInterval(updateMax, max_refresh * 1000); //TODO: replace with internal logic based on status
 			setInterval(updateTables, tbl_refresh * 1000);
 		}
 	}
@@ -116,12 +114,27 @@ $(function() {
 			chart_chans.series[0].addPoint([x, result.chans.val], true, true);
 			chart_servers.series[0].addPoint([x, result.servers.val], true, true);
 			$("#net_users").html(result.users.val);
+			if ($("#net_users").html() > $("#net_users_max")) {
+				$("#net_users_max").html(result.users.val);
+				$("#net_users_max_time").html(result.users.time);
+			}
 			$("#net_users_today").html(result.daily_users.val);
 			$("#net_users_today_time").html(result.daily_users.time);
-			$("#net_users").html(result.users.val);
 			$("#net_chans").html(result.chans.val);
+			if ($("#net_chans").html() > $("#net_chans_max")) {
+				$("#net_chans_max").html(result.chans.val);
+				$("#net_chans_max_time").html(result.chans.time);
+			}
 			$("#net_servers").html(result.servers.val);
+			if ($("#net_servers").html() > $("#net_servers_max")) {
+				$("#net_servers_max").html(result.servers.val);
+				$("#net_servers_max_time").html(result.servers.time);
+			}
 			$("#net_opers").html(result.opers.val);
+			if ($("#net_opers").html() > $("#net_opers_max")) {
+				$("#net_opers_max").html(result.opers.val);
+				$("#net_opers_max_time").html(result.opers.time);
+			}
 		});
 	}
 	function updateMax() {
@@ -141,227 +154,31 @@ $(function() {
 		oTable2.fnReloadAjax();
 		oTable3.fnReloadAjax();
 	}
-	Highcharts.setOptions({
-		global: {
-			useUTC: false
+	chart_users = new Highcharts.Chart({
+		colors: ['#89A54E'],
+		chart: { renderTo: 'chart_users', events: { load: startCron() } },
+		yAxis: { title: { text: 'Users' } },
+		series: [{ name: 'Users', data: initData() }]
+	});
+	chart_chans = new Highcharts.Chart({
+		colors: ['#AA4643'],
+		chart: { renderTo: 'chart_chans', events: { load: startCron() } },
+		yAxis: { title: { text: 'Channels' } },
+		series: [{ name: 'Channels', data: initData() }]
+	});
+	chart_servers = new Highcharts.Chart({
+		colors: ['#4572A7'],
+		chart: { renderTo: 'chart_servers', events: { load: startCron() } },
+		yAxis: { title: { text: 'Servers' } },
+		series: [{ name: 'Servers', data: initData() }]
+	});
+	function initData() {
+		var data = [], time = (new Date()).getTime();
+		for (i = -19; i <= 0; i++) {
+			data.push({ x: time + i * status_refresh * 1000, y: null });
 		}
-	});
-	$.getJSON('rest/denora.php/network/status', function(result) {
-		chart_users = new Highcharts.Chart({
-			colors: ['#89A54E'],
-			chart: {
-				renderTo: 'chart_users',
-				backgroundColor: 'transparent',
-				type: 'spline',
-				marginRight: 10,
-				style: { fontFamily: 'Share, cursive' },
-				events: { load: startCron() }
-			},
-			credits: { enabled: false },
-			title: { text: '' },
-			xAxis: {
-				type: 'datetime',
-				tickPixelInterval: 150
-			},
-			yAxis: {
-				title: { text: 'Users' },
-				allowDecimals: false,
-				plotLines: [{
-					value: 0,
-					width: 1,
-					color: '#808080'
-				}]
-			},
-			tooltip: {
-				formatter: function() {
-						return '<b>'+ this.series.name +'</b><br/>'+
-						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-						Highcharts.numberFormat(this.y, 0);
-				}
-			},
-			legend: { enabled: false },
-			exporting: { enabled: false },
-			plotOptions: {
-                spline: {
-                    lineWidth: 4,
-                    states: {
-                        hover: {
-                            lineWidth: 5
-                        }
-                    },
-                    marker: {
-                        enabled: false,
-                        states: {
-                            hover: {
-                                enabled: true,
-                                symbol: 'circle',
-                                radius: 5,
-                                lineWidth: 1
-                            }
-                        }
-                    }
-                }
-            },
-			// TODO: cleanup
-			series: [{
-				name: 'Users',
-				data: (function() {
-					var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * status_refresh * 1000,
-                            y: result.users.val
-                        });
-                    }
-                    return data;
-                })()
-			}]
-		});
-		chart_chans = new Highcharts.Chart({
-			colors: ['#AA4643'],
-			chart: {
-				renderTo: 'chart_chans',
-				backgroundColor: 'transparent',
-				type: 'spline',
-				marginRight: 10,
-				events: { load: startCron() }
-			},
-			credits: { enabled: false },
-			title: { text: '' },
-			xAxis: {
-				type: 'datetime',
-				tickPixelInterval: 150
-			},
-			yAxis: {
-				title: { text: 'Channels' },
-				allowDecimals: false,
-				plotLines: [{
-					value: 0,
-					width: 1,
-					color: '#808080'
-				}]
-			},
-			tooltip: {
-				formatter: function() {
-						return '<b>'+ this.series.name +'</b><br/>'+
-						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-						Highcharts.numberFormat(this.y, 0);
-				}
-			},
-			legend: { enabled: false },
-			exporting: { enabled: false },
-			plotOptions: {
-                spline: {
-                    lineWidth: 4,
-                    states: {
-                        hover: {
-                            lineWidth: 5
-                        }
-                    },
-                    marker: {
-                        enabled: false,
-                        states: {
-                            hover: {
-                                enabled: true,
-                                symbol: 'circle',
-                                radius: 5,
-                                lineWidth: 1
-                            }
-                        }
-                    }
-                }
-            },
-			// TODO: cleanup
-			series: [{
-				name: 'Channels',
-				data: (function() {
-					var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * status_refresh * 1000,
-                            y: result.chans.val
-                        });
-                    }
-                    return data;
-                })()
-			}]
-		});
-		chart_servers = new Highcharts.Chart({
-			colors: ['#4572A7'],
-			chart: {
-				renderTo: 'chart_servers',
-				backgroundColor: 'transparent',
-				type: 'spline',
-				marginRight: 10,
-				events: { load: startCron() }
-			},
-			credits: { enabled: false },
-			title: { text: '' },
-			xAxis: {
-				type: 'datetime',
-				tickPixelInterval: 150
-			},
-			yAxis: {
-				title: { text: 'Servers' },
-				allowDecimals: false,
-				plotLines: [{
-					value: 0,
-					width: 1,
-					color: '#808080'
-				}]
-			},
-			tooltip: {
-				formatter: function() {
-						return '<b>'+ this.series.name +'</b><br/>'+
-						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-						Highcharts.numberFormat(this.y, 0);
-				}
-			},
-			legend: { enabled: false },
-			exporting: { enabled: false },
-			plotOptions: {
-                spline: {
-                    lineWidth: 4,
-                    states: {
-                        hover: {
-                            lineWidth: 5
-                        }
-                    },
-                    marker: {
-                        enabled: false,
-                        states: {
-                            hover: {
-                                enabled: true,
-                                symbol: 'circle',
-                                radius: 5,
-                                lineWidth: 1
-                            }
-                        }
-                    }
-                }
-            },
-			// TODO: cleanup
-			series: [{
-				name: 'Servers',
-				data: (function() {
-					var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * status_refresh * 1000,
-                            y: result.servers.val
-                        });
-                    }
-                    return data;
-                })()
-			}]
-		});
-	});
+		return data;
+	}
 	oTable1 = $("#tbl_biggestchans").dataTable({
 		"bProcessing": false,
 		"bServerSide": false,

@@ -7,17 +7,12 @@
 <!--
 $(function() {
     var seriesOptions = [],
-        yAxisOptions = [],
         seriesCounter = 0,
-        names = ['Servers', 'Channels', 'Users'],
-        colors = Highcharts.getOptions().colors;
+        names = ['Servers', 'Channels', 'Users'];
 
     $.each(names, function(i, name) {
         $.getJSON('rest/denora.php/'+ name.toLowerCase() +'/hourlystats', function(data) {
-            seriesOptions[i] = {
-                name: name,
-                data: data
-            };
+            seriesOptions[i] = { name: name, data: data };
             seriesCounter++;
             if (seriesCounter == names.length) {
                 createChart();
@@ -26,27 +21,10 @@ $(function() {
     });
 
     function createChart() {
-        chart = new Highcharts.StockChart({
-            chart: {
-                renderTo: 'chart-evolution',
-				backgroundColor: 'transparent'
-            },
-			credits: {
-				enabled: false
-			},
-            rangeSelector: {
-                selected: 4
-            },
-			xAxis: {
-				ordinal: false // Firefox hang workaround
-			},
-            yAxis: {
-				min: 0
-            },
-            tooltip: {
-                pointFormat: '{literal}<span style="color:{series.color}">{series.name}<\/span>: <b>{point.y}<\/b><br\/>{/literal}',
-                valueDecimals: 0
-            },
+        new Highcharts.StockChart({
+            chart: { renderTo: 'chart-evolution' },
+			xAxis: { ordinal: false },
+            yAxis: { min: 0 },
             series: seriesOptions
         });
     }
