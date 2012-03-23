@@ -9,7 +9,6 @@ $(document).ready(function() {
     $.getJSON('rest/denora.php/channels/hourlystats', function(data) {
         new Highcharts.StockChart({
             chart: { renderTo: 'chart-history' },
-			xAxis: { ordinal: false },
 			yAxis: { min: 0 },
             series: [{
                 name: 'Channels online',

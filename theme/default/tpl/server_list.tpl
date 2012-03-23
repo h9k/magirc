@@ -45,21 +45,8 @@
 <!--
 $(document).ready(function() {
 	$('#tbl_servers').dataTable({
-		"bJQueryUI": true,
-		"bAutoWidth": false,
-		"bProcessing": true,
-		"bFilter": true,
-		"bInfo": true,
-		"bLengthChange": true,
-		"bPaginate": true,
-		"bSort": true,
-		"bStateSave": false,
 		"iDisplayLength": 25,
-		"sPaginationType": "full_numbers",
 		"aaSorting": [[ 1, "asc" ]],
-		//TODO
-		//"aoColumnDefs": [{ "sType": "natural", "aTargets": [ '_all' ] }],
-		//"oLanguage": dtLang,
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/default/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/default/img/status/offline.png" alt="offline" title="offline" \/>'; } },

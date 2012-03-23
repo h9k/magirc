@@ -32,6 +32,24 @@ $(document).ready(function() {
 	}).ajaxStop(function(){
 		$(this).hide();
 	});
+	// Datatable default settings
+	$.extend($.fn.dataTable.defaults, {
+        "bProcessing": true,
+		"bServerSide": false,
+		"bJQueryUI": true,
+		"bAutoWidth": false,
+		//"bFilter": true,
+		//"bInfo": true,
+		//"bLengthChange": true,
+		//"bPaginate": true,
+		//"bSort": true,
+		//"bRegex": false,
+		//"bSmart": false,
+		//"bStateSave": false,
+		//"iDisplayLength": 10,
+		"sPaginationType": "full_numbers"
+    });
+	// Highcharts default settings
 	Highcharts.setOptions({
 		global: { useUTC: false },
 		chart: {
@@ -43,7 +61,8 @@ $(document).ready(function() {
 		title: { text: '' },
 		xAxis: {
 			type: 'datetime',
-			tickPixelInterval: 150
+			tickPixelInterval: 150,
+			ordinal: true
 		},
 		yAxis: {
 			title: { align: 'low' },

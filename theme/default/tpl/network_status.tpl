@@ -96,8 +96,27 @@ $(function() {
 	//TODO: make refresh configurable and do not run if the tab is not active
 	var status_refresh = 15; // seconds
 	var tbl_refresh = 15; // seconds
-	var chart_users, chart_chans, chart_servers;
 	var count = 0;
+
+	var chart_users = new Highcharts.Chart({
+		colors: ['#89A54E'],
+		chart: { renderTo: 'chart_users', events: { load: startCron() } },
+		yAxis: { title: { text: 'Users' } },
+		series: [{ name: 'Users', data: initData() }]
+	});
+	var chart_chans = new Highcharts.Chart({
+		colors: ['#AA4643'],
+		chart: { renderTo: 'chart_chans', events: { load: startCron() } },
+		yAxis: { title: { text: 'Channels' } },
+		series: [{ name: 'Channels', data: initData() }]
+	});
+	var chart_servers = new Highcharts.Chart({
+		colors: ['#4572A7'],
+		chart: { renderTo: 'chart_servers', events: { load: startCron() } },
+		yAxis: { title: { text: 'Servers' } },
+		series: [{ name: 'Servers', data: initData() }]
+	});
+
 	function startCron() {
 		count++;
 		if (count >= 3) {
@@ -154,24 +173,6 @@ $(function() {
 		oTable2.fnReloadAjax();
 		oTable3.fnReloadAjax();
 	}
-	chart_users = new Highcharts.Chart({
-		colors: ['#89A54E'],
-		chart: { renderTo: 'chart_users', events: { load: startCron() } },
-		yAxis: { title: { text: 'Users' } },
-		series: [{ name: 'Users', data: initData() }]
-	});
-	chart_chans = new Highcharts.Chart({
-		colors: ['#AA4643'],
-		chart: { renderTo: 'chart_chans', events: { load: startCron() } },
-		yAxis: { title: { text: 'Channels' } },
-		series: [{ name: 'Channels', data: initData() }]
-	});
-	chart_servers = new Highcharts.Chart({
-		colors: ['#4572A7'],
-		chart: { renderTo: 'chart_servers', events: { load: startCron() } },
-		yAxis: { title: { text: 'Servers' } },
-		series: [{ name: 'Servers', data: initData() }]
-	});
 	function initData() {
 		var data = [], time = (new Date()).getTime();
 		for (i = -19; i <= 0; i++) {
@@ -179,17 +180,16 @@ $(function() {
 		}
 		return data;
 	}
-	oTable1 = $("#tbl_biggestchans").dataTable({
-		"bProcessing": false,
-		"bServerSide": false,
-		"bJQueryUI": true,
-		"bAutoWidth": false,
+	$.extend($.fn.dataTable.defaults, {
+        "bProcessing": false,
 		"bFilter": false,
 		"bInfo": false,
 		"bLengthChange": false,
 		"bPaginate": false,
 		"bSort": false,
-		"bEscapeRegex": false,
+		"bEscapeRegex": false
+    });
+	oTable1 = $("#tbl_biggestchans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/biggest/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel" },
@@ -201,16 +201,6 @@ $(function() {
 		window.location = url_base + '?section=channel&action=profile&chan=' + escape(chan);
 	});
 	oTable2 = $("#tbl_top10chans").dataTable({
-		"bProcessing": false,
-		"bServerSide": false,
-		"bJQueryUI": true,
-		"bAutoWidth": false,
-		"bFilter": false,
-		"bInfo": false,
-		"bLengthChange": false,
-		"bPaginate": false,
-		"bSort": false,
-		"bEscapeRegex": false,
 		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "chan" },
@@ -222,16 +212,6 @@ $(function() {
 		window.location = url_base + '?section=channel&action=stats&chan=' + escape(chan);
 	});
 	oTable3 = $("#tbl_top10users").dataTable({
-		"bProcessing": false,
-		"bServerSide": false,
-		"bJQueryUI": true,
-		"bAutoWidth": false,
-		"bFilter": false,
-		"bInfo": false,
-		"bLengthChange": false,
-		"bPaginate": false,
-		"bSort": false,
-		"bEscapeRegex": false,
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "uname" },

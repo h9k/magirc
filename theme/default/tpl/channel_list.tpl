@@ -18,18 +18,8 @@
 <!--
 $(document).ready(function() {
 	$('#tbl_channels').dataTable({
-		"bJQueryUI": true,
-		"bAutoWidth": false,
-		"bProcessing": true,
-		"bFilter": true,
-		"bInfo": true,
-		"bLengthChange": true,
-		"bPaginate": true,
-		"bSort": true,
-		"bStateSave": false,
 		"bServerSide": true,
 		"iDisplayLength": 25,
-		"sPaginationType": "full_numbers",
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [

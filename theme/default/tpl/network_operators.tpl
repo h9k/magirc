@@ -19,21 +19,8 @@
 <!--
 $(document).ready(function() {
 	$('#tbl_operators').dataTable({
-		"bJQueryUI": true,
-		"bAutoWidth": false,
-		"bProcessing": true,
-		"bFilter": true,
-		"bInfo": true,
-		"bLengthChange": true,
-		"bPaginate": true,
-		"bSort": true,
-		"bStateSave": false,
 		"iDisplayLength": 25,
-		"sPaginationType": "full_numbers",
 		"aaSorting": [[ 0, "asc" ]],
-		//TODO
-		//"aoColumnDefs": [{ "sType": "natural", "aTargets": [ '_all' ] }],
-		//"oLanguage": dtLang,
 		"sAjaxSource": 'rest/denora.php/operators?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "nick", "fnRender": function(oObj) { return '<strong>'+oObj.aData['nick']+'</strong>'; } },

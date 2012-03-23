@@ -23,7 +23,6 @@ $(function() {
     function createChart() {
         new Highcharts.StockChart({
             chart: { renderTo: 'chart-evolution' },
-			xAxis: { ordinal: false },
             yAxis: { min: 0 },
             series: seriesOptions
         });
