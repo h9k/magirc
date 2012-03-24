@@ -4,7 +4,7 @@
 // Unreal 3.2 protocol file for Denora support on Magirc
 
 class Protocol {
-	private $oper_hidden_mode = 'U';
+	private $oper_hidden_mode = 'H';
 	private $helper_mode = 'h';
 	private $bot_mode = 'B';
 	private $services_protection_mode = 'S';
