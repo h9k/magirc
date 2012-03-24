@@ -1,13 +1,14 @@
 <?php
-// $Id$
-
-/* -------------------------------------- *
- *     MagIRC - Let the magirc begin!     *
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
- *  http://www.magirc.org/                *
- *  (c) 2009-2012 hal9000@denorastats.org *
- *  GPL v2 License - see doc/COPYING      *
- * -------------------------------------- *
+/**
+ * MagIRC - Let the magirc begin!
+ *
+ * @author      Sebastian Vassiliou <hal9000@denorastats.org>
+ * @copyright   2012 Sebastian Vassiliou
+ * @link        http://www.magirc.org/
+ * @license     GPLv2
+ * @version     0.7.0
+ * 
+ * $Id$
  */
 
 ini_set('display_errors','on');

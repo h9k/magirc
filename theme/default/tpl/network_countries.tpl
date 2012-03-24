@@ -6,7 +6,7 @@
 <script type="text/javascript">
 <!--
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/countrystats', function(data) {
+    $.getJSON('rest/denora.php/countrystats/global', function(data) {
         new Highcharts.Chart({
 			chart: {
 				renderTo: 'chart-countries',

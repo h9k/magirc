@@ -6,6 +6,7 @@ $Id$
 
 magirc v0.7.0-dev
 -----------------
+2012-03-24 Switched the RESTful API engine from Restler to Slim
 2012-03-23 Improved server-side handling for Datatables
 2012-03-22 Implemented Top10 biggest chans / most active chans / most active users tables
 2012-03-21 Implemented operator list
