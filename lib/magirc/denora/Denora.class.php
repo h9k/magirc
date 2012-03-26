@@ -1,7 +1,9 @@
 <?php
+
 // $Id$
 
 class Denora_DB extends DB {
+
 	function __construct() {
 		parent::__construct();
 		$error = false;
@@ -16,11 +18,12 @@ class Denora_DB extends DB {
 			$error = true;
 		}
 		if ($error) {
-			die ('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
+			die('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
 		}
 		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Denora database<br />'.$this->error);
+		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Denora database<br />' . $this->error);
 	}
+
 }
 
 class Denora {
@@ -32,7 +35,7 @@ class Denora {
 	function __construct() {
 		$this->db = new Denora_DB();
 		$this->cfg = new Config();
-		require_once(PATH_ROOT."lib/magirc/denora/protocol/".IRCD.".inc.php");
+		require_once(PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php");
 		$this->ircd = new Protocol();
 	}
 
@@ -67,7 +70,7 @@ class Denora {
 					$pattern = '/([0-9.]+)/';
 					preg_match($pattern, $result['version'], $num);
 					if (!$num) {
-						$version = explode("(",substr($result['version'], 0, -1));
+						$version = explode("(", substr($result['version'], 0, -1));
 					} else {
 						$pattern = '/(\.[0-9]+)\s/';
 						preg_match($pattern, $result['version'], $version);
@@ -106,55 +109,89 @@ class Denora {
 	}
 
 	// return an array of all servers
-	/*function getServers() {
-		return $this->db->selectAll('server', NULL, 'server', 'ASC');
-	}*/
+	/* function getServers() {
+	  return $this->db->selectAll('server', NULL, 'server', 'ASC');
+	  } */
 
 	// return the mode formatted for sql
 	private function getSqlMode($mode) {
 		if (!$mode) {
 			return null;
 		} elseif (strtoupper($mode) === $mode) {
-			return "mode_u".strtolower($mode);
+			return "mode_u" . strtolower($mode);
 		} else {
-			return "mode_l".strtolower($mode);
+			return "mode_l" . strtolower($mode);
 		}
 	}
 
 	// CTCP statistics
 	function getClientStats($chan = "global") {
-		$sql_mode = $this->getSqlMode($this->ircd->getParam("services_protection_mode"));
-		$query = "SELECT COUNT(nickid) FROM user WHERE online='Y'";
-		if ($sql_mode) {
-			$query .= " AND {$sql_mode}='N'";
-		}
-		$stmt = $this->db->prepare($query);
-		$stmt->execute();
-		$sum = $stmt->fetch(PDO::FETCH_COLUMN);
+		if ($chan == "global") {
+			$sql_mode = $this->getSqlMode($this->ircd->getParam("services_protection_mode"));
+			$query = "SELECT COUNT(nickid) FROM user WHERE online='Y'";
+			if ($sql_mode) {
+				$query .= " AND {$sql_mode}='N'";
+			}
+			$stmt = $this->db->prepare($query);
+			$stmt->execute();
+			$sum = $stmt->fetch(PDO::FETCH_COLUMN);
 
-		if ($sql_mode) {
-			$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y' AND {$sql_mode}='N' GROUP by ctcpversion ORDER BY count DESC";
+			if ($sql_mode) {
+				$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y'
+				AND {$sql_mode}='N' GROUP by ctcpversion ORDER BY count DESC";
+			} else {
+				$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y'
+					GROUP by ctcpversion ORDER BY count DESC";
+			}
+			$stmt = $this->db->prepare($query);
+			$stmt->execute();
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		} else {
-			$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y' GROUP by ctcpversion ORDER BY count DESC";
-		}
-		$stmt = $this->db->prepare($query);
-		$stmt->execute();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$query = "SELECT COUNT(user.nickid) FROM user, chan, ison WHERE chan.chanid = ison.chanid
+				AND user.nickid = ison.nickid AND user.online='Y' AND LOWER(channel)=LOWER(:chan)";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
+			$stmt->execute();
+			$sum = $stmt->fetch(PDO::FETCH_COLUMN);
 
+			$query = "SELECT user.ctcpversion AS name, COUNT(*) AS count FROM user, chan, ison WHERE
+				user.nickid=ison.nickid AND ison.chanid=chan.chanid AND LOWER(chan.channel)=LOWER(:chan)
+				AND user.online='Y' GROUP by user.ctcpversion ORDER BY count DESC;";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
+			$stmt->execute();
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
 		return $this->makeData($result, $sum);
 	}
 
 	function getCountryStats($chan = "global") {
-		$query = "SELECT SUM(count) FROM tld WHERE count != 0;";
-		$stmt = $this->db->prepare($query);
-		$stmt->execute();
-		$sum = $stmt->fetch(PDO::FETCH_COLUMN);
+		if ($chan == "global") {
+			$query = "SELECT SUM(count) FROM tld WHERE count != 0;";
+			$stmt = $this->db->prepare($query);
+			$stmt->execute();
+			$sum = $stmt->fetch(PDO::FETCH_COLUMN);
 
-		$query = "SELECT country AS name, count FROM tld WHERE count != 0 ORDER BY count DESC;";
-		$stmt = $this->db->prepare($query);
-		$stmt->execute();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$query = "SELECT country AS name, count FROM tld WHERE count != 0 ORDER BY count DESC;";
+			$stmt = $this->db->prepare($query);
+			$stmt->execute();
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} else {
+			$query = ("SELECT COUNT(user.nickid) FROM chan, ison, user WHERE chan.chanid = ison.chanid
+				AND ison.nickid = user.nickid AND LOWER(channel)=LOWER(:chan) AND user.online='Y'");
+			$stmt = $this->db->prepare($query);
+			$stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
+			$stmt->execute();
+			$sum = $stmt->fetch(PDO::FETCH_COLUMN);
 
+			$query = "SELECT user.country AS name, COUNT(*) AS count FROM user, chan, ison WHERE
+				user.nickid=ison.nickid AND ison.chanid=chan.chanid AND LOWER(chan.channel)=LOWER(:chan)
+				AND user.online='Y' GROUP by user.country ORDER BY count DESC";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
+			$stmt->execute();
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
 		return $this->makeData($result, $sum);
 	}
 
@@ -190,7 +227,7 @@ class Denora {
 		foreach ($result as $val) {
 			$date = "{$val['year']}-{$val['month']}-{$val['day']}";
 			for ($i = 0; $i < 24; $i++) {
-				$data[] = array(strtotime("{$date} {$i}:00:00") * 1000, $val["time_".$i] ? (int) $val["time_".$i] : null);
+				$data[] = array(strtotime("{$date} {$i}:00:00") * 1000, $val["time_" . $i] ? (int) $val["time_" . $i] : null);
 			}
 		}
 		return $data;
@@ -200,7 +237,7 @@ class Denora {
 		$sWhere = "";
 		$hide_servers = $this->cfg->getParam('hide_servers');
 		if ($hide_servers) {
-			$hide_servers = explode(",",$hide_servers);
+			$hide_servers = explode(",", $hide_servers);
 			foreach ($hide_servers as $key => $server) {
 				$hide_servers[$key] = $this->db->escape(trim($server));
 			}
@@ -228,9 +265,9 @@ class Denora {
 
 	function getOperatorList() {
 		$array = array();
-		$ho = $this->ircd->getParam('oper_hidden_mode') ? "AND user.".$this->getSqlMode($this->ircd->getParam('oper_hidden_mode'))." = 'N'" : NULL;
+		$ho = $this->ircd->getParam('oper_hidden_mode') ? "AND user." . $this->getSqlMode($this->ircd->getParam('oper_hidden_mode')) . " = 'N'" : NULL;
 		$hu = $this->cfg->getParam('hide_ulined') ? "AND server.uline = '0'" : NULL;
-		$hs = $this->ircd->getParam('services_protection_mode') ? "AND user.".$this->getSqlMode($this->ircd->getParam('services_protection_mode'))." = 'N'" : NULL;
+		$hs = $this->ircd->getParam('services_protection_mode') ? "AND user." . $this->getSqlMode($this->ircd->getParam('services_protection_mode')) . " = 'N'" : NULL;
 		if (IRCD == "unreal32") {
 			$query = "SELECT user.*,server.uline FROM user,server WHERE (user.mode_un = 'Y' OR user.mode_ua = 'Y' OR user.mode_la = 'Y' OR user.mode_uc = 'Y' OR user.mode_lo = 'Y')
 				AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.mode_un,user.mode_ua,user.mode_la,user.mode_uc,user.mode_lo,user.nick ASC";
@@ -246,11 +283,16 @@ class Denora {
 			$data['connecttime'] = $row['connecttime'] ? $row['connecttime'] : NULL;
 			$data['away'] = $row['away'] == "Y" ? true : false;
 			if (IRCD == "unreal32") {
-				if ($row['mode_un'] == "Y") $level = "Network Admin";
-				elseif ($row['mode_ua'] == "Y") $level = "Server Admin";
-				elseif ($row['mode_la'] == "Y") $level = "Services Admin";
-				elseif ($row['mode_uc'] == "Y") $level = "Co-Admin";
-				elseif ($row['mode_lo'] == "Y") $level = "Global Operator";
+				if ($row['mode_un'] == "Y")
+					$level = "Network Admin";
+				elseif ($row['mode_ua'] == "Y")
+					$level = "Server Admin";
+				elseif ($row['mode_la'] == "Y")
+					$level = "Services Admin";
+				elseif ($row['mode_uc'] == "Y")
+					$level = "Co-Admin";
+				elseif ($row['mode_lo'] == "Y")
+					$level = "Global Operator";
 			} else {
 				$level = "Operator";
 			}
@@ -278,7 +320,7 @@ class Denora {
 		}
 		$hide_channels = $this->cfg->getParam('hide_chans');
 		if ($hide_channels) {
-			$hide_channels = explode(",",$hide_channels);
+			$hide_channels = explode(",", $hide_channels);
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
@@ -290,7 +332,7 @@ class Denora {
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
 			$sOrdering = $this->db->datatablesOrdering(array('channel', 'currentusers', 'maxusers'));
 			$sPaging = $this->db->datatablesPaging();
-			$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS * FROM chan WHERE %s %s %s %s", $sWhere, $sFiltering ? "AND ".$sFiltering : "", $sOrdering, $sPaging);
+			$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS * FROM chan WHERE %s %s %s %s", $sWhere, $sFiltering ? "AND " . $sFiltering : "", $sOrdering, $sPaging);
 		}
 		$ps = $this->db->prepare($sQuery);
 		$ps->execute();
@@ -331,9 +373,9 @@ class Denora {
 		if ($private_mode) {
 			$query .= sprintf(" AND %s='N'", $this->getSqlMode($private_mode));
 		}
-		$hide_chans = explode(",",$this->cfg->getParam('hide_chans'));
+		$hide_chans = explode(",", $this->cfg->getParam('hide_chans'));
 		for ($i = 0; $i < count($hide_chans); $i++) {
-			$query .= " AND LOWER(channel) NOT LIKE ".$this->db->escape(strtolower($hide_chans[$i]));
+			$query .= " AND LOWER(channel) NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
 		}
 		$query .= " ORDER BY currentusers DESC LIMIT :limit";
 		$ps = $this->db->prepare($query);
@@ -352,9 +394,9 @@ class Denora {
 		if ($private_mode) {
 			$query .= sprintf(" AND chan.%s='N'", $this->getSqlMode($private_mode));
 		}
-		$hide_chans = explode(",",$this->cfg->getParam('hide_chans'));
+		$hide_chans = explode(",", $this->cfg->getParam('hide_chans'));
 		for ($i = 0; $i < count($hide_chans); $i++) {
-			$query .= " AND cstats.chan NOT LIKE ".$this->db->escape(strtolower($hide_chans[$i]));
+			$query .= " AND cstats.chan NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
 		}
 		$query .= " ORDER BY cstats.line DESC LIMIT :limit";
 		$ps = $this->db->prepare($query);
@@ -389,14 +431,15 @@ class Denora {
 
 	/* Checks if given channel can be displayed
 	 * 0 = not existing, 1 = denied, 2 = ok */
+
 	function checkChannel($chan) {
 		$noshow = array();
 		$no = explode(",", Config::getParam('hide_chans'));
 		for ($i = 0; $i < count($no); $i++) {
 			$noshow[$i] = strtolower($no[$i]);
 		}
-		if (in_array(strtolower($chan),$noshow))
-		return 1;
+		if (in_array(strtolower($chan), $noshow))
+			return 1;
 
 		$stmt = $this->db->prepare("SELECT * FROM `chan` WHERE BINARY LOWER(`channel`) = LOWER(:channel)");
 		$stmt->bindParam(':channel', $chan, SQL_STR);
@@ -422,9 +465,9 @@ class Denora {
 		$array = array();
 		$i = 0;
 		$query = "SELECT ";
-		/*if ($this->ircd->helper_mode) {
-		 $query .= sprintf("`user`.`%s` AS 'helper', ", $this->ircd->helper_mode);
-		 }*/
+		/* if ($this->ircd->helper_mode) {
+		  $query .= sprintf("`user`.`%s` AS 'helper', ", $this->ircd->helper_mode);
+		  } */
 		$query .= "`user`.*, `ison`.*,`server`.`uline`
 		FROM `ison`,`chan`,`user`,`server`
 		WHERE LOWER(`chan`.`channel`) = LOWER(:channel)
@@ -455,16 +498,16 @@ class Denora {
 					$mode .= "v";
 				}
 				$array[$i]['nick'] = $data['nick'];
-				$array[$i]['modes'] = ($mode ? "+".$mode : "");
+				$array[$i]['modes'] = ($mode ? "+" . $mode : "");
 				$array[$i]['host'] = ((!empty($data['hiddenhostname']) && $data['hiddenhostname'] != "(null)") ? $data['hiddenhostname'] : $data['hostname']);
 				$array[$i]['username'] = $data['username'];
 				$array[$i]['countrycode'] = $data['countrycode'];
 				$array[$i]['country'] = $data['country'];
-				$array[$i]['bot'] = /*$this->ircd->bot_mode ? $data[$this->ircd->bot_mode] :*/ 'N';
+				$array[$i]['bot'] = /* $this->ircd->bot_mode ? $data[$this->ircd->bot_mode] : */ 'N';
 				$array[$i]['away'] = $data['away'];
 				$array[$i]['online'] = $data['online'];
 				$array[$i]['uline'] = $data['uline'];
-				$array[$i]['helper'] = /*$this->ircd->helper_mode ? $this->ircd->helper_mode :*/ 'N';
+				$array[$i]['helper'] = /* $this->ircd->helper_mode ? $this->ircd->helper_mode : */ 'N';
 				$i++;
 			}
 		}
@@ -476,31 +519,31 @@ class Denora {
 		$modes = "";
 		$j = 97;
 		while ($j <= 122) {
-			if (@$chan['mode_l'.chr($j)] == "Y") {
+			if (@$chan['mode_l' . chr($j)] == "Y") {
 				$modes .= chr($j);
 			}
-			if (@$chan['mode_u'.chr($j)] == "Y") {
-				$modes .= chr($j-32);
+			if (@$chan['mode_u' . chr($j)] == "Y") {
+				$modes .= chr($j - 32);
 			}
 			$j++;
 		}
 		if (@$chan['mode_lf_data'] != NULL) {
-			$modes .= " ".$chan['mode_lf_data'];
+			$modes .= " " . $chan['mode_lf_data'];
 		}
 		if (@$chan['mode_lj_data'] != NULL) {
-			$modes .= " ".$chan['mode_lj_data'];
+			$modes .= " " . $chan['mode_lj_data'];
 		}
 		if (@$chan['mode_ll_data'] > 0) {
-			$modes .= " ".$chan['mode_ll_data'];
+			$modes .= " " . $chan['mode_ll_data'];
 		}
 		if (@$chan['mode_uf_data'] != NULL) {
-			$modes .= " ".$chan['mode_uf_data'];
+			$modes .= " " . $chan['mode_uf_data'];
 		}
 		if (@$chan['mode_uj_data'] > 0) {
-			$modes .= " ".$chan['mode_uj_data'];
+			$modes .= " " . $chan['mode_uj_data'];
 		}
 		if (@$chan['mode_ul_data'] != NULL) {
-			$modes .= " ".$chan['mode_ul_data'];
+			$modes .= " " . $chan['mode_ul_data'];
 		}
 		return $modes;
 	}

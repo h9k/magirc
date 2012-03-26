@@ -6,6 +6,8 @@ $Id$
 
 magirc v0.7.0-dev
 -----------------
+2012-03-26 Implemented per channel country and client statistics
+2012-03-26 Fixed bug in Slim framework which prevented use of channel names as parameter
 2012-03-24 Switched the RESTful API engine from Restler to Slim
 2012-03-23 Improved server-side handling for Datatables
 2012-03-22 Implemented Top10 biggest chans / most active chans / most active users tables
