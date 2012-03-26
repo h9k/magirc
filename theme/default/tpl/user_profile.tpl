@@ -5,6 +5,7 @@
 <div id="tabs">
 	<ul>
 		<li><a href="?section=user&amp;action=info&amp;nick={$smarty.get.nick|escape:'url'}">User info</a></li>
+		<li><a href="?section=user&amp;action=activity&amp;nick={$smarty.get.nick|escape:'url'}">User activity</a></li>
 	</ul>
 </div>
 {/block}

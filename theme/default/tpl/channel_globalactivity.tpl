@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<h1>Channel statistics for {$smarty.get.chan}</h1>
+<h1>Global channel activity</h1>
 
 Not implemented.
 

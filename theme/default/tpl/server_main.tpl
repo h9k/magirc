@@ -4,8 +4,8 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="?section=server&amp;action=list">Server list</a></li>
-		<li><a href="?section=server&amp;action=history">Server history</a></li>
+		<li><a href="?section=server&amp;action=list">Servers</a></li>
+		<li><a href="?section=server&amp;action=history">History</a></li>
 	</ul>
 </div>
 {/block}

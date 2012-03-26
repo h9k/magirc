@@ -7,7 +7,7 @@
 		<li><a href="?section=channel&amp;action=status&amp;chan={$smarty.get.chan|escape:'url'}">Status</a></li>
 		<li><a href="?section=channel&amp;action=countries&amp;chan={$smarty.get.chan|escape:'url'}">Countries</a></li>
 		<li><a href="?section=channel&amp;action=clients&amp;chan={$smarty.get.chan|escape:'url'}">Clients</a></li>
-		<li><a href="?section=channel&amp;action=stats&amp;chan={$smarty.get.chan|escape:'url'}">Statistics</a></li>
+		<li><a href="?section=channel&amp;action=activity&amp;chan={$smarty.get.chan|escape:'url'}">Activity</a></li>
 	</ul>
 </div>
 {/block}

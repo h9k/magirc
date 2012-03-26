@@ -4,7 +4,8 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="?section=user&amp;action=history">User history</a></li>
+		<li><a href="?section=user&amp;action=globalactivity">Activity</a></li>
+		<li><a href="?section=user&amp;action=history">History</a></li>
 	</ul>
 </div>
 {/block}

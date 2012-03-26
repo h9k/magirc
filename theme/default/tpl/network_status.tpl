@@ -220,7 +220,7 @@ $(function() {
 	});
 	$("#tbl_top10users tbody tr").live("click", function(event) {
 		var user = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '?section=user&action=stats&user=' + escape(user);
+		window.location = url_base + '?section=user&action=profile&nick=' + escape(user);
 	});
 });
 -->
