@@ -209,7 +209,7 @@ $(function() {
 	});
 	$("#tbl_top10chans tbody tr").live("click", function(event) {
 		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '?section=channel&action=stats&chan=' + escape(chan);
+		window.location = url_base + '?section=channel&action=profile&chan=' + escape(chan) + '#ui-tabs-4';
 	});
 	oTable3 = $("#tbl_top10users").dataTable({
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
