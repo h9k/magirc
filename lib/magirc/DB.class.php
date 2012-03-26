@@ -201,10 +201,9 @@ class DB {
 
 	// Total data set length
 	function datatablesTotal($sFrom, $sWhere) {
-		$sQuery = "SELECT COUNT(*) FROM $sFrom WHERE $sWhere";
-		$this->query($sQuery, SQL_INIT, SQL_INDEX);
-		$aResultTotal = $this->record;
-		return $aResultTotal[0];
+		$ps = $this->prepare("SELECT COUNT(*) FROM $sFrom WHERE $sWhere");
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
 
 	function datatablesPaging() {

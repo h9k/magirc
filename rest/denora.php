@@ -12,6 +12,9 @@ require_once('../lib/slim/Slim.php');
 $magirc = new Magirc('denora');
 $app = new Slim();
 $app->contentType('application/json');
+$app->notFound(function () use ($app) {
+    echo json_encode(array('error' => "HTTP 404 Not Found"));
+});
 
 // Routing
 $app->get('/network/status', 'getNetworkStatus');
@@ -27,8 +30,8 @@ $app->get('/users', 'getUsers');
 $app->get('/users/hourlystats', 'getUserStats');
 $app->get('/users/top/:limit', 'getUsersTop');
 $app->get('/operators', 'getOperators');
-$app->get('/clientstats/:chan', 'getClientStats');
-$app->get('/countrystats/:chan', 'getCountryStats');
+$app->get('/clientstats(/:chan)', 'getClientStats');
+$app->get('/countrystats(/:chan)', 'getCountryStats');
 
 // Functions
 function getNetworkStatus() {
@@ -106,12 +109,12 @@ function getOperators() {
 	}
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
 };
-function getClientStats($chan) {
+function getClientStats($chan = 'global') {
 	global $magirc;
 	$data = $magirc->denora->getClientStats($chan);
 	echo json_encode($data);
 };
-function getCountryStats($chan) {
+function getCountryStats($chan = 'global') {
 	global $magirc;
 	$data = $magirc->denora->getCountryStats($chan);
 	echo json_encode($data);

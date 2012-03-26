@@ -5,10 +5,10 @@
 <div id="tabs">
 	<ul>
 		<li><a href="?section=network&amp;action=status">Status</a></li>
-		<li><a href="?section=network&amp;action=evolution">Evolution</a></li>
 		<li><a href="?section=network&amp;action=countries">Countries</a></li>
 		<li><a href="?section=network&amp;action=clients">Clients</a></li>
 		<li><a href="?section=network&amp;action=operators">Operators</a></li>
+		<li><a href="?section=network&amp;action=history">History</a></li>
 	</ul>
 </div>
 {/block}
