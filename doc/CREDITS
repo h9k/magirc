@@ -1,14 +1,22 @@
-MAGIRC CREDITS
+$Id$
+
+MagIRC Credits
 --------------
+MagIRC originates from phpDenora, but is a complete rewrite.
 
-Magirc originates from phpDenora, but is a complete rewrite. 
+MagIRC uses the following open source products developed by third parties:
 
-Magirc comes with makes use of the following products
-developed by 3rd parties: 
-
-- jquery
-- jquery-ui
-- jquery datatables
-- jquery highcharts
-- ckeditor
-- smarty3 template engine
+- jQuery
+  http://www.jquery.com
+- jQuery-UI
+  http://www.jqueryui.com
+- DataTables
+  http://www.datatables.net
+- Highcharts and Highstock
+  http://www.highcharts.com
+- CKEditor
+  http://www.ckeditor.com
+- Smarty Template Engine
+  http://www.smarty.net
+- Slim Framework
+  http://www.slimframework.com

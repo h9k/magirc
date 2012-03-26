@@ -2,10 +2,10 @@ $Id$
 
 MILESTONE 1 : get phpDenora features
 -----------
-- Replace the current prototype template with a nice default template
-- Make extended use of jquery, jquery-ui and ajax with json sources
-- Implement dynamic, auto-updating graphs with highcharts
-- Implement dynamic, auto-updating tables with datatables
+x Replace the current prototype template with a nice default template
+x Make extended use of jquery, jquery-ui and ajax with json sources
+x Implement dynamic, auto-updating graphs with highcharts
+x Implement dynamic, auto-updating tables with datatables
 - Magirc should do everything that phpdenora can
 
 Probably release magirc 1.0 at this point, or rebrand it as phpdenora 2 for this release
@@ -14,5 +14,3 @@ MILESTONE 2 : integrate with Anope
 -----------
 - Implement some form of anope integration
 - Improve and extend existing features
-
- 

@@ -5,9 +5,9 @@
  * @author      Sebastian Vassiliou <hal9000@denorastats.org>
  * @copyright   2012 Sebastian Vassiliou
  * @link        http://www.magirc.org/
- * @license     GPLv2
+ * @license     GNU GPL Version 3, see doc/LICENSE
  * @version     0.7.0
- * 
+ *
  * $Id$
  */
 
