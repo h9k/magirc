@@ -56,7 +56,10 @@ $(document).ready(function() {
 			backgroundColor: 'transparent',
 			type: 'spline',
 			marginRight: 10,
-			style: { fontFamily: 'Share, cursive' }
+			style: { fontFamily: 'Share, cursive' },
+			plotBackgroundColor: null,
+			plotBorderWidth: null,
+			plotShadow: false
 		},
 		title: { text: '' },
 		xAxis: {
@@ -89,6 +92,18 @@ $(document).ready(function() {
 							radius: 5,
 							lineWidth: 1
 						}
+					}
+				}
+			},
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: true,
+					color: '#000000',
+					connectorColor: '#000000',
+					formatter: function() {
+						return '<b>'+ this.point.name +'<\/b>: '+ Math.round(this.percentage * 100) / 100 +' %';
 					}
 				}
 			}
