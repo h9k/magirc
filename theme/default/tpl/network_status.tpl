@@ -1,5 +1,4 @@
 
-
 <h1>Live Network Status</h1>
 
 <table class="details" style="width:100%;">
@@ -29,9 +28,9 @@
 
 <table>
 	<tr>
-		<td><div id="chart_users" style="height: 175px; width: 280px;"></div></td>
-		<td><div id="chart_chans" style="height: 175px; width: 280px;"></div></td>
-		<td><div id="chart_servers" style="height: 175px; width: 280px;"></div></td>
+		<td><div id="chart_users" style="height: 175px; width: 560px;"></div></td>
+		{*<td><div id="chart_chans" style="height: 175px; width: 280px;"></div></td>*}
+		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
 	</tr>
 </table>
 
@@ -104,22 +103,17 @@ $(function() {
 		yAxis: { title: { text: 'Users' } },
 		series: [{ name: 'Users', data: initData() }]
 	});
-	var chart_chans = new Highcharts.Chart({
-		colors: ['#AA4643'],
-		chart: { renderTo: 'chart_chans', events: { load: startCron() } },
-		yAxis: { title: { text: 'Channels' } },
-		series: [{ name: 'Channels', data: initData() }]
-	});
-	var chart_servers = new Highcharts.Chart({
-		colors: ['#4572A7'],
-		chart: { renderTo: 'chart_servers', events: { load: startCron() } },
-		yAxis: { title: { text: 'Servers' } },
-		series: [{ name: 'Servers', data: initData() }]
+	var chart_status = new Highcharts.Chart({
+		chart: { renderTo: 'chart_status', type: 'column', events: { load: startCron() } },
+		xAxis: { type: 'linear', categories: [ 'Users', 'Channels', 'Operators', 'Servers' ], labels: { rotation: -45, align: 'right' } },
+		yAxis: { min: 0, title: { text: '' } },
+		tooltip: { formatter: function() { return '<b>'+ this.x +'</b>: '+ Highcharts.numberFormat(this.y, 0); } },
+		series: [{ name: 'Status', data: [0, 0, 0] }]
 	});
 
 	function startCron() {
 		count++;
-		if (count >= 3) {
+		if (count >= 2) {
 			updateStatus();
 			updateMax();
 			setInterval(updateStatus, status_refresh * 1000);
@@ -130,8 +124,7 @@ $(function() {
 		$.getJSON('rest/denora.php/network/status', function(result) {
 			var x = (new Date()).getTime();
 			chart_users.series[0].addPoint([x, result.users.val], true, true);
-			chart_chans.series[0].addPoint([x, result.chans.val], true, true);
-			chart_servers.series[0].addPoint([x, result.servers.val], true, true);
+			chart_status.series[0].setData([result.users.val, result.chans.val, result.opers.val, result.servers.val]);
 			$("#net_users").html(result.users.val);
 			if ($("#net_users").html() > $("#net_users_max")) {
 				$("#net_users_max").html(result.users.val);
