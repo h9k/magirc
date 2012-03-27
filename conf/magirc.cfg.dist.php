@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 // Configure and rename this file to magirc.cfg.php
 

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 // Inspircd 1.1/1.2/2.0 protocol file for Denora support on Magirc
 

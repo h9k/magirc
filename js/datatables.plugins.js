@@ -1,4 +1,4 @@
-// $Id$
+
 
 jQuery.fn.dataTableExt.oSort['anti-the-asc']  = function(a,b) {
     var x = a.replace(/^the /i, "");

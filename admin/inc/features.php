@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 if (isset($_POST['form'])) {
 	if (isset($_POST['status_lookup'])) $admin->saveConfig('status_lookup',1);

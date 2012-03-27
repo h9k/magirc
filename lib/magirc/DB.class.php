@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 // define the query types
 define('SQL_NONE', 1);

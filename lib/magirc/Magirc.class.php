@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 // Root path
 define('PATH_ROOT', __DIR__ . '/../../');

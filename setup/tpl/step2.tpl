@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 {extends file="components/main.tpl"}
 {block name="content"}
 <pre>Checking MagIRC database schema...

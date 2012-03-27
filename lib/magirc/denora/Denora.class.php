@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 class Denora_DB extends DB {
 

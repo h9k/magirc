@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 {extends file="components/main.tpl"}
 {block name="content"}
 <div class="page_title">Welcome to the MagIRC Setup!</div>

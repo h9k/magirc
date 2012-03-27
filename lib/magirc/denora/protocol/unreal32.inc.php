@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 // Unreal 3.2 protocol file for Denora support on Magirc
 

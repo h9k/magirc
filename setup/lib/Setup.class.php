@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 class Setup {
 	public $db;

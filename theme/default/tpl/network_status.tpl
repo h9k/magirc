@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 
 <h1>Live Network Status</h1>
 

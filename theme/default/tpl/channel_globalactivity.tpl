@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 
 <h1>Global channel activity</h1>
 

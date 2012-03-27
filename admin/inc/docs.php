@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 $file = isset($_GET['f']) ? stripslashes($_GET['f']) : 'README';
 $path = '../doc/' . basename($file);

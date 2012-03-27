@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 if (get_magic_quotes_gpc()) {
 	function stripslashes_deep($value) {

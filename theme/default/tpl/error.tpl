@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 {extends file="_main.tpl"}
 {block name="css"}<link href="theme/default/css/bsod.css" rel="stylesheet" type="text/css" />{/block}
 {block name="body"}

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 $service = isset($_GET['service']) ? basename($_GET['service']) : 'denora';
 $db_config_file = "../conf/{$service}.cfg.php";

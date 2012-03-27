@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 if (isset($_POST['form'])) {
 	if (isset($_POST['net_name'])) $admin->saveConfig('net_name',$_POST['net_name']);

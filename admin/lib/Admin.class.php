@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 // database configuration
 class Magirc_DB extends DB {

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 $magirc_url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $magirc_url = explode("admin/",$magirc_url);

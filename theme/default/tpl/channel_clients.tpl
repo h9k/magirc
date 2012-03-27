@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 
 <h1>Current Client Statistics for {$smarty.get.chan}</h1>
 <div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>

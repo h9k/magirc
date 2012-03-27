@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 if (isset($_POST['form'])) {
 	if (isset($_POST['chanstats_sort'])) $admin->saveConfig('chanstats_sort',$_POST['chanstats_sort']);

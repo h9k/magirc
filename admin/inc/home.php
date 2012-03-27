@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 #$denora_version = @$admin->denora->getVersion('num');
 if (!@$denora_version) {

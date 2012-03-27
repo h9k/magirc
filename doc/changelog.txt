@@ -1,11 +1,10 @@
-$Id$
-
 ==================
  MAGIRC CHANGELOG
 ==================
 
 magirc v0.7.0-dev
 -----------------
+2012-03-27 Moved project to GitHub
 2012-03-27 Implemented channel info page
 2012-03-26 Implemented per channel country and client statistics
 2012-03-26 Fixed bug in Slim framework which prevented use of channel names as parameter

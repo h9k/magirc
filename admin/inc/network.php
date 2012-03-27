@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 if (isset($_POST['form'])) {
 	if (isset($_POST['ircd_type'])) $admin->saveConfig('ircd_type',$_POST['ircd_type']);

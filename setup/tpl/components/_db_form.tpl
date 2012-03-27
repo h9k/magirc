@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 <p>Please configure the access to the MagIRC SQL database</p>
 <form id="database" name="database" method="post" action="">
 <table width="100%" border="0" cellspacing="0" cellpadding="5">

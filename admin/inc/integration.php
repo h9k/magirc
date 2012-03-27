@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 if (isset($_POST['form'])) {
 	if (isset($_POST['netsplit_id'])) $admin->saveConfig('netsplit_id',$_POST['netsplit_id']);

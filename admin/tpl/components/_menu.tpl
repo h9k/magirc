@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 
 <div class="menu">
     <ul class="level1">

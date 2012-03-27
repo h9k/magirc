@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 /*
  * converts irc text with control codes to xhtml, used by magirc

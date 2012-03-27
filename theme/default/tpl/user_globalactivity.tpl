@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 
 <h1>Global user activity</h1>
 

@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 
 <h1>Channel list</h1>
 <table id="tbl_channels" class="display">

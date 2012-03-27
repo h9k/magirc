@@ -1,11 +1,10 @@
--- 
+--
 -- Magirc configuration table
--- $Id$
 --
 
--- 
+--
 -- Table structure for table `magirc_config`
--- 
+--
 
 CREATE TABLE IF NOT EXISTS `magirc_config` (
   `parameter` varchar(32) NOT NULL default '',
@@ -13,9 +12,9 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
   PRIMARY KEY (`parameter`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- 
+--
 -- Dumping data for table `magirc_config`
--- 
+--
 
 INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '1'),
 ('net_name', 'MyNetwork'),

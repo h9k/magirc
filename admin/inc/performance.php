@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 if (isset($_POST['form'])) {
 	if (isset($_POST['graph_cache'])) $admin->saveConfig('graph_cache',1);

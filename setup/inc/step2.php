@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 $config['debug_mode'] = 0;
 $config['show_exec_time'] = 0;

@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 
 <h1>User info for {$smarty.get.nick}</h1>
 

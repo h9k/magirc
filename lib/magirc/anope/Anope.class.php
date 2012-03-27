@@ -1,5 +1,5 @@
 <?php
-// $Id$
+
 
 class Anope_DB extends DB {
 	function __construct() {

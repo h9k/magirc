@@ -7,8 +7,6 @@
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see doc/LICENSE
  * @version     0.7.0
- *
- * $Id$
  */
 
 ini_set('display_errors','on');

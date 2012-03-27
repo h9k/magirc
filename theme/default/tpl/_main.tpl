@@ -1,4 +1,4 @@
-{* $Id$ *}
+
 <!DOCTYPE html>
 <html>
 <head>
