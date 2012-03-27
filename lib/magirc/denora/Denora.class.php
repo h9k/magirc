@@ -517,7 +517,7 @@ class Denora {
 		return $array;
 	}
 	
-	function getChannelActivity($type, $datatables = false) {
+	function getChannelGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 		$secret_mode = $this->ircd->getParam('chan_secret_mode');
 		$private_mode = $this->ircd->getParam('chan_private_mode');
@@ -562,6 +562,48 @@ class Denora {
 			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
 		}
 		return $aaData;
+	}
+	
+	function getChannelActivity($chan, $type, $datatables = false) {
+		$aaData = array();
+		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats WHERE chan=:channel AND type=:type AND letters > 0 ";
+		if ($datatables) {
+			$sFiltering = $this->db->datatablesFiltering(array('uname'));
+			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
+			$sPaging = $this->db->datatablesPaging();
+			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+		}
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindParam(':type', $type, PDO::PARAM_INT);
+		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
+			if ($datatables) {
+				$row["DT_RowId"] = $row['name'];
+			}
+			$aaData[] = $row;
+		}
+		if ($datatables) {
+			$iTotal = $this->db->foundRows();
+			#$iFilteredTotal = $this->db->datatablesTotal('cstats,chan', $sWhere);
+			$iFilteredTotal = $iTotal; //TODO: fix me!
+			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+		}
+		return $aaData;
+	}
+	
+	function getChannelHourlyActivity($chan, $type) {
+		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
+			FROM cstats WHERE chan=:channel AND type=:type";
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindParam(':type', $type, PDO::PARAM_INT);
+		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		$result = $ps->fetch(PDO::FETCH_NUM);
+		foreach ($result as $key => $val) {
+			$result[$key] = (int) $val;
+		}
+		return $result;
 	}
 
 	private function getChannelModes($chan) {

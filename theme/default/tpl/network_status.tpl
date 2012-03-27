@@ -28,7 +28,6 @@
 <table>
 	<tr>
 		<td><div id="chart_users" style="height: 175px; width: 560px;"></div></td>
-		{*<td><div id="chart_chans" style="height: 175px; width: 280px;"></div></td>*}
 		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
 	</tr>
 </table>

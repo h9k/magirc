@@ -25,10 +25,11 @@ $app->get('/channels', 'getChannels');
 $app->get('/channels/hourlystats', 'getChannelStats');
 $app->get('/channels/biggest(/:limit)', 'getChannelsBiggest');
 $app->get('/channels/top(/:limit)', 'getChannelsTop');
-$app->get('/channels/activity/:type', 'getChannelsActivity');
+$app->get('/channels/activity/:type', 'getChannelGlobalActivity');
 $app->get('/channels/:chan', 'getChannel');
 $app->get('/channels/:chan/users', 'getChannelUsers');
 $app->get('/channels/:chan/activity/:type', 'getChannelActivity');
+$app->get('/channels/:chan/hourly/:type', 'getChannelHourlyActivity');
 $app->get('/users', 'getUsers');
 $app->get('/users/hourlystats', 'getUserStats');
 $app->get('/users/top(/:limit)', 'getUsersTop');
@@ -97,13 +98,20 @@ function getChannelUsers($chan) {
 	$data = $magirc->denora->getChannelUsers($chan);
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
 }
-function getChannelsActivity($type) {
+function getChannelGlobalActivity($type) {
 	global $magirc;
-	$data = $magirc->denora->getChannelActivity($type, @$_GET['format'] == 'datatables');
+	$data = $magirc->denora->getChannelGlobalActivity($type, @$_GET['format'] == 'datatables');
 	echo json_encode($data);
 }
 function getChannelActivity($chan, $type) {
-	
+	global $magirc;
+	$data = $magirc->denora->getChannelActivity($chan, $type, @$_GET['format'] == 'datatables');
+	echo json_encode($data);
+}
+function getChannelHourlyActivity($chan, $type) {
+	global $magirc;
+	$data = $magirc->denora->getChannelHourlyActivity($chan, $type);
+	echo json_encode($data);
 }
 function getUsers() {
 	global $magirc;

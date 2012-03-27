@@ -105,6 +105,14 @@ $(document).ready(function() {
 						return '<b>'+ this.point.name +'<\/b>: '+ Math.round(this.percentage * 100) / 100 +' %';
 					}
 				}
+			},
+			column: {
+				dataLabels: {
+					enabled: true,
+					rotation: -90,
+					x: 3,
+					y: -12
+				}
 			}
 		},
 		rangeSelector: { selected: 4 },
