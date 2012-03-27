@@ -260,7 +260,9 @@ class Denora {
 		$stmt = $this->db->prepare($query);
 		$stmt->bindParam(':server', $server, PDO::PARAM_STR);
 		$stmt->execute();
-		return $stmt->fetch(PDO::FETCH_ASSOC);
+		$server = $stmt->fetch(PDO::FETCH_ASSOC);
+		$server['motd_html'] = $this->irc2html($server['motd']);
+		return $server;
 	}
 
 	function getOperatorList() {
@@ -344,11 +346,11 @@ class Denora {
 				'users_max' => $row['maxusers'],
 				'users_max_time' => $row['maxusertime'],
 				'topic' => $row['topic'],
-				//'topic_html' => $row['topic'],
+				'topic_html' => $this->irc2html($row['topic']),
 				'topic_author' => $row['topicauthor'],
 				'topic_time' => strtotime($row['topictime']),
 				'kicks' => $row['kickcount'],
-				'modes' => $this->getModes($row)
+				'modes' => $this->getChannelModes($row)
 			);
 			if ($datatables) {
 				$aData["DT_RowId"] = $row['channel'];
@@ -412,29 +414,31 @@ class Denora {
 		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	function getChannel($name) {
-		$chan = $this->db->selectOne('chan', array('channel' => $name));
+	function getChannel($chan) {
+		$chan = $this->db->selectOne('chan', array('channel' => $chan));
 		if ($chan) {
-			$this->id = $chan['chanid'];
-			$this->name = $chan['channel'];
-			$this->users = $chan['currentusers'];
-			$this->users_max = $chan['maxusers'];
-			$this->users_max_time = $chan['maxusertime'];
-			$this->topic = $chan['topic'];
-			$this->topic_author = $chan['topicauthor'];
-			$this->topic_time = strtotime($chan['topictime']);
-			$this->kicks = $chan['kickcount'];
-			$this->modes = $this->getModes($chan);
+			return array(
+				'id' => $chan['chanid'],
+				'name' => $chan['channel'],
+				'users' => $chan['currentusers'],
+				'users_max' => $chan['maxusers'],
+				'users_max_time' => date('Y-m-d H:i:s', $chan['maxusertime']),
+				'topic' => $chan['topic'],
+				'topic_html' => $this->irc2html($chan['topic']),
+				'topic_author' => $chan['topicauthor'],
+				'topic_time' => $chan['topictime'],
+				'kicks' => $chan['kickcount'],
+				'modes' => $this->getChannelModes($chan)
+			);
 		}
-		return $this;
+		return null;
 	}
 
 	/* Checks if given channel can be displayed
 	 * 0 = not existing, 1 = denied, 2 = ok */
-
 	function checkChannel($chan) {
 		$noshow = array();
-		$no = explode(",", Config::getParam('hide_chans'));
+		$no = explode(",", $this->cfg->getParam('hide_chans'));
 		for ($i = 0; $i < count($no); $i++) {
 			$noshow[$i] = strtolower($no[$i]);
 		}
@@ -457,11 +461,10 @@ class Denora {
 		}
 	}
 
-	function getUsers($chan) {
+	function getChannelUsers($chan) {
 		if ($this->checkChannel($chan) < 2) {
-			return 0;
+			return null;
 		}
-
 		$array = array();
 		$i = 0;
 		$query = "SELECT ";
@@ -503,11 +506,11 @@ class Denora {
 				$array[$i]['username'] = $data['username'];
 				$array[$i]['countrycode'] = $data['countrycode'];
 				$array[$i]['country'] = $data['country'];
-				$array[$i]['bot'] = /* $this->ircd->bot_mode ? $data[$this->ircd->bot_mode] : */ 'N';
-				$array[$i]['away'] = $data['away'];
-				$array[$i]['online'] = $data['online'];
-				$array[$i]['uline'] = $data['uline'];
-				$array[$i]['helper'] = /* $this->ircd->helper_mode ? $this->ircd->helper_mode : */ 'N';
+				$array[$i]['bot'] = $data[$this->getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y' ? true : false;
+				$array[$i]['away'] = $data['away'] == 'Y' ? true : false;
+				$array[$i]['online'] = $data['online'] == 'Y' ? true : false;
+				$array[$i]['uline'] = $data['uline'] == '1' ? true : false;
+				$array[$i]['helper'] = false; //TODO: Fix! $data[$this->getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y' ? true : false;
 				$i++;
 			}
 		}
@@ -515,7 +518,7 @@ class Denora {
 		return $array;
 	}
 
-	private function getModes($chan) {
+	private function getChannelModes($chan) {
 		$modes = "";
 		$j = 97;
 		while ($j <= 122) {
@@ -546,6 +549,53 @@ class Denora {
 			$modes .= " " . $chan['mode_ul_data'];
 		}
 		return $modes;
+	}
+
+	private function irc2html($text) {
+		global $charset;
+		$lines = explode("\n", utf8_decode($text));
+		$out = '';
+
+		foreach($lines as $line) {
+			$line = nl2br(htmlentities($line,ENT_COMPAT,$charset));
+			// replace control codes
+			$line = preg_replace_callback('/[\003](\d{0,2})(,\d{1,2})?([^\003\x0F]*)(?:[\003](?!\d))?/', function($matches) {
+				$colors = array('#FFFFFF', '#000000', '#00007F', '#009300', '#FF0000', '#7F0000', '#9C009C', '#FC7F00', '#FFFF00', '#00FC00', '#009393', '#00FFFF', '#0000FC', '#FF00FF', '#7F7F7F', '#D2D2D2');
+				$options = '';
+
+				if($matches[2] != '') {
+					$bgcolor = trim(substr($matches[2],1));
+					if ((int)$bgcolor < count($colors)) {
+						$options .= 'background-color: ' . $colors[(int)$bgcolor] . '; ';
+					}
+				}
+
+				$forecolor = trim($matches[1]);
+				if($forecolor != '' && (int)$forecolor < count($colors)) {
+					$options .= 'color: ' . $colors[(int)$forecolor] . ';';
+				}
+
+				if($options != '') {
+					return '<span style="' . $options . '">' . $matches[3] . '</span>';
+				} else {
+					return $matches[3];
+				}
+			}, $line);
+			$line = preg_replace('/[\002]([^\002\x0F]*)(?:[\002])?/','<strong>$1</strong>',$line);
+			$line = preg_replace('/[\x1F]([^\x1F\x0F]*)(?:[\x1F])?/','<span style="text-decoration: underline;">$1</span>',$line);
+			$line = preg_replace('/[\x12]([^\x12\x0F]*)(?:[\x12])?/','<span style="text-decoration: line-through;">$1</span>',$line);
+			$line = preg_replace('/[\x16]([^\x16\x0F]*)(?:[\x16])?/','<span style="font-style: italic;">$1</span>',$line);
+			$line = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\S+]*(\?\S+)?)?)?)@', "<a href='$1' class='topic'>$1</a>", $line);
+			// remove dirt
+			$line = preg_replace('/[\x00-\x1F]/', '', $line);
+			$line = preg_replace('/[\x7F-\xFF]/', '', $line);
+			// append line
+			if($line != '') {
+				$out .= $line;
+			}
+		}
+
+		return $out;
 	}
 
 }

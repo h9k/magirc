@@ -62,7 +62,8 @@ div.motd {
 	height:300px;
 	overflow:scroll;
 }
-div.motd pre { font-family:"Courier New", Courier, monospace; line-height:0.5em; }
+div.motd pre { font-family:"Courier New", Courier, monospace; }
+div.topic { border:1px dashed #ccc; padding:10px; font-family:"Courier New", Courier, monospace; }
 span.val { color:#0066CC; }
 div.clear { clear:both; }
 table.details th { text-align:left; }

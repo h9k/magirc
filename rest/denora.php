@@ -24,11 +24,13 @@ $app->get('/servers/hourlystats', 'getServerStats');
 $app->get('/server/:server', 'getServer');
 $app->get('/channels', 'getChannels');
 $app->get('/channels/hourlystats', 'getChannelStats');
-$app->get('/channels/biggest/:limit', 'getChannelsBiggest');
-$app->get('/channels/top/:limit', 'getChannelsTop');
+$app->get('/channels/biggest(/:limit)', 'getChannelsBiggest');
+$app->get('/channels/top(/:limit)', 'getChannelsTop');
+$app->get('/channels/:chan', 'getChannel');
+$app->get('/channels/:chan/users', 'getChannelUsers');
 $app->get('/users', 'getUsers');
 $app->get('/users/hourlystats', 'getUserStats');
-$app->get('/users/top/:limit', 'getUsersTop');
+$app->get('/users/top(/:limit)', 'getUsersTop');
 $app->get('/operators', 'getOperators');
 $app->get('/clientstats(/:chan)', 'getClientStats');
 $app->get('/countrystats(/:chan)', 'getCountryStats');
@@ -74,16 +76,26 @@ function getChannelStats() {
     $data = $magirc->denora->getHourlyStats('channelstats');
 	echo json_encode($data);
 };
-function getChannelsBiggest($limit) {
+function getChannelsBiggest($limit = 10) {
 	global $magirc;
     $data = $magirc->denora->getChannelBiggest((int) $limit);
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
 };
-function getChannelsTop($limit) {
+function getChannelsTop($limit = 10) {
 	global $magirc;
 	$data = $magirc->denora->getChannelTop((int) $limit);
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
 };
+function getChannel($chan) {
+	global $magirc;
+	$data = $magirc->denora->getChannel($chan);
+	echo json_encode($data);
+}
+function getChannelUsers($chan) {
+	global $magirc;
+	$data = $magirc->denora->getChannelUsers($chan);
+	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
+}
 function getUsers() {
 	global $magirc;
 	$data = $magirc->denora->getUserList();
@@ -94,7 +106,7 @@ function getUserStats() {
     $data = $magirc->denora->getHourlyStats('stats');
 	echo json_encode($data);
 };
-function getUsersTop($limit) {
+function getUsersTop($limit = 10) {
 	global $magirc;
 	$data = $magirc->denora->getUsersTop((int) $limit);
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);

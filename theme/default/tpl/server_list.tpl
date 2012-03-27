@@ -75,7 +75,7 @@ $(document).ready(function() {
 				$("#srv_opers").html(data.opers);
 				$("#srv_maxopers").html(data.maxopers);
 				$("#srv_maxopertime").html(data.maxopertime);
-				$("#srv_motd").html(data.motd ? data.motd : "MOTD not available for this server");
+				$("#srv_motd").html(data.motd ? data.motd_html : "MOTD not available for this server");
 				$("#dialog-server").dialog("open");
 			} else {
 				alert("Failed");

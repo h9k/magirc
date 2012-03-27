@@ -25,8 +25,7 @@ $(document).ready(function() {
 		"aoColumns": [
 			{ "mDataProp": "nick", "fnRender": function(oObj) { return '<strong>'+oObj.aData['nick']+'</strong>'; } },
 			{ "mDataProp": "away", "fnRender": function (oObj) {
-				var out = '';
-				out += oObj.aData['away'] ? '<img src="theme/default/img/status/away.png" alt="away" title="Away" \/>' : '<img src="theme/default/img/status/online.png" alt="online" title="Online" \/>';
+				var out = oObj.aData['away'] ? '<img src="theme/default/img/status/away.png" alt="away" title="Away" \/>' : '<img src="theme/default/img/status/online.png" alt="online" title="Online" \/>';
 				if (oObj.aData['bot']) out += '<img src="theme/default/img/status/bot.png" alt="bot" title="Bot" \/>';
 				if (oObj.aData['helper']) out += '<img src="theme/default/img/status/help.png" alt="help" title="Available for help" \/>';
 				if (oObj.aData['uline']) out += '<img src="theme/default/img/status/service.png" alt="service" title="Service" \/>';
