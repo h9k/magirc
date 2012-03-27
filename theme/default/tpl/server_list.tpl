@@ -1,5 +1,3 @@
-
-
 <h1>Server list</h1>
 <table id="tbl_servers" class="display">
 <thead>

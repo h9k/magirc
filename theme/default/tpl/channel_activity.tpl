@@ -1,5 +1,3 @@
-
-
 <h1>Channel activity for {$smarty.get.chan}</h1>
 
 Not implemented.

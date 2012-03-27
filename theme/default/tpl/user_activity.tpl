@@ -1,5 +1,3 @@
-
-
 <h1>User activity for {$smarty.get.nick}</h1>
 
 Not implemented.

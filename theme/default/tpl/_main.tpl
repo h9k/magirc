@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>{block name="title"}MagIRC PROTOTYPE TESTING{/block}</title>
+<title>{block name="title"}MagIRC - {/block}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="ROBOTS" content="INDEX, FOLLOW" />
 <meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />

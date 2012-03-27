@@ -1,5 +1,3 @@
-
-
 <h1>Channel info for {$smarty.get.chan}</h1>
 
 <div class="halfleft">

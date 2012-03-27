@@ -1,5 +1,3 @@
-
-
 <h1>Global user activity</h1>
 
 Not implemented.

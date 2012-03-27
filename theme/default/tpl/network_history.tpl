@@ -1,5 +1,3 @@
-
-
 <h1>Network Usage Evolution</h1>
 <div id="chart-evolution" style="height: 350px; min-width: 700px"></div>
 

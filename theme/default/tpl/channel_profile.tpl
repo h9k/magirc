@@ -1,5 +1,6 @@
-
 {extends file="_main.tpl"}
+
+{block name="title" append}Channel: {$smarty.get.chan}{/block}
 
 {block name="content"}
 <div id="tabs">

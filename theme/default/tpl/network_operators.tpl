@@ -1,5 +1,3 @@
-
-
 <h1>Operators currently online</h1>
 <table id="tbl_operators" class="display">
 <thead>

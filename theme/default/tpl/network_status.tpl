@@ -1,4 +1,3 @@
-
 <h1>Live Network Status</h1>
 
 <table class="details" style="width:100%;">

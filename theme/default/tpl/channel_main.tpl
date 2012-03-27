@@ -1,5 +1,6 @@
-
 {extends file="_main.tpl"}
+
+{block name="title" append}Channels{/block}
 
 {block name="content"}
 <div id="tabs">

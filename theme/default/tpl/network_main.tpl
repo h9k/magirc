@@ -1,5 +1,6 @@
-
 {extends file="_main.tpl"}
+
+{block name="title" append}Network{/block}
 
 {block name="content"}
 <div id="tabs">

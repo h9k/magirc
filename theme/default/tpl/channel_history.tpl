@@ -1,5 +1,3 @@
-
-
 <h1>Channel history</h1>
 <div id="chart-history" style="height: 350px; min-width: 700px"></div>
 

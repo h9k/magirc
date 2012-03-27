@@ -1,5 +1,3 @@
-
-
 <h1>Current Country Statistics for {$smarty.get.chan}</h1>
 <div id="chart-countries" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
