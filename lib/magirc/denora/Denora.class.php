@@ -1,7 +1,5 @@
 <?php
 
-
-
 class Denora_DB extends DB {
 
 	function __construct() {
@@ -436,6 +434,7 @@ class Denora {
 
 	/* Checks if given channel can be displayed
 	 * 0 = not existing, 1 = denied, 2 = ok */
+
 	function checkChannel($chan) {
 		$noshow = array();
 		$no = explode(",", $this->cfg->getParam('hide_chans'));
@@ -517,6 +516,53 @@ class Denora {
 
 		return $array;
 	}
+	
+	function getChannelActivity($type, $datatables = false) {
+		$aaData = array();
+		$secret_mode = $this->ircd->getParam('chan_secret_mode');
+		$private_mode = $this->ircd->getParam('chan_private_mode');
+		
+		$sWhere = "cstats.letters>0";
+		if ($secret_mode) {
+			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($secret_mode));
+		}
+		if ($private_mode) {
+			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($private_mode));
+		}
+		$hide_channels = $this->cfg->getParam('hide_chans');
+		if ($hide_channels) {
+			$hide_channels = explode(",", $hide_channels);
+			foreach ($hide_channels as $key => $channel) {
+				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
+			}
+			$sWhere .= sprintf(" AND LOWER(cstats.chan) NOT IN(%s)", implode(',', $hide_channels));
+		}
+
+		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS chan AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM cstats
+			 JOIN chan ON BINARY LOWER(cstats.chan)=LOWER(chan.channel) WHERE cstats.type=:type AND %s", $sWhere);
+		if ($datatables) {
+			$sFiltering = $this->db->datatablesFiltering(array('cstats.chan', 'chan.topic'));
+			$sOrdering = $this->db->datatablesOrdering(array('chan', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
+			$sPaging = $this->db->datatablesPaging();
+			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+		}
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindParam(':type', $type, PDO::PARAM_INT);
+		$ps->execute();
+		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
+			if ($datatables) {
+				$row["DT_RowId"] = $row['name'];
+			}
+			$aaData[] = $row;
+		}
+		if ($datatables) {
+			$iTotal = $this->db->foundRows();
+			#$iFilteredTotal = $this->db->datatablesTotal('cstats,chan', $sWhere);
+			$iFilteredTotal = $iTotal; //TODO: fix me!
+			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+		}
+		return $aaData;
+	}
 
 	private function getChannelModes($chan) {
 		$modes = "";
@@ -556,41 +602,41 @@ class Denora {
 		$lines = explode("\n", utf8_decode($text));
 		$out = '';
 
-		foreach($lines as $line) {
-			$line = nl2br(htmlentities($line,ENT_COMPAT,$charset));
+		foreach ($lines as $line) {
+			$line = nl2br(htmlentities($line, ENT_COMPAT, $charset));
 			// replace control codes
 			$line = preg_replace_callback('/[\003](\d{0,2})(,\d{1,2})?([^\003\x0F]*)(?:[\003](?!\d))?/', function($matches) {
-				$colors = array('#FFFFFF', '#000000', '#00007F', '#009300', '#FF0000', '#7F0000', '#9C009C', '#FC7F00', '#FFFF00', '#00FC00', '#009393', '#00FFFF', '#0000FC', '#FF00FF', '#7F7F7F', '#D2D2D2');
-				$options = '';
+						$colors = array('#FFFFFF', '#000000', '#00007F', '#009300', '#FF0000', '#7F0000', '#9C009C', '#FC7F00', '#FFFF00', '#00FC00', '#009393', '#00FFFF', '#0000FC', '#FF00FF', '#7F7F7F', '#D2D2D2');
+						$options = '';
 
-				if($matches[2] != '') {
-					$bgcolor = trim(substr($matches[2],1));
-					if ((int)$bgcolor < count($colors)) {
-						$options .= 'background-color: ' . $colors[(int)$bgcolor] . '; ';
-					}
-				}
+						if ($matches[2] != '') {
+							$bgcolor = trim(substr($matches[2], 1));
+							if ((int) $bgcolor < count($colors)) {
+								$options .= 'background-color: ' . $colors[(int) $bgcolor] . '; ';
+							}
+						}
 
-				$forecolor = trim($matches[1]);
-				if($forecolor != '' && (int)$forecolor < count($colors)) {
-					$options .= 'color: ' . $colors[(int)$forecolor] . ';';
-				}
+						$forecolor = trim($matches[1]);
+						if ($forecolor != '' && (int) $forecolor < count($colors)) {
+							$options .= 'color: ' . $colors[(int) $forecolor] . ';';
+						}
 
-				if($options != '') {
-					return '<span style="' . $options . '">' . $matches[3] . '</span>';
-				} else {
-					return $matches[3];
-				}
-			}, $line);
-			$line = preg_replace('/[\002]([^\002\x0F]*)(?:[\002])?/','<strong>$1</strong>',$line);
-			$line = preg_replace('/[\x1F]([^\x1F\x0F]*)(?:[\x1F])?/','<span style="text-decoration: underline;">$1</span>',$line);
-			$line = preg_replace('/[\x12]([^\x12\x0F]*)(?:[\x12])?/','<span style="text-decoration: line-through;">$1</span>',$line);
-			$line = preg_replace('/[\x16]([^\x16\x0F]*)(?:[\x16])?/','<span style="font-style: italic;">$1</span>',$line);
+						if ($options != '') {
+							return '<span style="' . $options . '">' . $matches[3] . '</span>';
+						} else {
+							return $matches[3];
+						}
+					}, $line);
+			$line = preg_replace('/[\002]([^\002\x0F]*)(?:[\002])?/', '<strong>$1</strong>', $line);
+			$line = preg_replace('/[\x1F]([^\x1F\x0F]*)(?:[\x1F])?/', '<span style="text-decoration: underline;">$1</span>', $line);
+			$line = preg_replace('/[\x12]([^\x12\x0F]*)(?:[\x12])?/', '<span style="text-decoration: line-through;">$1</span>', $line);
+			$line = preg_replace('/[\x16]([^\x16\x0F]*)(?:[\x16])?/', '<span style="font-style: italic;">$1</span>', $line);
 			$line = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\S+]*(\?\S+)?)?)?)@', "<a href='$1' class='topic'>$1</a>", $line);
 			// remove dirt
 			$line = preg_replace('/[\x00-\x1F]/', '', $line);
 			$line = preg_replace('/[\x7F-\xFF]/', '', $line);
 			// append line
-			if($line != '') {
+			if ($line != '') {
 				$out .= $line;
 			}
 		}

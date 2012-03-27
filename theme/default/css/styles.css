@@ -53,6 +53,7 @@ div#loading { display:none; float:right; margin-top:25px; }
 
 div.halfleft { width:49%; float:left; }
 div.halfright { width:49%; float:right; }
+div.choser { text-align:right; margin-bottom:10px; }
 div.motd {
 	border:1px solid #ccc;
 	margin:15px 5px 0 5px;

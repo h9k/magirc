@@ -10,7 +10,7 @@ require_once('../lib/slim/Slim.php');
 // Initialization
 $magirc = new Magirc('denora');
 $app = new Slim();
-$app->contentType('application/json');
+#$app->contentType('application/json');
 $app->notFound(function () use ($app) {
     echo json_encode(array('error' => "HTTP 404 Not Found"));
 });
@@ -25,8 +25,10 @@ $app->get('/channels', 'getChannels');
 $app->get('/channels/hourlystats', 'getChannelStats');
 $app->get('/channels/biggest(/:limit)', 'getChannelsBiggest');
 $app->get('/channels/top(/:limit)', 'getChannelsTop');
+$app->get('/channels/activity/:type', 'getChannelsActivity');
 $app->get('/channels/:chan', 'getChannel');
 $app->get('/channels/:chan/users', 'getChannelUsers');
+$app->get('/channels/:chan/activity/:type', 'getChannelActivity');
 $app->get('/users', 'getUsers');
 $app->get('/users/hourlystats', 'getUserStats');
 $app->get('/users/top(/:limit)', 'getUsersTop');
@@ -94,6 +96,14 @@ function getChannelUsers($chan) {
 	global $magirc;
 	$data = $magirc->denora->getChannelUsers($chan);
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
+}
+function getChannelsActivity($type) {
+	global $magirc;
+	$data = $magirc->denora->getChannelActivity($type, @$_GET['format'] == 'datatables');
+	echo json_encode($data);
+}
+function getChannelActivity($chan, $type) {
+	
 }
 function getUsers() {
 	global $magirc;
