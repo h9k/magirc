@@ -46,7 +46,12 @@ try {
 		$magirc->tpl->display('error.tpl');
 	});
 	
-	$magirc->slim->get('/(home)', function() use($magirc) {
+	$magirc->slim->get('/(network)', function() use($magirc) {
+		$magirc->tpl->assign('section', 'network');
+		$magirc->tpl->display('network_main.tpl');
+	});
+	$magirc->slim->get('/home', function() use($magirc) {
+		$magirc->tpl->assign('section', 'home');
 		$magirc->tpl->assign('welcome', $magirc->cfg->getParam('msg_welcome'));
 		$magirc->tpl->display('home.tpl');
 	});
