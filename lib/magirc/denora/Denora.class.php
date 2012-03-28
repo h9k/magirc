@@ -327,12 +327,15 @@ class Denora {
 			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(',', $hide_channels));
 		}
 
-		$sQuery = sprintf("SELECT * FROM chan WHERE %s ORDER BY `channel` ASC", $sWhere);
+		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS * FROM chan WHERE %s", $sWhere);
 		if ($datatables) {
+			$iTotal = $this->db->datatablesTotal($sQuery);
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
 			$sOrdering = $this->db->datatablesOrdering(array('channel', 'currentusers', 'maxusers'));
 			$sPaging = $this->db->datatablesPaging();
-			$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS * FROM chan WHERE %s %s %s %s", $sWhere, $sFiltering ? "AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$sQuery .= sprintf(" %s %s %s", $sFiltering ? "AND " . $sFiltering : "", $sOrdering, $sPaging);
+		} else {
+			$sQuery .= " ORDER BY `channel` ASC";
 		}
 		$ps = $this->db->prepare($sQuery);
 		$ps->execute();
@@ -356,8 +359,7 @@ class Denora {
 			$aaData[] = $aData;
 		}
 		if ($datatables) {
-			$iTotal = $this->db->foundRows();
-			$iFilteredTotal = $this->db->datatablesTotal('chan', $sWhere);
+			$iFilteredTotal = $this->db->foundRows();
 			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
 		}
 		return $aaData;
@@ -541,6 +543,7 @@ class Denora {
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS chan AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM cstats
 			 JOIN chan ON BINARY LOWER(cstats.chan)=LOWER(chan.channel) WHERE cstats.type=:type AND %s", $sWhere);
 		if ($datatables) {
+			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('cstats.chan', 'chan.topic'));
 			$sOrdering = $this->db->datatablesOrdering(array('chan', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
 			$sPaging = $this->db->datatablesPaging();
@@ -556,9 +559,7 @@ class Denora {
 			$aaData[] = $row;
 		}
 		if ($datatables) {
-			$iTotal = $this->db->foundRows();
-			#$iFilteredTotal = $this->db->datatablesTotal('cstats,chan', $sWhere);
-			$iFilteredTotal = $iTotal; //TODO: fix me!
+			$iFilteredTotal = $this->db->foundRows();
 			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
 		}
 		return $aaData;
@@ -568,6 +569,7 @@ class Denora {
 		$aaData = array();
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats WHERE chan=:channel AND type=:type AND letters > 0 ";
 		if ($datatables) {
+			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type, ':channel' => $chan));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
 			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
 			$sPaging = $this->db->datatablesPaging();
@@ -584,9 +586,7 @@ class Denora {
 			$aaData[] = $row;
 		}
 		if ($datatables) {
-			$iTotal = $this->db->foundRows();
-			#$iFilteredTotal = $this->db->datatablesTotal('cstats,chan', $sWhere);
-			$iFilteredTotal = $iTotal; //TODO: fix me!
+			$iFilteredTotal = $this->db->foundRows();
 			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
 		}
 		return $aaData;
@@ -645,6 +645,7 @@ class Denora {
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats
 			 WHERE type=:type AND letters>0 and chan='global'";
 		if ($datatables) {
+			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
 			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
 			$sPaging = $this->db->datatablesPaging();
@@ -660,9 +661,7 @@ class Denora {
 			$aaData[] = $row;
 		}
 		if ($datatables) {
-			$iTotal = $this->db->foundRows();
-			#$iFilteredTotal = $this->db->datatablesTotal('cstats,chan', $sWhere);
-			$iFilteredTotal = $iTotal; #TODO: fix me!
+			$iFilteredTotal = $this->db->foundRows();
 			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
 		}
 		return $aaData;

@@ -200,8 +200,12 @@ class DB {
 	}
 
 	// Total data set length
-	function datatablesTotal($sFrom, $sWhere) {
-		$ps = $this->prepare("SELECT COUNT(*) FROM $sFrom WHERE $sWhere");
+	function datatablesTotal($sQuery, $aParams = array()) {
+		$sQuery = preg_replace("/SELECT .+ FROM/", "SELECT COUNT(*) FROM", $sQuery);
+		$ps = $this->prepare($sQuery);
+		foreach ($aParams as $key => $val) {
+			$ps->bindParam($key, $val);
+		}
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
