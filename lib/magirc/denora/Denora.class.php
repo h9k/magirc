@@ -638,6 +638,35 @@ class Denora {
 		}
 		return $modes;
 	}
+	
+	function getUserGlobalActivity($type, $datatables = false) {
+		$aaData = array();
+		
+		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats
+			 WHERE type=:type AND letters>0 and chan='global'";
+		if ($datatables) {
+			$sFiltering = $this->db->datatablesFiltering(array('uname'));
+			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
+			$sPaging = $this->db->datatablesPaging();
+			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+		}
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindParam(':type', $type, PDO::PARAM_INT);
+		$ps->execute();
+		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
+			if ($datatables) {
+				$row["DT_RowId"] = $row['name'];
+			}
+			$aaData[] = $row;
+		}
+		if ($datatables) {
+			$iTotal = $this->db->foundRows();
+			#$iFilteredTotal = $this->db->datatablesTotal('cstats,chan', $sWhere);
+			$iFilteredTotal = $iTotal; #TODO: fix me!
+			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+		}
+		return $aaData;
+	}
 
 	private function irc2html($text) {
 		global $charset;

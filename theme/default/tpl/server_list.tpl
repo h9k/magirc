@@ -55,7 +55,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_servers tbody tr").live("click", function() {
-		$.getJSON("rest/denora.php/server/"+this.id, function(data){
+		$.getJSON("rest/denora.php/servers/"+this.id, function(data){
 			if (data) {
 				$("#dialog-server").dialog("option", "title", data.server);
 				$("#srv_description").html(data.comment);

@@ -20,7 +20,7 @@ $app->get('/network/status', 'getNetworkStatus');
 $app->get('/network/max', 'getNetworkMax');
 $app->get('/servers', 'getServers');
 $app->get('/servers/hourlystats', 'getServerStats');
-$app->get('/server/:server', 'getServer');
+$app->get('/servers/:server', 'getServer');
 $app->get('/channels', 'getChannels');
 $app->get('/channels/hourlystats', 'getChannelStats');
 $app->get('/channels/biggest(/:limit)', 'getChannelsBiggest');
@@ -33,6 +33,7 @@ $app->get('/channels/:chan/hourly/:type', 'getChannelHourlyActivity');
 $app->get('/users', 'getUsers');
 $app->get('/users/hourlystats', 'getUserStats');
 $app->get('/users/top(/:limit)', 'getUsersTop');
+$app->get('/users/activity/:type', 'getUserGlobalActivity');
 $app->get('/operators', 'getOperators');
 $app->get('/clientstats(/:chan)', 'getClientStats');
 $app->get('/countrystats(/:chan)', 'getCountryStats');
@@ -128,6 +129,11 @@ function getUsersTop($limit = 10) {
 	$data = $magirc->denora->getUsersTop((int) $limit);
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
 };
+function getUserGlobalActivity($type) {
+	global $magirc;
+	$data = $magirc->denora->getUserGlobalActivity($type, @$_GET['format'] == 'datatables');
+	echo json_encode($data);
+}
 function getOperators() {
 	global $magirc;
 	$data = $magirc->denora->getOperatorList();
