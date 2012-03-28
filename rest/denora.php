@@ -9,34 +9,33 @@ require_once('../lib/slim/Slim.php');
 
 // Initialization
 $magirc = new Magirc('denora');
-$app = new Slim();
-#$app->contentType('application/json');
-$app->notFound(function () use ($app) {
+$magirc->slim->contentType('application/json');
+$magirc->slim->notFound(function () use ($magirc) {
     echo json_encode(array('error' => "HTTP 404 Not Found"));
 });
 
 // Routing
-$app->get('/network/status', 'getNetworkStatus');
-$app->get('/network/max', 'getNetworkMax');
-$app->get('/servers', 'getServers');
-$app->get('/servers/hourlystats', 'getServerStats');
-$app->get('/servers/:server', 'getServer');
-$app->get('/channels', 'getChannels');
-$app->get('/channels/hourlystats', 'getChannelStats');
-$app->get('/channels/biggest(/:limit)', 'getChannelsBiggest');
-$app->get('/channels/top(/:limit)', 'getChannelsTop');
-$app->get('/channels/activity/:type', 'getChannelGlobalActivity');
-$app->get('/channels/:chan', 'getChannel');
-$app->get('/channels/:chan/users', 'getChannelUsers');
-$app->get('/channels/:chan/activity/:type', 'getChannelActivity');
-$app->get('/channels/:chan/hourly/:type', 'getChannelHourlyActivity');
-$app->get('/users', 'getUsers');
-$app->get('/users/hourlystats', 'getUserStats');
-$app->get('/users/top(/:limit)', 'getUsersTop');
-$app->get('/users/activity/:type', 'getUserGlobalActivity');
-$app->get('/operators', 'getOperators');
-$app->get('/clientstats(/:chan)', 'getClientStats');
-$app->get('/countrystats(/:chan)', 'getCountryStats');
+$magirc->slim->get('/network/status', 'getNetworkStatus');
+$magirc->slim->get('/network/max', 'getNetworkMax');
+$magirc->slim->get('/servers', 'getServers');
+$magirc->slim->get('/servers/hourlystats', 'getServerStats');
+$magirc->slim->get('/servers/:server', 'getServer');
+$magirc->slim->get('/channels', 'getChannels');
+$magirc->slim->get('/channels/hourlystats', 'getChannelStats');
+$magirc->slim->get('/channels/biggest(/:limit)', 'getChannelsBiggest');
+$magirc->slim->get('/channels/top(/:limit)', 'getChannelsTop');
+$magirc->slim->get('/channels/activity/:type', 'getChannelGlobalActivity');
+$magirc->slim->get('/channels/:chan', 'getChannel');
+$magirc->slim->get('/channels/:chan/users', 'getChannelUsers');
+$magirc->slim->get('/channels/:chan/activity/:type', 'getChannelActivity');
+$magirc->slim->get('/channels/:chan/hourly/:type', 'getChannelHourlyActivity');
+$magirc->slim->get('/users', 'getUsers');
+$magirc->slim->get('/users/hourlystats', 'getUserStats');
+$magirc->slim->get('/users/top(/:limit)', 'getUsersTop');
+$magirc->slim->get('/users/activity/:type', 'getUserGlobalActivity');
+$magirc->slim->get('/operators', 'getOperators');
+$magirc->slim->get('/clientstats(/:chan)', 'getClientStats');
+$magirc->slim->get('/countrystats(/:chan)', 'getCountryStats');
 
 // Functions
 function getNetworkStatus() {
@@ -156,8 +155,6 @@ function getCountryStats($chan = 'global') {
 };
 
 // Go! :)
-$app->run();
-
-unset($magirc, $app);
+$magirc->slim->run();
 
 ?>
