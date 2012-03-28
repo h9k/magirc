@@ -680,12 +680,53 @@ class Denora {
 	}
 	
 	function getUser($mode, $user) {
-		if ($mode == "stats") {
-			
-		} else {
-			
-		}
+		$uname = ($mode == "stats") ? $user : $this->getUnameFromNick($user);
+		$aliases = $this->getUnameAliases($uname);
+		$nick = ($mode == "stats") ? $aliases[0] : $user;
+		array_shift($aliases);
+		
+		$ps = $this->db->prepare("SELECT realname, hostname, hiddenhostname, username, swhois,
+			account, connecttime, server, away, awaymsg, ctcpversion, online, lastquit,
+			lastquitmsg, countrycode, country FROM user WHERE nick = :nickname");
+		$ps->bindParam(':nickname', $nick, PDO::PARAM_INT);
+		$ps->execute();
+		$data = $ps->fetch(PDO::FETCH_OBJ);
+		
+		$user = array(
+			'nick' => $nick,
+			'uname' => $uname,
+			'aliases' => $aliases,
+			'username' => $data->username,
+			'realname' => $data->realname,
+			'hostname' => $this->ircd->getParam('host_cloaking') ? $data->hiddenhostname : $data->hostname,
+			'connected_time' => $data->connecttime,
+			'lastquit_time' => $data->lastquit,
+			'lastquit_msg' => $data->lastquitmsg,
+			'server' => $data->server,
+			'client' => $data->ctcpversion,
+			'country' => $data->country,
+			'country_code' => $data->countrycode,
+			'online' => $data->online == 'Y',
+			'away' => $data->away == 'Y',
+			'away_msg' => $data->awaymsg
+		);
 		return $user;
+	}
+	
+	private function getUnameFromNick($nick) {
+		$ps = $this->db->prepare("SELECT uname FROM aliases WHERE nick = :nickname");
+		$ps->bindParam(':nickname', $nick, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN);
+	}
+	
+	private function getUnameAliases($uname) {
+		$ps = $this->db->prepare("SELECT a.nick FROM aliases a LEFT JOIN user u ON a.nick = u.nick
+			WHERE a.uname = :uname ORDER BY CASE WHEN u.online IS NULL THEN 1 ELSE 0 END, 
+			u.online DESC, u.lastquit DESC, u.connecttime ASC");
+		$ps->bindParam(':uname', $uname, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_COLUMN);
 	}
 
 	private function irc2html($text) {

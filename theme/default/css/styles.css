@@ -65,4 +65,4 @@ div.motd pre { font-family:"Courier New", Courier, monospace; }
 div.topic { border:1px dashed #ccc; padding:10px; font-family:"Courier New", Courier, monospace; }
 span.val { color:#0066CC; }
 div.clear { clear:both; }
-table.details th { text-align:left; }
+table.details th { text-align:left; vertical-align:top; }
