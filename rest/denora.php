@@ -90,11 +90,19 @@ function getChannelsTop($limit = 10) {
 };
 function getChannel($chan) {
 	global $magirc;
+	switch ($magirc->denora->checkChannel($chan)) {
+		case 0: $magirc->slim->notFound();
+		case 1: $magirc->slim->halt(403, json_encode(array('error' => "HTTP 403 Access Denied")));
+	}
 	$data = $magirc->denora->getChannel($chan);
 	echo json_encode($data);
 }
 function getChannelUsers($chan) {
 	global $magirc;
+	switch ($magirc->denora->checkChannel($chan)) {
+		case 0: $magirc->slim->notFound();
+		case 1: $magirc->slim->halt(403, json_encode(array('error' => "HTTP 403 Access Denied")));
+	}
 	$data = $magirc->denora->getChannelUsers($chan);
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
 }
@@ -105,11 +113,19 @@ function getChannelGlobalActivity($type) {
 }
 function getChannelActivity($chan, $type) {
 	global $magirc;
+	switch ($magirc->denora->checkChannel($chan)) {
+		case 0: $magirc->slim->notFound();
+		case 1: $magirc->slim->halt(403, json_encode(array('error' => "HTTP 403 Access Denied")));
+	}
 	$data = $magirc->denora->getChannelActivity($chan, $type, @$_GET['format'] == 'datatables');
 	echo json_encode($data);
 }
 function getChannelHourlyActivity($chan, $type) {
 	global $magirc;
+	switch ($magirc->denora->checkChannel($chan)) {
+		case 0: $magirc->slim->notFound();
+		case 1: $magirc->slim->halt(403, json_encode(array('error' => "HTTP 403 Access Denied")));
+	}
 	$data = $magirc->denora->getChannelHourlyActivity($chan, $type);
 	echo json_encode($data);
 }
@@ -145,11 +161,23 @@ function getOperators() {
 };
 function getClientStats($chan = 'global') {
 	global $magirc;
+	if ($chan != 'global') {
+		switch ($magirc->denora->checkChannel($chan)) {
+			case 0: $magirc->slim->notFound();
+			case 1: $magirc->slim->halt(403, json_encode(array('error' => "HTTP 403 Access Denied")));
+		}
+	}
 	$data = $magirc->denora->getClientStats($chan);
 	echo json_encode($data);
 };
 function getCountryStats($chan = 'global') {
 	global $magirc;
+	if ($chan != 'global') {
+		switch ($magirc->denora->checkChannel($chan)) {
+			case 0: $magirc->slim->notFound();
+			case 1: $magirc->slim->halt(403, json_encode(array('error' => "HTTP 403 Access Denied")));
+		}
+	}
 	$data = $magirc->denora->getCountryStats($chan);
 	echo json_encode($data);
 };

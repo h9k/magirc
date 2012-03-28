@@ -54,6 +54,12 @@ try {
 		$tpl_file = basename($section) . '_' . basename($action) . '.tpl';
 		$tpl_path = 'theme/' . $magirc->cfg->getParam("theme") . '/tpl/' . $tpl_file;
 		if (file_exists($tpl_path)) {
+			if ($section == 'channel') {
+				switch ($magirc->denora->checkChannel($target)) {
+					case 0: $magirc->slim->notFound();
+					case 1: $magirc->slim->halt(403, 'Access denied');
+				}
+			}
 			$magirc->tpl->assign('section', $section);
 			$magirc->tpl->assign('target', $target);
 			$magirc->tpl->display($tpl_file);
