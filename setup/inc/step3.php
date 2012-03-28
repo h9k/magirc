@@ -1,8 +1,5 @@
 <?php
 
-
-$config['debug_mode'] = 0;
-$config['show_exec_time'] = 0;
 $error = false;
 $username = isset($_POST['username']) ? htmlspecialchars($_POST['username']) : NULL;
 $password = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : NULL;

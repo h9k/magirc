@@ -10,6 +10,7 @@ class Setup {
 		$this->tpl->template_dir = 'tpl';
 		$this->tpl->compile_dir = 'tmp';
 		$this->tpl->error_reporting = E_ALL & ~E_NOTICE;
+		$this->tpl->debugging = true;
 		$this->db = new DB;
 		// We skip db connection in the first step for check purposes
 		if (@$_GET['step'] > 1) {
@@ -29,7 +30,7 @@ class Setup {
 
 		$status = array('error' => false);
 
-		if (version_compare("5.2.0", phpversion(), "<") == 1) {
+		if (version_compare("5.3.0", phpversion(), "<") == 1) {
 			$status['php'] = true;
 		} else {
 			$status['php'] = false;
@@ -40,13 +41,6 @@ class Setup {
 			$status['pdo'] = true;
 		} else {
 			$status['pdo'] = false;
-			$status['error'] = true;
-		}
-
-		if (extension_loaded('gd') == 1) {
-			$status['gd'] = true;
-		} else {
-			$status['gd'] = false;
 			$status['error'] = true;
 		}
 
@@ -76,6 +70,13 @@ class Setup {
 			$status['cache'] = true;
 		} else {
 			$status['cache'] = false;
+			$status['error'] = true;
+		}
+		
+		if (is_writable('../admin/tmp')) {
+			$status['admin'] = true;
+		} else {
+			$status['admin'] = false;
 			$status['error'] = true;
 		}
 
@@ -125,7 +126,6 @@ class Setup {
 	function configDump() {
 		$file_content = file('sql/schema.sql');
 		$query = "";
-		$error = 0;
 		foreach($file_content as $sql_line) {
 			$tsl = trim($sql_line);
 			if (($sql_line != "") && (substr($tsl, 0, 2) != "--") && (substr($tsl, 0, 1) != "#")) {
@@ -134,13 +134,18 @@ class Setup {
 					$query = str_replace(";", "", "$query");
 					$result = $this->db->query($query);
 					if (!$result) {
-						$error = 1;
+						return false;
 					}
 					$query = "";
 				}
 			}
 		}
-		return $error;
+		return true;
+	}
+	
+	function checkAdmins() {
+		$this->db->query("SELECT id FROM magirc_admin", SQL_INIT);
+		return $this->db->record ? true : false;
 	}
 }
 

@@ -1,5 +1,5 @@
-
 {extends file="components/main.tpl"}
+
 {block name="content"}
 <div class="page_title">Welcome to the MagIRC Setup!</div>
 <p>Please follow the on-screen instructions to install MagIRC</p>
@@ -13,9 +13,6 @@
 <pre>Checking PHP PDO mysql driver... {if $status.pdo}<span style="color:green">Present</span></pre>
 {else} <span style="color:red">Missing!</span><br />This component is required to run MagIRC. Please contact your Administrator.</pre>{/if}
 
-<pre>Checking PHP GD extension... {if $status.gd}<span style="color:green">Present</span></pre>
-{else} <span style="color:red">Missing!</span><br />This component is required to run MagIRC. Please contact your Administrator.</pre>{/if}
-
 <pre>Checking SQL configuration files...{if $status.writable} <span style="color:green;">Writable</span></pre>
 {else} <span style="color:orange;">Not writable</span><br />Please copy the conf/*.cfg.dist.php files to conf/*.cfg.php and chmod them to 0666.<br />Alternatively, chmod the conf/ directory to 0777.<br />If it still doesn't work don't worry, you can continue anyway.</pre>{/if}
 
@@ -23,6 +20,9 @@
 {else} <span style="color:red;">Not writable</span><br />Please chmod the directory to 0777</pre>{/if}
 
 <pre>Checking if <em>tmp/cache</em> is writable... {if $status.cache} <span style="color:green;">Writable</span></pre>
+{else} <span style="color:red;">Not writable</span><br />Please chmod the directory to 0777</pre>{/if}
+	
+<pre>Checking if <em>admin/tmp</em> is writable... {if $status.admin} <span style="color:green;">Writable</span></pre>
 {else} <span style="color:red;">Not writable</span><br />Please chmod the directory to 0777</pre>{/if}
 
 {if !$status.error}
