@@ -30,6 +30,8 @@ try {
 	define('BASE_URL', sprintf("%s://%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], $_SERVER['SCRIPT_NAME']));
 	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
 	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
+	$cfg = array('net_name' => $magirc->cfg->getParam('net_name'), 'net_url' => $magirc->cfg->getParam('net_url'));
+	$magirc->tpl->assign('cfg', $cfg);
 
 	if ($magirc->cfg->getParam('debug_mode') < 1) {
 		ini_set('display_errors','off');
