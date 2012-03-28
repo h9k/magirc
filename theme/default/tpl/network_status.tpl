@@ -211,7 +211,7 @@ $(function() {
 	});
 	$("#tbl_top10users tbody tr").live("click", function(event) {
 		var user = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '/user/' + escape(user) + '/profile';
+		window.location = url_base + '/user/stats:' + escape(user) + '/profile';
 	});
 });
 -->

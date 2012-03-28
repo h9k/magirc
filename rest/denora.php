@@ -33,6 +33,7 @@ $magirc->slim->get('/users', 'getUsers');
 $magirc->slim->get('/users/hourlystats', 'getUserStats');
 $magirc->slim->get('/users/top(/:limit)', 'getUsersTop');
 $magirc->slim->get('/users/activity/:type', 'getUserGlobalActivity');
+$magirc->slim->get('/users/:mode/:user', 'getUser');
 $magirc->slim->get('/operators', 'getOperators');
 $magirc->slim->get('/clientstats(/:chan)', 'getClientStats');
 $magirc->slim->get('/countrystats(/:chan)', 'getCountryStats');
@@ -147,6 +148,11 @@ function getUsersTop($limit = 10) {
 function getUserGlobalActivity($type) {
 	global $magirc;
 	$data = $magirc->denora->getUserGlobalActivity($type, @$_GET['format'] == 'datatables');
+	echo json_encode($data);
+}
+function getUser($mode, $user) {
+	global $magirc;
+	$data = $magirc->denora->getUser($mode, $user);
 	echo json_encode($data);
 }
 function getOperators() {

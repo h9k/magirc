@@ -41,7 +41,7 @@ $(document).ready(function() {
 	});
 	$("#tbl_activity tbody tr").live("click", function(event) {
 		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '/user/' + escape(name) + '/profile#ui-tabs-2';
+		window.location = url_base + '/user/stats:' + escape(name) + '/profile#ui-tabs-2';
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {

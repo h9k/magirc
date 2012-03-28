@@ -666,6 +666,27 @@ class Denora {
 		}
 		return $aaData;
 	}
+	
+	function checkUser($user, $mode) {
+		if ($mode == "stats") {
+			$query = "SELECT uname FROM ustats WHERE LOWER(uname) = LOWER(:user)";
+		} else {
+			$query = "SELECT nick FROM user WHERE LOWER(nick) = LOWER(:user)";
+		}
+		$stmt = $this->db->prepare($query);
+		$stmt->bindParam(':user', $user, SQL_STR);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_COLUMN) ? true : false;
+	}
+	
+	function getUser($mode, $user) {
+		if ($mode == "stats") {
+			
+		} else {
+			
+		}
+		return $user;
+	}
 
 	private function irc2html($text) {
 		global $charset;

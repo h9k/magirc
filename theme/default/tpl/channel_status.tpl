@@ -57,6 +57,10 @@ $(document).ready(function() {
 			{ "mDataProp": "modes" }
 		]
 	});
+	$("#tbl_users tbody tr").live("click", function(event) {
+		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
+		window.location = url_base + '/user/nick:' + escape(name) + '/profile';
+	});
 });
 -->
 </script>

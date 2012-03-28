@@ -61,14 +61,27 @@ try {
 		$tpl_file = basename($section) . '_' . basename($action) . '.tpl';
 		$tpl_path = 'theme/' . $magirc->cfg->getParam("theme") . '/tpl/' . $tpl_file;
 		if (file_exists($tpl_path)) {
+			$mode = null;
 			if ($section == 'channel') {
 				switch ($magirc->denora->checkChannel($target)) {
 					case 0: $magirc->slim->notFound();
 					case 1: $magirc->slim->halt(403, 'Access denied');
 				}
+			} elseif ($section == 'user') {
+				$array = explode(':', $target);
+				if (count($array) == 2) {
+					$mode = $array[0];
+					$target = $array[1];
+					if (!$magirc->denora->checkUser($target, $mode)) {
+						$magirc->slim->notFound();
+					}
+				} else {
+					$magirc->slim->notFound();
+				}
 			}
 			$magirc->tpl->assign('section', $section);
 			$magirc->tpl->assign('target', $target);
+			$magirc->tpl->assign('mode', $mode);
 			$magirc->tpl->display($tpl_file);
 		} else {
 			$magirc->slim->notFound();
