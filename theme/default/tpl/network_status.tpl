@@ -189,7 +189,7 @@ $(function() {
 	});
 	$("#tbl_biggestchans tbody tr").live("click", function(event) {
 		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '?section=channel&action=profile&chan=' + escape(chan);
+		window.location = url_base + '/channel/' + escape(chan) + '/profile';
 	});
 	oTable2 = $("#tbl_top10chans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
@@ -200,7 +200,7 @@ $(function() {
 	});
 	$("#tbl_top10chans tbody tr").live("click", function(event) {
 		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '?section=channel&action=profile&chan=' + escape(chan) + '#ui-tabs-4';
+		window.location = url_base + '/channel/' + escape(chan) + '/profile#ui-tabs-4';
 	});
 	oTable3 = $("#tbl_top10users").dataTable({
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
@@ -211,7 +211,7 @@ $(function() {
 	});
 	$("#tbl_top10users tbody tr").live("click", function(event) {
 		var user = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '?section=user&action=profile&nick=' + escape(user);
+		window.location = url_base + '/user/' + escape(user) + '/profile';
 	});
 });
 -->

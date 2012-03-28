@@ -28,7 +28,7 @@ $(document).ready(function() {
 	});
 	$("#tbl_channels tbody tr").live("click", function(event) {
 		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '?section=channel&action=profile&chan=' + escape(chan);
+		window.location = url_base + '/channel/' + escape(chan) + '/profile';
 	});
 });
 -->

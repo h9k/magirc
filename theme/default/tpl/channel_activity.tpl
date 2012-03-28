@@ -1,4 +1,4 @@
-<h1>Channel activity for {$smarty.get.chan}</h1>
+<h1>Channel activity for {$target}</h1>
 
 <form>
 	<div id="radio" class="choser">
@@ -32,7 +32,7 @@ $(document).ready(function() {
 		series: [{ name: 'Lines', data: [] }]
 	});
 	function updateChart() {
-		$.getJSON('rest/denora.php/channels/{$smarty.get.chan|escape:'url'}/hourly/'+type, function(result) {
+		$.getJSON('rest/denora.php/channels/{$target|escape:'url'}/hourly/'+type, function(result) {
 			chart_activity.series[0].setData(result);
 		});
 	}
@@ -40,7 +40,7 @@ $(document).ready(function() {
 		"bServerSide": true,
 		"iDisplayLength": 10,
 		"aaSorting": [[ 3, "desc" ]],
-		"sAjaxSource": "rest/denora.php/channels/{$smarty.get.chan|escape:'url'}/activity/"+type+"?format=datatables",
+		"sAjaxSource": "rest/denora.php/channels/{$target|escape:'url'}/activity/"+type+"?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "name" },
 			{ "mDataProp": "letters" },
@@ -60,7 +60,7 @@ $(document).ready(function() {
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').index() / 2;
-		oTable.fnSettings().sAjaxSource = "rest/denora.php/channels/{$smarty.get.chan|escape:'url'}/activity/"+type+"?format=datatables",
+		oTable.fnSettings().sAjaxSource = "rest/denora.php/channels/{$target|escape:'url'}/activity/"+type+"?format=datatables",
 		oTable.fnDraw();
 		updateChart();
 	});

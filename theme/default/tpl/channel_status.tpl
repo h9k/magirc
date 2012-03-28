@@ -1,4 +1,4 @@
-<h1>Channel info for {$smarty.get.chan}</h1>
+<h1>Channel info for {$target}</h1>
 
 <div class="halfleft">
 
@@ -31,7 +31,7 @@
 <script type="text/javascript">
 <!--
 $(document).ready(function() {
-	$.getJSON('rest/denora.php/channels/{$smarty.get.chan|escape:'url'}', function(result) {
+	$.getJSON('rest/denora.php/channels/{$target|escape:'url'}', function(result) {
 		$("#chan_topic").html(result.topic_html);
 		$("#chan_topic_author").html(result.topic_author);
 		$("#chan_topic_time").html(result.topic_time);
@@ -44,7 +44,7 @@ $(document).ready(function() {
 	$('#tbl_users').dataTable({
 		"iDisplayLength": 10,
 		"aaSorting": [[ 0, "asc" ]],
-		"sAjaxSource": 'rest/denora.php/channels/{$smarty.get.chan|escape:'url'}/users?format=datatables',
+		"sAjaxSource": 'rest/denora.php/channels/{$target|escape:'url'}/users?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "nick" },
 			{ "mDataProp": "away", "fnRender": function (oObj) {

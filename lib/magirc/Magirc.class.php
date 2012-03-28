@@ -1,6 +1,4 @@
 <?php
-
-
 // Root path
 define('PATH_ROOT', __DIR__ . '/../../');
 
@@ -29,11 +27,18 @@ class Magirc {
 	public $db;
 	public $cfg;
 	public $tpl;
-	#public $anope;
+	public $slim;
 	public $denora;
 
 	function __construct($api_mode = "web") {
 		if ($api_mode == "web") {
+			// Setup the Slim framework
+			$this->slim = new Slim();
+			/*$this->slim = new Slim(array("view" => new SmartyView()));
+			SmartyView::$smartyDirectory = 'lib/smarty';
+			SmartyView::$smartyTemplatesDirectory = 'theme/default/tpl';
+			SmartyView::$smartyCompileDirectory = 'tmp/compiled';
+			SmartyView::$smartyCacheDirectory = 'tmp/cache';*/
 			// Setup the template engine
 			$this->tpl = new Smarty;
 			$this->tpl->template_dir = 'theme/default/tpl';
@@ -41,6 +46,8 @@ class Magirc {
 			$this->tpl->compile_dir = 'tmp/compiled';
 			$this->tpl->cache_dir = 'tmp/cache';
 			$this->tpl->addPluginsDir('lib/smarty-plugins/');
+		} else {
+			$this->slim = new Slim();
 		}
 
 		// Setup the database
@@ -89,59 +96,6 @@ class Magirc {
 		return true;
 	}
 
-	// Gets and returns the given url parameter depending on what it is
-	function getUrlParameter($param) {
-		switch ($param) {
-			case 'section':
-				$param = isset($_GET['section']) ? $_GET['section'] : 'home';
-				break;
-			case 'action':
-				$param = isset($_GET['action']) ? $_GET['action'] : 'main';
-				break;
-			default:
-				$param = isset($_GET[$param]) ? $_GET[$param] : '';
-		}
-		return stripslashes(htmlspecialchars(basename($param)));
-	}
-
-	// Load the appropriate code based on the section parameter
-	function display() {
-		$section = $this->getUrlParameter('section');
-		$action = $this->getUrlParameter('action');
-		$inc_file = 'inc/' . $section . '.inc.php';
-		$tpl_file = 'theme/' . $this->cfg->getParam("theme") . '/tpl/' . $section . '_' . $action . '.tpl';
-
-		if (file_exists($inc_file)) {
-			require_once($inc_file);
-		} elseif (file_exists($tpl_file)) {
-			$this->tpl->display($tpl_file);
-		} else {
-			$content = $this->getPage($section);
-			if ($content) {
-				$this->tpl->assign('content', $content);
-				$this->tpl->display('generic.tpl');
-			} else {
-				$this->displayError("Unable to handle this request");
-				exit;
-			}
-		}
-	}
-
-	// Displays an error page with the given message
-	function displayError($err_msg, $api_mode = "web") {
-		if ($api_mode == "web") {
-			$this->tpl->assign('err_msg', $err_msg);
-			$this->tpl->assign('server', $_SERVER);
-			$this->tpl->display('error.tpl');
-		} else {
-			die($err_msg);
-		}
-	}
-
-	//TODO: implement :)
-	function getPage($page) {
-		return NULL;
-	}
 }
 
 ?>

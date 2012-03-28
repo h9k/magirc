@@ -41,7 +41,7 @@ $(document).ready(function() {
 	});
 	$("#tbl_activity tbody tr").live("click", function(event) {
 		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '?section=channel&action=profile&chan=' + escape(name) + '#ui-tabs-4';
+		window.location = url_base + '/channel/' + escape(name) + '/profile#ui-tabs-4';
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {

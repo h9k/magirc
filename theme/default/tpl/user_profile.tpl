@@ -1,12 +1,12 @@
 {extends file="_main.tpl"}
 
-{block name="title" append}User: {$smarty.get.nick}{/block}
+{block name="title" append}User: {$target}{/block}
 
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="?section=user&amp;action=info&amp;nick={$smarty.get.nick|escape:'url'}">User info</a></li>
-		<li><a href="?section=user&amp;action=activity&amp;nick={$smarty.get.nick|escape:'url'}">User activity</a></li>
+		<li><a href="index.php/user/{$target|escape:'url'}/info">User info</a></li>
+		<li><a href="index.php/user/{$target|escape:'url'}/activity">User activity</a></li>
 	</ul>
 </div>
 {/block}

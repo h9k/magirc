@@ -5,11 +5,11 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="?section=network&amp;action=status">Status</a></li>
-		<li><a href="?section=network&amp;action=countries">Countries</a></li>
-		<li><a href="?section=network&amp;action=clients">Clients</a></li>
-		<li><a href="?section=network&amp;action=operators">Operators</a></li>
-		<li><a href="?section=network&amp;action=history">History</a></li>
+		<li><a href="index.php/network/status">Status</a></li>
+		<li><a href="index.php/network/countries">Countries</a></li>
+		<li><a href="index.php/network/clients">Clients</a></li>
+		<li><a href="index.php/network/operators">Operators</a></li>
+		<li><a href="index.php/network/history">History</a></li>
 	</ul>
 </div>
 {/block}

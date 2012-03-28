@@ -1,4 +1,4 @@
-<h1>User info for {$smarty.get.nick}</h1>
+<h1>User info for {$target}</h1>
 
 Not implemented.
 

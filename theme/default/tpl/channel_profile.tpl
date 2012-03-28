@@ -1,14 +1,14 @@
 {extends file="_main.tpl"}
 
-{block name="title" append}Channel: {$smarty.get.chan}{/block}
+{block name="title" append}Channel: {$target}{/block}
 
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="?section=channel&amp;action=status&amp;chan={$smarty.get.chan|escape:'url'}">Status</a></li>
-		<li><a href="?section=channel&amp;action=countries&amp;chan={$smarty.get.chan|escape:'url'}">Countries</a></li>
-		<li><a href="?section=channel&amp;action=clients&amp;chan={$smarty.get.chan|escape:'url'}">Clients</a></li>
-		<li><a href="?section=channel&amp;action=activity&amp;chan={$smarty.get.chan|escape:'url'}">Activity</a></li>
+		<li><a href="index.php/channel/{$target|escape:'url'}/status">Status</a></li>
+		<li><a href="index.php/channel/{$target|escape:'url'}/countries">Countries</a></li>
+		<li><a href="index.php/channel/{$target|escape:'url'}/clients">Clients</a></li>
+		<li><a href="index.php/channel/{$target|escape:'url'}/activity">Activity</a></li>
 	</ul>
 </div>
 {/block}

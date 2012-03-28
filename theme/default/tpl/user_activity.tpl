@@ -1,4 +1,4 @@
-<h1>User activity for {$smarty.get.nick}</h1>
+<h1>User activity for {$target}</h1>
 
 Not implemented.
 

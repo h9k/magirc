@@ -1,10 +1,10 @@
-<h1>Current Client Statistics for {$smarty.get.chan}</h1>
+<h1>Current Client Statistics for {$target}</h1>
 <div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <script type="text/javascript">
 <!--
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/clientstats/{$smarty.get.chan|escape:'url'}', function(data) {
+    $.getJSON('rest/denora.php/clientstats/{$target|escape:'url'}', function(data) {
         new Highcharts.Chart({
 			chart: { renderTo: 'chart-clients' },
 			tooltip: {
