@@ -467,9 +467,9 @@ class Denora {
 		$array = array();
 		$i = 0;
 		$query = "SELECT ";
-		/* if ($this->ircd->helper_mode) {
-		  $query .= sprintf("`user`.`%s` AS 'helper', ", $this->ircd->helper_mode);
-		  } */
+		if ($this->ircd->getParam('helper_mode')) {
+			$query .= sprintf("`user`.`%s` AS 'helper', ", $this->getSqlMode($this->ircd->getParam('helper_mode')));
+		}
 		$query .= "`user`.*, `ison`.*,`server`.`uline`
 		FROM `ison`,`chan`,`user`,`server`
 		WHERE LOWER(`chan`.`channel`) = LOWER(:channel)
@@ -509,7 +509,7 @@ class Denora {
 				$array[$i]['away'] = $data['away'] == 'Y' ? true : false;
 				$array[$i]['online'] = $data['online'] == 'Y' ? true : false;
 				$array[$i]['uline'] = $data['uline'] == '1' ? true : false;
-				$array[$i]['helper'] = false; //TODO: Fix! $data[$this->getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y' ? true : false;
+				$array[$i]['helper'] = $data['helper'] == 'Y' ? true : false;
 				$i++;
 			}
 		}
