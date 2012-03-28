@@ -10,7 +10,6 @@ class Setup {
 		$this->tpl->template_dir = 'tpl';
 		$this->tpl->compile_dir = 'tmp';
 		$this->tpl->error_reporting = E_ALL & ~E_NOTICE;
-		$this->tpl->debugging = true;
 		$this->db = new DB;
 		// We skip db connection in the first step for check purposes
 		if (@$_GET['step'] > 1) {
