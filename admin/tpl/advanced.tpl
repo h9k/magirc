@@ -21,14 +21,6 @@
         <option value="2"{if $config.debug_mode eq '2'} selected="selected"{/if}>Verbose debugging</option>
       </select></td>
     </tr>
-    <tr>
-      <td align="right">Show script execution time and number of performed SQL queries</td>
-      <td align="left"><input name="show_exec_time" type="checkbox" id="show_exec_time" tabindex="2"{if $config.show_exec_time} checked="checked" {/if}/></td>
-    </tr>
-    <tr>
-      <td align="right">Show links to XHTML and CSS validators</td>
-      <td align="left"><input name="show_validators" type="checkbox" id="show_validators" tabindex="3"{if $config.show_validators} checked="checked" {/if}/></td>
-    </tr>
   </table>
 </form>
 
