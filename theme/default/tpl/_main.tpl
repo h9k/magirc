@@ -130,7 +130,7 @@ $(document).ready(function() {
 	<a href="./"><img src="theme/default/img/logo.png" alt="" id="logo" /></a>
 	<div id="menu">
 		<ul>
-			<li><a href="index.php/home"{if $section eq 'home'} class="active"{/if}><span>&nbsp;Home</span></a></li>
+			{*<li><a href="index.php/home"{if $section eq 'home'} class="active"{/if}><span>&nbsp;Home</span></a></li>*}
 			<li><a href="index.php/network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>
 			<li><a href="index.php/server"{if $section eq 'server'} class="active"{/if}><span>&nbsp;Servers</span></a></li>
 			<li><a href="index.php/channel"{if $section eq 'channel'} class="active"{/if}><span>&nbsp;Channels</span></a></li>
