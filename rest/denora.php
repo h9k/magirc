@@ -1,4 +1,14 @@
 <?php
+/**
+ * MagIRC - Let the magirc begin!
+ * RESTful API
+ *
+ * @author      Sebastian Vassiliou <hal9000@denorastats.org>
+ * @copyright   2012 Sebastian Vassiliou
+ * @link        http://www.magirc.org/
+ * @license     GNU GPL Version 3, see doc/LICENSE
+ * @version     0.7.0
+ */
 
 include_once('../lib/magirc/version.inc.php');
 require_once('../lib/magirc/DB.class.php');

@@ -1,0 +1,71 @@
+html {
+	background:black url("../img/bg.jpg") no-repeat center top fixed;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	background-size:cover;
+}
+body { margin:0; padding:0; font-family:'Share', cursive; font-size:13px; }
+
+img,td,th{border:0}
+img#logo{padding:10px 25px 0px 5px;float:left;}
+h1,h2,h3,h4,h5,h6{font-family:'Share', cursive;color:#333;}
+
+div#header { padding:0 10px; margin:0px auto 5px auto; width:880px; height:75px; }
+div#menu { float:left; margin:0; padding:0; }
+div#menu ul { list-style:none; margin:0; padding:0; }
+div#menu li { display:inline; margin:0; padding:0; }
+div#menu a {
+	float:left;
+	height:30px;
+	width:150px;
+	padding-top:45px;
+	text-decoration:none;
+	color:white;
+	font-family:'Share', cursive;
+	font-size:18px;
+	display:block;
+}
+div#menu a:hover { color:orange; background-color:rgba(255,255,255,0.2); }
+div#menu a.active { color:orange; }
+div#main {
+	width:900px;
+	margin:5px auto;
+	padding:0;
+	background-color:white;
+	border-radius:6px;
+	min-height:500px;
+}
+div#main a, div#main a:visited { color:#000099; }
+div#main a:hover, div#main a:active { color:#000033; text-decoration:none; }
+div#content { padding:5px 10px; }
+div#footer {
+	text-align:right;
+	font-size:x-small;
+	color:#FCFCFC;
+	padding:0px 5px 10px 5px;
+	margin:0px auto 10px auto;
+	width:890px;
+}
+div#footer a, div#footer a:visited { color:#FCFCFC; }
+div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:none; }
+div#loading { display:none; float:right; margin-top:25px; }
+
+div.halfleft { width:49%; float:left; }
+div.halfright { width:49%; float:right; }
+div.choser { text-align:right; margin-bottom:10px; }
+div.motd {
+	border:1px solid #ccc;
+	margin:15px 5px 0 5px;
+	padding:5px;
+	height:300px;
+	overflow:scroll;
+}
+div.motd pre { font-family:"Courier New", Courier, monospace; }
+div.topic { border:1px dashed #ccc; padding:10px; font-family:"Courier New", Courier, monospace; }
+span.val { color:#0066CC; }
+div.clear { clear:both; }
+table.details th { text-align:left; vertical-align:top; }
+table.form { margin:auto; }
+table.form th { text-align:left; }
+table.form input { background-color:#DDDDDD; padding:3px; border:0; }

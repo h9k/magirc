@@ -1,31 +1,54 @@
+{extends "_main.tpl"}
 
-{extends file="components/main.tpl"}
-{block name="content"}
+{block name="title" append}Login{/block}
 
-<h2>Login to MagIRC</h2>
+{block name="body"}
 
-{if $message}<div class="warning">{$message}</div>{/if}
-
-<form id="login" method="post" action="?page=login">
-
-  <table width="350" border="0" cellpadding="2" cellspacing="0">
-    <tr>
-      <td style="width:100px;"><label>Username</label></td>
-      <td style="width:150px;"><input type="text" name="username" id="username" tabindex="1" /></td>
-    </tr>
-    <tr>
-      <td style="width:100px;"><label>Password</label></td>
-      <td style="width:150px;"><input type="password" name="password" id="password" tabindex="2" /></td>
-    </tr>
-  </table>
-
-<div id="toolbar">
-    <input type="hidden" name="form" value="login" />
-    <ul>
-        <li><a href="#" onclick="javascript:document.forms['login'].submit();return false"><img src="img/login.png" alt="" /> Login</a></li>
-    </ul>
+<div id="dialog-login" title="Welcome to MagIRC">
+	<h1 id="title">Login</h1>
+	<span id="message">Please insert your credentials</span><br /><br />
+	<noscript>WARNING: Your web browser does not support JavaScript. However this is needed in order to use this application!</noscript>
+	<form id="login" method="post" action="./">
+		<table class="form">
+			<tr>
+				<th><label for="username">Username</label></th>
+				<td><input type="text" name="username" id="username" value="{$smarty.post.username}" size="24" /></td>
+			</tr>
+			<tr>
+				<th><label for="password">Password</label></th>
+				<td><input type="password" name="password" id="password" size="24" /></td>
+			</tr>
+		</table>
+	</form>
 </div>
 
-</form>
+{/block}
 
+{block name="js" append}
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
+$("#dialog-login").dialog({
+	autoOpen: true,
+	closeOnEscape: false,
+	height: 260,
+	width: 350,
+	resizable: false,
+	modal: true,
+	buttons: {
+		"Login": function() {
+			$.post("index.php/login", { username: $("#username").val(), password: $("#password").val() }, function(success) {
+				if (success) {
+					window.location = 'index.php';
+				} else {
+					$("#title").html('Login failed');
+					$("#message").html('Please check your credentials and try again');
+				}
+			}, "json");
+		}
+	}
+});
+{/literal}
+--></script>
+{/jsmin}
 {/block}

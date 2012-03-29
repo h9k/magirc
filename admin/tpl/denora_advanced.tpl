@@ -1,7 +1,3 @@
-
-{extends file="components/main.tpl"}
-{block name="content"}
-
 <h2>Advanced Settings</h2>
 <form id="advanced" method="post" action="">
 
@@ -23,5 +19,3 @@
     </tr>
   </table>
 </form>
-
-{/block}

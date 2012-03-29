@@ -1,6 +1,7 @@
 <?php
 /**
  * MagIRC - Let the magirc begin!
+ * Frontend
  *
  * @author      Sebastian Vassiliou <hal9000@denorastats.org>
  * @copyright   2012 Sebastian Vassiliou
@@ -101,6 +102,7 @@ try {
 	$magirc->slim->run();
 } catch (Exception $e) {
 	$magirc->tpl->assign('err_msg', $e->getMessage());
+	$magirc->tpl->assign('err_extra', $e->getTraceAsString());
 	$magirc->tpl->display('error.tpl');
 }
 ?>

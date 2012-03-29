@@ -1,7 +1,8 @@
 <?php
+// Root path
+define('PATH_ROOT', __DIR__ . '/../../');
 
-
-// database configuration
+// Database configuration
 class Magirc_DB extends DB {
 	function Magirc_DB() {
 		if (file_exists('../conf/magirc.cfg.php')) {
@@ -15,17 +16,21 @@ class Magirc_DB extends DB {
 }
 
 class Admin {
+	public $slim;
 	public $tpl;
 	public $db;
 	public $cfg;
 
 	function __construct() {
+		$this->slim = new Slim();
 		$this->tpl = new Smarty();
 		$this->tpl->template_dir = 'tpl';
 		$this->tpl->compile_dir = 'tmp';
 		$this->tpl->config_dir = '../conf';
 		$this->tpl->cache_dir = 'tmp';
 		$this->tpl->error_reporting = E_ALL & ~E_NOTICE;
+		$this->tpl->autoload_filters = array('pre' => array('jsmin'));
+		$this->tpl->addPluginsDir('../lib/smarty-plugins/');
 		$this->db = new Magirc_DB();
 		$this->cfg = new Config();
 		$this->ckeditor = new CKEditor();
@@ -45,7 +50,7 @@ class Admin {
 			array('Maximize','ShowBlocks','Preview','Templates'),
 			array('Cut','Copy','PasteText','-','Print','Scayt'),
 			array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'),
-			#array('Source'),
+			array('Source'),
 			array('Link','Unlink','Anchor'),
 			array('Image','Table','HorizontalRule','Smiley','SpecialChar'),
 	            '/',
@@ -54,15 +59,20 @@ class Admin {
 			array('NumberedList','BulletedList','-','Outdent','Indent','Blockquote'),
 			array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock')
 		);
-		#CKFinder::SetupCKEditor($this->ckeditor, '../js/ckfinder/');
 	}
 
 	// login function
 	function login($username, $password) {
-		if (!isset($username) || !isset($password))
-		return false;
-
-		return $this->db->selectOne('magirc_admin', array('username' => $username, 'password' => md5(trim($password))));
+		if (!isset($username) || !isset($password)) {
+			return false;
+		}
+		if ($this->db->selectOne('magirc_admin', array('username' => trim($username), 'password' => md5(trim($password))))) {
+			$_SESSION['username'] = $_POST['username'];
+			$_SESSION["ipaddr"] = $_SERVER["REMOTE_ADDR"];
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// Returns session status
@@ -71,7 +81,7 @@ class Admin {
 			$_SESSION["message"] = "Access denied";
 			return false;
 		}
-		if (!isset($_SESSION["ip"]) || ($_SESSION["ip"] != $_SERVER["REMOTE_ADDR"])) {
+		if (!isset($_SESSION["ipaddr"]) || ($_SESSION["ipaddr"] != $_SERVER["REMOTE_ADDR"])) {
 			$_SESSION["message"] = "Access denied";
 			return false;
 		}

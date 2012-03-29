@@ -2,7 +2,7 @@
 // Root path
 define('PATH_ROOT', __DIR__ . '/../../');
 
-// database configuration
+// Database configuration
 class Magirc_DB extends DB {
 	function __construct() {
 		parent::__construct();
@@ -31,9 +31,9 @@ class Magirc {
 	public $denora;
 
 	function __construct($api_mode = "web") {
+		// Setup the Slim framework
+		$this->slim = new Slim();
 		if ($api_mode == "web") {
-			// Setup the Slim framework
-			$this->slim = new Slim();
 			// Setup the template engine
 			$this->tpl = new Smarty;
 			$this->tpl->template_dir = 'theme/default/tpl';
@@ -42,8 +42,6 @@ class Magirc {
 			$this->tpl->cache_dir = 'tmp/cache';
 			$this->tpl->autoload_filters = array('pre' => array('jsmin'));
 			$this->tpl->addPluginsDir('lib/smarty-plugins/');
-		} else {
-			$this->slim = new Slim();
 		}
 
 		// Setup the database
