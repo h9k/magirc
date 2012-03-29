@@ -1,7 +1,9 @@
 php_flag zlib.output_compression On
 
+<IfModule mod_header.c>
 Header unset ETag
 FileETag None
+</IfModule>
 
 <IfModule mod_expires.c>
 ExpiresActive On
@@ -20,7 +22,9 @@ ExpiresByType image/x-icon "access plus 1 year"
 
 <IfModule mod_deflate.c>
 SetOutputFilter DEFLATE
+<IfModule mod_header.c>
 Header append Vary User-Agent env=!dont-vary
+</IfModule>
 </IfModule>
 
 <IfModule mod_rewrite.c>
