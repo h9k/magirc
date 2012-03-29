@@ -13,19 +13,31 @@
 <link href="theme/default/css/datatables.css" rel="stylesheet" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
 {/block}
+</head>
+<body>
+{block name="body"}
+<div id="header">
+	<a href="./"><img src="theme/default/img/logo.png" alt="" id="logo" /></a>
+	<div id="menu">
+		<ul>
+			<li><a href="index.php/network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>
+			<li><a href="index.php/server"{if $section eq 'server'} class="active"{/if}><span>&nbsp;Servers</span></a></li>
+			<li><a href="index.php/channel"{if $section eq 'channel'} class="active"{/if}><span>&nbsp;Channels</span></a></li>
+			<li><a href="index.php/user"{if $section eq 'user'} class="active"{/if}><span>&nbsp;Users</span></a></li>
+		</ul>
+	</div>
+	<div id="loading"><img src="theme/default/img/loading.gif" alt="loading..." /></div>
+</div>
+<div id="main">{block name="content"}[content placeholder]{/block}</div>
+<div id="footer">powered by <span style="font-size:12px;"><strong>MagIRC</strong></span> v{$smarty.const.VERSION_FULL}</div>
+{/block}
 {block name="js"}
-{*<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/jquery.datatables.min.js"></script>*}
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.18/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.js"></script>
-{*<script type="text/javascript" src="js/datatables.plugins.js"></script>*}
 <script type="text/javascript" src="js/datatables.fnReloadAjax.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
-{*<script type="text/javascript" src="js/date.js"></script>*}
-
 {jsmin}
 <script type="text/javascript">
 <!--
@@ -120,35 +132,5 @@ $(document).ready(function() {
 --></script>
 {/jsmin}
 {/block}
-</head>
-<body>
-{block name="body"}
-
-<div id="header">
-	<a href="./"><img src="theme/default/img/logo.png" alt="" id="logo" /></a>
-	<div id="menu">
-		<ul>
-			{*<li><a href="index.php/home"{if $section eq 'home'} class="active"{/if}><span>&nbsp;Home</span></a></li>*}
-			<li><a href="index.php/network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>
-			<li><a href="index.php/server"{if $section eq 'server'} class="active"{/if}><span>&nbsp;Servers</span></a></li>
-			<li><a href="index.php/channel"{if $section eq 'channel'} class="active"{/if}><span>&nbsp;Channels</span></a></li>
-			<li><a href="index.php/user"{if $section eq 'user'} class="active"{/if}><span>&nbsp;Users</span></a></li>
-		</ul>
-	</div>
-	<div id="loading"><img src="theme/default/img/loading.gif" alt="loading..." /></div>
-</div>
-
-<div id="main">
-{block name="content"}
-[content placeholder]
-{/block}
-</div>
-
-<div id="footer">
-powered by <span style="font-size:12px;"><strong>MagIRC</strong></span> v{$smarty.const.VERSION_FULL}
-</div>
-
-{/block}
-
 </body>
 </html>
