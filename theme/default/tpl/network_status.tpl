@@ -1,4 +1,6 @@
-<h1>Live Network Status</h1>
+<div id="welcome"></div>
+
+{*<h1>Live Network Status</h1>*}
 
 <table class="details" style="width:100%;">
 	<tr>
@@ -89,6 +91,9 @@
 {jsmin}
 <script type="text/javascript"><!--{literal}
 $(function() {
+	$.getJSON('index.php/welcome', function(result) {
+		$("#welcome").html(result);
+	});
 	//TODO: make refresh configurable and do not run if the tab is not active
 	var status_refresh = 15; // seconds
 	var tbl_refresh = 15; // seconds

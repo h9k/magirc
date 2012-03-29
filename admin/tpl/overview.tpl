@@ -32,7 +32,8 @@
 	</div>
 
 	<div class="halfright">
-		<h2>Like MagIRC? Please consider a donation :)</h2>
+		<h2>Like MagIRC? Please consider a donation!</h2>
+		Show some love to the developer so he can afford some cookies :)<br /><br />
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="width:100px;">
 			<div>
 				<input type="hidden" name="cmd" value="_s-xclick" />
