@@ -12,8 +12,9 @@
 	</tbody>
 </table>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
 $(document).ready(function() {
 	$('#tbl_channels').dataTable({
 		"bServerSide": true,
@@ -31,5 +32,6 @@ $(document).ready(function() {
 		window.location = url_base + '/channel/' + escape(chan) + '/profile';
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

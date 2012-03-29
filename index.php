@@ -42,12 +42,12 @@ try {
 			$magirc->tpl->debugging = true;
 		}*/
 	}
-	
+
 	$magirc->slim->notFound(function () use ($magirc) {
 		$magirc->tpl->assign('err_msg', 'HTTP 404 - Not Found');
 		$magirc->tpl->display('error.tpl');
 	});
-	
+
 	$magirc->slim->get('/(network)', function() use($magirc) {
 		$magirc->tpl->assign('section', 'network');
 		$magirc->tpl->display('network_main.tpl');
@@ -97,7 +97,7 @@ try {
 			$magirc->slim->notFound();
 		}
 	});
-	
+
 	$magirc->slim->run();
 } catch (Exception $e) {
 	$magirc->tpl->assign('err_msg', $e->getMessage());

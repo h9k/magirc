@@ -12,7 +12,9 @@
 {/block}
 
 {block name="js" append}
-<script type="text/javascript">
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
 $(function() {
 	$( "#tabs" ).tabs({
 		cache: true,
@@ -24,5 +26,7 @@ $(function() {
 		}
 	});
 });
-</script>
+{/literal}
+--></script>
+{/jsmin}
 {/block}

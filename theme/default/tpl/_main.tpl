@@ -14,17 +14,23 @@
 <link href='http://fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
 {/block}
 {block name="js"}
-<script type="text/javascript" src="js/jquery.min.js"></script>
+{*<script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/jquery.datatables.min.js"></script>
-<script type="text/javascript" src="js/datatables.plugins.js"></script>
+<script type="text/javascript" src="js/jquery.datatables.min.js"></script>*}
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.js"></script>
+{*<script type="text/javascript" src="js/datatables.plugins.js"></script>*}
 <script type="text/javascript" src="js/datatables.fnReloadAjax.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
-<script type="text/javascript" src="js/date.js"></script>
+{*<script type="text/javascript" src="js/date.js"></script>*}
+
+{jsmin}
 <script type="text/javascript">
 <!--
 var url_base = '{$smarty.const.BASE_URL}';
+{literal}
 $(document).ready(function() {
 	$("#loading").ajaxStart(function(){
 		$(this).show();
@@ -37,15 +43,6 @@ $(document).ready(function() {
 		"bServerSide": false,
 		"bJQueryUI": true,
 		"bAutoWidth": false,
-		//"bFilter": true,
-		//"bInfo": true,
-		//"bLengthChange": true,
-		//"bPaginate": true,
-		//"bSort": true,
-		//"bRegex": false,
-		//"bSmart": false,
-		//"bStateSave": false,
-		//"iDisplayLength": 10,
 		"sPaginationType": "full_numbers"
     });
 	// Highcharts default settings
@@ -119,8 +116,9 @@ $(document).ready(function() {
 		credits: { enabled: false }
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}
 {/block}
 </head>
 <body>

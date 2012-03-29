@@ -18,8 +18,9 @@
 	</tbody>
 </table>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
 $(document).ready(function() {
 	var type = 3;
 	var oTable = $('#tbl_activity').dataTable({
@@ -50,5 +51,6 @@ $(document).ready(function() {
 		oTable.fnDraw();
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

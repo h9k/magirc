@@ -39,8 +39,9 @@
 	<div class="motd clear" title="MOTD"><pre id="srv_motd"></pre></div>
 </div>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
 $(document).ready(function() {
 	$('#tbl_servers').dataTable({
 		"iDisplayLength": 25,
@@ -94,5 +95,6 @@ $(document).ready(function() {
 		}
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

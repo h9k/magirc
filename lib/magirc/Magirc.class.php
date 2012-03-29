@@ -34,17 +34,13 @@ class Magirc {
 		if ($api_mode == "web") {
 			// Setup the Slim framework
 			$this->slim = new Slim();
-			/*$this->slim = new Slim(array("view" => new SmartyView()));
-			SmartyView::$smartyDirectory = 'lib/smarty';
-			SmartyView::$smartyTemplatesDirectory = 'theme/default/tpl';
-			SmartyView::$smartyCompileDirectory = 'tmp/compiled';
-			SmartyView::$smartyCacheDirectory = 'tmp/cache';*/
 			// Setup the template engine
 			$this->tpl = new Smarty;
 			$this->tpl->template_dir = 'theme/default/tpl';
 			$this->tpl->config_dir = 'theme/default/cfg';
 			$this->tpl->compile_dir = 'tmp/compiled';
 			$this->tpl->cache_dir = 'tmp/cache';
+			$this->tpl->autoload_filters = array('pre' => array('jsmin'));
 			$this->tpl->addPluginsDir('lib/smarty-plugins/');
 		} else {
 			$this->slim = new Slim();

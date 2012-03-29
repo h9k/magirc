@@ -1,8 +1,9 @@
 <h1>Current Country Statistics</h1>
 <div id="chart-countries" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
 $(document).ready(function() {
     $.getJSON('rest/denora.php/countrystats/global', function(data) {
         new Highcharts.Chart({
@@ -16,5 +17,6 @@ $(document).ready(function() {
 		});
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

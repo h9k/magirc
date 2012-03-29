@@ -12,10 +12,13 @@
 	<tr><th>Status:</th><td><span id="user_status" class="val"></span><span id="user_status_extra"></span></td></tr>
 </table>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+var target = '{$target|escape:'url'}';
+var mode = '{$mode}';
+{literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/users/{$mode}/{$target|escape:'url'}', function(result) {
+    $.getJSON('rest/denora.php/users/'+mode+'/'+target, function(result) {
 		var aliases = '', status = '', status_extra = '';
 		$("#user_nick").html(result.nick);
 		$.each(result.aliases, function(key, value) {
@@ -45,5 +48,6 @@ $(document).ready(function() {
 		$("#user_client").html(result.client);
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

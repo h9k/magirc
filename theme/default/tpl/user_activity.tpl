@@ -38,8 +38,11 @@
 	</tbody>
 </table>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+var target = '{$target|escape:'url'}';
+var mode = '{$mode}';
+{literal}
 $(document).ready(function() {
 	var chan = 'global';
 	var type = 3;
@@ -51,7 +54,7 @@ $(document).ready(function() {
 		series: [{ name: 'Lines', data: [] }]
 	});
 	function updateChart() {
-		$.getJSON('rest/denora.php/users/{$mode}/{$target|escape:'url'}/hourly/'+escape(chan)+'/'+type, function(result) {
+		$.getJSON('rest/denora.php/users/'+mode+'/'+target+'/hourly/'+escape(chan)+'/'+type, function(result) {
 			chart_activity.series[0].setData(result);
 		});
 	}
@@ -62,7 +65,7 @@ $(document).ready(function() {
 		"bPaginate": false,
 		"bSort": false,
 		"bEscapeRegex": false,
-		"sAjaxSource": "rest/denora.php/users/{$mode}/{$target|escape:'url'}/activity/"+escape(chan)+'?format=datatables',
+		"sAjaxSource": "rest/denora.php/users/"+mode+"/"+target+"/activity/"+escape(chan)+'?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "type", "fnRender": function (oObj) {
 				switch (oObj.aData['type']) {
@@ -85,7 +88,7 @@ $(document).ready(function() {
 	$("#radio,#type").buttonset();
 	$("#radio").change(function(event) {
 		chan = $('input[name=radio]:checked').val();
-		oTable.fnSettings().sAjaxSource = "rest/denora.php/users/{$mode}/{$target|escape:'url'}/activity/"+escape(chan)+'?format=datatables';
+		oTable.fnSettings().sAjaxSource = "rest/denora.php/users/"+mode+"/"+target+"/activity/"+escape(chan)+'?format=datatables';
 		oTable.fnReloadAjax();
 		updateChart();
 	});
@@ -93,7 +96,7 @@ $(document).ready(function() {
 		type = $('input[name=type]:checked').index() / 2;
 		updateChart();
 	});
-	$.getJSON("rest/denora.php/users/{$mode}/{$target|escape:'url'}/channels", function(result) {
+	$.getJSON("rest/denora.php/users/"+mode+"/"+target+"/channels", function(result) {
 		var i = 1;
 		$.each(result, function(key, value) {
 			$("#radio").append('<input type="radio" id="radio'+i+'" name="radio" value="'+value+'"\/><label for="radio'+i+'">'+value+'<\/label>');
@@ -103,5 +106,6 @@ $(document).ready(function() {
 	});
 	updateChart();
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

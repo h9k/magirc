@@ -13,8 +13,9 @@
 </tbody>
 </table>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
 $(document).ready(function() {
 	$('#tbl_operators').dataTable({
 		"iDisplayLength": 25,
@@ -37,5 +38,6 @@ $(document).ready(function() {
 		window.location = url_base + '/user/nick:' + escape(this.id) + '/profile';
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

@@ -86,9 +86,8 @@
 		</td>
 	</tr>
 </table>
-
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--{literal}
 $(function() {
 	//TODO: make refresh configurable and do not run if the tab is not active
 	var status_refresh = 15; // seconds
@@ -214,5 +213,6 @@ $(function() {
 		window.location = url_base + '/user/stats:' + escape(user) + '/profile';
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

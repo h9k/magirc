@@ -1,8 +1,9 @@
 <h1>Channel history</h1>
 <div id="chart-history" style="height: 350px; min-width: 700px"></div>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
 $(document).ready(function() {
     $.getJSON('rest/denora.php/channels/hourlystats', function(data) {
         new Highcharts.StockChart({
@@ -17,5 +18,6 @@ $(document).ready(function() {
         });
     });
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

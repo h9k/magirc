@@ -1,8 +1,9 @@
 <h1>Network Usage Evolution</h1>
 <div id="chart-evolution" style="height: 350px; min-width: 700px"></div>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+{literal}
 $(function() {
     var seriesOptions = [],
         seriesCounter = 0,
@@ -27,5 +28,6 @@ $(function() {
     }
 
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}

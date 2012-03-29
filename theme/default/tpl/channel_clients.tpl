@@ -1,10 +1,12 @@
 <h1>Current Client Statistics for {$target}</h1>
 <div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
-<script type="text/javascript">
-<!--
+{jsmin}
+<script type="text/javascript"><!--
+var target = '{$target|escape:'url'}';
+{literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/clientstats/{$target|escape:'url'}', function(data) {
+    $.getJSON('rest/denora.php/clientstats/'+target, function(data) {
         new Highcharts.Chart({
 			chart: { renderTo: 'chart-clients' },
 			tooltip: {
@@ -16,5 +18,6 @@ $(document).ready(function() {
 		});
 	});
 });
--->
-</script>
+{/literal}
+--></script>
+{/jsmin}
