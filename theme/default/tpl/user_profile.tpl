@@ -5,8 +5,8 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/user/{$mode}:{$target|escape:'url'}/info">User info</a></li>
-		<li><a href="index.php/user/{$mode}:{$target|escape:'url'}/activity">User activity</a></li>
+		<li><a href="index.php/user/{$mode}:{$target|escape:'url'}/info">Info</a></li>
+		<li><a href="index.php/user/{$mode}:{$target|escape:'url'}/activity">Activity</a></li>
 	</ul>
 </div>
 {/block}

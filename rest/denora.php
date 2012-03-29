@@ -15,8 +15,12 @@ $magirc->slim->notFound(function () use ($magirc) {
 });
 
 // Routing
-$magirc->slim->get('/network/status', 'getNetworkStatus');
-$magirc->slim->get('/network/max', 'getNetworkMax');
+$magirc->slim->get('/network/status', function() use ($magirc) {
+	echo json_encode($magirc->denora->getCurrentStatus());
+});
+$magirc->slim->get('/network/max', function() use ($magirc) {
+	echo json_encode($magirc->denora->getMaxValues());
+});
 $magirc->slim->get('/servers', 'getServers');
 $magirc->slim->get('/servers/hourlystats', 'getServerStats');
 $magirc->slim->get('/servers/:server', 'getServer');
@@ -33,22 +37,24 @@ $magirc->slim->get('/users', 'getUsers');
 $magirc->slim->get('/users/hourlystats', 'getUserStats');
 $magirc->slim->get('/users/top(/:limit)', 'getUsersTop');
 $magirc->slim->get('/users/activity/:type', 'getUserGlobalActivity');
-$magirc->slim->get('/users/:mode/:user', 'getUser');
+$magirc->slim->get('/users/:mode/:user', function ($mode, $user) use ($magirc) {
+	echo json_encode($magirc->denora->getUser($mode, $user));
+});
+$magirc->slim->get('/users/:mode/:user/channels', function($mode, $user) use ($magirc) {
+	echo json_encode($magirc->denora->getUserChannels($mode, $user));
+});
+$magirc->slim->get('/users/:mode/:user/activity(/:chan)', function($mode, $user, $chan = 'global') use ($magirc) {
+	$data = $magirc->denora->getUserActivity($mode, $user, $chan);
+	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
+});
+$magirc->slim->get('/users/:mode/:user/hourly/:chan/:type', function($mode, $user, $chan, $type) use($magirc) {
+	echo json_encode($magirc->denora->getUserHourlyActivity($mode, $user, $chan, $type));
+});
 $magirc->slim->get('/operators', 'getOperators');
 $magirc->slim->get('/clientstats(/:chan)', 'getClientStats');
 $magirc->slim->get('/countrystats(/:chan)', 'getCountryStats');
 
 // Functions
-function getNetworkStatus() {
-	global $magirc;
-    $data = $magirc->denora->getCurrentStatus();
-	echo json_encode($data);
-}
-function getNetworkMax() {
-	global $magirc;
-    $data = $magirc->denora->getMaxValues();
-	echo json_encode($data);
-}
 function getServers() {
 	global $magirc;
 	$data = $magirc->denora->getServerList();
@@ -148,11 +154,6 @@ function getUsersTop($limit = 10) {
 function getUserGlobalActivity($type) {
 	global $magirc;
 	$data = $magirc->denora->getUserGlobalActivity($type, @$_GET['format'] == 'datatables');
-	echo json_encode($data);
-}
-function getUser($mode, $user) {
-	global $magirc;
-	$data = $magirc->denora->getUser($mode, $user);
 	echo json_encode($data);
 }
 function getOperators() {

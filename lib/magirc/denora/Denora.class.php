@@ -667,6 +667,22 @@ class Denora {
 		return $aaData;
 	}
 	
+	function getUserHourlyActivity($mode, $user, $chan, $type) {
+		$info = $this->getUserData($mode, $user);		
+		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
+			FROM ustats WHERE uname=:uname AND chan=:channel AND type=:type";
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindParam(':type', $type, PDO::PARAM_INT);
+		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindParam(':uname', $info['uname'], PDO::PARAM_STR);
+		$ps->execute();
+		$result = $ps->fetch(PDO::FETCH_NUM);
+		foreach ($result as $key => $val) {
+			$result[$key] = (int) $val;
+		}
+		return $result;
+	}
+	
 	function checkUser($user, $mode) {
 		if ($mode == "stats") {
 			$query = "SELECT uname FROM ustats WHERE LOWER(uname) = LOWER(:user)";
@@ -679,23 +695,28 @@ class Denora {
 		return $stmt->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
 	
-	function getUser($mode, $user) {
+	private function getUserData($mode, $user) {
 		$uname = ($mode == "stats") ? $user : $this->getUnameFromNick($user);
 		$aliases = $this->getUnameAliases($uname);
 		$nick = ($mode == "stats") ? $aliases[0] : $user;
 		array_shift($aliases);
+		return array('nick' => $nick, 'uname' => $uname, 'aliases' => $aliases);
+	}
+	
+	function getUser($mode, $user) {
+		$info = $this->getUserData($mode, $user);
 		
 		$ps = $this->db->prepare("SELECT realname, hostname, hiddenhostname, username, swhois,
 			account, connecttime, server, away, awaymsg, ctcpversion, online, lastquit,
 			lastquitmsg, countrycode, country FROM user WHERE nick = :nickname");
-		$ps->bindParam(':nickname', $nick, PDO::PARAM_INT);
+		$ps->bindParam(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();
 		$data = $ps->fetch(PDO::FETCH_OBJ);
 		
 		$user = array(
-			'nick' => $nick,
-			'uname' => $uname,
-			'aliases' => $aliases,
+			'nick' => $info['nick'],
+			'uname' => $info['uname'],
+			'aliases' => $info['aliases'],
 			'username' => $data->username,
 			'realname' => $data->realname,
 			'hostname' => $this->ircd->getParam('host_cloaking') ? $data->hiddenhostname : $data->hostname,
@@ -711,6 +732,69 @@ class Denora {
 			'away_msg' => $data->awaymsg
 		);
 		return $user;
+	}
+	
+	function getUserChannels($mode, $user) {
+		$info = $this->getUserData($mode, $user);
+		$secret_mode = $this->ircd->getParam('chan_secret_mode');
+		$private_mode = $this->ircd->getParam('chan_private_mode');
+		
+		$sWhere = "";
+		if ($secret_mode) {
+			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($secret_mode));
+		}
+		if ($private_mode) {
+			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($private_mode));
+		}
+		$hide_channels = $this->cfg->getParam('hide_chans');
+		if ($hide_channels) {
+			$hide_channels = explode(",", $hide_channels);
+			foreach ($hide_channels as $key => $channel) {
+				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
+			}
+			$sWhere .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
+		}
+		
+		$query = sprintf("SELECT DISTINCT chan FROM ustats, chan, user WHERE ustats.uname=:uname
+			AND ustats.type=0 AND BINARY LOWER(ustats.chan)=LOWER(chan.channel)
+			AND user.nick=:nick %s", $sWhere);
+		$ps = $this->db->prepare($query);
+		$ps->bindParam(':uname', $info['uname'], PDO::PARAM_STR);
+		$ps->bindParam(':nick', $info['nick'], PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_COLUMN);
+	}
+	
+	function getUserActivity($mode, $user, $chan) {
+		$info = $this->getUserData($mode, $user);
+		if ($chan == 'global') {
+			$sQuery = "SELECT type,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics
+				FROM ustats WHERE uname=:uname AND chan=:chan ORDER BY ustats.letters DESC";
+		} else {
+			$sWhere = "";
+			$hide_channels = $this->cfg->getParam('hide_chans');
+			if ($hide_channels) {
+				$hide_channels = explode(",", $hide_channels);
+				foreach ($hide_channels as $key => $channel) {
+					$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
+				}
+				$sWhere .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
+			}
+			$sQuery = sprintf("SELECT type,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics
+				FROM ustats, chan WHERE ustats.uname=:uname AND ustats.chan=:chan
+				AND BINARY LOWER(ustats.chan)=LOWER(chan.channel) %s ORDER BY ustats.letters DESC", $sWhere);
+		}
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindParam(':uname', $info['uname'], PDO::PARAM_STR);
+		$ps->bindParam(':chan', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($data as $key => $type) {
+			foreach ($type as $field => $val) {
+				$data[$key][$field] = (int) $val;
+			}
+		}
+		return $data;
 	}
 	
 	private function getUnameFromNick($nick) {
