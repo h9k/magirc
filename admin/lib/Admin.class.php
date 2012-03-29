@@ -34,7 +34,7 @@ class Admin {
 		$this->db = new Magirc_DB();
 		$this->cfg = new Config();
 		$this->ckeditor = new CKEditor();
-		$this->ckeditor->basePath = '../js/ckeditor/';
+		$this->ckeditor->basePath = BASE_URL.'../js/ckeditor/';
 		$this->ckeditor->returnOutput = true;
 		$this->ckeditor->config['height'] = 300;
 		$this->ckeditor->config['width'] = 740;

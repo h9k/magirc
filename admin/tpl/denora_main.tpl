@@ -10,6 +10,8 @@
 		<li><a href="index.php/denora/database">Database</a></li>
 	</ul>
 </div>
+<div id="success">Saved successfully</div>
+<div id="failure">Failed</div>
 {/block}
 
 {block name="js" append}

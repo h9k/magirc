@@ -28,12 +28,12 @@ require_once('../lib/magirc/Config.class.php');
 include_once('../lib/ckeditor/ckeditor.php');
 require_once('lib/Admin.class.php');
 
+define('BASE_URL', sprintf("%s://%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
 $admin = new Admin();
 
 try {
 	if ($admin->cfg->getParam('db_version') < 1) $admin->slim->halt(500, 'SQL Config Table is missing or out of date!<br />Please run the <em>MagIRC Installer</em>');
 	define('DEBUG', $admin->cfg->getParam('debug_mode'));
-	define('BASE_URL', sprintf("%s://%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
 	$admin->tpl->assign('cfg', $admin->cfg->config);
 	if ($admin->cfg->getParam('debug_mode') < 1) {
 		ini_set('display_errors','off');
@@ -92,6 +92,14 @@ try {
 		$admin->tpl->assign('ircds', $ircds);
 		$admin->tpl->display('denora_settings.tpl');
 	});
+	$admin->slim->post('/denora/settings', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$admin->slim->contentType('application/json');
+		foreach ($_POST as $key => $val) {
+			$admin->saveConfig($key, $val);
+		}
+		echo json_encode(true);
+	});
 	$admin->slim->get('/denora/welcome', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
 		$admin->tpl->assign('editor', $admin->ckeditor->editor('msg_welcome', $admin->cfg->getParam('msg_welcome')));
@@ -114,6 +122,41 @@ try {
 		$admin->tpl->assign('writable', is_writable($db_config_file));
 		$admin->tpl->assign('db', $db);
 		$admin->tpl->display('denora_database.tpl');
+	});
+	$admin->slim->post('/:service/database', function($service) use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$admin->slim->contentType('application/json');
+		$db_config_file = "../conf/$service.cfg.php";
+		$db = array();
+		if (file_exists($db_config_file)) {
+			include($db_config_file);
+		} else {
+			@touch($db_config_file);
+		}
+		if (!$db) {
+			$db = array('username' => 'magirc', 'password' => 'magirc', 'database' => 'magirc', 'hostname' => 'localhost');
+		}
+		if (isset($_POST['database'])) {
+			$db['username'] = (isset($_POST['username'])) ? $_POST['username'] : $db['username'];
+			$db['password'] = (isset($_POST['password'])) ? $_POST['password'] : $db['password'];
+			$db['database'] = (isset($_POST['database'])) ? $_POST['database'] : $db['database'];
+			$db['hostname'] = (isset($_POST['hostname'])) ? $_POST['hostname'] : $db['hostname'];
+			$db['port'] = (isset($_POST['port'])) ? $_POST['port'] : $db['port'];
+			$db_buffer = "<?php\n".
+				"\$db['username'] = \"{$db['username']}\";\n".
+				"\$db['password'] = \"{$db['password']}\";\n".
+				"\$db['database'] = \"{$db['database']}\";\n".
+				"\$db['hostname'] = \"{$db['hostname']}\";\n".
+				"\$db['port'] = \"{$db['port']}\";\n".
+				"?>";
+			if (is_writable($db_config_file)) {
+				$writefile = fopen($db_config_file,"w");
+				fwrite($writefile,$db_buffer);
+				fclose($writefile);
+				echo json_encode(true); exit;
+			}
+		}
+		echo json_encode(false);
 	});
 	$admin->slim->get('/support/register', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }

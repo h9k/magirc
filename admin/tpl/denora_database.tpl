@@ -1,5 +1,5 @@
 <h1>Database settings</h1>
-<form id="database" method="post" action="index.php/denora/database">
+<form id="database-form" method="post" action="index.php/denora/database">
 <table width="100%" border="0" cellspacing="0" cellpadding="5">
 	<tr>
 		<td align="right">Username</td>
@@ -32,5 +32,34 @@
 {/if}
 </pre>
 
-<button type="submit">Save</button>
+<button id="database-submit" type="button">Save</button>
 </form>
+
+<div id="manual" style="display:none;">
+	<br />MagIRC was unable to write the file.<br />Please create {$db_config_file} and paste the following code:
+	<div id="file" class="file"></div>
+</div>
+
+{jsmin}
+<script type="text/javascript"><!--{literal}
+$(function() {
+	$("#database-submit").button().click(function() {
+		$("#database-form").ajaxSubmit({ url: 'index.php/denora/database', type: 'post', success: function(data) {
+			if (data) $("#success").show().delay(1500).fadeOut(500);
+			else {
+				$("#failure").show().delay(1500).fadeOut(500);
+				$("#manual").show();
+				$("#file").html("<pre>&lt;?php\n"+
+				"$db['username'] = \""+$("#username").val()+"\";\n"+
+				"$db['password'] = \""+$("#password").val()+"\";\n"+
+				"$db['database'] = \""+$("#database").val()+"\";\n"+
+				"$db['hostname'] = \""+$("#hostname").val()+"\";\n"+
+				"$db['port'] = \""+$("#port").val()+"\";\n"+
+				"?&gt;<\/pre>");
+			}
+		} });
+	});
+});
+{/literal}
+--></script>
+{/jsmin}

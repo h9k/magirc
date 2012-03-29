@@ -1,5 +1,5 @@
 <h1>General settings</h1>
-<form id="settings" method="post" action="index.php/denora/settings">
+<form id="settings-form" method="post" action="index.php/denora/settings">
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
 			<td align="right">The <strong>name of your Network</strong></td>
@@ -50,5 +50,19 @@
 			</td>
 		</tr>
 	</table>
-	<button type="submit">Save</button>
+	<button id="settings-submit" type="button">Save</button>
 </form>
+
+{jsmin}
+<script type="text/javascript"><!--{literal}
+$(function() {
+	$("#settings-submit").button().click(function() {
+		$("#settings-form").ajaxSubmit({ url: 'index.php/denora/settings', type: 'post', success: function(data) {
+			if (data) $("#success").show().delay(1500).fadeOut(500);
+			else $("#failure").show().delay(1500).fadeOut(500);
+		} });
+	});
+});
+{/literal}
+--></script>
+{/jsmin}

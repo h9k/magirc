@@ -33,6 +33,7 @@
 {block name="js"}
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
 {jsmin}
 <script type="text/javascript"><!--
 {literal}

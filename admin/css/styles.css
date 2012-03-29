@@ -50,12 +50,14 @@ div#footer {
 div#footer a, div#footer a:visited { color:#FCFCFC; }
 div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:none; }
 div#loading { display:none; float:right; margin-top:25px; }
-
 div.halfleft { width:49%; float:left; }
 div.halfright { width:49%; float:right; }
 div.choser { text-align:right; margin-bottom:10px; }
 div.warning { padding:2px 10px; margin:15px; background-color:#FAFAFA; border:2px dashed orange; }
 div.clear { clear:both; }
+div.file { background-color:#FAFAFA; border:1px solid #ccc; padding:5px 15px; margin:10px; }
+div#success { color:green; text-align:center; font-size:large; display:none; }
+div#failure { color:red; text-align:center; font-size:large; display:none; }
 table.form { margin:auto; }
 table.form th { text-align:left; }
 table.form input { background-color:#DDDDDD; padding:3px; border:0; }
