@@ -7,6 +7,7 @@
 <meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />
 <meta name="Description" content="IRC Statistics powered by MagIRC" />
 <base href="{$smarty.const.BASE_URL}" />
+<link rel="icon" href="theme/default/css/favicon.ico" type="image/x-icon">
 {block name="css"}
 <link href="theme/default/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="theme/default/css/jquery-ui.css" rel="stylesheet" type="text/css" />
