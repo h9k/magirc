@@ -54,18 +54,8 @@ div#loading { display:none; float:right; margin-top:25px; }
 div.halfleft { width:49%; float:left; }
 div.halfright { width:49%; float:right; }
 div.choser { text-align:right; margin-bottom:10px; }
-div.motd {
-	border:1px solid #ccc;
-	margin:15px 5px 0 5px;
-	padding:5px;
-	height:300px;
-	overflow:scroll;
-}
-div.motd pre { font-family:"Courier New", Courier, monospace; }
-div.topic { border:1px dashed #ccc; padding:10px; font-family:"Courier New", Courier, monospace; }
-span.val { color:#0066CC; }
+div.warning { padding:2px 10px; margin:15px; background-color:#FAFAFA; border:2px dashed orange; }
 div.clear { clear:both; }
-table.details th { text-align:left; vertical-align:top; }
 table.form { margin:auto; }
 table.form th { text-align:left; }
 table.form input { background-color:#DDDDDD; padding:3px; border:0; }

@@ -5,10 +5,9 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/denora/general">General</a></li>
-		<li><a href="index.php/denora/network">Network</a></li>
+		<li><a href="index.php/denora/settings">Settings</a></li>
+		<li><a href="index.php/denora/welcome">Welcome message</a></li>
 		<li><a href="index.php/denora/database">Database</a></li>
-		<li><a href="index.php/denora/advanced">Advanced</a></li>
 	</ul>
 </div>
 {/block}

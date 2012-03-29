@@ -6,7 +6,7 @@
  * @author      Sebastian Vassiliou <hal9000@denorastats.org>
  * @copyright   2012 Sebastian Vassiliou
  * @link        http://www.magirc.org/
- * @license     GNU GPL Version 3, see doc/LICENSE
+ * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
  * @version     0.7.0
  */
 
@@ -33,7 +33,7 @@ $admin = new Admin();
 try {
 	if ($admin->cfg->getParam('db_version') < 1) $admin->slim->halt(500, 'SQL Config Table is missing or out of date!<br />Please run the <em>MagIRC Installer</em>');
 	define('DEBUG', $admin->cfg->getParam('debug_mode'));
-	define('BASE_URL', sprintf("%s://%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], $_SERVER['SCRIPT_NAME']));
+	define('BASE_URL', sprintf("%s://%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
 	$admin->tpl->assign('cfg', $admin->cfg->config);
 	if ($admin->cfg->getParam('debug_mode') < 1) {
 		ini_set('display_errors','off');
@@ -75,16 +75,63 @@ try {
 	$admin->slim->get('/(overview)', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->tpl->display('login.tpl'); exit; }
 		$admin->tpl->assign('section', 'overview');
-		#$denora_version = @$admin->denora->getVersion('num');
-		if (!@$denora_version) $denora_version = "unknown";
-		$version = array(
-				'denora' => $denora_version,
-				'php' => phpversion(),
-				'sql_client' => @mysqli_get_client_info()
-		);
 		$admin->tpl->assign('setup', file_exists('../setup/'));
-		$admin->tpl->assign('version', $version);
-		$admin->tpl->display('overview_main.tpl');
+		$admin->tpl->assign('version', array('php' => phpversion(), 'sql_client' => @mysqli_get_client_info(), 'slim' => '1.5.0'));
+		$admin->tpl->display('overview.tpl');
+	});
+	$admin->slim->get('/denora/settings', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$ircds = array();
+		foreach (glob("../lib/magirc/denora/protocol/*") as $filename) {
+			if ($filename != "../lib/magirc/denora/protocol/index.php") {
+				$ircdlist = explode("/", $filename);
+				$ircdlist = explode(".", $ircdlist[5]);
+				$ircds[] = $ircdlist[0];
+			}
+		}
+		$admin->tpl->assign('ircds', $ircds);
+		$admin->tpl->display('denora_settings.tpl');
+	});
+	$admin->slim->get('/denora/welcome', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$admin->tpl->assign('editor', $admin->ckeditor->editor('msg_welcome', $admin->cfg->getParam('msg_welcome')));
+		$admin->tpl->display('denora_welcome.tpl');
+	});
+	$admin->slim->get('/denora/database', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$service = isset($_GET['service']) ? basename($_GET['service']) : 'denora';
+		$db_config_file = "../conf/{$service}.cfg.php";
+		$db = array();
+		if (file_exists($db_config_file)) {
+			include($db_config_file);
+		} else {
+			@touch($db_config_file);
+		}
+		if (!$db) {
+			$db = array('username' => 'magirc', 'password' => 'magirc', 'database' => 'magirc', 'hostname' => 'localhost');
+		}
+		$admin->tpl->assign('db_config_file', $db_config_file);
+		$admin->tpl->assign('writable', is_writable($db_config_file));
+		$admin->tpl->assign('db', $db);
+		$admin->tpl->display('denora_database.tpl');
+	});
+	$admin->slim->get('/support/register', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$magirc_url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$magirc_url = explode("admin/",$magirc_url);
+		$admin->tpl->assign('magirc_url', $magirc_url[0]);
+		$admin->tpl->display('support_register.tpl');
+	});
+	$admin->slim->get('/support/doc/:file', function($file) use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$path = ($file == 'readme') ? '../README.md' : '../doc/'.basename($file).'.md';
+		if (is_file($path)) {
+			$text = file_get_contents($path);
+			$admin->tpl->assign('text', $text);
+		} else {
+			$admin->tpl->assign('text', "ERROR: Specified documentation file not found");
+		}
+		$admin->tpl->display('support_markdown.tpl');
 	});
 	$admin->slim->get('/:section(/:action)', function($section, $action = 'main') use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->tpl->display('login.tpl'); exit; }
