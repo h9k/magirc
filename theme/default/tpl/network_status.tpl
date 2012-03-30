@@ -101,7 +101,7 @@ $(function() {
 		chart: { type: 'area', renderTo: 'chart_users', events: { load: startCron() } },
 		yAxis: { title: { text: null } },
 		series: [{ name: 'Servers', data: initData(), visible:false }, { name: 'Channels', data: initData(), visible:false }, { name: 'Users', data: initData() }, { name: 'Operators', data: initData(), visible:false }],
-		legend: { enabled: true, verticalAlign: top }
+		legend: { enabled: true }
 	});
 	var chart_status = new Highcharts.Chart({
 		chart: { renderTo: 'chart_status', type: 'column', events: { load: startCron() } },
