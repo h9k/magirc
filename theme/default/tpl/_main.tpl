@@ -18,7 +18,7 @@
 <body>
 {block name="body"}
 <div id="header">
-	<a href="./"><img src="theme/default/img/logo.png" alt="" id="logo" /></a>
+	<a href="./"><img src="theme/default/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
 	<div id="menu">
 		<ul>
 			<li><a href="index.php/network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>

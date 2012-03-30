@@ -1,5 +1,5 @@
 html {
-	background:black url("../img/bg.jpg") no-repeat center top fixed;
+	background:black url("../img/bg.jpg") no-repeat center center fixed;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
 	-o-background-size:cover;
@@ -8,7 +8,7 @@ html {
 body { margin:0; padding:0; font-family:'Share', cursive; font-size:13px; }
 
 img,td,th{border:0}
-img#logo{padding:10px 25px 0px 5px;float:left;}
+img#logo{padding:18px 25px 0px 5px;float:left;}
 h1,h2,h3,h4,h5,h6{font-family:'Share', cursive;color:#333;}
 
 div#header { padding:0 10px; margin:0px auto 5px auto; width:880px; height:75px; }
@@ -53,7 +53,7 @@ div#loading { display:none; float:right; margin-top:25px; }
 div.halfleft { width:49%; float:left; }
 div.halfright { width:49%; float:right; }
 div.choser { text-align:right; margin-bottom:10px; }
-div.warning { padding:2px 10px; margin:15px; background-color:#FAFAFA; border:2px dashed orange; }
+div.warning { padding:2px 10px 2px 60px; margin:15px; background:#FAFAFA url("../img/warning.png") no-repeat 15px center; border:2px dashed orange; }
 div.clear { clear:both; }
 div.file { background-color:#FAFAFA; border:1px solid #ccc; padding:5px 15px; margin:10px; }
 div#success { color:green; text-align:center; font-size:large; display:none; }

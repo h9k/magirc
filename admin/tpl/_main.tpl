@@ -16,7 +16,7 @@
 <body>
 {block name="body"}
 <div id="header">
-	<a href="./"><img src="img/magirc.png" alt="" id="logo" /></a>
+	<a href="./"><img src="img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
 	<div id="menu">
 		<ul>
 			<li><a href="index.php/overview"{if $section eq 'overview'} class="active"{/if}><span>&nbsp;Overview</span></a></li>
