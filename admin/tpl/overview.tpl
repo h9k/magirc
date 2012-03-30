@@ -44,7 +44,7 @@
 		</form>
 		
 		<h2>Bugs? Suggestions?</h2>
-		Please let us know any wishes you have or any bugs you encounter by opening a ticket in out <a href="https://github.com/h9k/magirc/issues">Issue Tracker</a>
+		Please let us know any wishes you have or any bugs you encounter by opening a ticket in our <a href="https://github.com/h9k/magirc/issues">Issue Tracker</a>
 		
 		<h2>Important notes</h2>
 		{if $setup}
