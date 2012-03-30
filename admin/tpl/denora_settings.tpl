@@ -22,7 +22,7 @@
 			<td align="left">
 				<select name="ircd_type" id="ircd_type">
 				{foreach from=$ircds item=item}
-					<option value="{$item}"{if $cfg.ircd_type} selected="selected"{/if}>{$item}</option>
+					<option value="{$item}"{if $cfg.ircd_type eq $item} selected="selected"{/if}>{$item}</option>
 				{/foreach}
 				</select>
 			</td>
