@@ -70,7 +70,7 @@ $(document).ready(function() {
 			plotBorderWidth: null,
 			plotShadow: false
 		},
-		title: { text: '' },
+		title: { text: null },
 		xAxis: {
 			type: 'datetime',
 			tickPixelInterval: 150,

@@ -1,6 +1,4 @@
-<div id="welcome"></div>
-
-{*<h1>Live Network Status</h1>*}
+<div id="welcome"><h1>Live Network Status</h1></div>
 
 <table class="details" style="width:100%;">
 	<tr>
@@ -100,15 +98,15 @@ $(function() {
 	var count = 0;
 
 	var chart_users = new Highcharts.Chart({
-		colors: ['#89A54E'],
-		chart: { renderTo: 'chart_users', events: { load: startCron() } },
-		yAxis: { title: { text: 'Users' } },
-		series: [{ name: 'Users', data: initData() }]
+		chart: { type: 'area', renderTo: 'chart_users', events: { load: startCron() } },
+		yAxis: { title: { text: null } },
+		series: [{ name: 'Servers', data: initData(), visible:false }, { name: 'Channels', data: initData(), visible:false }, { name: 'Users', data: initData() }, { name: 'Operators', data: initData(), visible:false }],
+		legend: { enabled: true, verticalAlign: top }
 	});
 	var chart_status = new Highcharts.Chart({
 		chart: { renderTo: 'chart_status', type: 'column', events: { load: startCron() } },
 		xAxis: { type: 'linear', categories: [ 'Users', 'Channels', 'Operators', 'Servers' ], labels: { rotation: -45, align: 'right' } },
-		yAxis: { min: 0, title: { text: '' } },
+		yAxis: { min: 0, title: { text: null } },
 		tooltip: { formatter: function() { return '<b>'+ this.x +'</b>: '+ Highcharts.numberFormat(this.y, 0); } },
 		series: [{ name: 'Status', data: [0, 0, 0] }]
 	});
@@ -125,7 +123,10 @@ $(function() {
 	function updateStatus() {
 		$.getJSON('rest/denora.php/network/status', function(result) {
 			var x = (new Date()).getTime();
-			chart_users.series[0].addPoint([x, result.users.val], true, true);
+			chart_users.series[0].addPoint([x, result.servers.val], true, true);
+			chart_users.series[1].addPoint([x, result.chans.val], true, true);
+			chart_users.series[2].addPoint([x, result.users.val], true, true);
+			chart_users.series[3].addPoint([x, result.opers.val], true, true);
 			chart_status.series[0].setData([result.users.val, result.chans.val, result.opers.val, result.servers.val]);
 			$("#net_users").html(result.users.val);
 			if ($("#net_users").html() > $("#net_users_max")) {
