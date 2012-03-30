@@ -5,8 +5,8 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/server/list">Servers</a></li>
-		<li><a href="index.php/server/history">History</a></li>
+		<li><a href="index.php/server/list" title="servers">Servers</a></li>
+		<li><a href="index.php/server/history" title="history">History</a></li>
 	</ul>
 </div>
 {/block}

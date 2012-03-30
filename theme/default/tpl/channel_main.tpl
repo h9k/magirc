@@ -5,9 +5,9 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/channel/list">Channels</a></li>
-		<li><a href="index.php/channel/globalactivity">Activity</a></li>
-		<li><a href="index.php/channel/history">History</a></li>
+		<li><a href="index.php/channel/list" title="channels">Channels</a></li>
+		<li><a href="index.php/channel/globalactivity" title="activity">Activity</a></li>
+		<li><a href="index.php/channel/history" title="history">History</a></li>
 	</ul>
 </div>
 {/block}

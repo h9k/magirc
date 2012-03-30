@@ -205,7 +205,7 @@ $(function() {
 	});
 	$("#tbl_top10chans tbody tr").live("click", function(event) {
 		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '/channel/' + escape(chan) + '/profile#ui-tabs-4';
+		window.location = url_base + '/channel/' + escape(chan) + '/profile#activity';
 	});
 	oTable3 = $("#tbl_top10users").dataTable({
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",

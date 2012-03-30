@@ -5,10 +5,10 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/channel/{$target|escape:'url'}/status">Status</a></li>
-		<li><a href="index.php/channel/{$target|escape:'url'}/countries">Countries</a></li>
-		<li><a href="index.php/channel/{$target|escape:'url'}/clients">Clients</a></li>
-		<li><a href="index.php/channel/{$target|escape:'url'}/activity">Activity</a></li>
+		<li><a href="index.php/channel/{$target|escape:'url'}/status" title="status">Status</a></li>
+		<li><a href="index.php/channel/{$target|escape:'url'}/countries" title="countries">Countries</a></li>
+		<li><a href="index.php/channel/{$target|escape:'url'}/clients" title="clients">Clients</a></li>
+		<li><a href="index.php/channel/{$target|escape:'url'}/activity" title="activity">Activity</a></li>
 	</ul>
 </div>
 {/block}
