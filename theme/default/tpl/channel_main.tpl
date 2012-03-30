@@ -18,6 +18,7 @@
 {literal}
 $(function() {
 	$( "#tabs" ).tabs({
+		select: function(event, ui) { window.location.hash = ui.tab.hash; },
 		cache: true,
 		spinner: 'Loading...',
 		ajaxOptions: {
