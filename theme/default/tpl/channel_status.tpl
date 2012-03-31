@@ -45,6 +45,7 @@ $(document).ready(function() {
 	});
 	$('#tbl_users').dataTable({
 		"iDisplayLength": 10,
+		"sPaginationType": "two_button",
 		"aaSorting": [[ 0, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/channels/'+target+'/users?format=datatables',
 		"aoColumns": [
