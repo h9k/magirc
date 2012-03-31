@@ -40,9 +40,9 @@ try {
 		error_reporting(E_ERROR);
 	} else {
 		$admin->tpl->force_compile = true;
-		if ($admin->cfg->getParam('debug_mode') > 1) {
+		/*if ($admin->cfg->getParam('debug_mode') > 1) {
 			$admin->tpl->debugging = true;
-		}
+		}*/
 	}
 
 	$admin->slim->notFound(function () use ($admin) {
