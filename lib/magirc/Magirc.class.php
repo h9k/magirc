@@ -68,7 +68,9 @@ class Magirc {
 			// Set the locale
 			$locale = $this->cfg->getParam('locale');
 			$domain = "messages";
-			putenv("LC_ALL={$locale}.utf8");
+			/*if (!ini_get("safe_mode")) {
+				putenv("LC_ALL={$locale}.utf8");
+			}*/
 			setlocale(LC_ALL, $locale);
 			bindtextdomain($domain, './locale/');
 			bind_textdomain_codeset($domain, "UTF-8");
