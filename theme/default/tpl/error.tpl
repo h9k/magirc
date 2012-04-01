@@ -10,7 +10,7 @@
 *** STOP: {$err_msg}
 <br /><br />
 {if $smarty.const.DEBUG}
-	Trace:<br />{$err_extra}
+	{if $err_extra}Trace:<br />{$err_extra}{/if}
 	{foreach from=$smarty.server item=item key=key}
 	{$key}: {$item}<br />
 	{/foreach}

@@ -47,6 +47,7 @@ try {
 
 	$admin->slim->notFound(function () use ($admin) {
 		$admin->tpl->assign('err_msg', 'HTTP 404 - Not Found');
+		$admin->tpl->assign('err_extra', null);
 		$admin->tpl->display('error.tpl');
 	});
 

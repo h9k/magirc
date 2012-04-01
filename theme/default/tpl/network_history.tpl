@@ -1,5 +1,5 @@
-<h1>Network Usage Evolution</h1>
-<div id="chart-evolution" style="height: 350px; min-width: 700px"></div>
+<h1>Network Usage History</h1>
+<div id="chart-history" style="height: 350px; min-width: 700px"></div>
 
 {jsmin}
 <script type="text/javascript"><!--
@@ -21,7 +21,7 @@ $(function() {
 
     function createChart() {
         new Highcharts.StockChart({
-            chart: { renderTo: 'chart-evolution' },
+            chart: { renderTo: 'chart-history' },
             yAxis: { min: 0 },
 			rangeSelector: {
 				buttons: [{

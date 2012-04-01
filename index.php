@@ -46,6 +46,7 @@ try {
 
 	$magirc->slim->notFound(function () use ($magirc) {
 		$magirc->tpl->assign('err_msg', 'HTTP 404 - Not Found');
+		$magirc->tpl->assign('err_extra', null);
 		$magirc->tpl->display('error.tpl');
 	});
 
