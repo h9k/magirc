@@ -85,16 +85,12 @@ class Slim_Http_Uri {
     public static function getUri( $reload = false ) {
         if ( $reload || is_null(self::$uri) ) {
             $uri = '';
-            if ( !empty($_SERVER['PATH_INFO']) ) {
-                $uri = $_SERVER['PATH_INFO'];
+            if ( isset($_SERVER['REQUEST_URI']) ) {
+                $uri = parse_url(self::getScheme() . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            } else if ( isset($_SERVER['PHP_SELF']) ) {
+                $uri = $_SERVER['PHP_SELF'];
             } else {
-                if ( isset($_SERVER['REQUEST_URI']) ) {
-                    $uri = parse_url(self::getScheme() . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                } else if ( isset($_SERVER['PHP_SELF']) ) {
-                    $uri = $_SERVER['PHP_SELF'];
-                } else {
-                    throw new RuntimeException('Unable to detect request URI');
-                }
+                throw new RuntimeException('Unable to detect request URI');
             }
             if ( self::getBaseUri() !== '' && strpos($uri, self::getBaseUri()) === 0 ) {
                 $uri = substr($uri, strlen(self::getBaseUri()));

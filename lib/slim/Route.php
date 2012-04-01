@@ -332,7 +332,7 @@ class Slim_Route {
         if ( array_key_exists($key, $this->conditions) ) {
             return '(?P<' . $key . '>' . $this->conditions[$key] . ')';
         } else {
-            return '(?P<' . $key . '>[a-zA-Z0-9_\-\.\!\~\*\\\'\(\)\:\@\&\=\$\+,%\#]+)';
+            return '(?P<' . $key . '>[a-zA-Z0-9_\-\.\!\~\*\\\'\(\)\:\@\&\=\$\+,%]+)';
         }
     }
 
@@ -363,14 +363,14 @@ class Slim_Route {
      * registered for this route, each callable middleware is invoked in
      * the order specified.
      *
-     * This method is smart about trailing slashes on the route pattern.
-     * If this route's pattern is defined with a trailing slash, and if the
-     * current request URI does not have a trailing slash but otherwise
+     * This method is smart about trailing slashes on the route pattern. 
+     * If this route's pattern is defined with a trailing slash, and if the 
+     * current request URI does not have a trailing slash but otherwise 
      * matches this route's pattern, a Slim_Exception_RequestSlash
-     * will be thrown triggering an HTTP 301 Permanent Redirect to the same
-     * URI _with_ a trailing slash. This Exception is caught in the
-     * `Slim::run` loop. If this route's pattern is defined without a
-     * trailing slash, and if the current request URI does have a trailing
+     * will be thrown triggering an HTTP 301 Permanent Redirect to the same 
+     * URI _with_ a trailing slash. This Exception is caught in the 
+     * `Slim::run` loop. If this route's pattern is defined without a 
+     * trailing slash, and if the current request URI does have a trailing 
      * slash, this route will not be matched and a 404 Not Found
      * response will be sent if no subsequent matching routes are found.
      *
