@@ -62,7 +62,7 @@ $(document).ready(function() {
 	});
 	$("#tbl_users tbody tr").live("click", function(event) {
 		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '/user/nick:' + escape(name) + '/profile';
+		window.location = url_base + '/user/nick:' + encodeURIComponent(name) + '/profile';
 	});
 });
 {/literal}

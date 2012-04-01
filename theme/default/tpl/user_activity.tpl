@@ -54,7 +54,7 @@ $(document).ready(function() {
 		series: [{ name: 'Lines', data: [] }]
 	});
 	function updateChart() {
-		$.getJSON('rest/denora.php/users/'+mode+'/'+target+'/hourly/'+escape(chan)+'/'+type, function(result) {
+		$.getJSON('rest/denora.php/users/'+mode+'/'+target+'/hourly/'+encodeURIComponent(chan)+'/'+type, function(result) {
 			chart_activity.series[0].setData(result);
 		});
 	}
@@ -65,7 +65,7 @@ $(document).ready(function() {
 		"bPaginate": false,
 		"bSort": false,
 		"bEscapeRegex": false,
-		"sAjaxSource": "rest/denora.php/users/"+mode+"/"+target+"/activity/"+escape(chan)+'?format=datatables',
+		"sAjaxSource": "rest/denora.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "type", "fnRender": function (oObj) {
 				switch (oObj.aData['type']) {
@@ -88,7 +88,7 @@ $(document).ready(function() {
 	$("#radio,#type").buttonset();
 	$("#radio").change(function(event) {
 		chan = $('input[name=radio]:checked').val();
-		oTable.fnSettings().sAjaxSource = "rest/denora.php/users/"+mode+"/"+target+"/activity/"+escape(chan)+'?format=datatables';
+		oTable.fnSettings().sAjaxSource = "rest/denora.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables';
 		oTable.fnReloadAjax();
 		updateChart();
 	});

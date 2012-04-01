@@ -42,7 +42,7 @@ $(document).ready(function() {
 	});
 	$("#tbl_activity tbody tr").live("click", function(event) {
 		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + '/channel/' + escape(name) + '/profile#activity';
+		window.location = url_base + '/channel/' + encodeURIComponent(name) + '/profile#activity';
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
