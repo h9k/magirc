@@ -84,8 +84,13 @@ class Setup {
 			$status['admin'] = false;
 			$status['error'] = true;
 		}
-
-		$status['magic_quotes'] = get_magic_quotes_gpc();
+		
+		if (get_magic_quotes_gpc()) {
+			$status['magic_quotes'] = true;
+			$status['error'] = true;
+		} else {
+			$status['magic_quotes'] = false;
+		}
 
 		return $status;
 	}

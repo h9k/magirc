@@ -7,7 +7,7 @@
 <pre>Checking PHP version...{if $status.php} <span style="color:green">Supported</span> ({$phpversion})</pre>
 {else} <span style="color:red">Not Supported</span> ({$phpversion}) ><br />You need at least version 5.2.0</pre>{/if}
 
-<pre>Checking PHP magic_quotes_gpc...{if $status.magic_quotes} <span style="color:orange;">Enabled</span><br />Please ensure that the magic_quotes_gpc option is turned OFF in your php.ini!</pre>
+<pre>Checking PHP magic_quotes_gpc...{if $status.magic_quotes} <span style="color:red;">Enabled</span><br />Please ensure that the magic_quotes_gpc option is turned OFF in your php.ini!</pre>
 {else} <span style="color:green;">Disabled</span></pre>{/if}
 
 <pre>Checking PHP PDO mysql driver... {if $status.pdo}<span style="color:green">Present</span></pre>
