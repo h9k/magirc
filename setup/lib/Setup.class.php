@@ -1,6 +1,5 @@
 <?php
 
-
 class Setup {
 	public $db;
 	public $tpl;
@@ -36,7 +35,7 @@ class Setup {
 			$status['error'] = true;
 		}
 
-		if (in_array('mysql', PDO::getAvailableDrivers())) {
+		if (extension_loaded('pdo') == 1 && in_array('mysql', PDO::getAvailableDrivers())) {
 			$status['pdo'] = true;
 		} else {
 			$status['pdo'] = false;
