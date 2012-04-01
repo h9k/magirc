@@ -1,0 +1,58 @@
+#
+# The following directives help to improve the performance of MagIRC and are
+# intended for Apache web servers only.
+#
+# To enable, rename this file to .htaccess
+#
+# Depending on your particular system, enabling an option might cause server
+# errors. If this happens, just comment the offending line again.
+#
+
+# Enable zlib output compression for PHP 
+#php_flag zlib.output_compression On
+
+# Unset cache ETags. Requires the mod_header apache module.
+#<IfModule mod_header.c>
+#Header unset ETag
+#FileETag None
+#</IfModule>
+
+# Set cache expirations by file types. Requires the mod_expires apache module.
+#<IfModule mod_expires.c>
+#ExpiresActive On
+#ExpiresDefault "access plus 300 seconds"
+#ExpiresByType text/html "access plus 1 week"
+#ExpiresByType text/css "access plus 1 week"
+#ExpiresByType text/javascript "access plus 1 month"
+#ExpiresByType application/javascript "access plus 1 month"
+#ExpiresByType application/x-javascript "access plus 1 month"
+#ExpiresByType application/json "access plus 5 seconds"
+#ExpiresByType image/gif "access plus 1 month"
+#ExpiresByType image/jpg "access plus 1 month"
+#ExpiresByType image/jpeg "access plus 1 month"
+#ExpiresByType image/png "access plus 1 month"
+#ExpiresByType image/x-icon "access plus 1 year"
+#</IfModule>
+
+# Enable gzip output compression. Requires the mod_deflate apache module
+#<IfModule mod_deflate.c>
+#SetOutputFilter DEFLATE
+#AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/json
+#<IfModule mod_header.c>
+#Header append Vary User-Agent env=!dont-vary
+#</IfModule>
+#</IfModule>
+
+# Enable URL rewriting. Requires the mod_rewrite apache module
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Some hosts may require you to use the `RewriteBase` directive.
+# If you need to use the `RewriteBase` directive, it should be the
+# absolute physical path to the directory that contains this htaccess file.
+#
+# RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
