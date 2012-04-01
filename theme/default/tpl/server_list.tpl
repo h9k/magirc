@@ -36,7 +36,7 @@
 			<tr><th>Max opers:</th><td><span id="srv_maxopers" class="val"></span> on <span id="srv_maxopertime"></td></tr>
 		</table>
 	</div>
-	<div class="motd clear" title="MOTD"><pre id="srv_motd"></pre></div>
+	<div id="srv_motd" class="motd clear" title="MOTD"><pre id="srv_motd_txt"></pre></div>
 </div>
 
 {jsmin}
@@ -74,8 +74,9 @@ $(document).ready(function() {
 				$("#srv_opers").html(data.opers);
 				$("#srv_maxopers").html(data.maxopers);
 				$("#srv_maxopertime").html(data.maxopertime);
-				$("#srv_motd").html(data.motd ? data.motd_html : "MOTD not available for this server");
+				$("#srv_motd_txt").html(data.motd ? data.motd_html : "MOTD not available for this server");
 				$("#dialog-server").dialog("open");
+				$("#srv_motd").scrollTop(0);
 			} else {
 				alert("Failed");
 			}
