@@ -43,6 +43,13 @@ class Setup {
 			$status['error'] = true;
 		}
 
+		if (extension_loaded('gettext') == 1) {
+			$status['gettext'] = true;
+		} else {
+			$status['gettext'] = false;
+			$status['error'] = true;
+		}
+
 		if (file_exists($magirc_conf)) {
 			if (is_writable($magirc_conf)) {
 				$status['writable'] = true;
