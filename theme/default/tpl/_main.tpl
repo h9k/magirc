@@ -7,22 +7,22 @@
 <meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />
 <meta name="Description" content="IRC Statistics powered by MagIRC" />
 <base href="{$smarty.const.BASE_URL}" />
-<link rel="icon" href="theme/default/css/favicon.ico" type="image/x-icon">
+<link rel="icon" href="theme/{$cfg.theme}/css/favicon.ico" type="image/x-icon">
 {block name="css"}
-<link href="theme/default/css/styles.css" rel="stylesheet" type="text/css" />
-<link href="theme/default/css/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="theme/default/css/datatables.css" rel="stylesheet" type="text/css" />
+<link href="theme/{$cfg.theme}/css/styles.css" rel="stylesheet" type="text/css" />
+<link href="theme/{$cfg.theme}/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="theme/{$cfg.theme}/css/datatables.css" rel="stylesheet" type="text/css" />
 {if $cfg.cdn_enable}
 <link href='http://fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
 {else}
-<link href="theme/default/css/font.css" rel="stylesheet" type="text/css" />
+<link href="theme/{$cfg.theme}/css/font.css" rel="stylesheet" type="text/css" />
 {/if}
 {/block}
 </head>
 <body>
 {block name="body"}
 <div id="header">
-	<a href="./"><img src="theme/default/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
+	<a href="./"><img src="theme/{$cfg.theme}/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
 	<div id="menu">
 		<ul>
 			<li><a href="index.php/network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>
@@ -31,7 +31,7 @@
 			<li><a href="index.php/user"{if $section eq 'user'} class="active"{/if}><span>&nbsp;Users</span></a></li>
 		</ul>
 	</div>
-	<div id="loading"><img src="theme/default/img/loading.gif" alt="loading..." /></div>
+	<div id="loading"><img src="theme/{$cfg.theme}/img/loading.gif" alt="loading..." /></div>
 </div>
 <div id="main">{block name="content"}[content placeholder]{/block}</div>
 <div id="footer">powered by <span style="font-size:12px;"><strong>MagIRC</strong></span> v{$smarty.const.VERSION_FULL}</div>
@@ -53,6 +53,7 @@
 <script type="text/javascript">
 <!--
 var url_base = '{$smarty.const.BASE_URL}';
+var theme = '{$cfg.theme}';
 {literal}
 $(document).ready(function() {
 	$("#loading").ajaxStart(function(){

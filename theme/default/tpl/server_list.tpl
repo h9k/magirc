@@ -48,7 +48,7 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/default/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/default/img/status/offline.png" alt="offline" title="offline" \/>'; } },
+			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; } },
 			{ "mDataProp": "server", "fnRender": function (oObj) { return "<strong>" + oObj.aData['server'] + "<\/strong>"; } },
 			{ "mDataProp": "comment" },
 			{ "mDataProp": "currentusers" },
