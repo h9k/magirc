@@ -1,5 +1,5 @@
 <h1>Database settings</h1>
-<form id="denora-form" method="post" action="index.php/configuration/denora/database">
+<form id="denora-form">
 <table width="100%" border="0" cellspacing="0" cellpadding="5">
 	<tr>
 		<td align="right">Username</td>

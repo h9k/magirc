@@ -1,4 +1,4 @@
-<form id="interface-form" method="post" action="index.php/configuration">
+<form id="interface-form">
 	<h1>Interface settings</h1>
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>

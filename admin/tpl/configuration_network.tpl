@@ -1,5 +1,5 @@
 <h1>Network settings</h1>
-<form id="network-form" method="post" action="index.php/configuration">
+<form id="network-form">
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
 			<td align="right">The <strong>name of your Network</strong></td>

@@ -1,4 +1,4 @@
-<form id="welcome-form" method="post" action="index.php/configuration">
+<form id="welcome-form">
 	<h1>Welcome message</h1>
 	<p>You can welcome your users, describe your network, and put whatever information you want in here.
 	<br />The message will be displayed on the MagIRC front page.</p>
