@@ -80,7 +80,7 @@ try {
 		$admin->tpl->assign('version', array('php' => phpversion(), 'sql_client' => @mysqli_get_client_info(), 'slim' => '1.5.0'));
 		$admin->tpl->display('overview.tpl');
 	});
-	$admin->slim->get('/denora/settings', function() use ($admin) {
+	$admin->slim->get('/configuration/network', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
 		$ircds = array();
 		foreach (glob("../lib/magirc/denora/protocol/*") as $filename) {
@@ -91,22 +91,14 @@ try {
 			}
 		}
 		$admin->tpl->assign('ircds', $ircds);
-		$admin->tpl->display('denora_settings.tpl');
+		$admin->tpl->display('configuration_network.tpl');
 	});
-	$admin->slim->post('/denora/settings', function() use ($admin) {
-		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
-		$admin->slim->contentType('application/json');
-		foreach ($_POST as $key => $val) {
-			$admin->saveConfig($key, $val);
-		}
-		echo json_encode(true);
-	});
-	$admin->slim->get('/denora/welcome', function() use ($admin) {
+	$admin->slim->get('/configuration/welcome', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
 		$admin->tpl->assign('editor', $admin->ckeditor->editor('msg_welcome', $admin->cfg->getParam('msg_welcome')));
-		$admin->tpl->display('denora_welcome.tpl');
+		$admin->tpl->display('configuration_welcome.tpl');
 	});
-	$admin->slim->get('/denora/database', function() use ($admin) {
+	$admin->slim->get('/configuration/denora', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
 		$service = isset($_GET['service']) ? basename($_GET['service']) : 'denora';
 		$db_config_file = "../conf/{$service}.cfg.php";
@@ -122,9 +114,17 @@ try {
 		$admin->tpl->assign('db_config_file', $db_config_file);
 		$admin->tpl->assign('writable', is_writable($db_config_file));
 		$admin->tpl->assign('db', $db);
-		$admin->tpl->display('denora_database.tpl');
+		$admin->tpl->display('configuration_denora.tpl');
 	});
-	$admin->slim->post('/:service/database', function($service) use ($admin) {
+	$admin->slim->post('/configuration', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$admin->slim->contentType('application/json');
+		foreach ($_POST as $key => $val) {
+			$admin->saveConfig($key, $val);
+		}
+		echo json_encode(true);
+	});
+	$admin->slim->post('/configuration/:service/database', function($service) use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
 		$admin->slim->contentType('application/json');
 		$db_config_file = "../conf/$service.cfg.php";

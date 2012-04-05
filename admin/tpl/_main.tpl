@@ -20,7 +20,7 @@
 	<div id="menu">
 		<ul>
 			<li><a href="index.php/overview"{if $section eq 'overview'} class="active"{/if}><span>&nbsp;Overview</span></a></li>
-			<li><a href="index.php/denora"{if $section eq 'denora'} class="active"{/if}><span>&nbsp;Denora</span></a></li>
+			<li><a href="index.php/configuration"{if $section eq 'configuration'} class="active"{/if}><span>&nbsp;Configuration</span></a></li>
 			<li><a href="index.php/support"{if $section eq 'support'} class="active"{/if}><span>&nbsp;Support</span></a></li>
 		</ul>
 	</div>

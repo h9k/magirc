@@ -1,5 +1,5 @@
 <h1>Database settings</h1>
-<form id="database-form" method="post" action="index.php/denora/database">
+<form id="denora-form" method="post" action="index.php/configuration/denora/database">
 <table width="100%" border="0" cellspacing="0" cellpadding="5">
 	<tr>
 		<td align="right">Username</td>
@@ -32,7 +32,7 @@
 {/if}
 </pre>
 
-<button id="database-submit" type="button">Save</button>
+<button id="denora-submit" type="button">Save</button>
 </form>
 
 <div id="manual" style="display:none;">
@@ -43,8 +43,8 @@
 {jsmin}
 <script type="text/javascript"><!--{literal}
 $(function() {
-	$("#database-submit").button().click(function() {
-		$("#database-form").ajaxSubmit({ url: 'index.php/denora/database', type: 'post', success: function(data) {
+	$("#denora-submit").button().click(function() {
+		$("#denora-form").ajaxSubmit({ url: 'index.php/configuration/denora/database', type: 'post', success: function(data) {
 			if (data) $("#success").show().delay(1500).fadeOut(500);
 			else {
 				$("#failure").show().delay(1500).fadeOut(500);

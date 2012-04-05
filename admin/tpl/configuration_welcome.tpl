@@ -1,10 +1,9 @@
-<h1>Welcome message</h1>
-<p>You can welcome your users, describe your network, and put whatever information you want in here.
-<br />The message will be displayed on the MagIRC front page.</p>
-
-<form id="welcome-form" method="post" action="index.php/denora/welcome">
-{$editor}
-<br /><button id="welcome-submit" type="button">Save</button>
+<form id="welcome-form" method="post" action="index.php/configuration">
+	<h1>Welcome message</h1>
+	<p>You can welcome your users, describe your network, and put whatever information you want in here.
+	<br />The message will be displayed on the MagIRC front page.</p>
+	{$editor}
+	<br /><button id="welcome-submit" type="button">Save</button>
 </form>
 
 {jsmin}
@@ -12,7 +11,7 @@
 $(function() {
 	$("#welcome-submit").button().click(function() {
 		$("#welcome-form").ajaxSubmit({
-			url: 'index.php/denora/settings',
+			url: 'index.php/configuration',
 			type: 'post',
 			beforeSerialize:function(){
 				for (instance in CKEDITOR.instances ) {

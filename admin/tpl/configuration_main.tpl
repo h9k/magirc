@@ -1,13 +1,14 @@
 {extends file="_main.tpl"}
 
-{block name="title" append}Denora{/block}
+{block name="title" append}General{/block}
 
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/denora/settings">Settings</a></li>
-		<li><a href="index.php/denora/welcome">Welcome message</a></li>
-		<li><a href="index.php/denora/database">Database</a></li>
+		<li><a href="index.php/configuration/welcome">Welcome</a></li>
+		<li><a href="index.php/configuration/interface">Interface</a></li>
+		<li><a href="index.php/configuration/network">Network</a></li>
+		<li><a href="index.php/configuration/denora">Denora</a></li>
 	</ul>
 </div>
 <div id="success">Saved successfully</div>

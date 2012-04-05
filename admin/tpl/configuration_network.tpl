@@ -1,5 +1,5 @@
-<h1>General settings</h1>
-<form id="settings-form" method="post" action="index.php/denora/settings">
+<h1>Network settings</h1>
+<form id="network-form" method="post" action="index.php/configuration">
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
 			<td align="right">The <strong>name of your Network</strong></td>
@@ -8,14 +8,6 @@
 		<tr>
 			<td align="right">The URL of the <strong>Homepage of your Network</strong></td>
 			<td align="left"><input name="net_url" type="text" id="net_url" value="{$cfg.net_url}" size="32" maxlength="1024" /></td>
-		</tr>
-		<tr>
-			<td align="right"><strong>Default Theme</strong></td>
-			<td align="left"><em>Default</em></td>
-		</tr>
-		<tr>
-			<td align="right"><strong>Default Language</strong><br />(will not override automatic detection by browser)</td>
-			<td align="left"><em>English</em></td>
 		</tr>
 		<tr>
 			<td align="right"><strong>IRCd Server Type</strong></td>
@@ -39,25 +31,15 @@
 			<td align="right">Channels you don't want MagIRC to show.<br />Separate with commas, example: &quot;#opers,#services&quot;</td>
 			<td align="left"><input name="hide_chans" type="text" id="hide_chans" value="{$cfg.hide_chans}" size="32" maxlength="1024" /></td>
 		</tr>
-		<tr>
-			<td align="right">Debug mode</td>
-			<td align="left">
-				<select name="debug_mode" id="debug_mode">
-					<option value="0"{if $cfg.debug_mode eq '0'} selected="selected"{/if}>Off</option>
-					<option value="1"{if $cfg.debug_mode eq '1'} selected="selected"{/if}>PHP Warnings/SQL Errors</option>
-					<option value="2"{if $cfg.debug_mode eq '2'} selected="selected"{/if}>Verbose debugging</option>
-				</select>
-			</td>
-		</tr>
 	</table>
-	<button id="settings-submit" type="button">Save</button>
+	<button id="network-submit" type="button">Save</button>
 </form>
 
 {jsmin}
 <script type="text/javascript"><!--{literal}
 $(function() {
-	$("#settings-submit").button().click(function() {
-		$("#settings-form").ajaxSubmit({ url: 'index.php/denora/settings', type: 'post', success: function(data) {
+	$("#network-submit").button().click(function() {
+		$("#network-form").ajaxSubmit({ url: 'index.php/configuration', type: 'post', success: function(data) {
 			if (data) $("#success").show().delay(1500).fadeOut(500);
 			else $("#failure").show().delay(1500).fadeOut(500);
 		} });
