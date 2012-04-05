@@ -77,7 +77,7 @@ try {
 		if (!$admin->sessionStatus()) { $admin->tpl->display('login.tpl'); exit; }
 		$admin->tpl->assign('section', 'overview');
 		$admin->tpl->assign('setup', file_exists('../setup/'));
-		$admin->tpl->assign('version', array('php' => phpversion(), 'sql_client' => @mysqli_get_client_info(), 'slim' => '1.5.0'));
+		$admin->tpl->assign('version', array('php' => phpversion(), 'sql_client' => @mysqli_get_client_info(), 'slim' => '1.6.0-develop'));
 		$admin->tpl->display('overview.tpl');
 	});
 	$admin->slim->get('/configuration/welcome', function() use ($admin) {
