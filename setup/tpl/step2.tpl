@@ -9,6 +9,8 @@
 	{else}
 		<span style="color:red;">Failed</span></pre>
 	{/if}
+{elseif $updated}
+	<span style="color:green;">Upgraded</span> (version {$version})</pre>
 {else}
 	<span style="color:green;">OK</span> (version {$version})</pre>
 {/if}

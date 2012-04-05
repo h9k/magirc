@@ -10,7 +10,11 @@
 {block name="css"}
 <link href="css/styles.css" rel="stylesheet" type="text/css" />
 <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
+{if $cfg.cdn_enable}
 <link href='http://fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
+{else}
+<link href="css/font.css" rel="stylesheet" type="text/css" />
+{/if}
 {/block}
 </head>
 <body>
@@ -31,8 +35,13 @@
 <div id="footer">powered by <span style="font-size:12px;"><strong>MagIRC</strong></span> v{$smarty.const.VERSION_FULL}</div>
 {/block}
 {block name="js"}
+{if $cfg.cdn_enable}
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.18/jquery-ui.min.js"></script>
+{else}
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+{/if}
 <script type="text/javascript" src="../js/jquery.form.js"></script>
 {jsmin}
 <script type="text/javascript"><!--

@@ -87,14 +87,13 @@
 	</tr>
 </table>
 {jsmin}
-<script type="text/javascript"><!--{literal}
+<script type="text/javascript"><!--
+var refresh_interval = {$cfg.live_interval};
+{literal}
 $(function() {
 	$.getJSON('index.php/welcome', function(result) {
 		$("#welcome").html(result);
 	});
-	//TODO: make refresh configurable and do not run if the tab is not active
-	var status_refresh = 15; // seconds
-	var tbl_refresh = 15; // seconds
 	var count = 0;
 
 	var chart_users = new Highcharts.Chart({
@@ -116,8 +115,10 @@ $(function() {
 		if (count >= 2) {
 			updateStatus();
 			updateMax();
-			setInterval(updateStatus, status_refresh * 1000);
-			setInterval(updateTables, tbl_refresh * 1000);
+			if (refresh_interval > 0) {
+				setInterval(updateStatus, refresh_interval * 1000);
+				setInterval(updateTables, refresh_interval * 1000);
+			}
 		}
 	}
 	function updateStatus() {
@@ -172,7 +173,7 @@ $(function() {
 	function initData() {
 		var data = [], time = (new Date()).getTime();
 		for (i = -19; i <= 0; i++) {
-			data.push({ x: time + i * status_refresh * 1000, y: null });
+			data.push({ x: time + i * refresh_interval * 1000, y: null });
 		}
 		return data;
 	}

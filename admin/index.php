@@ -32,9 +32,9 @@ define('BASE_URL', sprintf("%s://%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $
 $admin = new Admin();
 
 try {
-	if ($admin->cfg->getParam('db_version') < 1) $admin->slim->halt(500, 'SQL Config Table is missing or out of date!<br />Please run the <em>MagIRC Installer</em>');
 	define('DEBUG', $admin->cfg->getParam('debug_mode'));
 	$admin->tpl->assign('cfg', $admin->cfg->config);
+	if ($admin->cfg->getParam('db_version') < 2) die('SQL Config Table is missing or out of date!<br />Please run the <em>MagIRC Installer</em>');
 	if ($admin->cfg->getParam('debug_mode') < 1) {
 		ini_set('display_errors','off');
 		error_reporting(E_ERROR);
@@ -80,6 +80,20 @@ try {
 		$admin->tpl->assign('version', array('php' => phpversion(), 'sql_client' => @mysqli_get_client_info(), 'slim' => '1.5.0'));
 		$admin->tpl->display('overview.tpl');
 	});
+	$admin->slim->get('/configuration/welcome', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$admin->tpl->assign('editor', $admin->ckeditor->editor('msg_welcome', $admin->cfg->getParam('msg_welcome')));
+		$admin->tpl->display('configuration_welcome.tpl');
+	});
+	$admin->slim->get('/configuration/interface', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$themes = array();
+		foreach (glob("../theme/*") as $filename) {
+			$themes[] = basename($filename);
+		}
+		$admin->tpl->assign('themes', $themes);
+		$admin->tpl->display('configuration_interface.tpl');
+	});
 	$admin->slim->get('/configuration/network', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
 		$ircds = array();
@@ -92,11 +106,6 @@ try {
 		}
 		$admin->tpl->assign('ircds', $ircds);
 		$admin->tpl->display('configuration_network.tpl');
-	});
-	$admin->slim->get('/configuration/welcome', function() use ($admin) {
-		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
-		$admin->tpl->assign('editor', $admin->ckeditor->editor('msg_welcome', $admin->cfg->getParam('msg_welcome')));
-		$admin->tpl->display('configuration_welcome.tpl');
 	});
 	$admin->slim->get('/configuration/denora', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }

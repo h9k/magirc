@@ -2,12 +2,26 @@
 	<h1>Interface settings</h1>
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
-			<td align="right"><strong>Default Theme</strong></td>
-			<td align="left"><em>Default</em></td>
+			<td align="right"><strong>Theme</strong></td>
+			<td align="left">
+				<select name="theme" id="theme">
+				{foreach from=$themes item=item}
+					<option value="{$item}"{if $cfg.theme eq $item} selected="selected"{/if}>{$item}</option>
+				{/foreach}
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td align="right"><strong>Default Language</strong><br />(will not override automatic detection by browser)</td>
 			<td align="left"><em>English</em></td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Enable CDN</strong><br />(improves performance, template dependent)</td>
+			<td align="left">yes <input type="radio" name="cdn_enable" value="1"{if $cfg.cdn_enable} checked="checked"{/if} /> <input type="radio" name="cdn_enable" value="0"{if !$cfg.cdn_enable} checked="checked"{/if} /> no</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Live update interval</strong><br />(0 to disable)</td>
+			<td align="left"><input type="text" size="3" maxlength="3" name="live_interval" value="{$cfg.live_interval}" /> seconds</td>
 		</tr>
 		<tr>
 			<td align="right">Debug mode</td>
