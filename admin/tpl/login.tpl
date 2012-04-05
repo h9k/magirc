@@ -37,17 +37,24 @@ $("#dialog-login").dialog({
 	modal: true,
 	buttons: {
 		"Login": function() {
-			$.post("index.php/login", { username: $("#username").val(), password: $("#password").val() }, function(success) {
-				if (success) {
-					window.location = 'index.php';
-				} else {
-					$("#title").html('Login failed');
-					$("#message").html('Please check your credentials and try again');
-				}
-			}, "json");
+			login();
 		}
 	}
 });
+$(document).keyup(function(e){
+    if(e.keyCode === 13) login();
+});
+function login() {
+	$.post("index.php/login", { username: $("#username").val(), password: $("#password").val() }, function(success) {
+		if (success) {
+			window.location = 'index.php';
+		} else {
+			$("#title").html('Login failed');
+			$("#message").html('Please check your credentials and try again');
+		}
+	}, "json");
+}
+
 {/literal}
 --></script>
 {/jsmin}
