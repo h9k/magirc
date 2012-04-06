@@ -20,6 +20,10 @@
 			<td align="left">yes <input type="radio" name="cdn_enable" value="1"{if $cfg.cdn_enable} checked="checked"{/if} /> <input type="radio" name="cdn_enable" value="0"{if !$cfg.cdn_enable} checked="checked"{/if} /> no</td>
 		</tr>
 		<tr>
+			<td align="right"><strong>Enable URL Rewrite</strong><br />(Requires rewriting support on the web server.<br />For apache, please rename htaccess.txt to .htaccess)</td>
+			<td align="left">yes <input type="radio" name="rewrite_enable" value="1"{if $cfg.rewrite_enable} checked="checked"{/if} /> <input type="radio" name="rewrite_enable" value="0"{if !$cfg.rewrite_enable} checked="checked"{/if} /> no</td>
+		</tr>
+		<tr>
 			<td align="right"><strong>Live update interval</strong><br />(0 to disable)</td>
 			<td align="left"><input type="text" size="3" maxlength="3" name="live_interval" value="{$cfg.live_interval}" /> seconds</td>
 		</tr>

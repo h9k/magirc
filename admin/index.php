@@ -36,7 +36,7 @@ $admin = new Admin();
 try {
 	define('DEBUG', $admin->cfg->getParam('debug_mode'));
 	$admin->tpl->assign('cfg', $admin->cfg->config);
-	if ($admin->cfg->getParam('db_version') < 2) die('SQL Config Table is missing or out of date!<br />Please run the <em>MagIRC Installer</em>');
+	if ($admin->cfg->getParam('db_version') < DB_VERSION) die('SQL Config Table is missing or out of date!<br />Please run the <em>MagIRC Installer</em>');
 	if ($admin->cfg->getParam('debug_mode') < 1) {
 		ini_set('display_errors','off');
 		error_reporting(E_ERROR);

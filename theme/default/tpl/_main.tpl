@@ -25,10 +25,10 @@
 	<a href="./"><img src="theme/{$cfg.theme}/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
 	<div id="menu">
 		<ul>
-			<li><a href="index.php/network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>
-			<li><a href="index.php/server"{if $section eq 'server'} class="active"{/if}><span>&nbsp;Servers</span></a></li>
-			<li><a href="index.php/channel"{if $section eq 'channel'} class="active"{/if}><span>&nbsp;Channels</span></a></li>
-			<li><a href="index.php/user"{if $section eq 'user'} class="active"{/if}><span>&nbsp;Users</span></a></li>
+			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;Network</span></a></li>
+			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}server"{if $section eq 'server'} class="active"{/if}><span>&nbsp;Servers</span></a></li>
+			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}channel"{if $section eq 'channel'} class="active"{/if}><span>&nbsp;Channels</span></a></li>
+			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}user"{if $section eq 'user'} class="active"{/if}><span>&nbsp;Users</span></a></li>
 		</ul>
 	</div>
 	<div id="loading"><img src="theme/{$cfg.theme}/img/loading.gif" alt="loading..." /></div>
@@ -52,7 +52,7 @@
 {jsmin}
 <script type="text/javascript">
 <!--
-var url_base = '{$smarty.const.BASE_URL}';
+var url_base = '{$smarty.const.BASE_URL}{if !$cfg.rewrite_enable}index.php/{/if}';
 var theme = '{$cfg.theme}';
 {literal}
 $(document).ready(function() {

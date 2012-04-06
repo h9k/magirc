@@ -7,7 +7,7 @@
  * @copyright   2012 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     0.7.0
+ * @version     0.7.2
  */
 
 ini_set('display_errors','off');
@@ -23,7 +23,9 @@ if (!is_writable('tmp/')) {
 	die("ERROR: The 'setup/tmp/' directory is not writable. Please chmod it to 0777.");
 }
 
-require_once('lib/init.inc.php');
+include_once('../lib/magirc/version.inc.php');
+require_once('../lib/smarty/Smarty.class.php');
+require_once('../lib/magirc/DB.class.php');
 require_once('lib/Setup.class.php');
 
 $setup = new Setup();

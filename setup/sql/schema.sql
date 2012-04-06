@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
 -- Dumping data for table `magirc_config`
 --
 
-INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '2'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '3'),
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
 ('msg_welcome', '<h1>Welcome to Magirc</h1><p>These are the Web Stats of this IRC Network.<br />You will find detailed information about the network status and the activity of its channels and users.<br />Enjoy your stay!</p>'),
@@ -28,7 +28,8 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('hide_chans', '#opers,#services'),
 ('debug_mode', '0'),
 ('live_interval', '15'),
-('cdn_enable', '1');
+('cdn_enable', '1'),
+('rewrite_enable', '1');
 
 --
 -- Table structure for table `magirc_admin`
