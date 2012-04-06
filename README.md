@@ -19,7 +19,7 @@ Main features
 
 Requirements
 ------------
-* Web Server with PHP 5.3+ and the PHP MySQL module installed
+* Web Server with PHP 5.3+ and the *pdo_mysql*, *mcrypt* and *gettext* modules installed
 * Modern Web Browser supporting HTML5, CSS3 and JavaScript
 * [Denora Stats](http://www.denorastats.org) with MySQL enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
@@ -29,7 +29,7 @@ Limitations
 The current version is considered to be **alpha** and has some known limitations:
 
 * English only: MagIRC already has gettext localization built in, but it will be activated only once the software is nearly finished to avoid too much work maintaining language files for rapidly changing code. This is scheduled for the **beta** release.
-* Only one default theme: MagIRC will allow to install additional themes, but things need to be sorted out before allowing this. This is scheduled for the **release candidate**.
+* Only one default theme: MagIRC allows to install additional themes, but things need to be sorted out before fully this. This is scheduled for the **release candidate**.
 
 Required Denora settings
 ------------------------

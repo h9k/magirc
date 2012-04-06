@@ -13,7 +13,9 @@
 ini_set('display_errors','on');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
-if (get_magic_quotes_gpc()) die('Disable magic_quotes_gpc in your php.ini');
+if (version_compare(PHP_VERSION, '5.3.0', '<') || !extension_loaded('pdo') || !in_array('mysql', PDO::getAvailableDrivers()) || !extension_loaded('gettext') || !extension_loaded('mcrypt') || get_magic_quotes_gpc()) {
+	die('System requirements not met. Please run setup.');
+}
 
 session_start();
 

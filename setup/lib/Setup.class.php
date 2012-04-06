@@ -48,6 +48,13 @@ class Setup {
 			$status['gettext'] = false;
 			$status['error'] = true;
 		}
+		
+		if (extension_loaded('mcrypt') == 1) {
+			$status['mcrypt'] = true;
+		} else {
+			$status['mcrypt'] = false;
+			$status['error'] = true;
+		}
 
 		if (file_exists($magirc_conf)) {
 			if (is_writable($magirc_conf)) {

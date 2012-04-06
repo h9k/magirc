@@ -13,6 +13,9 @@
 <pre>Checking PHP PDO mysql driver... {if $status.pdo}<span style="color:green">Present</span></pre>
 {else} <span style="color:red">Missing!</span><br />This component is required to run MagIRC. Please contact your Administrator.</pre>{/if}
 
+<pre>Checking PHP mcrypt extension... {if $status.mcrypt}<span style="color:green">Present</span></pre>
+{else} <span style="color:red">Missing!</span><br />This component is required to run MagIRC. Please contact your Administrator.</pre>{/if}
+
 <pre>Checking PHP gettext extension... {if $status.gettext}<span style="color:green">Present</span></pre>
 {else} <span style="color:red">Missing!</span><br />This component is required to run MagIRC. Please contact your Administrator.</pre>{/if}
 
