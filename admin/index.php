@@ -19,7 +19,7 @@ if (version_compare(PHP_VERSION, '5.3.0', '<') || !extension_loaded('pdo') || !i
 
 session_start();
 
-if (!file_exists('../conf/magirc.cfg.php')) die('Please configure conf/magirc.cfg.dist.php and rename it to conf/magirc.cfg.php');
+if (!file_exists('../conf/magirc.cfg.php')) die('<strong>MagIRC</strong> is not configured<br />Please run <a href="../setup/">Setup</a>');
 if (!is_writable('tmp/')) die("The 'admin/tmp/' directory is not writable. Please chmod it to 0777.");
 
 include_once('../lib/magirc/version.inc.php');
@@ -120,7 +120,7 @@ try {
 			@touch($db_config_file);
 		}
 		if (!$db) {
-			$db = array('username' => 'magirc', 'password' => 'magirc', 'database' => 'magirc', 'hostname' => 'localhost');
+			$db = array('username' => 'denora', 'password' => 'denora', 'database' => 'denora', 'hostname' => 'localhost');
 		}
 		$admin->tpl->assign('db_config_file', $db_config_file);
 		$admin->tpl->assign('writable', is_writable($db_config_file));
