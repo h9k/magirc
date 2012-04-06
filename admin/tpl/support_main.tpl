@@ -5,12 +5,11 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/support/doc/readme">README</a></li>
-		<li><a href="index.php/support/doc/support">Resources</a></li>
-		<li><a href="index.php/support/register">Registration</a></li>
-		<li><a href="index.php/support/doc/changelog">Changelog</a></li>
-		<li><a href="index.php/support/doc/credits">Credits</a></li>
-		<li><a href="index.php/support/doc/license">License</a></li>
+		<li><a href="index.php/support/doc/readme" title="readme">README</a></li>
+		<li><a href="index.php/support/doc/support" title="resources">Resources</a></li>
+		<li><a href="index.php/support/register" title="registration">Registration</a></li>
+		<li><a href="index.php/support/doc/credits" title="credits">Credits</a></li>
+		<li><a href="index.php/support/doc/license" title="license">License</a></li>
 	</ul>
 </div>
 {/block}

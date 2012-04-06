@@ -14,7 +14,7 @@
 		<h3>Resources</h3>
 		<ul>
 			<li><a href="../">View Stats</a></li>
-			<li><a href="index.php/support#ui-tabs-3">Register</a></li>
+			<li><a href="index.php/support#registration">Register</a></li>
 			<li><a href="http://www.magirc.org/">Homepage</a></li>
 			<li><a href="index.php/support">Support</a></li>
 		</ul>
