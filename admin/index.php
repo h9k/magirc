@@ -79,10 +79,7 @@ try {
 		if (!$admin->sessionStatus()) { $admin->tpl->display('login.tpl'); exit; }
 		$admin->tpl->assign('section', 'overview');
 		$admin->tpl->assign('setup', file_exists('../setup/'));
-		$sql_version = "Unknown";
-		if (extension_loaded('mysqli')) $sql_version = mysqli_get_client_info();
-		elseif (extension_loaded('mysql')) $sql_version = mysql_get_client_info();
-		$admin->tpl->assign('version', array('php' => phpversion(), 'sql_client' => $sql_version, 'slim' => '1.6.0-develop'));
+		$admin->tpl->assign('version', array('php' => phpversion(), 'slim' => '1.6.0-develop'));
 		$admin->tpl->display('overview.tpl');
 	});
 	$admin->slim->get('/configuration/welcome', function() use ($admin) {

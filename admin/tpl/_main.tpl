@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{block name="title"}{$cfg.net_name} - {/block}</title>
+<title>{block name="title"}MagIRC - {/block}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
 <meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />

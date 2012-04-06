@@ -1,6 +1,6 @@
 {extends file="_main.tpl"}
 
-{block name="title" append}General{/block}
+{block name="title" append}Configuration{/block}
 
 {block name="content"}
 <div id="tabs">

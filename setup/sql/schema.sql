@@ -30,7 +30,7 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('debug_mode', '0'),
 ('live_interval', '15'),
 ('cdn_enable', '1'),
-('rewrite_enable', '1');
+('rewrite_enable', '0');
 
 --
 -- Table structure for table `magirc_admin`
