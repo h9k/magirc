@@ -17,6 +17,9 @@ class Config {
 		foreach ($data as $item) {
 			$config[$item['parameter']] = $item['value'];
 		}
+		if (isset($config['timezone']) && !date_default_timezone_set($config['timezone'])) {
+			die("ERROR: Invalid timezone setting.<br/>Please check your configuration.");
+		}
 		return $config;
 	}
 

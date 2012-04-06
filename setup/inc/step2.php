@@ -15,6 +15,9 @@ if (!$check) { // Dump file to db
 		if ($version < 3) {
 			$setup->db->insert('magirc_config', array('parameter' => 'rewrite_enable', 'value' => 0));
 		}
+		if ($version < 4) {
+			$setup->db->insert('magirc_config', array('parameter' => 'timezone', 'value' => 'UTC'));
+		}
 		$setup->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 		$updated = true;
 	}

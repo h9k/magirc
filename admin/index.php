@@ -97,6 +97,7 @@ try {
 			$themes[] = basename($filename);
 		}
 		$admin->tpl->assign('themes', $themes);
+		$admin->tpl->assign('timezones', DateTimeZone::listIdentifiers());
 		$admin->tpl->display('configuration_interface.tpl');
 	});
 	$admin->slim->get('/configuration/network', function() use ($admin) {
