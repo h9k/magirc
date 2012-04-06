@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
 <link href="css/default.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
 </head>
 <body>
 <div id="header">
