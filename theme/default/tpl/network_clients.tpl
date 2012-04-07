@@ -5,7 +5,7 @@
 <script type="text/javascript"><!--
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/clientstats/global', function(data) {
+    $.getJSON('rest/denora.php/clientstats', function(data) {
         new Highcharts.Chart({
 			chart: { renderTo: 'chart-clients' },
 			tooltip: {

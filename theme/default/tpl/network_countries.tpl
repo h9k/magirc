@@ -5,7 +5,7 @@
 <script type="text/javascript"><!--
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/countrystats/global', function(data) {
+    $.getJSON('rest/denora.php/countrystats', function(data) {
         new Highcharts.Chart({
 			chart: { renderTo: 'chart-countries' },
 			tooltip: {

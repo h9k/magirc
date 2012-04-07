@@ -121,76 +121,57 @@ class Denora {
 			return "mode_l" . strtolower($mode);
 		}
 	}
-
-	// CTCP statistics
-	function getClientStats($chan = "global") {
-		if ($chan == "global") {
-			$sql_mode = $this->getSqlMode($this->ircd->getParam("services_protection_mode"));
-			$query = "SELECT COUNT(nickid) FROM user WHERE online='Y'";
-			if ($sql_mode) {
-				$query .= " AND {$sql_mode}='N'";
-			}
-			$stmt = $this->db->prepare($query);
-			$stmt->execute();
-			$sum = $stmt->fetch(PDO::FETCH_COLUMN);
-
-			if ($sql_mode) {
-				$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y'
-				AND {$sql_mode}='N' GROUP by ctcpversion ORDER BY count DESC";
-			} else {
-				$query = "SELECT ctcpversion AS name, COUNT(*) AS count FROM user WHERE online='Y'
-					GROUP by ctcpversion ORDER BY count DESC";
-			}
-			$stmt = $this->db->prepare($query);
-			$stmt->execute();
-			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+	private function getUserCount($chan = null) {
+		$query = "SELECT COUNT(*) FROM user
+			JOIN server ON server.servid = user.servid";
+		if ($chan) {
+			$query .= " JOIN ison ON ison.nickid = user.nickid
+			JOIN chan ON chan.chanid = ison.chanid
+			WHERE LOWER(chan.channel)=LOWER(:chan) AND user.online = 'Y'";
 		} else {
-			$query = "SELECT COUNT(user.nickid) FROM user, chan, ison WHERE chan.chanid = ison.chanid
-				AND user.nickid = ison.nickid AND user.online='Y' AND LOWER(channel)=LOWER(:chan)";
-			$stmt = $this->db->prepare($query);
-			$stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
-			$stmt->execute();
-			$sum = $stmt->fetch(PDO::FETCH_COLUMN);
-
-			$query = "SELECT user.ctcpversion AS name, COUNT(*) AS count FROM user, chan, ison WHERE
-				user.nickid=ison.nickid AND ison.chanid=chan.chanid AND LOWER(chan.channel)=LOWER(:chan)
-				AND user.online='Y' GROUP by user.ctcpversion ORDER BY count DESC;";
-			$stmt = $this->db->prepare($query);
-			$stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
-			$stmt->execute();
-			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$query .= " WHERE user.online = 'Y'";
 		}
-		return $this->makeData($result, $sum);
+		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
+		if ($this->ircd->getParam("services_protection_mode")) {
+			$query .= sprintf(" AND user.%s='N'", $this->getSqlMode($this->ircd->getParam("services_protection_mode")));
+		}
+		$stmt = $this->db->prepare($query);
+		if ($chan != 'global') $stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_COLUMN);
+	}
+	
+	private function getPieStats($type, $chan = null) {
+		$type = ($type == 'clients') ? 'ctcpversion' : 'country';
+		$query = "SELECT user.$type AS name, COUNT(*) AS count FROM user
+			JOIN server ON server.servid = user.servid";
+		if ($chan) {
+			$query .= " JOIN ison ON ison.nickid = user.nickid
+				JOIN chan ON chan.chanid = ison.chanid
+				WHERE LOWER(chan.channel)=LOWER(:chan)
+				AND user.online='Y'";
+		} else {
+			$query .= " WHERE user.online='Y'";
+		}		
+		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
+		if ($this->ircd->getParam("services_protection_mode")) {
+			$query .= sprintf(" AND user.%s='N'", $this->getSqlMode($this->ircd->getParam("services_protection_mode")));
+		}
+		$query .= " GROUP by user.$type ORDER BY count DESC";
+		$stmt = $this->db->prepare($query);
+		if ($chan != 'global') $stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	function getCountryStats($chan = "global") {
-		if ($chan == "global") {
-			$query = "SELECT SUM(count) FROM tld WHERE count != 0;";
-			$stmt = $this->db->prepare($query);
-			$stmt->execute();
-			$sum = $stmt->fetch(PDO::FETCH_COLUMN);
-
-			$query = "SELECT country AS name, count FROM tld WHERE count != 0 ORDER BY count DESC;";
-			$stmt = $this->db->prepare($query);
-			$stmt->execute();
-			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		} else {
-			$query = ("SELECT COUNT(user.nickid) FROM chan, ison, user WHERE chan.chanid = ison.chanid
-				AND ison.nickid = user.nickid AND LOWER(channel)=LOWER(:chan) AND user.online='Y'");
-			$stmt = $this->db->prepare($query);
-			$stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
-			$stmt->execute();
-			$sum = $stmt->fetch(PDO::FETCH_COLUMN);
-
-			$query = "SELECT user.country AS name, COUNT(*) AS count FROM user, chan, ison WHERE
-				user.nickid=ison.nickid AND ison.chanid=chan.chanid AND LOWER(chan.channel)=LOWER(:chan)
-				AND user.online='Y' GROUP by user.country ORDER BY count DESC";
-			$stmt = $this->db->prepare($query);
-			$stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
-			$stmt->execute();
-			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		}
-		return $this->makeData($result, $sum);
+	// CTCP statistics
+	function getClientStats($chan = null) {
+		return $this->makeData($this->getPieStats('clients', $chan), $this->getUserCount($chan));
+	}
+	// TLD statistics
+	function getCountryStats($chan = null) {
+		return $this->makeData($this->getPieStats('countries', $chan), $this->getUserCount($chan));
 	}
 
 	private function makeData($result, $sum) {

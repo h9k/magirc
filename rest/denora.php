@@ -176,9 +176,9 @@ function getOperators() {
 	}
 	echo (@$_GET['format'] == "datatables") ? json_encode(array('aaData' => $data)) : json_encode($data);
 };
-function getClientStats($chan = 'global') {
+function getClientStats($chan = null) {
 	global $magirc;
-	if ($chan != 'global') {
+	if ($chan) {
 		switch ($magirc->denora->checkChannel($chan)) {
 			case 0: $magirc->slim->notFound();
 			case 1: $magirc->slim->halt(403, json_encode(array('error' => "HTTP 403 Access Denied")));
@@ -187,9 +187,9 @@ function getClientStats($chan = 'global') {
 	$data = $magirc->denora->getClientStats($chan);
 	echo json_encode($data);
 };
-function getCountryStats($chan = 'global') {
+function getCountryStats($chan = null) {
 	global $magirc;
-	if ($chan != 'global') {
+	if ($chan) {
 		switch ($magirc->denora->checkChannel($chan)) {
 			case 0: $magirc->slim->notFound();
 			case 1: $magirc->slim->halt(403, json_encode(array('error' => "HTTP 403 Access Denied")));
