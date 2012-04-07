@@ -71,9 +71,6 @@ $magirc->slim->get('/channels/:chan/hourly/:type', function($chan, $type) use($m
 	$magirc->checkPermission('channel', $chan);
 	$magirc->jsonOutput($magirc->denora->getChannelHourlyActivity($chan, $type));
 });
-$magirc->slim->get('/users', function() use($magirc) {
-	$magirc->jsonOutput($data, $magirc->denora->getUserList());
-});
 $magirc->slim->get('/users/hourlystats', function() use($magirc) {
     $magirc->jsonOutput($magirc->denora->getHourlyStats('stats'));
 });
