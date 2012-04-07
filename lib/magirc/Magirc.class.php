@@ -30,6 +30,10 @@ class Magirc {
 	public $slim;
 	public $denora;
 
+	/**
+	 * Magirc Class Constructor
+	 * @param type $api_mode ('web': frontend, 'denora': Denora API)
+	 */
 	function __construct($api_mode = "web") {
 		// Setup the Slim framework
 		$this->slim = new Slim();
@@ -78,8 +82,50 @@ class Magirc {
 			#define('LANG', substr($locale, 0, 2));
 		}
 	}
+	
+	/**
+	 * Checks thet permission for the given type and target.
+	 * Terminates the program with an appropriate error message on failure.
+	 * (Used by the RESTful API)
+	 * @param string $type Choices: 'channel'
+	 * @param string $target For example the channel name
+	 */
+	function checkPermission($type, $target) {
+		$result = 200;
+		switch($type) {
+			case 'channel':
+				$result = $this->denora->checkChannel($target);
+				break;
+		}
+		// In case of error the application will terminate, otherwise it will continue normally
+		switch ($result) {
+			case 404: $this->slim->notFound();
+			case 403: $this->slim->halt(403, $this->jsonOutput(array('error' => "HTTP 403 Access Denied")));
+		}
+	}
+	
+	/**
+	 * Encodes the given data as a JSON object.
+	 * (Used by the RESTful API)
+	 * @param mixed $data Data
+	 * @param boolean $datatables allow/forbid DataTables format
+	 * @param string $idcolumn Column name to use as index for the DataTables automatic row id
+	 */
+	function jsonOutput($data, $datatables = false, $idcolumn = null) {
+		if ($datatables && @$_GET['format'] == "datatables") {
+			if ($idcolumn) {
+				foreach ($data as $key => $val) $data[$key]["DT_RowId"] = $val[$idcolumn];
+			}
+			echo json_encode(array('aaData' => $data));
+		} else {
+			echo json_encode($data);
+		}
+	}
 
-	// Returns session status
+	/**
+	 * Returns the session status
+	 * @return boolean true: valid session, false: invalid or no session
+	 */
 	function sessionStatus() {
 		if (!isset($_SESSION["loginUsername"])) {
 			$_SESSION["message"] = "Access denied";

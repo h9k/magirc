@@ -25,7 +25,7 @@
 			<tr><th style="text-align:right;">IRCd</th><td style="text-align:left;">{$cfg.ircd_type}</td></tr>
 			<tr><th style="text-align:right;">PHP</th><td style="text-align:left;">{$version.php}</td></tr>
 			<tr><th style="text-align:right;">Slim Framework</th><td style="text-align:left;">{$version.slim}</td></tr>
-			<tr><th style="text-align:right;">Smarty</th><td style="text-align:left;">{$smarty.version|str_replace:"Smarty-":""}</td></tr>
+			<tr><th style="text-align:right;">Smarty</th><td style="text-align:left;">{$smarty.version}</td></tr>
 		</table>
 		<br /><img src="img/gplv3.png" alt="GPLv3" />
 	</div>

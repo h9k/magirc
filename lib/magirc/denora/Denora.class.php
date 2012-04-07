@@ -416,7 +416,7 @@ class Denora {
 	}
 
 	/* Checks if given channel can be displayed
-	 * 0 = not existing, 1 = denied, 2 = ok */
+	 * 404 = not existing, 403 = denied, 200 = ok */
 
 	function checkChannel($chan) {
 		$noshow = array();
@@ -425,7 +425,7 @@ class Denora {
 			$noshow[$i] = strtolower($no[$i]);
 		}
 		if (in_array(strtolower($chan), $noshow))
-			return 1;
+			return 403;
 
 		$stmt = $this->db->prepare("SELECT * FROM `chan` WHERE BINARY LOWER(`channel`) = LOWER(:channel)");
 		$stmt->bindParam(':channel', $chan, SQL_STR);
@@ -433,12 +433,12 @@ class Denora {
 		$data = $stmt->fetch();
 
 		if (!$data) {
-			return 0;
+			return 404;
 		} else {
 			if (@$data['mode_li'] == "Y" || @$data['mode_lk'] == "Y" || @$data['mode_uo'] == "Y") {
-				return 1;
+				return 403;
 			} else {
-				return 2;
+				return 200;
 			}
 		}
 	}
