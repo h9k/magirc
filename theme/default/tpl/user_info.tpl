@@ -46,7 +46,7 @@ $(document).ready(function() {
 			$("#user_status_extra").html(status_extra);
 			$("#user_hostname").html(result.hostname);
 			$("#user_server").html(result.server);
-			$("#user_country").html('<img src="theme/'+theme+'/img/flags/'+result.country_code+'.png" alt="" /> '+result.country);
+			$("#user_country").html('<img src="theme/'+theme+'/img/flags/'+result.country_code.toLowerCase()+'.png" alt="" /> '+result.country);
 			$("#user_client").html(result.client);
 		} else {
 			$("#tbl_details").hide();

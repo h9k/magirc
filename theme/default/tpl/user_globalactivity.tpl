@@ -36,7 +36,7 @@ $(document).ready(function() {
 				else if (aData['online']) out = '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online as '+aData['nick']+'" \/>';
 				else out = '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="Offline" \/>';
 				if (aData['country_code'] != '' && aData['country_code'] != '??' && aData['country_code'] != 'local') {
-					out += ' <img src="theme/'+theme+'/img/flags/'+aData['country_code']+'.png" alt="'+aData['country_code']+'" title="'+aData['country']+'" />';
+					out += ' <img src="theme/'+theme+'/img/flags/'+aData['country_code'].toLowerCase()+'.png" alt="'+aData['country_code']+'" title="'+aData['country']+'" />';
 				} else {
 					out += ' <img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="Unknown" />';
 				}
