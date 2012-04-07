@@ -19,7 +19,7 @@
 			<td>{$smarty.const.VERSION_FULL}</td>
 		</tr>
 		<tr>
-			<td align="right"><strong>Email address:</strong></td>
+			<td align="right"><strong>Email address:</strong><br />Optional, you will receive notifications for new releases</td>
 			<td><input name="email" type="text" size="32" /></td>
 		</tr>
 		<tr>
@@ -27,8 +27,8 @@
 			<td>
 				<input type="hidden" name="netname" value="{$cfg.net_name}" />
 				<input type="hidden" name="netpage" value="{$cfg.net_url}" />
-				<input type="hidden" name="homepage" value="http://{$server.HTTP_HOST}{$server.REQUEST_URI}" />
-				<input type="hidden" name="version" value="{$smarty.const.VERSION_FULL}" />
+				<input type="hidden" name="homepage" value="http://{$magirc_url}" />
+				<input type="hidden" name="magirc" value="{$smarty.const.VERSION_FULL}" />
 				<input type="hidden" name="ircd" value="{$cfg.ircd_type}" />
 			</td>
 		</tr>
