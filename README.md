@@ -20,8 +20,8 @@ Main features
 Requirements
 ------------
 * Web Server with PHP 5.3+ and the *pdo_mysql*, *mcrypt* and *gettext* modules installed
-* Modern Web Browser supporting HTML5, CSS3 and JavaScript
-* [Denora Stats](http://www.denorastats.org) with MySQL enabled
+* Web Browser supporting HTML5, CSS3 and JavaScript
+* [Denora Stats](http://www.denorastats.org) server with MySQL enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
 
 Limitations
@@ -59,3 +59,13 @@ Limiting chanstats to +r users improves nick tracking.
 To use this feature **enable** the following parameters by removing the '#' in front:
 
     ustatsregistered;
+
+Installation
+------------
+* Extract the MagIRC archive to your web server
+* Navigate to http://<yourpathtomagirc>/setup/ and follow on-screen instructions
+
+Upgrading
+---------
+* Extract the MagIRC archive overwriting all older files
+* Run setup from http://<yourpathtomagirc>/setup/ for the upgrade procedure
