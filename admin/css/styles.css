@@ -20,10 +20,11 @@ div#menu a {
 	height:30px;
 	width:150px;
 	padding-top:45px;
+	display:block;
 	text-decoration:none;
 	color:white;
 	font-size:18px;
-	display:block;
+	text-shadow: #333 1px 1px;
 	-webkit-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
     -moz-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
     -o-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;

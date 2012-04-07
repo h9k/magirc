@@ -22,14 +22,13 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name" },
+			{ "mDataProp": "name", "fnRender": function(oObj) { return '<strong>'+oObj.aData['name']+'<\/strong>'; } },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "users_max" }
 		]
 	});
 	$("#tbl_channels tbody tr").live("click", function(event) {
-		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + 'channel/' + encodeURIComponent(chan) + '/profile';
+		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
 });
 {/literal}

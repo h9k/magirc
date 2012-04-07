@@ -29,7 +29,24 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/denora.php/users/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name" },
+			{ "mDataProp": "name", "fnRender": function(oObj) {
+				var aData = oObj.aData;
+				var out = "";
+				if (aData['away']) out = '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away as '+aData['nick']+'" \/>';
+				else if (aData['online']) out = '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online as '+aData['nick']+'" \/>';
+				else out = '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="Offline" \/>';
+				if (aData['country_code'] != '' && aData['country_code'] != '??' && aData['country_code'] != 'local') {
+					out += ' <img src="theme/'+theme+'/img/flags/'+aData['country_code']+'.png" alt="'+aData['country_code']+'" title="'+aData['country']+'" />';
+				} else {
+					out += ' <img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="Unknown" />';
+				}
+				out += ' <strong>'+aData['name']+'</strong>';
+				if (aData['bot']) out += ' <img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
+				if (aData['service']) out += ' <img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
+				if (aData['operator']) out += ' <img src="theme/'+theme+'/img/status/operator.png" alt="oper" title="Operator" \/>';
+				if (aData['helper']) out += ' <img src="theme/'+theme+'/img/status/help.png" alt="help" title="Available for help" \/>';
+				return out;
+			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },
 			{ "mDataProp": "lines" },
@@ -40,9 +57,8 @@ $(document).ready(function() {
 			{ "mDataProp": "topics" }
 		]
 	});
-	$("#tbl_activity tbody tr").live("click", function(event) {
-		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + 'user/stats:' + encodeURIComponent(name) + '/profile#activity';
+	$("#tbl_activity tbody tr").live("click", function() {
+		window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile#activity';
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {

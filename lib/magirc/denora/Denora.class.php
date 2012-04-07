@@ -623,8 +623,9 @@ class Denora {
 	function getUserGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 		
-		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats
-			 WHERE type=:type AND letters>0 and chan='global'";
+		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname AS name,letters,words,line AS 'lines',
+			actions,smileys,kicks,modes,topics FROM ustats
+			WHERE type=:type AND letters>0 and chan='global'";
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
@@ -635,17 +636,28 @@ class Denora {
 		$ps = $this->db->prepare($sQuery);
 		$ps->bindParam(':type', $type, PDO::PARAM_INT);
 		$ps->execute();
-		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
+		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
+		if ($datatables) {
+			$iFilteredTotal = $this->db->foundRows();
+		}
+		foreach ($data as $row) {
 			if ($datatables) {
 				$row["DT_RowId"] = $row['name'];
 			}
+			// Get country code and online status
+			$user = $this->getUser('stats', $row['name']);
+			$row['nick'] = $user ? $user['nick'] : $row['name'];
+			$row['country'] = $user ? $user['country'] : 'Unknown';
+			$row['country_code'] = $user ? $user['country_code'] : '';
+			$row['online'] = $user ? $user['online'] : false;
+			$row['away'] = $user ? $user['away'] : false;
+			$row['bot'] = $user ? $user['bot'] : false;
+			$row['service'] = $user ? $user['service'] : false;
+			$row['operator'] = $user ? $user['operator'] : false;
+			$row['helper'] = $user ? $user['helper'] : false;
 			$aaData[] = $row;
 		}
-		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
-			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
-		}
-		return $aaData;
+		return $datatables ? $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData) : $aaData;
 	}
 	
 	function getUserHourlyActivity($mode, $user, $chan, $type) {
@@ -676,9 +688,18 @@ class Denora {
 		return $stmt->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
 	
+	/**
+	 * Returns the stats username and all aliases of a user
+	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
+	 * @param string $user Nickname or Stats username
+	 * @return array ('nick' => nickname, 'uname' => stats username, 'aliases' => array of aliases) 
+	 */
 	private function getUserData($mode, $user) {
 		$uname = ($mode == "stats") ? $user : $this->getUnameFromNick($user);
 		$aliases = $this->getUnameAliases($uname);
+		if (!$aliases) {
+			$aliases = array($uname ? $uname : $user);
+		}
 		$nick = ($mode == "stats") ? $aliases[0] : $user;
 		array_shift($aliases);
 		return array('nick' => $nick, 'uname' => $uname, 'aliases' => $aliases);
@@ -687,32 +708,54 @@ class Denora {
 	function getUser($mode, $user) {
 		$info = $this->getUserData($mode, $user);
 		
-		$ps = $this->db->prepare("SELECT realname, hostname, hiddenhostname, username, swhois,
-			account, connecttime, server, away, awaymsg, ctcpversion, online, lastquit,
-			lastquitmsg, countrycode, country FROM user WHERE nick = :nickname");
+		$ps = $this->db->prepare("SELECT user.*, server.uline FROM user
+			LEFT JOIN server ON server.servid = user.servid
+			WHERE user.nick = :nickname");
 		$ps->bindParam(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();
-		$data = $ps->fetch(PDO::FETCH_OBJ);
+		$data = $ps->fetch(PDO::FETCH_ASSOC);
+		if (!$data) return null;
 		
 		$user = array(
 			'nick' => $info['nick'],
 			'uname' => $info['uname'],
 			'aliases' => $info['aliases'],
-			'username' => $data->username,
-			'realname' => $data->realname,
-			'hostname' => $this->ircd->getParam('host_cloaking') ? $data->hiddenhostname : $data->hostname,
-			'connected_time' => $data->connecttime,
-			'lastquit_time' => $data->lastquit,
-			'lastquit_msg' => $data->lastquitmsg,
-			'server' => $data->server,
-			'client' => $data->ctcpversion,
-			'country' => $data->country,
-			'country_code' => $data->countrycode,
-			'online' => $data->online == 'Y',
-			'away' => $data->away == 'Y',
-			'away_msg' => $data->awaymsg
+			'username' => $data['username'],
+			'realname' => $data['realname'],
+			'hostname' => $this->ircd->getParam('host_cloaking') ? $data['hiddenhostname'] : $data['hostname'],
+			'connected_time' => $data['connecttime'],
+			'lastquit_time' => $data['lastquit'],
+			'lastquit_msg' => $data['lastquitmsg'],
+			'server' => $data['server'],
+			'client' => $data['ctcpversion'],
+			'country' => $data['country'],
+			'country_code' => $data['countrycode'],
+			'online' => $data['online'] == 'Y',
+			'away' => $data['away'] == 'Y',
+			'away_msg' => $data['awaymsg'],
+			'bot' => $this->isBot($data),
+			'service' => $data['uline'] ? true : false,
+			'operator' => $this->isOper($data),
+			'helper' => $this->isHelper($data)
 		);
 		return $user;
+	}
+	
+	private function isOper($user) {
+		if (IRCD == "unreal32") {
+			if ($user['mode_un'] == 'Y') return true;
+			if ($user['mode_ua'] == 'Y') return true;
+			if ($user['mode_la'] == 'Y') return true;
+			if ($user['mode_uc'] == 'Y') return true;
+		}
+		if ($user['mode_lo'] == 'Y') return true; 
+		return false;
+	}
+	private function isBot($user) {
+		return $this->ircd->getParam('bot_mode') && $user[$this->getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y';
+	}
+	private function isHelper($user) {
+		return $this->ircd->getParam('helper_mode') && $user[$this->getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
 	}
 	
 	function getUserChannels($mode, $user) {

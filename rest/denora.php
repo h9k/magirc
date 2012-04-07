@@ -61,7 +61,7 @@ $magirc->slim->get('/channels/:chan', function($chan) use($magirc) {
 });
 $magirc->slim->get('/channels/:chan/users', function($chan) use($magirc) {
 	$magirc->checkPermission('channel', $chan);
-	$magirc->jsonOutput($magirc->denora->getChannelUsers($chan), true);
+	$magirc->jsonOutput($magirc->denora->getChannelUsers($chan), true, 'nick');
 });
 $magirc->slim->get('/channels/:chan/activity/:type', function($chan, $type) use($magirc) {
 	$magirc->checkPermission('channel', $chan);

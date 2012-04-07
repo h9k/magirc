@@ -3,13 +3,12 @@
 <thead>
 	<tr>
 		<th>Nickname</th>
-		<th>Status</th>
 		<th>Server</th>
 		<th>Online since</th>
 	</tr>
 </thead>
 <tbody>
-	<tr><td colspan="4">Loading...</td></tr>
+	<tr><td colspan="3">Loading...</td></tr>
 </tbody>
 </table>
 
@@ -22,12 +21,12 @@ $(document).ready(function() {
 		"aaSorting": [[ 0, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/operators?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "nick", "fnRender": function(oObj) { return '<strong>'+oObj.aData['nick']+'</strong>'; } },
-			{ "mDataProp": "away", "fnRender": function (oObj) {
-				var out = oObj.aData['away'] ? '<img src="theme/'+theme+'/img/status/away.png" alt="away" title="Away" \/>' : '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="Online" \/>';
-				if (oObj.aData['bot']) out += '<img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
-				if (oObj.aData['helper']) out += '<img src="theme/'+theme+'/img/status/help.png" alt="help" title="Available for help" \/>';
-				if (oObj.aData['uline']) out += '<img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
+			{ "mDataProp": "nick", "fnRender": function(oObj) {
+				var out = oObj.aData['away'] ? '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away" \/>' : '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online" \/>';
+				out += ' <strong>'+oObj.aData['nick']+'</strong>';
+				if (oObj.aData['bot']) out += ' <img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
+				if (oObj.aData['helper']) out += ' <img src="theme/'+theme+'/img/status/help.png" alt="help" title="Available for help" \/>';
+				if (oObj.aData['uline']) out += ' <img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
 				return out;
 			} },
 			{ "mDataProp": "server" },

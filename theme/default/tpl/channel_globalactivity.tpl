@@ -29,7 +29,7 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name" },
+			{ "mDataProp": "name", "fnRender": function(oObj) { return '<strong>'+oObj.aData['name']+'<\/strong>'; } },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },
 			{ "mDataProp": "lines" },
@@ -41,8 +41,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_activity tbody tr").live("click", function(event) {
-		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + 'channel/' + encodeURIComponent(name) + '/profile#activity';
+		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {

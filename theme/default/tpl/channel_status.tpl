@@ -49,9 +49,9 @@ $(document).ready(function() {
 		"aaSorting": [[ 0, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/channels/'+target+'/users?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "nick" },
+			{ "mDataProp": "nick", "fnRender": function(oObj) { return '<strong>'+oObj.aData['nick']+'<\/strong>'; } },
 			{ "mDataProp": "away", "fnRender": function (oObj) {
-				var out = oObj.aData['away'] ? '<img src="theme/'+theme+'/img/status/away.png" alt="away" title="Away" \/>' : '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="Online" \/>';
+				var out = oObj.aData['away'] ? '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away" \/>' : '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online" \/>';
 				if (oObj.aData['bot']) out += '<img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
 				if (oObj.aData['helper']) out += '<img src="theme/'+theme+'/img/status/help.png" alt="help" title="Available for help" \/>';
 				if (oObj.aData['uline']) out += '<img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
@@ -61,8 +61,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_users tbody tr").live("click", function(event) {
-		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + 'user/nick:' + encodeURIComponent(name) + '/profile';
+		window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
 	});
 });
 {/literal}
