@@ -251,9 +251,9 @@ class Denora {
 		$hs = $this->ircd->getParam('services_protection_mode') ? "AND user." . $this->getSqlMode($this->ircd->getParam('services_protection_mode')) . " = 'N'" : NULL;
 		if (IRCD == "unreal32") {
 			$query = "SELECT user.*,server.uline FROM user,server WHERE (user.mode_un = 'Y' OR user.mode_ua = 'Y' OR user.mode_la = 'Y' OR user.mode_uc = 'Y' OR user.mode_lo = 'Y')
-				$ho $hs AND user.server = server.server $hu ORDER BY user.mode_un,user.mode_ua,user.mode_la,user.mode_uc,user.mode_lo,user.nick ASC";
+				AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.mode_un,user.mode_ua,user.mode_la,user.mode_uc,user.mode_lo,user.nick ASC";
 		} else {
-			$query = "SELECT user.*,server.uline FROM user,server WHERE user.mode_lo = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.nick ASC";
+			$query = "SELECT user.*,server.uline FROM user,server WHERE user.mode_lo = 'Y' AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.nick ASC";
 		}
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();

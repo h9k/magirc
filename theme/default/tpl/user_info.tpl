@@ -26,27 +26,29 @@ $(document).ready(function() {
 			$.each(result.aliases, function(key, value) {
 				aliases += value + '<br \/>';
 			});
-			$("#user_aliases").html(aliases);
+			$("#user_aliases").html(aliases ? aliases : '-');
 			$("#user_uname").html(result.uname);
 			$("#user_realname").html(result.realname);
+			status = getUserStatus(result);
 			if (result.online) {
 				if (result.away) {
-					status = 'Away';
+					//status += ' Away';
 					if (result.away_msg) status_extra += '<br \/>Message: ' + result.away_msg;
 				} else {
-					status = 'Online';
+					//status += ' Online';
 				}
 				status_extra += '<br \/>Connected since ' + result.connected_time;
 			} else {
-				status = 'Offline';
+				//status += ' Offline';
 				if (result.lastquit_time) status_extra += '<br \/>Last quit ' + result.lastquit_time;
 				if (result.lastquit_msg) status_extra += '<br \/>Message: ' + result.lastquit_msg;
 			}
+			status += getUserExtra(result);
 			$("#user_status").html(status);
 			$("#user_status_extra").html(status_extra);
 			$("#user_hostname").html(result.hostname);
 			$("#user_server").html(result.server);
-			$("#user_country").html('<img src="theme/'+theme+'/img/flags/'+result.country_code.toLowerCase()+'.png" alt="" /> '+result.country);
+			$("#user_country").html(getCountryFlag(result)+' '+result.country);
 			$("#user_client").html(result.client);
 		} else {
 			$("#tbl_details").hide();
