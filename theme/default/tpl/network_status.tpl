@@ -211,7 +211,9 @@ $(function() {
 	oTable3 = $("#tbl_top10users").dataTable({
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "uname" },
+			{ "mDataProp": "uname", "fnRender": function(oObj) {
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['uname']+'</strong>' + getUserExtra(oObj.aData);
+			} },
 			{ "mDataProp": "line" }
 		]
 	});

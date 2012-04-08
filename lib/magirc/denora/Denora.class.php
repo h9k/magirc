@@ -389,10 +389,26 @@ class Denora {
 	}
 
 	function getUsersTop($limit = 10) {
+		$aaData = array();
 		$ps = $this->db->prepare("SELECT uname, line FROM ustats WHERE type = 1 AND chan='global' AND line >= 1 ORDER BY line DESC LIMIT :limit");
 		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
-		return $ps->fetchAll(PDO::FETCH_ASSOC);
+		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($data as $row) {
+			// Get country code and online status
+			$user = $this->getUser('stats', $row['uname']);
+			$row['nick'] = $user ? $user['nick'] : $row['uname'];
+			$row['country'] = $user ? $user['country'] : 'Unknown';
+			$row['country_code'] = $user ? $user['country_code'] : '';
+			$row['online'] = $user ? $user['online'] : false;
+			$row['away'] = $user ? $user['away'] : false;
+			$row['bot'] = $user ? $user['bot'] : false;
+			$row['service'] = $user ? $user['service'] : false;
+			$row['operator'] = $user ? $user['operator'] : false;
+			$row['helper'] = $user ? $user['helper'] : false;
+			$aaData[] = $row;
+		}
+		return $aaData;
 	}
 
 	function getChannel($chan) {
@@ -486,12 +502,13 @@ class Denora {
 				$array[$i]['modes'] = ($mode ? "+" . $mode : "");
 				$array[$i]['host'] = ((!empty($data['hiddenhostname']) && $data['hiddenhostname'] != "(null)") ? $data['hiddenhostname'] : $data['hostname']);
 				$array[$i]['username'] = $data['username'];
-				$array[$i]['countrycode'] = $data['countrycode'];
+				$array[$i]['country_code'] = $data['countrycode'];
 				$array[$i]['country'] = $data['country'];
 				$array[$i]['bot'] = $data[$this->getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y' ? true : false;
 				$array[$i]['away'] = $data['away'] == 'Y' ? true : false;
 				$array[$i]['online'] = $data['online'] == 'Y' ? true : false;
-				$array[$i]['uline'] = $data['uline'] == '1' ? true : false;
+				$array[$i]['service'] = $data['uline'] == '1' ? true : false;
+				$array[$i]['operator'] = $this->isOper($data);
 				$array[$i]['helper'] = $data['helper'] == 'Y' ? true : false;
 				$i++;
 			}
@@ -564,6 +581,17 @@ class Denora {
 			if ($datatables) {
 				$row["DT_RowId"] = $row['name'];
 			}
+			// Get country code and online status
+			$user = $this->getUser('stats', $row['name']);
+			$row['nick'] = $user ? $user['nick'] : $row['name'];
+			$row['country'] = $user ? $user['country'] : 'Unknown';
+			$row['country_code'] = $user ? $user['country_code'] : '';
+			$row['online'] = $user ? $user['online'] : false;
+			$row['away'] = $user ? $user['away'] : false;
+			$row['bot'] = $user ? $user['bot'] : false;
+			$row['service'] = $user ? $user['service'] : false;
+			$row['operator'] = $user ? $user['operator'] : false;
+			$row['helper'] = $user ? $user['helper'] : false;
 			$aaData[] = $row;
 		}
 		if ($datatables) {

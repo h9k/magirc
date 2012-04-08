@@ -75,7 +75,7 @@ $magirc->slim->get('/users/hourlystats', function() use($magirc) {
     $magirc->jsonOutput($magirc->denora->getHourlyStats('stats'));
 });
 $magirc->slim->get('/users/top(/:limit)', function($limit = 10) use($magirc) {
-	$magirc->jsonOutput($magirc->denora->getUsersTop((int) $limit), true);
+	$magirc->jsonOutput($magirc->denora->getUsersTop((int) $limit), true, 'uname');
 });
 $magirc->slim->get('/users/activity/:type', function($type) use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getUserGlobalActivity($type, @$_GET['format'] == 'datatables'));

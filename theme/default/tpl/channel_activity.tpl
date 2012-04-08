@@ -44,7 +44,9 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels/"+target+"/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name" },
+			{ "mDataProp": "name", "fnRender": function(oObj) {
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['name']+'</strong>' + getUserExtra(oObj.aData);
+			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },
 			{ "mDataProp": "lines" },

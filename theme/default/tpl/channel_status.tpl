@@ -18,10 +18,10 @@
 	<h2>Users currently in channel</h2>
 	<table id="tbl_users" class="display">
 		<thead>
-			<tr><th>Nickname</th><th>Status</th><th>Modes</th></tr>
+			<tr><th>Nickname</th><th>Modes</th></tr>
 		</thead>
 		<tbody>
-			<tr><td colspan="3">Loading...</td></tr>
+			<tr><td colspan="2">Loading...</td></tr>
 		</tbody>
 	</table>
 </div>
@@ -49,13 +49,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 0, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/channels/'+target+'/users?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "nick", "fnRender": function(oObj) { return '<strong>'+oObj.aData['nick']+'<\/strong>'; } },
-			{ "mDataProp": "away", "fnRender": function (oObj) {
-				var out = oObj.aData['away'] ? '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away" \/>' : '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online" \/>';
-				if (oObj.aData['bot']) out += '<img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
-				if (oObj.aData['helper']) out += '<img src="theme/'+theme+'/img/status/help.png" alt="help" title="Available for help" \/>';
-				if (oObj.aData['uline']) out += '<img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
-				return out;
+			{ "mDataProp": "nick", "fnRender": function(oObj) {
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['nick']+'</strong>' + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "modes" }
 		]

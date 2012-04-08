@@ -174,6 +174,27 @@ $(document).ready(function() {
 		credits: { enabled: false }
 	});
 });
+
+function getUserStatus(user) {
+	if (user['away']) return '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away as '+user['nick']+'" \/>';
+	else if (user['online']) return '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online as '+user['nick']+'" \/>';
+	else return '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="Offline" \/>';
+}
+function getUserExtra(user) {
+	var out = "";
+	if (user['bot']) out += ' <img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
+	if (user['service']) out += ' <img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
+	if (user['operator']) out += ' <img src="theme/'+theme+'/img/status/operator.png" alt="oper" title="Operator" \/>';
+	if (user['helper']) out += ' <img src="theme/'+theme+'/img/status/help.png" alt="help" title="Available for help" \/>';
+	return out;
+}
+function getCountryFlag(user) {
+	if (user['country_code'] != '' && user['country_code'] != '??' && user['country_code'] != 'local') {
+		return '<img src="theme/'+theme+'/img/flags/'+user['country_code'].toLowerCase()+'.png" alt="'+user['country_code']+'" title="'+user['country']+'" />';
+	} else {
+		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="Unknown" />';
+	}
+}
 {/literal}
 --></script>
 {/jsmin}

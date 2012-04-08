@@ -10,7 +10,7 @@ body { margin:0; padding:0; font-family:'Share', Verdana, Arial; font-size:13px;
 img,td,th{border:0}
 img#logo{padding:18px 25px 0px 5px;float:left;}
 h1,h2,h3,h4,h5,h6{color:#333;}
-strong{letter-spacing:0.1em;}
+strong{font-weight:400; letter-spacing:0.05em;}
 
 div#header { padding:0 10px; margin:0px auto 5px auto; width:880px; height:75px; }
 div#menu { float:left; margin:0; padding:0; }

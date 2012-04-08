@@ -30,22 +30,7 @@ $(document).ready(function() {
 		"sAjaxSource": "rest/denora.php/users/activity/"+type+"?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "name", "fnRender": function(oObj) {
-				var aData = oObj.aData;
-				var out = "";
-				if (aData['away']) out = '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away as '+aData['nick']+'" \/>';
-				else if (aData['online']) out = '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online as '+aData['nick']+'" \/>';
-				else out = '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="Offline" \/>';
-				if (aData['country_code'] != '' && aData['country_code'] != '??' && aData['country_code'] != 'local') {
-					out += ' <img src="theme/'+theme+'/img/flags/'+aData['country_code'].toLowerCase()+'.png" alt="'+aData['country_code']+'" title="'+aData['country']+'" />';
-				} else {
-					out += ' <img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="Unknown" />';
-				}
-				out += ' <strong>'+aData['name']+'</strong>';
-				if (aData['bot']) out += ' <img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
-				if (aData['service']) out += ' <img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
-				if (aData['operator']) out += ' <img src="theme/'+theme+'/img/status/operator.png" alt="oper" title="Operator" \/>';
-				if (aData['helper']) out += ' <img src="theme/'+theme+'/img/status/help.png" alt="help" title="Available for help" \/>';
-				return out;
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['name']+'</strong>' + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },
