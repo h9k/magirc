@@ -228,7 +228,11 @@ class Denora {
 		$query = "SELECT server, online, comment, currentusers, opers FROM server $sWhere";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($data as $key => $val) {
+			$data[$key]['online'] = $val['online'] == 'Y';
+		}
+		return $data;
 	}
 
 	function getServer($server) {
