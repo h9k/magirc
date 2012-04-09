@@ -121,13 +121,12 @@ class Magirc {
 	 * (Used by the RESTful API)
 	 * @param mixed $data Data
 	 * @param boolean $datatables allow/forbid DataTables format
-	 * @param string $idcolumn Column name to use as index for the DataTables automatic row id
+	 * @param string $idcolumn Column name to use as index for the DataTables automatic row id. If not specified, the first column will be used.
 	 */
 	function jsonOutput($data, $datatables = false, $idcolumn = null) {
 		if ($datatables && @$_GET['format'] == "datatables") {
-			if ($idcolumn) {
-				foreach ($data as $key => $val) $data[$key]["DT_RowId"] = $val[$idcolumn];
-			}
+			if (!$idcolumn && count($data) > 0) $idcolumn = key($data[0]);
+			foreach ($data as $key => $val) $data[$key]["DT_RowId"] = $val[$idcolumn];
 			echo json_encode(array('aaData' => $data));
 		} else {
 			echo json_encode($data);

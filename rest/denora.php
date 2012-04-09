@@ -47,10 +47,10 @@ $magirc->slim->get('/channels/hourlystats', function() use($magirc) {
     $magirc->jsonOutput($magirc->denora->getHourlyStats('channelstats'));
 });
 $magirc->slim->get('/channels/biggest(/:limit)', function($limit = 10) use($magirc) {
-	$magirc->jsonOutput($magirc->denora->getChannelBiggest((int) $limit), true);
+	$magirc->jsonOutput($magirc->denora->getChannelBiggest((int) $limit), true, 'channel');
 });
 $magirc->slim->get('/channels/top(/:limit)', function($limit = 10) use($magirc) {
-	$magirc->jsonOutput($magirc->denora->getChannelTop((int) $limit), true);
+	$magirc->jsonOutput($magirc->denora->getChannelTop((int) $limit), true, 'chan');
 });
 $magirc->slim->get('/channels/activity/:type', function($type) use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getChannelGlobalActivity($type, @$_GET['format'] == 'datatables'));

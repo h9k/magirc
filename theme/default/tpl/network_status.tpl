@@ -197,8 +197,7 @@ $(function() {
 		]
 	});
 	$("#tbl_biggestchans tbody tr").live("click", function(event) {
-		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + 'channel/' + encodeURIComponent(chan) + '/profile';
+		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
 	oTable2 = $("#tbl_top10chans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
@@ -208,8 +207,7 @@ $(function() {
 		]
 	});
 	$("#tbl_top10chans tbody tr").live("click", function(event) {
-		var chan = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + 'channel/' + encodeURIComponent(chan) + '/profile#activity';
+		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
 	oTable3 = $("#tbl_top10users").dataTable({
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",

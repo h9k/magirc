@@ -58,8 +58,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_activity tbody tr").live("click", function(event) {
-		var name = $(event.target.parentNode)[0].cells[0].innerHTML;
-		window.location = url_base + 'user/nick:' + encodeURIComponent(name) + '/profile#activity';
+		window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile#activity';
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
