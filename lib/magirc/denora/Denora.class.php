@@ -455,6 +455,10 @@ class Denora {
 		if (!$data) {
 			return 404;
 		} else {
+			if ($this->cfg->getParam('block_spchans')) {
+				if ($this->ircd->getParam('chan_secret_mode') && @$data[$this->getSqlMode($this->ircd->getParam('chan_secret_mode'))] == 'Y' ) return 403;
+				if ($this->ircd->getParam('chan_private_mode') && @$data[$this->getSqlMode($this->ircd->getParam('chan_private_mode'))] == 'Y' ) return 403;
+			}
 			if (@$data['mode_li'] == "Y" || @$data['mode_lk'] == "Y" || @$data['mode_uo'] == "Y") {
 				return 403;
 			} else {
