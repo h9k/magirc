@@ -4,8 +4,8 @@
 <title>{block name="title"}{$cfg.net_name} - {/block}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="ROBOTS" content="INDEX, FOLLOW" />
-<meta name="Keywords" content="MagIRC IRC Chat Statistics Denora stats phpDenora" />
-<meta name="Description" content="IRC Statistics powered by MagIRC" />
+<meta name="Keywords" content="{$cfg.net_name} MagIRC IRC Chat Statistics Denora stats phpDenora" />
+<meta name="Description" content="{$cfg.net_name} Network Statistics powered by MagIRC" />
 <base href="{$smarty.const.BASE_URL}" />
 <link rel="icon" href="theme/{$cfg.theme}/img/favicon.ico" type="image/x-icon">
 {block name="css"}
