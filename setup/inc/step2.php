@@ -29,6 +29,14 @@ if (!$check) { // Dump file to db
 			$setup->db->query("ALTER TABLE `magirc_config` CHANGE `value` `value` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''");
 			$setup->db->query("ALTER TABLE `magirc_config` ENGINE = InnoDB");
 		}
+		if ($version < 6) {
+			$setup->db->insert('magirc_config', array('parameter' => 'block_spchans', 'value' => 0));
+			$setup->db->insert('magirc_config', array('parameter' => 'net_roundrobin', 'value' => ''));
+			$setup->db->insert('magirc_config', array('parameter' => 'service_adsense_id', 'value' => ''));
+			$setup->db->insert('magirc_config', array('parameter' => 'service_adsense_channel', 'value' => ''));
+			$setup->db->insert('magirc_config', array('parameter' => 'service_searchirc', 'value' => ''));
+			$setup->db->insert('magirc_config', array('parameter' => 'service_netsplit', 'value' => ''));
+		}
 		$setup->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 		$updated = true;
 	}

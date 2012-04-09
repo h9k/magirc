@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="right"><strong>Enable CDN</strong><br />(improves performance, template dependent)</td>
+			<td align="right"><strong>Enable CDN</strong><br />(Improves performance)</td>
 			<td align="left">yes <input type="radio" name="cdn_enable" value="1"{if $cfg.cdn_enable} checked="checked"{/if} /> <input type="radio" name="cdn_enable" value="0"{if !$cfg.cdn_enable} checked="checked"{/if} /> no</td>
 		</tr>
 		<tr>

@@ -8,6 +8,7 @@
 		<li><a href="index.php/configuration/welcome" title="welcome">Welcome</a></li>
 		<li><a href="index.php/configuration/interface" title="interface">Interface</a></li>
 		<li><a href="index.php/configuration/network" title="network">Network</a></li>
+		<li><a href="index.php/configuration/services" title="services">Services</a></li>
 		<li><a href="index.php/configuration/denora" title="denora">Denora</a></li>
 	</ul>
 </div>
