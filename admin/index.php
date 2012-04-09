@@ -84,7 +84,7 @@ try {
 	});
 	$admin->slim->get('/configuration/welcome', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
-		$admin->tpl->assign('editor', $admin->ckeditor->editor('msg_welcome', $admin->cfg->getParam('msg_welcome')));
+		$admin->tpl->assign('editor', $admin->ckeditor->editor('content_welcome', $admin->getContent('welcome')));
 		$admin->tpl->display('configuration_welcome.tpl');
 	});
 	$admin->slim->get('/configuration/interface', function() use ($admin) {
@@ -127,6 +127,14 @@ try {
 		$admin->tpl->assign('writable', is_writable($db_config_file));
 		$admin->tpl->assign('db', $db);
 		$admin->tpl->display('configuration_denora.tpl');
+	});
+	$admin->slim->post('/content', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$admin->slim->contentType('application/json');
+		foreach ($_POST as $key => $val) {
+			$admin->saveContent($key, $val);
+		}
+		echo json_encode(true);
 	});
 	$admin->slim->post('/configuration', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }

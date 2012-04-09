@@ -89,11 +89,14 @@
 {jsmin}
 <script type="text/javascript"><!--
 var refresh_interval = {$cfg.live_interval};
+var welcome_msg = '{$cfg.welcome_mode}';
 {literal}
 $(function() {
-	$.getJSON('index.php/welcome', function(result) {
-		$("#welcome").html(result);
-	});
+	if (welcome_msg == 'statuspage') {
+		$.get('index.php/content/welcome', function(result) {
+			$("#welcome").html(result);
+		});
+	}
 	var count = 0;
 
 	var chart_users = new Highcharts.Chart({

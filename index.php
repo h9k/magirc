@@ -56,14 +56,8 @@ try {
 		$magirc->tpl->assign('section', 'network');
 		$magirc->tpl->display('network_main.tpl');
 	});
-	/*$magirc->slim->get('/home', function() use($magirc) {
-		$magirc->tpl->assign('section', 'home');
-		$magirc->tpl->assign('welcome', $magirc->cfg->getParam('msg_welcome'));
-		$magirc->tpl->display('home.tpl');
-	});*/
-	$magirc->slim->get('/welcome', function() use($magirc) {
-		$magirc->slim->contentType('application/json');
-		echo json_encode($magirc->cfg->getParam('msg_welcome'));
+	$magirc->slim->get('/content/:name', function($name) use($magirc) {
+		echo $magirc->getContent($name);
 	});
 	$magirc->slim->get('/:section/:target/:action', function($section, $target, $action) use($magirc) {
 		$tpl_file = basename($section) . '_' . basename($action) . '.tpl';

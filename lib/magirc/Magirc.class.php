@@ -84,6 +84,18 @@ class Magirc {
 	}
 	
 	/**
+	 * Gets the page content for the specified name
+	 * @param string $name Content identifier
+	 * @return string HTML content 
+	 */
+	function getContent($name) {
+		$ps = $this->db->prepare("SELECT text FROM magirc_content WHERE name = :name");
+		$ps->bindParam(':name', $name, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN);
+	}
+	
+	/**
 	 * Checks thet permission for the given type and target.
 	 * Terminates the program with an appropriate error message on failure.
 	 * (Used by the RESTful API)

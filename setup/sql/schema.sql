@@ -8,18 +8,18 @@
 
 CREATE TABLE IF NOT EXISTS `magirc_config` (
   `parameter` varchar(32) NOT NULL default '',
-  `value` varchar(1024) NOT NULL default '',
+  `value` varchar(64) NOT NULL default '',
   PRIMARY KEY (`parameter`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `magirc_config`
 --
 
-INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '4'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '5'),
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
-('msg_welcome', '<h1>Welcome to Magirc</h1><p>These are the Web Stats of this IRC Network.<br />You will find detailed information about the network status and the activity of its channels and users.<br />Enjoy your stay!</p>'),
+('welcome_mode', 'statuspage'),
 ('timezone', 'UTC'),
 ('ircd_type', 'unreal32'),
 ('theme', 'default'),
@@ -31,6 +31,22 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('live_interval', '15'),
 ('cdn_enable', '1'),
 ('rewrite_enable', '0');
+
+--
+-- Table structure for table `magirc_content`
+--
+
+CREATE TABLE IF NOT EXISTS `magirc_content` (
+  `name` varchar(16) NOT NULL default '',
+  `text` text NOT NULL default '',
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `magirc_content`
+--
+
+INSERT IGNORE INTO `magirc_content` (`name`, `text`) VALUES ('welcome', '<h1>Welcome to Magirc</h1><p>These are the Web Stats of this IRC Network.<br />You will find detailed information about the network status and the activity of its channels and users.<br />Enjoy your stay!</p>');
 
 --
 -- Table structure for table `magirc_admin`

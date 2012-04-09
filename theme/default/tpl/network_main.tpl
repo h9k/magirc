@@ -5,6 +5,7 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
+		{if $cfg.welcome_mode eq 'ownpage'}<li><a href="index.php/content/welcome" title="welcome">Welcome</a></li>{/if}
 		<li><a href="index.php/network/status" title="status">Status</a></li>
 		<li><a href="index.php/network/countries" title="countries">Countries</a></li>
 		<li><a href="index.php/network/clients" title="clients">Clients</a></li>

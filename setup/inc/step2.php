@@ -18,6 +18,17 @@ if (!$check) { // Dump file to db
 		if ($version < 4) {
 			$setup->db->insert('magirc_config', array('parameter' => 'timezone', 'value' => 'UTC'));
 		}
+		if ($version < 5) {
+			$setup->db->insert('magirc_config', array('parameter' => 'welcome_mode', 'value' => 'statuspage'));
+			$setup->db->query("CREATE TABLE IF NOT EXISTS `magirc_content` (
+				`name` varchar(16) NOT NULL default '', `text` text NOT NULL default '',
+				PRIMARY KEY (`name`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+			$welcome_msg = $setup->db->selectOne('magirc_config', array('parameter' => 'msg_welcome'));
+			$setup->db->insert('magirc_content', array('name' => 'welcome', 'text' => $welcome_msg['value']));
+			$setup->db->delete('magirc_config', array('parameter' => 'msg_welcome'));
+			$setup->db->query("ALTER TABLE `magirc_config` CHANGE `value` `value` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''");
+			$setup->db->query("ALTER TABLE `magirc_config` ENGINE = InnoDB");
+		}
 		$setup->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 		$updated = true;
 	}
