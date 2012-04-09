@@ -11,6 +11,8 @@
 		<li><a href="index.php/network/clients" title="clients">Clients</a></li>
 		<li><a href="index.php/network/operators" title="operators">Operators</a></li>
 		<li><a href="index.php/network/history" title="history">History</a></li>
+		{if $cfg.service_netsplit}<li><a href="index.php/network/netsplit" title="netsplit">Netsplit Graphs</a></li>{/if}
+		{if $cfg.service_searchirc}<li><a href="index.php/network/searchirc" title="searchirc">Searchirc Graphs</a></li>{/if}
 	</ul>
 </div>
 {/block}
