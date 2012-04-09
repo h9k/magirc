@@ -33,7 +33,26 @@
 	</div>
 	<div id="loading"><img src="theme/{$cfg.theme}/img/loading.gif" alt="loading..." /></div>
 </div>
-<div id="main">{block name="content"}[content placeholder]{/block}</div>
+<div id="main">
+	{block name="content"}[content placeholder]{/block}
+	{if $cfg.service_adsense_id}
+		<script type="text/javascript"><!--
+		google_ad_client = "{$cfg.service_adsense_id}";
+		google_ad_width = 728;
+		google_ad_height = 90;
+		google_ad_format = "728x90_as";
+		google_ad_type = "text_image";
+		google_ad_channel ="{$cfg.service_adsense_channel}";
+		google_alternate_color = "f9f3df";
+		google_color_border = "CCCCCC";
+		google_color_bg = "FFFFFF";
+		google_color_link = "333333";
+		google_color_text = "666666";
+		google_color_url = "0066CC";
+		//--></script>
+		<div style="width:728px; margin:auto;"><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
+	{/if}
+</div>
 <div id="footer">powered by <span style="font-size:12px;"><strong>MagIRC</strong></span> v{$smarty.const.VERSION_FULL}</div>
 {/block}
 {block name="js"}
