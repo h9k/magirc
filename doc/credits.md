@@ -12,6 +12,7 @@ MagIRC uses the following open source products developed by third parties:
 * [jQuery-UI](http://www.jqueryui.com)
 * [DataTables](http://www.datatables.net)
 * [Highcharts and Highstock](http://www.highcharts.com)
+* [jQuery dateFormat](https://github.com/phstc/jquery-dateFormat)
 * [CKEditor](http://www.ckeditor.com)
 * [Smarty JSMin Plugin](http://www.nsmith.me.uk/jsmin-smarty-wrapper/)
 * [Smarty Markdown Plugin](http://michelf.com/projects/php-markdown/)

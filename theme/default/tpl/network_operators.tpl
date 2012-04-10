@@ -25,7 +25,7 @@ $(document).ready(function() {
 				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['nick']+'</strong>' + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "server" },
-			{ "mDataProp": "connecttime" }
+			{ "mDataProp": "connecttime", "fnRender": function(oObj) { return $.format.date(oObj.aData['connecttime'], format_datetime); } }
 		]
 	});
 	$("#tbl_operators tbody tr").live("click", function() {

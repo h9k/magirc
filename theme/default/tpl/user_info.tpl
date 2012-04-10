@@ -37,10 +37,10 @@ $(document).ready(function() {
 				} else {
 					//status += ' Online';
 				}
-				status_extra += '<br \/>Connected since ' + result.connected_time;
+				status_extra += '<br \/>Connected since ' + $.format.date(result.connected_time, format_datetime);
 			} else {
 				//status += ' Offline';
-				if (result.lastquit_time) status_extra += '<br \/>Last quit ' + result.lastquit_time;
+				if (result.lastquit_time) status_extra += '<br \/>Last quit ' + $.format.date(result.lastquit_time, format_datetime);
 				if (result.lastquit_msg) status_extra += '<br \/>Message: ' + result.lastquit_msg;
 			}
 			status += getUserExtra(result);

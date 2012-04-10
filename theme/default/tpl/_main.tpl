@@ -68,11 +68,17 @@
 <script type="text/javascript" src="js/datatables.fnReloadAjax.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
+<script type="text/javascript" src="js/jquery.dateformat.js"></script>
 {jsmin}
 <script type="text/javascript">
 <!--
 var url_base = '{$smarty.const.BASE_URL}{if !$cfg.rewrite_enable}index.php/{/if}';
 var theme = '{$cfg.theme}';
+var format_date = 'MMM d yyyy';
+var format_time = 'HH:mm:ss';
+var format_datetime = 'dd.MM.yyyy HH:mm:ss';
+var format_datetime_charts = '%d.%m.%Y %H:%M:%S'; // needs different format
+var format_datetime_full = 'ddd, MMM d. yyyy';
 {literal}
 $(document).ready(function() {
 	$("#loading").ajaxStart(function(){
@@ -149,7 +155,7 @@ $(document).ready(function() {
 			}],
 			selected: 3
 		},
-		tooltip: { valueDecimals: 0 },
+		tooltip: { valueDecimals: 0, xDateFormat: format_datetime_charts },
 		legend: { enabled: false },
 		exporting: { enabled: false },
 		plotOptions: {

@@ -36,10 +36,10 @@ $(document).ready(function() {
 	$.getJSON('rest/denora.php/channels/'+target, function(result) {
 		$("#chan_topic").html(result.topic_html);
 		$("#chan_topic_author").html(result.topic_author);
-		$("#chan_topic_time").html(result.topic_time);
+		$("#chan_topic_time").html($.format.date(result.topic_time, format_datetime));
 		$("#chan_users").html(result.users);
 		$("#chan_users_max").html(result.users_max);
-		$("#chan_users_max_time").html(result.users_max_time);
+		$("#chan_users_max_time").html($.format.date(result.users_max_time, format_datetime));
 		$("#chan_modes").html("+"+result.modes);
 		$("#chan_kicks").html(result.kicks);
 	});
