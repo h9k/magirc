@@ -1,0 +1,2 @@
+MagIRC - Templating
+===================
