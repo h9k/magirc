@@ -27,9 +27,8 @@
 
 <table>
 	<tr>
-		<td><div id="chart_users" style="height: 175px; width: {if $cfg.service_searchirc}380{else}560{/if}px;"></div></td>
+		<td><div id="chart_users" style="height: 175px; width: 560px;"></div></td>
 		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
-		{if $cfg.service_searchirc}<td><script type="text/javascript" src="http://searchirc.com/official_rank.php?ID={$cfg.service_searchirc}&amp;outof=1"></script></td>{/if}
 	</tr>
 </table>
 
