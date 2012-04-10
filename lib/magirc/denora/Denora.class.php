@@ -441,10 +441,12 @@ class Denora {
 		}
 		return null;
 	}
-
-	/* Checks if given channel can be displayed
-	 * 404 = not existing, 403 = denied, 200 = ok */
-
+	
+	/**
+	 * Checks if given channel can be displayed
+	 * @param string $chan
+	 * @return int code (200: OK, 404: not existing, 403: denied)
+	 */
 	function checkChannel($chan) {
 		$noshow = array();
 		$no = explode(",", $this->cfg->getParam('hide_chans'));
@@ -475,7 +477,7 @@ class Denora {
 	}
 
 	function getChannelUsers($chan) {
-		if ($this->checkChannel($chan) < 2) {
+		if ($this->checkChannel($chan) != 200) {
 			return null;
 		}
 		$array = array();

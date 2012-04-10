@@ -66,8 +66,8 @@ try {
 			$mode = null;
 			if ($section == 'channel') {
 				switch ($magirc->denora->checkChannel($target)) {
-					case 0: $magirc->slim->notFound();
-					case 1: $magirc->slim->halt(403, 'Access denied');
+					case 404: $magirc->slim->notFound();
+					case 403: $magirc->slim->halt(403, 'Access denied');
 				}
 			} elseif ($section == 'user') {
 				$array = explode(':', $target);
