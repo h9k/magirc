@@ -420,7 +420,10 @@ class Denora {
 	}
 
 	function getChannel($chan) {
-		$chan = $this->db->selectOne('chan', array('channel' => $chan));
+		$ps = $this->db->prepare("SELECT * FROM chan WHERE BINARY LOWER(channel) = LOWER(:chan)");
+		$ps->bindParam(':chan', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		$chan = $ps->fetch(PDO::FETCH_ASSOC);
 		if ($chan) {
 			return array(
 				'id' => $chan['chanid'],
