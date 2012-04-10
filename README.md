@@ -62,11 +62,13 @@ To use this feature **enable** the following parameters by removing the '#' in f
 
 Installation
 ------------
-1. sPull the latest MagIRC package from https://github.com/h9k/magirc/.
+1. Pull the latest MagIRC package from https://github.com/h9k/magirc/.
 2. Extract the MagIRC archive to your web server and move it's conetent to the MagIRC directory.
-3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions. Example: http://yourpathtomagirc/setup
+3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
+   Example: http://`yourpathtomagirc`/setup
 
-Note: If you are on Apache you can enable mod_rewrite by using "a2enmod rewrite; service apache2 restart" and rename htaccess.txt in the root to .htaccess.
+Note: If you are on Apache you can enable mod_rewrite by using "a2enmod rewrite; service apache2 restart"
+and rename htaccess.txt in the root  to .htaccess.
 
 Upgrading
 ---------
