@@ -3,7 +3,6 @@
 class Denora {
 
 	private $db;
-	private $ircd;
 	private $cfg;
 
 	function __construct() {
@@ -30,7 +29,6 @@ class Denora {
 		$this->db = new DB();
 		$this->db->connect("mysql:dbname={$db['database']};host={$db['hostname']}", $db['username'], $db['password']) || die('Error opening Denora database<br />' . $this->error);
 		$this->cfg = new Config();
-		$this->ircd = new Protocol();
 		require_once(__DIR__ . '/Objects.class.php');
 	}
 
@@ -96,8 +94,8 @@ class Denora {
 			$query .= " WHERE user.online = 'Y'";
 		}
 		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
-		if ($this->ircd->getParam("services_protection_mode")) {
-			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode($this->ircd->getParam("services_protection_mode")));
+		if (Protocol::services_protection_mode) {
+			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode(Protocol::services_protection_mode));
 		}
 		$stmt = $this->db->prepare($query);
 		if ($chan != 'global') $stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
@@ -124,8 +122,8 @@ class Denora {
 			$query .= " WHERE user.online='Y'";
 		}
 		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
-		if ($this->ircd->getParam("services_protection_mode")) {
-			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode($this->ircd->getParam("services_protection_mode")));
+		if (Protocol::services_protection_mode) {
+			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode(Protocol::services_protection_mode));
 		}
 		$query .= " GROUP by user.$type ORDER BY count DESC";
 		$stmt = $this->db->prepare($query);
@@ -246,12 +244,15 @@ class Denora {
 		return $stmt->fetchObject('Server');
 	}
 
+	/**
+	 * Get the list of Operators currently online
+	 * @return array of User
+	 */
 	function getOperatorList() {
-		$array = array();
-		$ho = $this->ircd->getParam('oper_hidden_mode') ? "AND user." . Denora::getSqlMode($this->ircd->getParam('oper_hidden_mode')) . " = 'N'" : NULL;
+		$ho = Protocol::oper_hidden_mode ? "AND user." . Denora::getSqlMode(Protocol::oper_hidden_mode) . " = 'N'" : NULL;
 		$hu = $this->cfg->getParam('hide_ulined') ? "AND server.uline = '0'" : NULL;
-		$hs = $this->ircd->getParam('services_protection_mode') ? "AND user." . Denora::getSqlMode($this->ircd->getParam('services_protection_mode')) . " = 'N'" : NULL;
-		if (IRCD == "unreal32") {
+		$hs = Protocol::services_protection_mode ? "AND user." . Denora::getSqlMode(Protocol::services_protection_mode) . " = 'N'" : NULL;
+		if (Protocol::ircd == "unreal32") {
 			$query = "SELECT user.*,server.uline FROM user,server WHERE (user.mode_un = 'Y' OR user.mode_ua = 'Y' OR user.mode_la = 'Y' OR user.mode_uc = 'Y' OR user.mode_lo = 'Y')
 				AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.mode_un,user.mode_ua,user.mode_la,user.mode_uc,user.mode_lo,user.nick ASC";
 		} else {
@@ -259,44 +260,14 @@ class Denora {
 		}
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
-		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-			$data = array();
-			$data['nick'] = $row['nick'];
-			$data['server'] = $row['server'];
-			$data['connecttime'] = $row['connecttime'] ? $row['connecttime'] : NULL;
-			$data['online'] = $row['online'] == "Y" ? true : false;
-			$data['away'] = $row['away'] == "Y" ? true : false;
-			if (IRCD == "unreal32") {
-				if ($row['mode_un'] == "Y")
-					$level = "Network Admin";
-				elseif ($row['mode_ua'] == "Y")
-					$level = "Server Admin";
-				elseif ($row['mode_la'] == "Y")
-					$level = "Services Admin";
-				elseif ($row['mode_uc'] == "Y")
-					$level = "Co-Admin";
-				elseif ($row['mode_lo'] == "Y")
-					$level = "Global Operator";
-			} else {
-				$level = "Operator";
-			}
-			$data['operator_level'] = $level;
-			$data['bot'] = $this->ircd->getParam('bot_mode') && $row[Denora::getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y';
-			$data['helper'] = $this->ircd->getParam('helper_mode') && $row[Denora::getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
-			$data['service'] = $row['uline'] ? true : false;
-			$data['operator'] = true;
-			$data['country_code'] = $row['countrycode'];
-			$data['country'] = $row['country'];
-			$array[] = $data;
-		}
-		return $array;
+		return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
 	}
 
 	// return an array of all channels
 	function getChannelList($datatables = false) {
 		$aaData = array();
-		$secret_mode = $this->ircd->getParam('chan_secret_mode');
-		$private_mode = $this->ircd->getParam('chan_private_mode');
+		$secret_mode = Protocol::chan_secret_mode;
+		$private_mode = Protocol::chan_private_mode;
 
 		$sWhere = "currentusers > 0";
 		if ($secret_mode) {
@@ -353,8 +324,8 @@ class Denora {
 	}
 
 	function getChannelBiggest($limit = 10) {
-		$secret_mode = $this->ircd->getParam('chan_secret_mode');
-		$private_mode = $this->ircd->getParam('chan_private_mode');
+		$secret_mode = Protocol::chan_secret_mode;
+		$private_mode = Protocol::chan_private_mode;
 		$query = "SELECT * FROM chan WHERE currentusers > 0";
 		if ($secret_mode) {
 			$query .= sprintf(" AND %s='N'", Denora::getSqlMode($secret_mode));
@@ -374,8 +345,8 @@ class Denora {
 	}
 
 	function getChannelTop($limit = 10) {
-		$secret_mode = $this->ircd->getParam('chan_secret_mode');
-		$private_mode = $this->ircd->getParam('chan_private_mode');
+		$secret_mode = Protocol::chan_secret_mode;
+		$private_mode = Protocol::chan_private_mode;
 		$query = "SELECT chan, line FROM cstats, chan WHERE BINARY LOWER(cstats.chan)=LOWER(chan.channel) AND cstats.type=1 AND cstats.line >= 1";
 		if ($secret_mode) {
 			$query .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($secret_mode));
@@ -463,8 +434,8 @@ class Denora {
 			return 404;
 		} else {
 			if ($this->cfg->getParam('block_spchans')) {
-				if ($this->ircd->getParam('chan_secret_mode') && @$data[Denora::getSqlMode($this->ircd->getParam('chan_secret_mode'))] == 'Y' ) return 403;
-				if ($this->ircd->getParam('chan_private_mode') && @$data[Denora::getSqlMode($this->ircd->getParam('chan_private_mode'))] == 'Y' ) return 403;
+				if (Protocol::chan_secret_mode && @$data[Denora::getSqlMode(Protocol::chan_secret_mode)] == 'Y' ) return 403;
+				if (Protocol::chan_private_mode && @$data[Denora::getSqlMode(Protocol::chan_private_mode)] == 'Y' ) return 403;
 			}
 			if (@$data['mode_li'] == "Y" || @$data['mode_lk'] == "Y" || @$data['mode_uo'] == "Y") {
 				return 403;
@@ -481,8 +452,8 @@ class Denora {
 		$array = array();
 		$i = 0;
 		$query = "SELECT ";
-		if ($this->ircd->getParam('helper_mode')) {
-			$query .= sprintf("`user`.`%s` AS 'helper', ", Denora::getSqlMode($this->ircd->getParam('helper_mode')));
+		if (Protocol::helper_mode) {
+			$query .= sprintf("`user`.`%s` AS 'helper', ", Denora::getSqlMode(Protocol::helper_mode));
 		}
 		$query .= "`user`.*, `ison`.*,`server`.`uline`
 		FROM `ison`,`chan`,`user`,`server`
@@ -515,16 +486,16 @@ class Denora {
 				}
 				$array[$i]['nick'] = $data['nick'];
 				$array[$i]['modes'] = ($mode ? "+" . $mode : "");
-				$array[$i]['host'] = $this->ircd->getParam('host_cloaking') && !empty($data['hiddenhostname']) ? $data['hiddenhostname'] : $data['hostname'];
+				$array[$i]['host'] = Protocol::host_cloaking && !empty($data['hiddenhostname']) ? $data['hiddenhostname'] : $data['hostname'];
 				$array[$i]['username'] = $data['username'];
 				$array[$i]['country_code'] = $data['countrycode'];
 				$array[$i]['country'] = $data['country'];
-				$array[$i]['bot'] = $data[Denora::getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y' ? true : false;
+				$array[$i]['bot'] = $data[Denora::getSqlMode(Protocol::bot_mode)] == 'Y' ? true : false;
 				$array[$i]['away'] = $data['away'] == 'Y' ? true : false;
 				$array[$i]['online'] = $data['online'] == 'Y' ? true : false;
 				$array[$i]['service'] = $data['uline'] == '1' ? true : false;
 				$array[$i]['operator'] = $this->isOper($data);
-				$array[$i]['helper'] = $this->ircd->getParam('helper_mode') && $data['helper'] == 'Y' ? true : false;
+				$array[$i]['helper'] = Protocol::helper_mode && $data['helper'] == 'Y' ? true : false;
 				$i++;
 			}
 		}
@@ -534,8 +505,8 @@ class Denora {
 
 	function getChannelGlobalActivity($type, $datatables = false) {
 		$aaData = array();
-		$secret_mode = $this->ircd->getParam('chan_secret_mode');
-		$private_mode = $this->ircd->getParam('chan_private_mode');
+		$secret_mode = Protocol::chan_secret_mode;
+		$private_mode = Protocol::chan_private_mode;
 
 		$sWhere = "cstats.letters>0";
 		if ($secret_mode) {
@@ -765,7 +736,7 @@ class Denora {
 			'aliases' => $info['aliases'],
 			'username' => $data['username'],
 			'realname' => $data['realname'],
-			'hostname' => $this->ircd->getParam('host_cloaking') && !empty($data['hiddenhostname']) ? $data['hiddenhostname'] : $data['hostname'],
+			'hostname' => Protocol::host_cloaking && !empty($data['hiddenhostname']) ? $data['hiddenhostname'] : $data['hostname'],
 			'connected_time' => $data['connecttime'],
 			'lastquit_time' => $data['lastquit'],
 			'lastquit_msg' => $data['lastquitmsg'],
@@ -785,7 +756,7 @@ class Denora {
 	}
 
 	private function isOper($user) {
-		if (IRCD == "unreal32") {
+		if (Protocol::ircd == "unreal32") {
 			if ($user['mode_un'] == 'Y') return true;
 			if ($user['mode_ua'] == 'Y') return true;
 			if ($user['mode_la'] == 'Y') return true;
@@ -795,16 +766,16 @@ class Denora {
 		return false;
 	}
 	private function isBot($user) {
-		return $this->ircd->getParam('bot_mode') && $user[Denora::getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y';
+		return Protocol::bot_mode && $user[Denora::getSqlMode(Protocol::bot_mode)] == 'Y';
 	}
 	private function isHelper($user) {
-		return $this->ircd->getParam('helper_mode') && $user[Denora::getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
+		return Protocol::helper_mode && $user[Denora::getSqlMode(Protocol::helper_mode)] == 'Y';
 	}
 
 	function getUserChannels($mode, $user) {
 		$info = $this->getUserData($mode, $user);
-		$secret_mode = $this->ircd->getParam('chan_secret_mode');
-		$private_mode = $this->ircd->getParam('chan_private_mode');
+		$secret_mode = Protocol::chan_secret_mode;
+		$private_mode = Protocol::chan_private_mode;
 
 		$sWhere = "";
 		if ($secret_mode) {

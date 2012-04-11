@@ -2,23 +2,21 @@
 // Nefarious 13 protocol file for Denora support on Magirc
 
 class Protocol {
-	private $oper_hidden_mode = 'H';
-	private $helper_mode = '';
-	private $bot_mode = 'B';
-	private $services_protection_mode = 'k';
-	private $chan_hide_mode = 'n';
-	private $chan_secret_mode = 's';
-	private $chan_private_mode = 'p';
+	const ircd = 'nefarious';
 
-	private $chan_exception = 1;
-	private $chan_invites = 0;
-	private $line_sq = 0;
-	private $line_g = 0;
-	private $host_cloaking = 1;
+	const oper_hidden_mode = 'H';
+	const helper_mode = '';
+	const bot_mode = 'B';
+	const services_protection_mode = 'k';
+	const chan_hide_mode = 'n';
+	const chan_secret_mode = 's';
+	const chan_private_mode = 'p';
 
-	function getParam($param) {
-		return @$this->$param;
-	}
+	const chan_exception = true;
+	const chan_invites = false;
+	const line_sq = false;
+	const line_g = false;
+	const host_cloaking = true;
 }
 
 ?>
