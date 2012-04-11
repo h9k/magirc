@@ -201,8 +201,8 @@ $(document).ready(function() {
 });
 
 function getUserStatus(user) {
-	if (user['away']) return '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away as '+user['nick']+'" \/>';
-	else if (user['online']) return '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online as '+user['nick']+'" \/>';
+	if (user['away']) return '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away as '+user['nickname']+'" \/>';
+	else if (user['online']) return '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online as '+user['nickname']+'" \/>';
 	else return '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="Offline" \/>';
 }
 function getUserExtra(user) {

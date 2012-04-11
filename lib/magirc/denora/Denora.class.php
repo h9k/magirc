@@ -243,21 +243,34 @@ class Denora {
 		$stmt->execute();
 		return $stmt->fetchObject('Server');
 	}
+	
+	//TODO: move it somewhere else
+	private function getModeColumns($table) {
+		$ps = $this->db->prepare("SHOW COLUMNS FROM $table LIKE 'mode_%'");
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_COLUMN);
+	}
 
 	/**
 	 * Get the list of Operators currently online
 	 * @return array of User
 	 */
 	function getOperatorList() {
-		$ho = Protocol::oper_hidden_mode ? "AND user." . Denora::getSqlMode(Protocol::oper_hidden_mode) . " = 'N'" : NULL;
-		$hu = $this->cfg->getParam('hide_ulined') ? "AND server.uline = '0'" : NULL;
-		$hs = Protocol::services_protection_mode ? "AND user." . Denora::getSqlMode(Protocol::services_protection_mode) . " = 'N'" : NULL;
+		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
+			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
+			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service,
+			%s FROM user u, server s WHERE", implode(',', $this->getModeColumns("user")));
 		if (Protocol::ircd == "unreal32") {
-			$query = "SELECT user.*,server.uline FROM user,server WHERE (user.mode_un = 'Y' OR user.mode_ua = 'Y' OR user.mode_la = 'Y' OR user.mode_uc = 'Y' OR user.mode_lo = 'Y')
-				AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.mode_un,user.mode_ua,user.mode_la,user.mode_uc,user.mode_lo,user.nick ASC";
+			$query .= " (u.mode_un = 'Y' OR u.mode_ua = 'Y' OR u.mode_la = 'Y' OR u.mode_uc = 'Y' OR u.mode_lo = 'Y')";
 		} else {
-			$query = "SELECT user.*,server.uline FROM user,server WHERE user.mode_lo = 'Y' AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.nick ASC";
+			$query .= " u.mode_lo = 'Y'";
 		}
+		$query .= " AND u.online = 'Y'";
+		if (Protocol::oper_hidden_mode) $query .= " AND u." . Denora::getSqlMode(Protocol::oper_hidden_mode) . " = 'N'";
+		if (Protocol::services_protection_mode) $query .= " AND u." . Denora::getSqlMode(Protocol::services_protection_mode) . " = 'N'";
+		$query .= " AND u.server = s.server";
+		if ($this->cfg->getParam('hide_ulined')) $query .= " AND s.uline = '0'";
+		$query .= " ORDER BY u.nick ASC";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');

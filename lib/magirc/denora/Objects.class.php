@@ -29,45 +29,41 @@ Class Server {
 }
 
 Class User {
-
-	private $nickid;
-	public $nick;
-	public $hopcount;
+	// From SQL
+	public $nickname;
 	public $realname;
 	public $hostname;
-	public $hiddenhostname;
-	public $nickip;
+	private $hostname_cloaked;
 	public $username;
 	public $swhois;
-	public $account;
-	public $connecttime;
-	private $servid;
+	public $connect_time;
 	public $server;
 	public $away;
-	public $awaymsg;
-	public $ctcpversion;
-	public $ctcpversion_html;
+	public $away_msg;
+	public $client;
+	public $client_html;
 	public $online;
-	public $lastquit;
-	public $lastquitmsg;
-	public $countrycode;
+	public $quit_time;
+	public $quit_msg;
+	public $country_code;
 	public $country;
+	public $service;
+	// User modes, only used internally
+	private $mode_la, $mode_lb, $mode_lc, $mode_ld, $mode_le, $mode_lf, $mode_lg, $mode_lh, $mode_li, $mode_lj, $mode_lk, $mode_ll, $mode_lm, $mode_ln, $mode_lo, $mode_lp, $mode_lq, $mode_lr, $mode_ls, $mode_lt, $mode_lu, $mode_lv, $mode_lw, $mode_lx, $mode_ly, $mode_lz;
+	private $mode_ua, $mode_ub, $mode_uc, $mode_ud, $mode_ue, $mode_uf, $mode_ug, $mode_uh, $mode_ui, $mode_uj, $mode_uk, $mode_ul, $mode_um, $mode_un, $mode_uo, $mode_up, $mode_uq, $mode_ur, $mode_us, $mode_ut, $mode_uu, $mode_uv, $mode_uw, $mode_ux, $mode_uy, $mode_uz;
+	// Filled by the constructor
 	private $modes;
-	private $modes_data;
-	public $uline;
 	public $operator;
 	public $operator_level;
 	public $helper;
 	public $bot;
-	private $mode_la, $mode_lb, $mode_lc, $mode_ld, $mode_le, $mode_lf, $mode_lg, $mode_lh, $mode_li, $mode_lj, $mode_lk, $mode_ll, $mode_lm, $mode_ln, $mode_lo, $mode_lp, $mode_lq, $mode_lr, $mode_ls, $mode_lt, $mode_lu, $mode_lv, $mode_lw, $mode_lx, $mode_ly, $mode_lz;
-	private $mode_ua, $mode_ub, $mode_uc, $mode_ud, $mode_ue, $mode_uf, $mode_ug, $mode_uh, $mode_ui, $mode_uj, $mode_uk, $mode_ul, $mode_um, $mode_un, $mode_uo, $mode_up, $mode_uq, $mode_ur, $mode_us, $mode_ut, $mode_uu, $mode_uv, $mode_uw, $mode_ux, $mode_uy, $mode_uz;
-
+	
 	function __construct() {
 		$this->online = $this->online == 'Y';
 		$this->away = $this->away == 'Y';
-		$this->uline = $this->uline == 'Y';
-		$this->ctcpversion_html = Magirc::irc2html($this->ctcpversion);
-		$this->country_code = $this->countrycode; # TODO: fix this query-side
+		$this->service = $this->service == 'Y';
+		if (Protocol::host_cloaking && !empty($this->hostname)) $this->hostname = $this->hostname_cloaked;
+		$this->client_html = Magirc::irc2html($this->client);
 		// User modes
 		for ($j = 97; $j <= 122; $j++) {
 			$mode_l = 'mode_l'.chr($j);
@@ -77,13 +73,6 @@ Class User {
 			if ($this->$mode_l) $this->modes .= chr($j);
 			if ($this->$mode_u) $this->modes .= chr($j - 32);
 		}
-		// Channel mode data
-		/*if ($this->mode_lf_data) $this->modes_data .= " " . $this->mode_lf_data;
-		if ($this->mode_lj_data) $this->modes_data .= " " . $this->mode_lj_data;
-		if ($this->mode_ll_data) $this->modes_data .= " " . $this->mode_ll_data;
-		if ($this->mode_uf_data) $this->modes_data .= " " . $this->mode_uf_data;
-		if ($this->mode_uj_data) $this->modes_data .= " " . $this->mode_uj_data;
-		if ($this->mode_ul_data) $this->modes_data .= " " . $this->mode_ul_data;*/
 		// Futher info
 		$this->bot = $this->hasMode(Protocol::bot_mode);
 		$this->helper = $this->hasMode(Protocol::helper_mode);
@@ -102,6 +91,16 @@ Class User {
 	private function hasMode($mode) {
 		return $mode ? strstr($this->modes, $mode) !== false : false;
 	}
+}
+
+class Channel {
+	// Channel mode data
+	/*if ($this->mode_lf_data) $this->modes_data .= " " . $this->mode_lf_data;
+	if ($this->mode_lj_data) $this->modes_data .= " " . $this->mode_lj_data;
+	if ($this->mode_ll_data) $this->modes_data .= " " . $this->mode_ll_data;
+	if ($this->mode_uf_data) $this->modes_data .= " " . $this->mode_uf_data;
+	if ($this->mode_uj_data) $this->modes_data .= " " . $this->mode_uj_data;
+	if ($this->mode_ul_data) $this->modes_data .= " " . $this->mode_ul_data;*/
 }
 
 ?>

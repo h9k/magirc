@@ -21,11 +21,11 @@ $(document).ready(function() {
 		"aaSorting": [[ 0, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/operators?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "nick", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['nick']+'</strong>' + getUserExtra(oObj.aData);
+			{ "mDataProp": "nickname", "fnRender": function(oObj) {
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['nickname']+'</strong>' + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "server" },
-			{ "mDataProp": "connecttime", "fnRender": function(oObj) { return $.format.date(oObj.aData['connecttime'], format_datetime); } }
+			{ "mDataProp": "connect_time", "fnRender": function(oObj) { return $.format.date(oObj.aData['connect_time'], format_datetime); } }
 		]
 	});
 	$("#tbl_operators tbody tr").live("click", function() {

@@ -93,7 +93,7 @@ $magirc->slim->get('/users/:mode/:user/hourly/:chan/:type', function($mode, $use
 	$magirc->jsonOutput($magirc->denora->getUserHourlyActivity($mode, $user, $chan, $type));
 });
 $magirc->slim->get('/operators', function() use($magirc) {
-	$magirc->jsonOutput($magirc->denora->getOperatorList(), true, 'nick');
+	$magirc->jsonOutput($magirc->denora->getOperatorList(), true, 'nickname');
 });
 $magirc->slim->get('/clientstats(/:chan)', function($chan = null) use($magirc) {
 	if ($chan) $magirc->checkPermission('channel', $chan);
