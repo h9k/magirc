@@ -1,5 +1,5 @@
 <h1>Channel list</h1>
-<table id="tbl_channels" class="display">
+<table id="tbl_channels" class="display clickable">
 	<thead>
 		<tr>
 			<th>Channel</th>

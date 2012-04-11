@@ -40,7 +40,7 @@
 	</tr>
 	<tr>
 		<td valign="top">
-			<table id="tbl_biggestchans" class="display">
+			<table id="tbl_biggestchans" class="display clickable">
 				<thead>
 					<tr>
 						<th>Channel</th>
@@ -55,7 +55,7 @@
 			</table>
 		</td>
 		<td valign="top">
-			<table id="tbl_top10chans" class="display">
+			<table id="tbl_top10chans" class="display clickable">
 				<thead>
 					<tr>
 						<th>Channel</th>
@@ -70,7 +70,7 @@
 			</table>
 		</td>
 		<td valign="top">
-			<table id="tbl_top10users" class="display">
+			<table id="tbl_top10users" class="display clickable">
 				<thead>
 					<tr>
 						<th>User</th>

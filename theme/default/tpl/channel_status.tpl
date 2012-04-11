@@ -16,7 +16,7 @@
 
 <div class="halfright">
 	<h2>Users currently in channel</h2>
-	<table id="tbl_users" class="display">
+	<table id="tbl_users" class="display clickable">
 		<thead>
 			<tr><th>Nickname</th><th>Modes</th></tr>
 		</thead>

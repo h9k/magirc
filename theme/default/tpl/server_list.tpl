@@ -1,6 +1,6 @@
 <h1>Server list</h1>
 {if $cfg.net_roundrobin}Network round robin: <a href="irc://{$cfg.net_roundrobin}">{$cfg.net_roundrobin}</a><br /><br />{/if}
-<table id="tbl_servers" class="display">
+<table id="tbl_servers" class="display clickable">
 <thead>
 	<tr>
 		<th>Status</th>
