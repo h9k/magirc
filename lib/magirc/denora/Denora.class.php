@@ -121,7 +121,7 @@ class Denora {
 			return "mode_l" . strtolower($mode);
 		}
 	}
-	
+
 	private function getUserCount($chan = null) {
 		$query = "SELECT COUNT(*) FROM user
 			JOIN server ON server.servid = user.servid";
@@ -141,7 +141,7 @@ class Denora {
 		$stmt->execute();
 		return $stmt->fetch(PDO::FETCH_COLUMN);
 	}
-	
+
 	private function getPieStats($type, $chan = null) {
 		$type = ($type == 'clients') ? 'ctcpversion' : 'country';
 		$query = "SELECT user.$type AS name, COUNT(*) AS count FROM user
@@ -153,7 +153,7 @@ class Denora {
 				AND user.online='Y'";
 		} else {
 			$query .= " WHERE user.online='Y'";
-		}		
+		}
 		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
 		if ($this->ircd->getParam("services_protection_mode")) {
 			$query .= sprintf(" AND user.%s='N'", $this->getSqlMode($this->ircd->getParam("services_protection_mode")));
@@ -441,7 +441,7 @@ class Denora {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Checks if given channel can be displayed
 	 * @param string $chan
@@ -517,7 +517,7 @@ class Denora {
 				}
 				$array[$i]['nick'] = $data['nick'];
 				$array[$i]['modes'] = ($mode ? "+" . $mode : "");
-				$array[$i]['host'] = ((!empty($data['hiddenhostname']) && $data['hiddenhostname'] != "(null)") ? $data['hiddenhostname'] : $data['hostname']);
+				$array[$i]['host'] = $this->ircd->getParam('host_cloaking') && !empty($data['hiddenhostname']) ? $data['hiddenhostname'] : $data['hostname'];
 				$array[$i]['username'] = $data['username'];
 				$array[$i]['country_code'] = $data['countrycode'];
 				$array[$i]['country'] = $data['country'];
@@ -533,12 +533,12 @@ class Denora {
 
 		return $array;
 	}
-	
+
 	function getChannelGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 		$secret_mode = $this->ircd->getParam('chan_secret_mode');
 		$private_mode = $this->ircd->getParam('chan_private_mode');
-		
+
 		$sWhere = "cstats.letters>0";
 		if ($secret_mode) {
 			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($secret_mode));
@@ -579,7 +579,7 @@ class Denora {
 		}
 		return $aaData;
 	}
-	
+
 	function getChannelActivity($chan, $type, $datatables = false) {
 		$aaData = array();
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats WHERE chan=:channel AND type=:type AND letters > 0 ";
@@ -617,7 +617,7 @@ class Denora {
 		}
 		return $aaData;
 	}
-	
+
 	function getChannelHourlyActivity($chan, $type) {
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM cstats WHERE chan=:channel AND type=:type";
@@ -664,10 +664,10 @@ class Denora {
 		}
 		return $modes;
 	}
-	
+
 	function getUserGlobalActivity($type, $datatables = false) {
 		$aaData = array();
-		
+
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname AS name,letters,words,line AS 'lines',
 			actions,smileys,kicks,modes,topics FROM ustats
 			WHERE type=:type AND letters>0 and chan='global'";
@@ -704,9 +704,9 @@ class Denora {
 		}
 		return $datatables ? $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData) : $aaData;
 	}
-	
+
 	function getUserHourlyActivity($mode, $user, $chan, $type) {
-		$info = $this->getUserData($mode, $user);		
+		$info = $this->getUserData($mode, $user);
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM ustats WHERE uname=:uname AND chan=:channel AND type=:type";
 		$ps = $this->db->prepare($sQuery);
@@ -720,7 +720,7 @@ class Denora {
 		}
 		return $result;
 	}
-	
+
 	function checkUser($user, $mode) {
 		if ($mode == "stats") {
 			$query = "SELECT uname FROM ustats WHERE LOWER(uname) = LOWER(:user)";
@@ -732,12 +732,12 @@ class Denora {
 		$stmt->execute();
 		return $stmt->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
-	
+
 	/**
 	 * Returns the stats username and all aliases of a user
 	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
 	 * @param string $user Nickname or Stats username
-	 * @return array ('nick' => nickname, 'uname' => stats username, 'aliases' => array of aliases) 
+	 * @return array ('nick' => nickname, 'uname' => stats username, 'aliases' => array of aliases)
 	 */
 	private function getUserData($mode, $user) {
 		$uname = ($mode == "stats") ? $user : $this->getUnameFromNick($user);
@@ -749,10 +749,10 @@ class Denora {
 		array_shift($aliases);
 		return array('nick' => $nick, 'uname' => $uname, 'aliases' => $aliases);
 	}
-	
+
 	function getUser($mode, $user) {
 		$info = $this->getUserData($mode, $user);
-		
+
 		$ps = $this->db->prepare("SELECT user.*, server.uline FROM user
 			LEFT JOIN server ON server.servid = user.servid
 			WHERE user.nick = :nickname");
@@ -760,14 +760,14 @@ class Denora {
 		$ps->execute();
 		$data = $ps->fetch(PDO::FETCH_ASSOC);
 		if (!$data) return null;
-		
+
 		$user = array(
 			'nick' => $info['nick'],
 			'uname' => $info['uname'],
 			'aliases' => $info['aliases'],
 			'username' => $data['username'],
 			'realname' => $data['realname'],
-			'hostname' => $this->ircd->getParam('host_cloaking') ? $data['hiddenhostname'] : $data['hostname'],
+			'hostname' => $this->ircd->getParam('host_cloaking') && !empty($data['hiddenhostname']) ? $data['hiddenhostname'] : $data['hostname'],
 			'connected_time' => $data['connecttime'],
 			'lastquit_time' => $data['lastquit'],
 			'lastquit_msg' => $data['lastquitmsg'],
@@ -785,7 +785,7 @@ class Denora {
 		);
 		return $user;
 	}
-	
+
 	private function isOper($user) {
 		if (IRCD == "unreal32") {
 			if ($user['mode_un'] == 'Y') return true;
@@ -793,7 +793,7 @@ class Denora {
 			if ($user['mode_la'] == 'Y') return true;
 			if ($user['mode_uc'] == 'Y') return true;
 		}
-		if ($user['mode_lo'] == 'Y') return true; 
+		if ($user['mode_lo'] == 'Y') return true;
 		return false;
 	}
 	private function isBot($user) {
@@ -802,12 +802,12 @@ class Denora {
 	private function isHelper($user) {
 		return $this->ircd->getParam('helper_mode') && $user[$this->getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
 	}
-	
+
 	function getUserChannels($mode, $user) {
 		$info = $this->getUserData($mode, $user);
 		$secret_mode = $this->ircd->getParam('chan_secret_mode');
 		$private_mode = $this->ircd->getParam('chan_private_mode');
-		
+
 		$sWhere = "";
 		if ($secret_mode) {
 			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($secret_mode));
@@ -823,7 +823,7 @@ class Denora {
 			}
 			$sWhere .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
 		}
-		
+
 		$query = sprintf("SELECT DISTINCT chan FROM ustats, chan, user WHERE ustats.uname=:uname
 			AND ustats.type=0 AND BINARY LOWER(ustats.chan)=LOWER(chan.channel)
 			AND user.nick=:nick %s", $sWhere);
@@ -833,7 +833,7 @@ class Denora {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
 	}
-	
+
 	function getUserActivity($mode, $user, $chan) {
 		$info = $this->getUserData($mode, $user);
 		if ($chan == 'global') {
@@ -865,17 +865,17 @@ class Denora {
 		}
 		return $data;
 	}
-	
+
 	private function getUnameFromNick($nick) {
 		$ps = $this->db->prepare("SELECT uname FROM aliases WHERE nick = :nickname");
 		$ps->bindParam(':nickname', $nick, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
-	
+
 	private function getUnameAliases($uname) {
 		$ps = $this->db->prepare("SELECT a.nick FROM aliases a LEFT JOIN user u ON a.nick = u.nick
-			WHERE a.uname = :uname ORDER BY CASE WHEN u.online IS NULL THEN 1 ELSE 0 END, 
+			WHERE a.uname = :uname ORDER BY CASE WHEN u.online IS NULL THEN 1 ELSE 0 END,
 			u.online DESC, u.lastquit DESC, u.connecttime ASC");
 		$ps->bindParam(':uname', $uname, PDO::PARAM_STR);
 		$ps->execute();
