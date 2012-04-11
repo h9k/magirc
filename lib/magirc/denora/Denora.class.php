@@ -77,6 +77,17 @@ class Denora {
 			return "mode_l" . strtolower($mode);
 		}
 	}
+	
+	/**
+	 * Return the mode data formatted for SQL
+	 * Example: o -> mode_lo_data, C -> mode_uc_data
+	 * @param string $mode Mode
+	 * @return string SQL Mode data
+	 */
+	public static function getSqlModeData($mode) {
+		$sql_mode = Denora::getSqlMode($mode);
+		return $sql_mode ? $sql_mode . "_data" : null;
+	}
 
 	/**
 	 * Get the global or channel-specific user count
@@ -269,7 +280,11 @@ class Denora {
 		return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
 	}
 
-	// return an array of all channels
+	/**
+	 * Gets the list of current channels
+	 * @param boolean $datatables Set true to enable server-side datatables functionality
+	 * @return array of Channel 
+	 */
 	function getChannelList($datatables = false) {
 		$aaData = array();
 		$secret_mode = Protocol::chan_secret_mode;
@@ -288,10 +303,13 @@ class Denora {
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
-			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(',', $hide_channels));
+			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(",", $hide_channels));
 		}
-
-		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS * FROM chan WHERE %s", $sWhere);
+		
+		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time,
+			topic, topicauthor AS topic_author, topictime AS topic_time, kickcount AS kicks, %s, %s FROM chan WHERE %s",
+				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::chan_modes))),
+				implode(',', array_map(array('Denora', 'getSqlModeData'), str_split(Protocol::chan_modes_data))), $sWhere);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery);
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
@@ -303,25 +321,7 @@ class Denora {
 		}
 		$ps = $this->db->prepare($sQuery);
 		$ps->execute();
-		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
-			$aData = array(
-				'id' => $row['chanid'],
-				'name' => $row['channel'],
-				'users' => $row['currentusers'],
-				'users_max' => $row['maxusers'],
-				'users_max_time' => $row['maxusertime'],
-				'topic' => $row['topic'],
-				'topic_html' => Magirc::irc2html($row['topic']),
-				'topic_author' => $row['topicauthor'],
-				'topic_time' => strtotime($row['topictime']),
-				'kicks' => $row['kickcount'],
-				'modes' => $this->getChannelModes($row)
-			);
-			if ($datatables) {
-				$aData["DT_RowId"] = $row['channel'];
-			}
-			$aaData[] = $aData;
-		}
+		$aaData = $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');
 		if ($datatables) {
 			$iFilteredTotal = $this->db->foundRows();
 			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
