@@ -243,13 +243,6 @@ class Denora {
 		$stmt->execute();
 		return $stmt->fetchObject('Server');
 	}
-	
-	//TODO: move it somewhere else
-	private function getModeColumns($table) {
-		$ps = $this->db->prepare("SHOW COLUMNS FROM $table LIKE 'mode_%'");
-		$ps->execute();
-		return $ps->fetchAll(PDO::FETCH_COLUMN);
-	}
 
 	/**
 	 * Get the list of Operators currently online
@@ -259,7 +252,7 @@ class Denora {
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service,
-			%s FROM user u, server s WHERE", implode(',', $this->getModeColumns("user")));
+			%s FROM user u, server s WHERE", implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
 		if (Protocol::ircd == "unreal32") {
 			$query .= " (u.mode_un = 'Y' OR u.mode_ua = 'Y' OR u.mode_la = 'Y' OR u.mode_uc = 'Y' OR u.mode_lo = 'Y')";
 		} else {

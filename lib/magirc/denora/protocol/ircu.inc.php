@@ -3,6 +3,10 @@
 
 class Protocol {
 	const ircd = 'ircu';
+	
+	const chan_modes = 'iklmnprst';
+	const chan_modes_data = 'kl';
+	const user_modes = 'dgikorsxw';
 
 	const oper_hidden_mode = '';
 	const helper_mode = '';

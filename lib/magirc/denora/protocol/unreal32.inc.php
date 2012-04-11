@@ -3,6 +3,10 @@
 
 class Protocol {
 	const ircd = 'unreal32';
+	
+	const chan_modes = 'cfijklmnprstuzACGKLMNOQRSTV';
+	const chan_modes_data = 'fjklL';
+	const user_modes = 'adghiopqrstvwxzABCGHNORSTVW';
 
 	const oper_hidden_mode = 'H';
 	const helper_mode = 'h';

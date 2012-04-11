@@ -3,6 +3,10 @@
 
 class Protocol {
 	const ircd = 'nefarious';
+	
+	const chan_modes = 'aciklmnprstzCLMNOQSTZ';
+	const chan_modes_data = 'klL';
+	const user_modes = 'acdfghiknoqrsxwzBCDHILORWX';
 
 	const oper_hidden_mode = 'H';
 	const helper_mode = '';

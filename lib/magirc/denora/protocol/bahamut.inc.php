@@ -3,8 +3,12 @@
 
 class Protocol {
 	const ircd = 'bahamut';
+	
+	const chan_modes = 'cijklmnprstLMOR';
+	const chan_modes_data = 'jkl';
+	const user_modes = 'abcdefghijkmnorswxyADFIKORX';
 
-	const oper_hidden_mode = 'H';
+	const oper_hidden_mode = '';
 	const helper_mode = '';
 	const bot_mode = '';
 	const services_protection_mode = '';

@@ -3,6 +3,10 @@
 
 class Protocol {
 	const ircd = 'charybdis';
+	
+	const chan_modes = 'cfgijklmnprstzFLPQ';
+	const chan_modes_data = 'fjkl';
+	const user_modes = 'ahgiloswzQRSZ';
 
 	const oper_hidden_mode = '';
 	const helper_mode = '';

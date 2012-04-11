@@ -3,6 +3,10 @@
 
 class Protocol {
 	const ircd = 'ratbox';
+	
+	const chan_modes = 'iklmnpst';
+	const chan_modes_data = 'kl';
+	const user_modes = 'abcdfgiklnorsuwxyz';
 
 	const oper_hidden_mode = '';
 	const helper_mode = '';

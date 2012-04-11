@@ -68,10 +68,22 @@ Class User {
 		for ($j = 97; $j <= 122; $j++) {
 			$mode_l = 'mode_l'.chr($j);
 			$mode_u = 'mode_u'.chr($j);
-			$this->$mode_l = isset($this->$mode_l) ? $this->$mode_l == "Y" : false;
-			$this->$mode_u = isset($this->$mode_u) ? $this->$mode_u == "Y" : false;
-			if ($this->$mode_l) $this->modes .= chr($j);
-			if ($this->$mode_u) $this->modes .= chr($j - 32);
+			if (isset($this->$mode_l)) {
+				if ($this->$mode_l == "Y") {
+					$this->$mode_l = true;
+					$this->modes .= chr($j);
+				} else {
+					$this->$mode_l = false;
+				}
+			}
+			if (isset($this->$mode_u)) {
+				if ($this->$mode_u == "Y") {
+					$this->$mode_u = true;
+					$this->modes .= chr($j - 32);
+				} else {
+					$this->$mode_u = false;
+				}
+			}
 		}
 		// Futher info
 		$this->bot = $this->hasMode(Protocol::bot_mode);
