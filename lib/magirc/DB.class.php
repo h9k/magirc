@@ -26,6 +26,10 @@ class DB {
 
 	}
 
+	function __destruct() {
+		$this->pdo = null;
+	}
+
 	function connect($dsn, $username, $password) {
 		try {
 			$this->pdo = new PDO($dsn, $username, $password);

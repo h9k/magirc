@@ -23,7 +23,7 @@
 	<img id="netsplit_history" src="" alt="" />
 </div>
 
-<br />More on <a href="http://irc.netsplit.de/networks/{$cfg.service_netsplit}/">Netsplit.de</a>
+<br />More on <a href="http://irc.netsplit.de/networks/{$cfg.service_netsplit}/" rel="external" target="_blank">Netsplit.de</a>
 
 {jsmin}
 <script type="text/javascript"><!--

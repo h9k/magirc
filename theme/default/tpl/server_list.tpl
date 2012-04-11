@@ -51,8 +51,8 @@ $(document).ready(function() {
 		"aoColumns": [
 			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; } },
 			{ "mDataProp": "server", "fnRender": function (oObj) { return "<strong>" + oObj.aData['server'] + "<\/strong>"; } },
-			{ "mDataProp": "comment" },
-			{ "mDataProp": "currentusers" },
+			{ "mDataProp": "description" },
+			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }
 		]
 	});
@@ -60,21 +60,21 @@ $(document).ready(function() {
 		$.getJSON("rest/denora.php/servers/"+this.id, function(data){
 			if (data) {
 				$("#dialog-server").dialog("option", "title", data.server);
-				$("#srv_description").html(data.comment);
-				$("#srv_online").html(data.online == 'Y' ? "Yes" : "No");
+				$("#srv_description").html(data.description);
+				$("#srv_online").html(data.online ? "Yes" : "No");
 				$("#srv_version").html(data.version);
 				$("#srv_uptime").html(Math.round(data.uptime / 3600));
-				$("#srv_connecttime").html($.format.date(data.connecttime, format_datetime));
-				$("#srv_lastsplit").html($.format.date(data.lastsplit, format_datetime));
+				$("#srv_connecttime").html($.format.date(data.connect_time, format_datetime));
+				$("#srv_lastsplit").html($.format.date(data.split_time, format_datetime));
 				$("#srv_ping").html(data.ping);
-				$("#srv_maxping").html(data.highestping);
-				$("#srv_maxpingtime").html($.format.date(data.maxpingtime, format_datetime));
-				$("#srv_users").html(data.currentusers);
-				$("#srv_maxusers").html(data.maxusers);
-				$("#srv_maxusertime").html($.format.date(data.maxusertime, format_datetime));
+				$("#srv_maxping").html(data.ping_max);
+				$("#srv_maxpingtime").html($.format.date(data.ping_max_time, format_datetime));
+				$("#srv_users").html(data.users);
+				$("#srv_maxusers").html(data.users_max);
+				$("#srv_maxusertime").html($.format.date(data.users_max_time, format_datetime));
 				$("#srv_opers").html(data.opers);
-				$("#srv_maxopers").html(data.maxopers);
-				$("#srv_maxopertime").html($.format.date(data.maxopertime, format_datetime));
+				$("#srv_maxopers").html(data.opers_max);
+				$("#srv_maxopertime").html($.format.date(data.opers_max_time, format_datetime));
 				$("#srv_motd_txt").html(data.motd ? data.motd_html : "MOTD not available for this server");
 				$("#dialog-server").dialog("open");
 				$("#srv_motd").scrollTop(0);

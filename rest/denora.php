@@ -35,7 +35,7 @@ $magirc->slim->get('/servers', function() use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getServerList(), true, 'server');
 });
 $magirc->slim->get('/servers/hourlystats', function() use($magirc) {
-	$magirc->jsonOutput($magirc->denora->getHourlyStats('serverstats'));
+	$magirc->jsonOutput($magirc->denora->getHourlyStats('servers'));
 });
 $magirc->slim->get('/servers/:server', function($server) use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getServer($server));
@@ -44,7 +44,7 @@ $magirc->slim->get('/channels', function() use($magirc) {
     $magirc->jsonOutput($magirc->denora->getChannelList(@$_GET['format'] == 'datatables'));
 });
 $magirc->slim->get('/channels/hourlystats', function() use($magirc) {
-    $magirc->jsonOutput($magirc->denora->getHourlyStats('channelstats'));
+    $magirc->jsonOutput($magirc->denora->getHourlyStats('channels'));
 });
 $magirc->slim->get('/channels/biggest(/:limit)', function($limit = 10) use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getChannelBiggest((int) $limit), true, 'channel');
@@ -72,7 +72,7 @@ $magirc->slim->get('/channels/:chan/hourly/:type', function($chan, $type) use($m
 	$magirc->jsonOutput($magirc->denora->getChannelHourlyActivity($chan, $type));
 });
 $magirc->slim->get('/users/hourlystats', function() use($magirc) {
-    $magirc->jsonOutput($magirc->denora->getHourlyStats('stats'));
+    $magirc->jsonOutput($magirc->denora->getHourlyStats('users'));
 });
 $magirc->slim->get('/users/top(/:limit)', function($limit = 10) use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getUsersTop((int) $limit), true, 'uname');

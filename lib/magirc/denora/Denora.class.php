@@ -22,7 +22,7 @@ class Denora {
 		// Get the ircd
 		$ircd_file = PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php";
 		if (file_exists($ircd_file)) {
-			require_once(PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php");
+			require_once($ircd_file);
 		} else {
 			die('<strong>MagIRC</strong> is not properly configured<br />Please configure the ircd in the <a href="admin/">Admin Panel</a>');
 		}
@@ -31,55 +31,13 @@ class Denora {
 		$this->db->connect("mysql:dbname={$db['database']};host={$db['hostname']}", $db['username'], $db['password']) || die('Error opening Denora database<br />' . $this->error);
 		$this->cfg = new Config();
 		$this->ircd = new Protocol();
+		require_once(__DIR__ . '/Objects.class.php');
 	}
 
-	// login function
-	function login($username, $password) {
-		if (!isset($username) || !isset($password)) {
-			return false;
-		} else {
-			return $this->db->selectOne('admin', array('uname' => $username, 'passwd' => md5(trim($password)), 'level' => 1));
-		}
-	}
-
-	// Returns the Denora version
-	function getVersion($what) {
-		global $config;
-		$table = isset($config['table_server']) ? $config['table_server'] : 'server';
-		$query = sprintf("SELECT `version` FROM `%s` WHERE `version` LIKE 'Denora%%'", $table);
-		$this->db->query($query, SQL_INIT, SQL_ASSOC);
-		$result = $this->db->record;
-		if (isset($result['version'])) {
-			switch ($what) {
-				case 'full':
-					$version = explode("-", $result['version']);
-					return @$version[1];
-					break;
-				case 'num':
-					$pattern = '/([0-9.]+)/';
-					preg_match($pattern, $result['version'], $version);
-					return @$version[1];
-					break;
-				case 'rev':
-					$pattern = '/([0-9.]+)/';
-					preg_match($pattern, $result['version'], $num);
-					if (!$num) {
-						$version = explode("(", substr($result['version'], 0, -1));
-					} else {
-						$pattern = '/(\.[0-9]+)\s/';
-						preg_match($pattern, $result['version'], $version);
-						$version[1] = substr($version[1], 1);
-					}
-					return @$version[1];
-					break;
-				default:
-					return NULL;
-			}
-		} else {
-			return NULL;
-		}
-	}
-
+	/**
+	 * Returns the current status
+	 * @return array of arrays (int val, int time)
+	 */
 	function getCurrentStatus() {
 		$query = "SELECT type, val, FROM_UNIXTIME(time) AS time FROM current";
 		$this->db->query($query, SQL_ALL, SQL_ASSOC);
@@ -91,6 +49,10 @@ class Denora {
 		return $data;
 	}
 
+	/**
+	 * Returns the ma values
+	 * @return array of arrays (int val, int time)
+	 */
 	function getMaxValues() {
 		$query = "SELECT type, val, time FROM maxvalues";
 		$this->db->query($query, SQL_ALL, SQL_ASSOC);
@@ -102,8 +64,13 @@ class Denora {
 		return $data;
 	}
 
-	// return the mode formatted for sql
-	private function getSqlMode($mode) {
+	/**
+	 * Return the mode formatted for SQL
+	 * Example: o -> mode_lo, C -> mode_uc
+	 * @param string $mode Mode
+	 * @return string SQL Mode
+	 */
+	public static function getSqlMode($mode) {
 		if (!$mode) {
 			return null;
 		} elseif (strtoupper($mode) === $mode) {
@@ -113,6 +80,11 @@ class Denora {
 		}
 	}
 
+	/**
+	 * Get the global or channel-specific user count
+	 * @param string $chan Channel (null for global)
+	 * @return int User count
+	 */
 	private function getUserCount($chan = null) {
 		$query = "SELECT COUNT(*) FROM user
 			JOIN server ON server.servid = user.servid";
@@ -125,7 +97,7 @@ class Denora {
 		}
 		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
 		if ($this->ircd->getParam("services_protection_mode")) {
-			$query .= sprintf(" AND user.%s='N'", $this->getSqlMode($this->ircd->getParam("services_protection_mode")));
+			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode($this->ircd->getParam("services_protection_mode")));
 		}
 		$stmt = $this->db->prepare($query);
 		if ($chan != 'global') $stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
@@ -133,6 +105,12 @@ class Denora {
 		return $stmt->fetch(PDO::FETCH_COLUMN);
 	}
 
+	/**
+	 * Get CTCP/GeoIP statistics for use by pie charts
+	 * @param string $type Type ('clients': client stats, 'countries': country stats)
+	 * @param string $chan Channel (null for global)
+	 * @return array Data
+	 */
 	private function getPieStats($type, $chan = null) {
 		$type = ($type == 'clients') ? 'ctcpversion' : 'country';
 		$query = "SELECT user.$type AS name, COUNT(*) AS count FROM user
@@ -147,7 +125,7 @@ class Denora {
 		}
 		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
 		if ($this->ircd->getParam("services_protection_mode")) {
-			$query .= sprintf(" AND user.%s='N'", $this->getSqlMode($this->ircd->getParam("services_protection_mode")));
+			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode($this->ircd->getParam("services_protection_mode")));
 		}
 		$query .= " GROUP by user.$type ORDER BY count DESC";
 		$stmt = $this->db->prepare($query);
@@ -156,15 +134,30 @@ class Denora {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	// CTCP statistics
+	/**
+	 * Get CTCP client statistics
+	 * @param string $chan Channel (null for global)
+	 * @return array Data
+	 */
 	function getClientStats($chan = null) {
 		return $this->makeData($this->getPieStats('clients', $chan), $this->getUserCount($chan));
 	}
-	// TLD statistics
+
+	/**
+	 * Get GeoIP country statistics
+	 * @param string $chan Channel (null for global)
+	 * @return array Data
+	 */
 	function getCountryStats($chan = null) {
 		return $this->makeData($this->getPieStats('countries', $chan), $this->getUserCount($chan));
 	}
 
+	/**
+	 * Prepare data for use by pie charts
+	 * @param array $result Array of data
+	 * @param type $sum user count
+	 * @return array of arrays (string 'name', double 'value')
+	 */
 	private function makeData($result, $sum) {
 		$data = array();
 		$unknown = 0;
@@ -188,7 +181,18 @@ class Denora {
 		return $data;
 	}
 
+	/**
+	 * Get hourly user/channel/server stats
+	 * @param string $table 'users', 'channels', 'servers'
+	 * @return array of arrays (int milliseconds, int value)
+	 */
 	function getHourlyStats($table) {
+		switch ($table) {
+			case 'users': $table = 'stats'; break;
+			case 'channels': $table = 'channelstats'; break;
+			case 'servers': $table = 'serverstats'; break;
+			default: return null;
+		}
 		$query = "SELECT * FROM {$table} ORDER BY year ASC, month ASC, day ASC";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
@@ -203,6 +207,10 @@ class Denora {
 		return $data;
 	}
 
+	/**
+	 * Gets a list of servers
+	 * @return array of Server
+	 */
 	function getServerList() {
 		$sWhere = "";
 		$hide_servers = $this->cfg->getParam('hide_servers');
@@ -211,39 +219,38 @@ class Denora {
 			foreach ($hide_servers as $key => $server) {
 				$hide_servers[$key] = $this->db->escape(trim($server));
 			}
-			$sWhere .= sprintf("%s LOWER(server) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(',', $hide_servers));
+			$sWhere .= sprintf("WHERE server NOT IN('%s')", implode("','", $hide_servers));
 		}
 		if ($this->cfg->getParam('hide_ulined')) {
 			$sWhere .= $sWhere ? " AND uline = 0" : "WHERE uline = 0";
 		}
-		$query = "SELECT server, online, comment, currentusers, opers FROM server $sWhere";
+		$query = "SELECT server, online, comment AS description, currentusers AS users, opers FROM server $sWhere";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
-		$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		foreach ($data as $key => $val) {
-			$data[$key]['online'] = $val['online'] == 'Y';
-		}
-		return $data;
+		return $stmt->fetchAll(PDO::FETCH_CLASS, 'Server');
 	}
 
+	/**
+	 * Gets a server
+	 * @param string $server Server name
+	 * @return Server
+	 */
 	function getServer($server) {
-		$query = "SELECT server, online, comment, connecttime, lastsplit, version,
-			uptime, motd, currentusers, maxusers, FROM_UNIXTIME(maxusertime) AS maxusertime, ping, highestping,
-			FROM_UNIXTIME(maxpingtime) AS maxpingtime, opers, maxopers, FROM_UNIXTIME(maxopertime) AS maxopertime
+		$query = "SELECT server, online, comment AS description, connecttime AS connect_time, lastsplit AS split_time, version,
+			uptime, motd, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time, ping, highestping AS ping_max,
+			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time
 			FROM server WHERE server = :server";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindParam(':server', $server, PDO::PARAM_STR);
 		$stmt->execute();
-		$server = $stmt->fetch(PDO::FETCH_ASSOC);
-		$server['motd_html'] = $this->irc2html($server['motd']);
-		return $server;
+		return $stmt->fetchObject('Server');
 	}
 
 	function getOperatorList() {
 		$array = array();
-		$ho = $this->ircd->getParam('oper_hidden_mode') ? "AND user." . $this->getSqlMode($this->ircd->getParam('oper_hidden_mode')) . " = 'N'" : NULL;
+		$ho = $this->ircd->getParam('oper_hidden_mode') ? "AND user." . Denora::getSqlMode($this->ircd->getParam('oper_hidden_mode')) . " = 'N'" : NULL;
 		$hu = $this->cfg->getParam('hide_ulined') ? "AND server.uline = '0'" : NULL;
-		$hs = $this->ircd->getParam('services_protection_mode') ? "AND user." . $this->getSqlMode($this->ircd->getParam('services_protection_mode')) . " = 'N'" : NULL;
+		$hs = $this->ircd->getParam('services_protection_mode') ? "AND user." . Denora::getSqlMode($this->ircd->getParam('services_protection_mode')) . " = 'N'" : NULL;
 		if (IRCD == "unreal32") {
 			$query = "SELECT user.*,server.uline FROM user,server WHERE (user.mode_un = 'Y' OR user.mode_ua = 'Y' OR user.mode_la = 'Y' OR user.mode_uc = 'Y' OR user.mode_lo = 'Y')
 				AND user.online = 'Y' $ho $hs AND user.server = server.server $hu ORDER BY user.mode_un,user.mode_ua,user.mode_la,user.mode_uc,user.mode_lo,user.nick ASC";
@@ -273,9 +280,9 @@ class Denora {
 			} else {
 				$level = "Operator";
 			}
-			$data['level'] = $level;
-			$data['bot'] = $this->ircd->getParam('bot_mode') && $row[$this->getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y';
-			$data['helper'] = $this->ircd->getParam('helper_mode') && $row[$this->getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
+			$data['operator_level'] = $level;
+			$data['bot'] = $this->ircd->getParam('bot_mode') && $row[Denora::getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y';
+			$data['helper'] = $this->ircd->getParam('helper_mode') && $row[Denora::getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
 			$data['service'] = $row['uline'] ? true : false;
 			$data['operator'] = true;
 			$data['country_code'] = $row['countrycode'];
@@ -293,10 +300,10 @@ class Denora {
 
 		$sWhere = "currentusers > 0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND %s='N'", $this->getSqlMode($secret_mode));
+			$sWhere .= sprintf(" AND %s='N'", Denora::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND %s='N'", $this->getSqlMode($private_mode));
+			$sWhere .= sprintf(" AND %s='N'", Denora::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->getParam('hide_chans');
 		if ($hide_channels) {
@@ -327,7 +334,7 @@ class Denora {
 				'users_max' => $row['maxusers'],
 				'users_max_time' => $row['maxusertime'],
 				'topic' => $row['topic'],
-				'topic_html' => $this->irc2html($row['topic']),
+				'topic_html' => Magirc::irc2html($row['topic']),
 				'topic_author' => $row['topicauthor'],
 				'topic_time' => strtotime($row['topictime']),
 				'kicks' => $row['kickcount'],
@@ -350,10 +357,10 @@ class Denora {
 		$private_mode = $this->ircd->getParam('chan_private_mode');
 		$query = "SELECT * FROM chan WHERE currentusers > 0";
 		if ($secret_mode) {
-			$query .= sprintf(" AND %s='N'", $this->getSqlMode($secret_mode));
+			$query .= sprintf(" AND %s='N'", Denora::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$query .= sprintf(" AND %s='N'", $this->getSqlMode($private_mode));
+			$query .= sprintf(" AND %s='N'", Denora::getSqlMode($private_mode));
 		}
 		$hide_chans = explode(",", $this->cfg->getParam('hide_chans'));
 		for ($i = 0; $i < count($hide_chans); $i++) {
@@ -371,10 +378,10 @@ class Denora {
 		$private_mode = $this->ircd->getParam('chan_private_mode');
 		$query = "SELECT chan, line FROM cstats, chan WHERE BINARY LOWER(cstats.chan)=LOWER(chan.channel) AND cstats.type=1 AND cstats.line >= 1";
 		if ($secret_mode) {
-			$query .= sprintf(" AND chan.%s='N'", $this->getSqlMode($secret_mode));
+			$query .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$query .= sprintf(" AND chan.%s='N'", $this->getSqlMode($private_mode));
+			$query .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
 		}
 		$hide_chans = explode(",", $this->cfg->getParam('hide_chans'));
 		for ($i = 0; $i < count($hide_chans); $i++) {
@@ -423,7 +430,7 @@ class Denora {
 				'users_max' => $chan['maxusers'],
 				'users_max_time' => date('Y-m-d H:i:s', $chan['maxusertime']),
 				'topic' => $chan['topic'],
-				'topic_html' => $this->irc2html($chan['topic']),
+				'topic_html' => Magirc::irc2html($chan['topic']),
 				'topic_author' => $chan['topicauthor'],
 				'topic_time' => $chan['topictime'],
 				'kicks' => $chan['kickcount'],
@@ -456,8 +463,8 @@ class Denora {
 			return 404;
 		} else {
 			if ($this->cfg->getParam('block_spchans')) {
-				if ($this->ircd->getParam('chan_secret_mode') && @$data[$this->getSqlMode($this->ircd->getParam('chan_secret_mode'))] == 'Y' ) return 403;
-				if ($this->ircd->getParam('chan_private_mode') && @$data[$this->getSqlMode($this->ircd->getParam('chan_private_mode'))] == 'Y' ) return 403;
+				if ($this->ircd->getParam('chan_secret_mode') && @$data[Denora::getSqlMode($this->ircd->getParam('chan_secret_mode'))] == 'Y' ) return 403;
+				if ($this->ircd->getParam('chan_private_mode') && @$data[Denora::getSqlMode($this->ircd->getParam('chan_private_mode'))] == 'Y' ) return 403;
 			}
 			if (@$data['mode_li'] == "Y" || @$data['mode_lk'] == "Y" || @$data['mode_uo'] == "Y") {
 				return 403;
@@ -475,7 +482,7 @@ class Denora {
 		$i = 0;
 		$query = "SELECT ";
 		if ($this->ircd->getParam('helper_mode')) {
-			$query .= sprintf("`user`.`%s` AS 'helper', ", $this->getSqlMode($this->ircd->getParam('helper_mode')));
+			$query .= sprintf("`user`.`%s` AS 'helper', ", Denora::getSqlMode($this->ircd->getParam('helper_mode')));
 		}
 		$query .= "`user`.*, `ison`.*,`server`.`uline`
 		FROM `ison`,`chan`,`user`,`server`
@@ -512,7 +519,7 @@ class Denora {
 				$array[$i]['username'] = $data['username'];
 				$array[$i]['country_code'] = $data['countrycode'];
 				$array[$i]['country'] = $data['country'];
-				$array[$i]['bot'] = $data[$this->getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y' ? true : false;
+				$array[$i]['bot'] = $data[Denora::getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y' ? true : false;
 				$array[$i]['away'] = $data['away'] == 'Y' ? true : false;
 				$array[$i]['online'] = $data['online'] == 'Y' ? true : false;
 				$array[$i]['service'] = $data['uline'] == '1' ? true : false;
@@ -532,10 +539,10 @@ class Denora {
 
 		$sWhere = "cstats.letters>0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($secret_mode));
+			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($private_mode));
+			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->getParam('hide_chans');
 		if ($hide_channels) {
@@ -788,10 +795,10 @@ class Denora {
 		return false;
 	}
 	private function isBot($user) {
-		return $this->ircd->getParam('bot_mode') && $user[$this->getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y';
+		return $this->ircd->getParam('bot_mode') && $user[Denora::getSqlMode($this->ircd->getParam('bot_mode'))] == 'Y';
 	}
 	private function isHelper($user) {
-		return $this->ircd->getParam('helper_mode') && $user[$this->getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
+		return $this->ircd->getParam('helper_mode') && $user[Denora::getSqlMode($this->ircd->getParam('helper_mode'))] == 'Y';
 	}
 
 	function getUserChannels($mode, $user) {
@@ -801,10 +808,10 @@ class Denora {
 
 		$sWhere = "";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($secret_mode));
+			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND chan.%s='N'", $this->getSqlMode($private_mode));
+			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->getParam('hide_chans');
 		if ($hide_channels) {
@@ -871,53 +878,6 @@ class Denora {
 		$ps->bindParam(':uname', $uname, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
-	}
-
-	private function irc2html($text) {
-		global $charset;
-		$lines = explode("\n", utf8_decode($text));
-		$out = '';
-
-		foreach ($lines as $line) {
-			$line = nl2br(htmlentities($line, ENT_COMPAT, $charset));
-			// replace control codes
-			$line = preg_replace_callback('/[\003](\d{0,2})(,\d{1,2})?([^\003\x0F]*)(?:[\003](?!\d))?/', function($matches) {
-						$colors = array('#FFFFFF', '#000000', '#00007F', '#009300', '#FF0000', '#7F0000', '#9C009C', '#FC7F00', '#FFFF00', '#00FC00', '#009393', '#00FFFF', '#0000FC', '#FF00FF', '#7F7F7F', '#D2D2D2');
-						$options = '';
-
-						if ($matches[2] != '') {
-							$bgcolor = trim(substr($matches[2], 1));
-							if ((int) $bgcolor < count($colors)) {
-								$options .= 'background-color: ' . $colors[(int) $bgcolor] . '; ';
-							}
-						}
-
-						$forecolor = trim($matches[1]);
-						if ($forecolor != '' && (int) $forecolor < count($colors)) {
-							$options .= 'color: ' . $colors[(int) $forecolor] . ';';
-						}
-
-						if ($options != '') {
-							return '<span style="' . $options . '">' . $matches[3] . '</span>';
-						} else {
-							return $matches[3];
-						}
-					}, $line);
-			$line = preg_replace('/[\002]([^\002\x0F]*)(?:[\002])?/', '<strong>$1</strong>', $line);
-			$line = preg_replace('/[\x1F]([^\x1F\x0F]*)(?:[\x1F])?/', '<span style="text-decoration: underline;">$1</span>', $line);
-			$line = preg_replace('/[\x12]([^\x12\x0F]*)(?:[\x12])?/', '<span style="text-decoration: line-through;">$1</span>', $line);
-			$line = preg_replace('/[\x16]([^\x16\x0F]*)(?:[\x16])?/', '<span style="font-style: italic;">$1</span>', $line);
-			$line = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\S+]*(\?\S+)?)?)?)@', "<a href='$1' class='topic'>$1</a>", $line);
-			// remove dirt
-			$line = preg_replace('/[\x00-\x1F]/', '', $line);
-			$line = preg_replace('/[\x7F-\xFF]/', '', $line);
-			// append line
-			if ($line != '') {
-				$out .= $line;
-			}
-		}
-
-		return $out;
 	}
 
 }

@@ -82,11 +82,11 @@ class Magirc {
 			#define('LANG', substr($locale, 0, 2));
 		}
 	}
-	
+
 	/**
 	 * Gets the page content for the specified name
 	 * @param string $name Content identifier
-	 * @return string HTML content 
+	 * @return string HTML content
 	 */
 	function getContent($name) {
 		$ps = $this->db->prepare("SELECT text FROM magirc_content WHERE name = :name");
@@ -94,7 +94,7 @@ class Magirc {
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
-	
+
 	/**
 	 * Checks thet permission for the given type and target.
 	 * Terminates the program with an appropriate error message on failure.
@@ -115,7 +115,7 @@ class Magirc {
 			case 403: $this->slim->halt(403, $this->jsonOutput(array('error' => "HTTP 403 Access Denied")));
 		}
 	}
-	
+
 	/**
 	 * Encodes the given data as a JSON object.
 	 * (Used by the RESTful API)
@@ -126,7 +126,10 @@ class Magirc {
 	function jsonOutput($data, $datatables = false, $idcolumn = null) {
 		if ($datatables && @$_GET['format'] == "datatables") {
 			if (!$idcolumn && count($data) > 0) $idcolumn = key($data[0]);
-			foreach ($data as $key => $val) $data[$key]["DT_RowId"] = $val[$idcolumn];
+			foreach ($data as $key => $val) {
+				if (is_array($data[$key])) $data[$key]["DT_RowId"] = $val[$idcolumn];
+				else $data[$key]->DT_RowId = $val->$idcolumn;
+			}
 			echo json_encode(array('aaData' => $data));
 		} else {
 			echo json_encode($data);
@@ -147,6 +150,59 @@ class Magirc {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Returns the given text with html tags for colors and styling
+	 * @global string $charset
+	 * @param string $text IRC text
+	 * @return string HTML text
+	 */
+	public static function irc2html($text) {
+		global $charset;
+		$lines = explode("\n", utf8_decode($text));
+		$out = '';
+
+		foreach ($lines as $line) {
+			$line = nl2br(htmlentities($line, ENT_COMPAT, $charset));
+			// replace control codes
+			$line = preg_replace_callback('/[\003](\d{0,2})(,\d{1,2})?([^\003\x0F]*)(?:[\003](?!\d))?/', function($matches) {
+						$colors = array('#FFFFFF', '#000000', '#00007F', '#009300', '#FF0000', '#7F0000', '#9C009C', '#FC7F00', '#FFFF00', '#00FC00', '#009393', '#00FFFF', '#0000FC', '#FF00FF', '#7F7F7F', '#D2D2D2');
+						$options = '';
+
+						if ($matches[2] != '') {
+							$bgcolor = trim(substr($matches[2], 1));
+							if ((int) $bgcolor < count($colors)) {
+								$options .= 'background-color: ' . $colors[(int) $bgcolor] . '; ';
+							}
+						}
+
+						$forecolor = trim($matches[1]);
+						if ($forecolor != '' && (int) $forecolor < count($colors)) {
+							$options .= 'color: ' . $colors[(int) $forecolor] . ';';
+						}
+
+						if ($options != '') {
+							return '<span style="' . $options . '">' . $matches[3] . '</span>';
+						} else {
+							return $matches[3];
+						}
+					}, $line);
+			$line = preg_replace('/[\002]([^\002\x0F]*)(?:[\002])?/', '<strong>$1</strong>', $line);
+			$line = preg_replace('/[\x1F]([^\x1F\x0F]*)(?:[\x1F])?/', '<span style="text-decoration: underline;">$1</span>', $line);
+			$line = preg_replace('/[\x12]([^\x12\x0F]*)(?:[\x12])?/', '<span style="text-decoration: line-through;">$1</span>', $line);
+			$line = preg_replace('/[\x16]([^\x16\x0F]*)(?:[\x16])?/', '<span style="font-style: italic;">$1</span>', $line);
+			$line = preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\S+]*(\?\S+)?)?)?)@', "<a href='$1' class='topic'>$1</a>", $line);
+			// remove dirt
+			$line = preg_replace('/[\x00-\x1F]/', '', $line);
+			$line = preg_replace('/[\x7F-\xFF]/', '', $line);
+			// append line
+			if ($line != '') {
+				$out .= $line;
+			}
+		}
+
+		return $out;
 	}
 
 }
