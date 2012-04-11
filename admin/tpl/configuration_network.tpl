@@ -10,8 +10,20 @@
 			<td align="left"><input name="net_url" type="text" id="net_url" value="{$cfg.net_url}" size="32" maxlength="64" /></td>
 		</tr>
 		<tr>
-			<td align="right"><strong>The Round Robin for yout Network</strong><br />For example irc.yourdomain.tld:6667</td>
+			<td align="right"><strong>The Round Robin for your Network</strong><br />For example irc.yourdomain.tld:6667</td>
 			<td align="left"><input name="net_roundrobin" type="text" id="net_roundrobin" value="{$cfg.net_roundrobin}" size="32" maxlength="64" /></td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Default server for channel hyperlinks</strong><br />For example irc.yourdomain.tld:6667</td>
+			<td align="left"><input name="net_defaulthref" type="text" id="net_defaulthref" value="{$cfg.net_defaulthref}" size="32" maxlength="64" /></td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Use irc hyperlinks on server list</strong></td>
+			<td align="left">yes <input type="radio" name="server_href" value="1"{if $cfg.server_href} checked="checked"{/if} /> <input type="radio" name="server_href" value="0"{if !$cfg.server_href} checked="checked"{/if} /> no</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Use irc hyperlinks on channel list</strong></td>
+			<td align="left">yes <input type="radio" name="channel_href" value="1"{if $cfg.channel_href} checked="checked"{/if} /> <input type="radio" name="channel_href" value="0"{if !$cfg.channel_href} checked="checked"{/if} /> no</td>
 		</tr>
 		<tr>
 			<td align="right"><strong>IRCd Server Type</strong></td>
