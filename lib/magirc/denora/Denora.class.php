@@ -596,6 +596,18 @@ class Denora {
 				$row["DT_RowId"] = $row['uname'];
 			}
 			$user = $this->getUser('stats', $row['uname']);
+			if (!$user) {
+				$user = new User();
+				$user->nickname = $row['uname'];
+				$user->country = 'Unknown';
+				$user->country_code = '';
+				$user->online = false;
+				$user->away = false;
+				$user->bot = false;
+				$user->service = false;
+				$user->operator = false;
+				$user->helper = false;
+			}
 			foreach ($row as $key => $val) {
 				$user->$key = $val;
 			}
@@ -666,9 +678,13 @@ class Denora {
 		$ps->bindParam(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();
 		$user = $ps->fetchObject('User');
-		$user->uname = $info['uname'];
-		$user->aliases = $info['aliases'];
-		return $user;
+		if ($user) {
+			$user->uname = $info['uname'];
+			$user->aliases = $info['aliases'];
+			return $user;
+		} else {
+			return null;
+		}
 	}
 
 	/**
