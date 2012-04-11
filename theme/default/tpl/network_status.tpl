@@ -193,7 +193,7 @@ $(function() {
 		"sAjaxSource": "rest/denora.php/channels/biggest/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel" },
-			{ "mDataProp": "currentusers" }
+			{ "mDataProp": "users" }
 		]
 	});
 	$("#tbl_biggestchans tbody tr").live("click", function(event) {
@@ -202,8 +202,8 @@ $(function() {
 	oTable2 = $("#tbl_top10chans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "chan" },
-			{ "mDataProp": "line" }
+			{ "mDataProp": "channel" },
+			{ "mDataProp": "lines" }
 		]
 	});
 	$("#tbl_top10chans tbody tr").live("click", function(event) {
@@ -215,7 +215,7 @@ $(function() {
 			{ "mDataProp": "uname", "fnRender": function(oObj) {
 				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['uname']+'</strong>' + getUserExtra(oObj.aData);
 			} },
-			{ "mDataProp": "line" }
+			{ "mDataProp": "lines" }
 		]
 	});
 	$("#tbl_top10users tbody tr").live("click", function(event) {

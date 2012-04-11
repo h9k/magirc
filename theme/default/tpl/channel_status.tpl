@@ -49,10 +49,10 @@ $(document).ready(function() {
 		"aaSorting": [[ 0, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/channels/'+target+'/users?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "nick", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['nick']+'</strong>' + getUserExtra(oObj.aData);
+			{ "mDataProp": "nickname", "fnRender": function(oObj) {
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['nickname']+'</strong>' + getUserExtra(oObj.aData);
 			} },
-			{ "mDataProp": "modes" }
+			{ "mDataProp": "cmodes" }
 		]
 	});
 	$("#tbl_users tbody tr").live("click", function(event) {

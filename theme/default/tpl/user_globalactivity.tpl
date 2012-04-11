@@ -29,8 +29,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/denora.php/users/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['name']+'</strong>' + getUserExtra(oObj.aData);
+			{ "mDataProp": "uname", "fnRender": function(oObj) {
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['uname']+'</strong>' + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },
