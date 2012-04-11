@@ -50,7 +50,7 @@ $(document).ready(function() {
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; } },
-			{ "mDataProp": "server", "fnRender": function (oObj) { return "<strong>" + oObj.aData['server'] + "<\/strong>"; } },
+			{ "mDataProp": "server", "fnRender": function (oObj) { return "<strong><a href=\"irc://" + oObj.aData['server'] + "\">" + oObj.aData['server'] + "</a><\/strong>"; } },
 			{ "mDataProp": "comment" },
 			{ "mDataProp": "currentusers" },
 			{ "mDataProp": "opers" }
