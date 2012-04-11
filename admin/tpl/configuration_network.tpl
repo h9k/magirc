@@ -10,7 +10,7 @@
 			<td align="left"><input name="net_url" type="text" id="net_url" value="{$cfg.net_url}" size="32" maxlength="64" /></td>
 		</tr>
 		<tr>
-			<td align="right"><strong>The Round Robin for yout Network</strong><br />For example irc.yourdomain.tld:6667</td>
+			<td align="right"><strong>The Round Robin for your Network</strong><br />For example irc.yourdomain.tld:6667</td>
 			<td align="left"><input name="net_roundrobin" type="text" id="net_roundrobin" value="{$cfg.net_roundrobin}" size="32" maxlength="64" /></td>
 		</tr>
 		<tr>
