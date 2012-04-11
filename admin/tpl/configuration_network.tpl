@@ -14,6 +14,10 @@
 			<td align="left"><input name="net_roundrobin" type="text" id="net_roundrobin" value="{$cfg.net_roundrobin}" size="32" maxlength="64" /></td>
 		</tr>
 		<tr>
+			<td align="right"><strong>The SSL Round Robin for your Network</strong><br />For example irc.yourdomain.tld:6697</td>
+			<td align="left"><input name="net_sslroundrobin" type="text" id="net_sslroundrobin" value="{$cfg.net_sslroundrobin}" size="32" maxlength="64" /></td>
+		</tr>
+		<tr>
 			<td align="right"><strong>Default server for channel hyperlinks</strong><br />For example irc.yourdomain.tld:6667</td>
 			<td align="left"><input name="net_defaulthref" type="text" id="net_defaulthref" value="{$cfg.net_defaulthref}" size="32" maxlength="64" /></td>
 		</tr>
