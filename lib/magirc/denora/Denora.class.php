@@ -1,29 +1,5 @@
 <?php
 
-class Denora_DB extends DB {
-
-	function __construct() {
-		parent::__construct();
-		$error = false;
-		if (file_exists('conf/denora.cfg.php')) {
-			include('conf/denora.cfg.php');
-		} elseif (file_exists('../conf/denora.cfg.php')) {
-			include('../conf/denora.cfg.php');
-		} else {
-			$error = true;
-		}
-		if (!isset($db)) {
-			$error = true;
-		}
-		if ($error) {
-			die('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
-		}
-		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Denora database<br />' . $this->error);
-	}
-
-}
-
 class Denora {
 
 	private $db;
@@ -31,9 +7,29 @@ class Denora {
 	private $cfg;
 
 	function __construct() {
-		$this->db = new Denora_DB();
+		// Check the database configuration
+		$error = false;
+		$config_file = PATH_ROOT . 'conf/denora.cfg.php';
+		if (file_exists($config_file)) {
+			include($config_file);
+		} else {
+			die($config_file);
+			$error = true;
+		}
+		if ($error || !isset($db)) {
+			die('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
+		}
+		// Get the ircd
+		$ircd_file = PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php";
+		if (file_exists($ircd_file)) {
+			require_once(PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php");
+		} else {
+			die('<strong>MagIRC</strong> is not properly configured<br />Please configure the ircd in the <a href="admin/">Admin Panel</a>');
+		}
+		// Load the required classes
+		$this->db = new DB();
+		$this->db->connect("mysql:dbname={$db['database']};host={$db['hostname']}", $db['username'], $db['password']) || die('Error opening Denora database<br />' . $this->error);
 		$this->cfg = new Config();
-		require_once(PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php");
 		$this->ircd = new Protocol();
 	}
 
@@ -105,11 +101,6 @@ class Denora {
 		}
 		return $data;
 	}
-
-	// return an array of all servers
-	/* function getServers() {
-	  return $this->db->selectAll('server', NULL, 'server', 'ASC');
-	  } */
 
 	// return the mode formatted for sql
 	private function getSqlMode($mode) {
@@ -526,7 +517,7 @@ class Denora {
 				$array[$i]['online'] = $data['online'] == 'Y' ? true : false;
 				$array[$i]['service'] = $data['uline'] == '1' ? true : false;
 				$array[$i]['operator'] = $this->isOper($data);
-				$array[$i]['helper'] = $data['helper'] == 'Y' ? true : false;
+				$array[$i]['helper'] = $this->ircd->getParam('helper_mode') && $data['helper'] == 'Y' ? true : false;
 				$i++;
 			}
 		}
