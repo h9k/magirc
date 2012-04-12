@@ -24,7 +24,7 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name", "fnRender": function(oObj) { 
+			{ "mDataProp": "channel", "fnRender": function(oObj) { 
 					if(channel_href == true) { return '<strong><a href="irc://'+net_defaulthref+'/'+oObj.aData['channel']+'">'+oObj.aData['channel']+'</a><\/strong>'; } 
 					else { return '<strong>'+oObj.aData['channel']+'<\/strong>'; }		
 				} 
