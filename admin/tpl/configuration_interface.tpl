@@ -2,7 +2,7 @@
 	<h1>Interface settings</h1>
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
-			<td align="right"><strong>Theme</strong></td>
+			<td align="right"><strong>Theme</strong><br />(this only applies to the frontend)</td>
 			<td align="left">
 				<select name="theme" id="theme">
 				{foreach from=$themes item=item}
@@ -38,7 +38,7 @@
 			<td align="left"><input type="text" size="3" maxlength="3" name="live_interval" value="{$cfg.live_interval}" /> seconds</td>
 		</tr>
 		<tr>
-			<td align="right">Debug mode</td>
+			<td align="right"><strong>Debug mode</strong></td>
 			<td align="left">
 				<select name="debug_mode" id="debug_mode">
 					<option value="0"{if $cfg.debug_mode eq '0'} selected="selected"{/if}>Off</option>
