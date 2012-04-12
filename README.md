@@ -74,9 +74,5 @@ Upgrading
 ---------
 1. Pull the latest MagIRC package from https://github.com/h9k/magirc/.
 2. Extract the MagIRC archive to your web server and move it's conetent to the MagIRC directory.
-<<<<<<< HEAD
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
-=======
-3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions. Example: http://yourpathtomagirc/setup/
->>>>>>> upstream/master
