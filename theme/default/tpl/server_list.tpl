@@ -1,9 +1,9 @@
 <h1>Server list</h1>
-{if $cfg.net_roundrobin}Connect to network round robin: <a href="irc://{$cfg.net_roundrobin}">{$cfg.net_roundrobin}</a>{if $cfg.net_sslroundrobin} | <a href="irc://{$cfg.net_sslroundrobin}">SSL</a>{/if}<br /><br />{/if}
+{if $cfg.net_roundrobin}Connect to network round robin: <a href="irc://{$cfg.net_roundrobin}"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="Connect" title="Connect" /></a>{if $cfg.net_sslroundrobin} <a href="irc://{$cfg.net_sslroundrobin}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" /></a>{/if}<br /><br />{/if}
 <table id="tbl_servers" class="display clickable">
 <thead>
 	<tr>
-		<th>Status</th>
+		<th>Connection</th>
 		<th>Server</th>
 		<th>Description</th>
 		<th>Users</th>
@@ -50,12 +50,15 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; } },
-			{ "mDataProp": "server", "fnRender": function (oObj) { 
-				if(server_href == true) { return "<strong><a href=\"irc://" + oObj.aData['server'] + "\">" + oObj.aData['server'] + "</a><\/strong>"; }
-				else { return "<strong>" + oObj.aData['server'] + "<\/strong>"; }
+			{ "mDataProp": "online", "fnRender": function (oObj) { 
+				if(server_href == true) {
+					return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>  <a href="irc://'+ oObj.aData['server'] +':6667"><img src="theme/'+theme+'/img/icons/link.png" alt="Connect" title="Connect" \/></a>  <a href="irc://'+ oObj.aData['server'] +':6697"><img src="theme/'+theme+'/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" \/></a>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; 
 				}
-			},
+				else {
+					return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; 
+				}
+			}},
+			{ "mDataProp": "server", "fnRender": function (oObj) { return "<strong>" + oObj.aData['server'] + "<\/strong>"; } },
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }
