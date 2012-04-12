@@ -395,6 +395,7 @@ class Denora {
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		foreach ($data as $row) {
 			$user = $this->getUser('stats', $row['uname']);
+			if (!$user) $user = new User();
 			$user->uname = $row['uname'];
 			$user->lines = $row['lines'];
 			$aaData[] = $user;
@@ -545,6 +546,7 @@ class Denora {
 			}
 			// Get country code and online status
 			$user = $this->getUser('stats', $row['uname']);
+			if (!$user) $user = new User();
 			foreach ($row as $key => $val) {
 				$user->$key = $val;
 			}
