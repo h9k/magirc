@@ -40,6 +40,9 @@ div#main {
 	background-color:white;
 	border-radius:6px;
 	min-height:500px;
+	-moz-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
+	-webkit-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
+	box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 }
 div#main a, div#main a:visited { color:#000099; }
 div#main a:hover, div#main a:active { color:#000033; text-decoration:none; }
