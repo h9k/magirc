@@ -214,7 +214,7 @@ function getUserExtra(user) {
 	return out;
 }
 function getCountryFlag(user) {
-	if (user['country_code'] != '' && user['country_code'] != '??' && user['country_code'] != 'local') {
+	if (user['country_code'] != null && user['country_code'] != '' && user['country_code'] != '??' && user['country_code'] != 'local') {
 		return '<img src="theme/'+theme+'/img/flags/'+user['country_code'].toLowerCase()+'.png" alt="'+user['country_code']+'" title="'+user['country']+'" />';
 	} else {
 		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="Unknown" />';
