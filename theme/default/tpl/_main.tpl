@@ -74,11 +74,11 @@
 <!--
 var url_base = '{$smarty.const.BASE_URL}{if !$cfg.rewrite_enable}index.php/{/if}';
 var theme = '{$cfg.theme}';
-var format_date = 'MMM d yyyy';
-var format_time = 'HH:mm:ss';
-var format_datetime = 'dd.MM.yyyy HH:mm:ss';
-var format_datetime_charts = '%d.%m.%Y %H:%M:%S'; // needs different format
-var format_datetime_full = 'ddd, MMM d. yyyy';
+//var format_date = 'MMM d yyyy';
+//var format_time = 'HH:mm:ss';
+var format_datetime = 'yyyy-MM-dd HH:mm:ss';
+var format_datetime_charts = '%Y-%m-%d %H:%M:%S';
+//var format_datetime_full = 'ddd, MMM d. yyyy';
 {literal}
 $(document).ready(function() {
 	$("#loading").ajaxStart(function(){
