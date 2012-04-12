@@ -3,6 +3,10 @@
 
 class Protocol {
 	const ircd = 'ircdrizon';
+	
+	const chan_modes = 'ciklmnpstzBMNORSZ';
+	const chan_modes_data = 'kl';
+	const user_modes = 'abcdfgijklnopqrsuwxyzCDGNRSWX';
 
 	const oper_hidden_mode = '';
 	const helper_mode = '';

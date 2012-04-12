@@ -22,7 +22,7 @@ $(document).ready(function() {
     $.getJSON('rest/denora.php/users/'+mode+'/'+target, function(result) {
 		if (result) {
 			var aliases = '', status = '', status_extra = '';
-			$("#user_nick").html(result.nick);
+			$("#user_nick").html(result.nickname);
 			$.each(result.aliases, function(key, value) {
 				aliases += value + '<br \/>';
 			});
@@ -37,11 +37,11 @@ $(document).ready(function() {
 				} else {
 					//status += ' Online';
 				}
-				status_extra += '<br \/>Connected since ' + $.format.date(result.connected_time, format_datetime);
+				status_extra += '<br \/>Connected since ' + $.format.date(result.connect_time, format_datetime);
 			} else {
 				//status += ' Offline';
-				if (result.lastquit_time) status_extra += '<br \/>Last quit ' + $.format.date(result.lastquit_time, format_datetime);
-				if (result.lastquit_msg) status_extra += '<br \/>Message: ' + result.lastquit_msg;
+				if (result.lastquit_time) status_extra += '<br \/>Last quit ' + $.format.date(result.quit_time, format_datetime);
+				if (result.lastquit_msg) status_extra += '<br \/>Message: ' + result.quit_msg;
 			}
 			status += getUserExtra(result);
 			$("#user_status").html(status);

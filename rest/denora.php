@@ -50,7 +50,7 @@ $magirc->slim->get('/channels/biggest(/:limit)', function($limit = 10) use($magi
 	$magirc->jsonOutput($magirc->denora->getChannelBiggest((int) $limit), true, 'channel');
 });
 $magirc->slim->get('/channels/top(/:limit)', function($limit = 10) use($magirc) {
-	$magirc->jsonOutput($magirc->denora->getChannelTop((int) $limit), true, 'chan');
+	$magirc->jsonOutput($magirc->denora->getChannelTop((int) $limit), true, 'channel');
 });
 $magirc->slim->get('/channels/activity/:type', function($type) use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getChannelGlobalActivity($type, @$_GET['format'] == 'datatables'));
@@ -61,7 +61,7 @@ $magirc->slim->get('/channels/:chan', function($chan) use($magirc) {
 });
 $magirc->slim->get('/channels/:chan/users', function($chan) use($magirc) {
 	$magirc->checkPermission('channel', $chan);
-	$magirc->jsonOutput($magirc->denora->getChannelUsers($chan), true, 'nick');
+	$magirc->jsonOutput($magirc->denora->getChannelUsers($chan), true, 'nickname');
 });
 $magirc->slim->get('/channels/:chan/activity/:type', function($chan, $type) use($magirc) {
 	$magirc->checkPermission('channel', $chan);

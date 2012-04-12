@@ -9,7 +9,7 @@
 	</div>
 </form>
 
-<table id="tbl_activity" class="display">
+<table id="tbl_activity" class="display clickable">
 	<thead>
 		<tr><th>Nickname</th><th>Letters</th><th>Words</th><th>Lines</th><th>Actions</th><th>Smileys</th><th>Kicks</th><th>Modes</th><th>Topics</th></tr>
 	</thead>
@@ -29,8 +29,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/denora.php/users/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['name']+'</strong>' + getUserExtra(oObj.aData);
+			{ "mDataProp": "uname", "fnRender": function(oObj) {
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['uname']+'</strong>' + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },

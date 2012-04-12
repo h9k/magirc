@@ -1,5 +1,5 @@
 <h1>Channel list</h1>
-<table id="tbl_channels" class="display">
+<table id="tbl_channels" class="display clickable">
 	<thead>
 		<tr>
 			<th>Channel</th>
@@ -24,11 +24,15 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name", "fnRender": function(oObj) { 
-				if(channel_href == true) { return '<strong><a href="irc://'+net_defaulthref+'/'+oObj.aData['name']+'">'+oObj.aData['name']+'</a><\/strong>'; } 
-				else { return '<strong>'+oObj.aData['name']+'<\/strong>'; }		
-				} 
-			},
+		<<<<<<< HEAD
+					{ "mDataProp": "channel", "fnRender": function(oObj) { return '<strong>'+oObj.aData['channel']+'<\/strong>'; } },
+		=======
+		{ "mDataProp": "name", "fnRender": function(oObj) { 
+			if(channel_href == true) { return '<strong><a href="irc://'+net_defaulthref+'/'+oObj.aData['name']+'">'+oObj.aData['name']+'</a><\/strong>'; } 
+			else { return '<strong>'+oObj.aData['name']+'<\/strong>'; }		
+			} 
+		},
+		>>>>>>> upstream/master
 			{ "mDataProp": "users" },
 			{ "mDataProp": "users_max" }
 		]

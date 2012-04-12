@@ -1,9 +1,13 @@
 <?php
-// Inspircd 1.1/1.2/2.x protocol file for Denora support on Magirc
+// Inspircd 1.2/2.x protocol file for Denora support on Magirc
 
 class Protocol {
 	const ircd = 'inspircd';
 
+	const chan_modes = 'cfgijklmnprstuzCFGJKLMNOPQRSTV';
+	const chan_modes_data = 'fjklFLJ';
+	const user_modes = 'cdghinorswxBGHIQRSW';
+	
 	const oper_hidden_mode = 'H';
 	const helper_mode = 'h';
 	const bot_mode = 'B';

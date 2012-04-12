@@ -1,6 +1,11 @@
 <h1>Server list</h1>
-{if $cfg.net_roundrobin}Connect to network round robin: <a href="irc://{$cfg.net_roundrobin}">{$cfg.net_roundrobin}</a>{if $cfg.net_sslroundrobin} | <a href="irc://{$cfg.net_sslroundrobin}">SSL</a>{/if}<br /><br />{/if}
+<<<<<<< HEAD
+{if $cfg.net_roundrobin}Network round robin: <a href="irc://{$cfg.net_roundrobin}">{$cfg.net_roundrobin}</a><br /><br />{/if}
 <table id="tbl_servers" class="display">
+=======
+{if $cfg.net_roundrobin}Connect to network round robin: <a href="irc://{$cfg.net_roundrobin}">{$cfg.net_roundrobin}</a>{if $cfg.net_sslroundrobin} | <a href="irc://{$cfg.net_sslroundrobin}">SSL</a>{/if}<br /><br />{/if}
+<table id="tbl_servers" class="display clickable">
+>>>>>>> upstream/master
 <thead>
 	<tr>
 		<th>Status</th>

@@ -3,6 +3,10 @@
 
 class Protocol {
 	const ircd = 'scarynet';
+	
+	const chan_modes = 'ciklmnprstuCDNOT';
+	const chan_modes_data = 'kl';
+	const user_modes = 'dghikorswxBCHORTW';
 
 	const oper_hidden_mode = '';
 	const helper_mode = '';

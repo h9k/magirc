@@ -1,5 +1,5 @@
 <h1>Operators currently online</h1>
-<table id="tbl_operators" class="display">
+<table id="tbl_operators" class="display clickable">
 <thead>
 	<tr>
 		<th>Nickname</th>
