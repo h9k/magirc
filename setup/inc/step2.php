@@ -37,6 +37,12 @@ if (!$check) { // Dump file to db
 			$setup->db->insert('magirc_config', array('parameter' => 'service_searchirc', 'value' => ''));
 			$setup->db->insert('magirc_config', array('parameter' => 'service_netsplit', 'value' => ''));
 		}
+		if ($version < 7) {
+			$setup->db->insert('magirc_config', array('parameter' => 'server_href', 'value' => 0));
+			$setup->db->insert('magirc_config', array('parameter' => 'channel_href', 'value' => 0));
+			$setup->db->insert('magirc_config', array('parameter' => 'net_sslroundrobin', 'value' => ''));
+			$setup->db->insert('magirc_config', array('parameter' => 'net_defaulthref', 'value' => ''));
+		}
 		$setup->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 		$updated = true;
 	}
