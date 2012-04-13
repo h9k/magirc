@@ -17,9 +17,7 @@ ini_set('default_charset','UTF-8');
 $_GET['step'] = (isset($_GET['step'])) ? htmlspecialchars($_GET['step']) : 1;
 define('MAGIRC_CFG_FILE', '../conf/magirc.cfg.php');
 
-if (!is_writable('../tmp/')) {
-	die("ERROR: The 'tmp/' directory is not writable. Please chmod it to 0777.");
-}
+if (!is_writable('../tmp/')) die("ERROR: The 'tmp/' directory is not writable. Please chmod it to 0777.");
 
 include_once('../lib/magirc/version.inc.php');
 require_once('../lib/smarty/Smarty.class.php');

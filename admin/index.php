@@ -13,14 +13,11 @@
 ini_set('display_errors','on');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
-if (version_compare(PHP_VERSION, '5.3.0', '<') || !extension_loaded('pdo') || !in_array('mysql', PDO::getAvailableDrivers()) || !extension_loaded('gettext') || !extension_loaded('mcrypt') || get_magic_quotes_gpc()) {
-	die('System requirements not met. Please run setup.');
-}
+if (version_compare(PHP_VERSION, '5.3.0', '<') || !extension_loaded('pdo') || !in_array('mysql', PDO::getAvailableDrivers()) || !extension_loaded('gettext') || !extension_loaded('mcrypt') || get_magic_quotes_gpc()) die('ERROR: System requirements not met. Please run <a href="../setup/">Setup</a>.');
+if (!file_exists('../conf/magirc.cfg.php')) die('ERROR: MagIRC is not configured. Please run <a href="../setup/">Setup</a>.');
+if (!is_writable('../tmp/')) die('ERROR: Unable to write temporary files. Please run <a href="../setup/">Setup</a>.');
 
 session_start();
-
-if (!file_exists('../conf/magirc.cfg.php')) die('<strong>MagIRC</strong> is not configured<br />Please run <a href="../setup/">Setup</a>');
-if (!is_writable('../tmp/')) die("The 'admin/tmp/' directory is not writable. Please chmod it to 0777.");
 
 include_once('../lib/magirc/version.inc.php');
 require_once('../lib/slim/Slim.php');
