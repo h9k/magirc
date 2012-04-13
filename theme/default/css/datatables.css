@@ -509,12 +509,9 @@ tr.even.gradeU td.sorting_3 {
 	background-color: #e2e2e2;
 }
 
-.clickable tbody tr.even:hover td {
-	cursor: pointer;
-	background-color: #ECFFB3;
-}
+.display tr { height:25px; }
 
-.clickable tbody tr.odd:hover td {
+.clickable tbody tr.even:hover td, .clickable tbody tr.odd:hover td {
 	cursor: pointer;
-	background-color: #E6FF99;
+	background-color: #FFE97F;
 }

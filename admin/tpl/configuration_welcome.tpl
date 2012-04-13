@@ -11,7 +11,7 @@
 
 {jsmin}
 <script type="text/javascript"><!--{literal}
-$(function() {
+$(document).ready(function() {
 	$("#welcome-submit").button().click(function() {
 		var success = true;
 		$("#welcome-form").ajaxSubmit({

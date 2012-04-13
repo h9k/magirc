@@ -22,17 +22,17 @@ class Admin {
 	public $cfg;
 
 	function __construct() {
+		$this->db = new Magirc_DB();
+		$this->cfg = new Config();
 		$this->slim = new Slim();
 		$this->tpl = new Smarty();
 		$this->tpl->template_dir = 'tpl';
-		$this->tpl->compile_dir = 'tmp';
+		$this->tpl->compile_dir = '../tmp';
 		$this->tpl->config_dir = '../conf';
-		$this->tpl->cache_dir = 'tmp';
+		$this->tpl->cache_dir = '../tmp';
 		$this->tpl->error_reporting = E_ALL & ~E_NOTICE;
 		$this->tpl->autoload_filters = array('pre' => array('jsmin'));
 		$this->tpl->addPluginsDir('../lib/smarty-plugins/');
-		$this->db = new Magirc_DB();
-		$this->cfg = new Config();
 		$this->ckeditor = new CKEditor();
 		$this->ckeditor->basePath = BASE_URL.'../js/ckeditor/';
 		$this->ckeditor->returnOutput = true;
@@ -93,11 +93,11 @@ class Admin {
 		$this->cfg->config[$parameter] = $value;
 		return $this->db->update('magirc_config', array('value' => $value), array('parameter' => $parameter));
 	}
-	
+
 	/**
 	 * Gets the page content for the specified name
 	 * @param string $name Content identifier
-	 * @return string HTML content 
+	 * @return string HTML content
 	 */
 	function getContent($name) {
 		$ps = $this->db->prepare("SELECT text FROM magirc_content WHERE name = :name");
@@ -105,7 +105,7 @@ class Admin {
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
-	
+
 	function saveContent($name, $text) {
 		$name = str_replace('content_', '', $name);
 		return $this->db->update('magirc_content', array('text' => $text), array('name' => $name));

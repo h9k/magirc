@@ -22,7 +22,7 @@ $(document).ready(function() {
 		"sAjaxSource": 'rest/denora.php/operators?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "nickname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['nickname']+'</strong>' + getUserExtra(oObj.aData);
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['nickname'] + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "server" },
 			{ "mDataProp": "connect_time", "fnRender": function(oObj) { return $.format.date(oObj.aData['connect_time'], format_datetime); } }

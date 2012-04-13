@@ -2,7 +2,7 @@
 	<h1>Interface settings</h1>
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
-			<td align="right"><strong>Theme</strong></td>
+			<td align="right"><strong>Theme</strong><br />(this only applies to the frontend)</td>
 			<td align="left">
 				<select name="theme" id="theme">
 				{foreach from=$themes item=item}
@@ -38,7 +38,11 @@
 			<td align="left"><input type="text" size="3" maxlength="3" name="live_interval" value="{$cfg.live_interval}" /> seconds</td>
 		</tr>
 		<tr>
-			<td align="right">Debug mode</td>
+			<td align="right"><strong>Show MagIRC version in footer</strong></td>
+			<td align="left">yes <input type="radio" name="version_show" value="1"{if $cfg.version_show} checked="checked"{/if} /> <input type="radio" name="version_show" value="0"{if !$cfg.version_show} checked="checked"{/if} /> no</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Debug mode</strong></td>
 			<td align="left">
 				<select name="debug_mode" id="debug_mode">
 					<option value="0"{if $cfg.debug_mode eq '0'} selected="selected"{/if}>Off</option>
@@ -53,7 +57,7 @@
 
 {jsmin}
 <script type="text/javascript"><!--{literal}
-$(function() {
+$(document).ready(function() {
 	$("#interface-submit").button().click(function() {
 		$("#interface-form").ajaxSubmit({ url: 'index.php/configuration', type: 'post', success: function(data) {
 			if (data) $("#success").show().delay(1500).fadeOut(500);

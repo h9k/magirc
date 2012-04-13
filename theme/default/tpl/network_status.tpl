@@ -27,8 +27,13 @@
 
 <table>
 	<tr>
-		<td><div id="chart_users" style="height: 175px; width: 560px;"></div></td>
+		<td><div id="chart_users" style="height: 175px; width: {if $cfg.service_searchirc}446{else}560{/if}px;"></div></td>
 		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
+		{if $cfg.service_searchirc}<td style="width: 114px; margin: auto; vertical-align: top; text-align: center;">
+			<img height="40" width="114" border="0" alt="Overall_Ranking" src="http://searchirc.com/img/ranked_logo.gif">
+			<br /><a target="_blank" href="http://searchirc.com/rank/{$cfg.service_searchirc}">Teranova</a>
+			<br /><span id="searchirc_ranking"></span>
+		</td>{/if}
 	</tr>
 </table>
 
@@ -90,8 +95,9 @@
 <script type="text/javascript"><!--
 var refresh_interval = {$cfg.live_interval};
 var welcome_msg = '{$cfg.welcome_mode}';
+var searchirc = '{$cfg.service_searchirc}';
 {literal}
-$(function() {
+$(document).ready(function() {
 	if (welcome_msg == 'statuspage') {
 		$.get('index.php/content/welcome', function(result) {
 			$("#welcome").html(result);
@@ -213,7 +219,7 @@ $(function() {
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "uname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['uname']+'</strong>' + getUserExtra(oObj.aData);
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['uname'] + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "lines" }
 		]
@@ -221,6 +227,9 @@ $(function() {
 	$("#tbl_top10users tbody tr").live("click", function(event) {
 		window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile';
 	});
+	if (searchirc) {
+		$("#searchirc_ranking").html($(".searchirc6").html());
+	}
 });
 {/literal}
 --></script>

@@ -50,7 +50,7 @@ $(document).ready(function() {
 		"sAjaxSource": 'rest/denora.php/channels/'+target+'/users?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "nickname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['nickname']+'</strong>' + getUserExtra(oObj.aData);
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['nickname'] + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "cmodes" }
 		]

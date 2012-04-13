@@ -1,6 +1,4 @@
-html {
-	background:white url("../img/bg.png") repeat;
-}
+html { background:white url("../img/bg.png") repeat; }
 body { margin:0; padding:0; font-family:'Share', Verdana, Arial; font-size:13px; }
 
 img,td,th{border:0}
@@ -39,9 +37,10 @@ div#main {
 	-webkit-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 	box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 }
-div#main a, div#main a:visited { color:#222; }
-div#main a:hover, div#main a:active { color:black; text-decoration:none; }
-div#content { padding:5px 10px; }
+div#content { padding:5px 10px 10px 10px; }
+div.ui-tabs-panel a, div.ui-tabs-panel a:visited { color:#222; }
+div.ui-tabs-panel a:hover, div.ui-tabs-panel a:active { color:black; text-decoration:none; }
+
 div#footer {
 	text-align:right;
 	font-size:small;
@@ -50,8 +49,9 @@ div#footer {
 	margin:0px auto 10px auto;
 	width:890px;
 }
-div#footer a, div#footer a:visited { color:#888; }
-div#footer a:hover, div#footer a:active { color:#888; text-decoration:none; }
+div#footer a, div#footer a:visited { color:#888; font-size:12px; font-weight:bold; text-decoration:none; }
+div#footer a:hover, div#footer a:active { color:#888; text-decoration:underline; }
+
 div#loading { display:none; float:right; margin-top:25px; }
 
 div.halfleft { width:49%; float:left; }
@@ -69,3 +69,4 @@ div.topic { border:1px dashed #ccc; padding:10px; font-family:"Courier New", Cou
 span.val { color:#0066CC; }
 div.clear { clear:both; }
 table.details th { text-align:left; vertical-align:top; }
+table.searchirc1 { border:0; }

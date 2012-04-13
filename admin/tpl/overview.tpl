@@ -3,14 +3,14 @@
 {block name="title" append}Overview{/block}
 
 {block name="content"}
-<div id="content">
+<div id="content" class="div.ui-tabs-panel">
 
 	<div class="halfleft">
 		<form id="logout" method="post" action="index.php/logout">
-			<h1>Welcome, {$smarty.session.username} <input type="submit" name="logout" value="Logout" /></h1>
+			<h1>Welcome, {$smarty.session.username} <button type="submit" name="logout">Logout</button></h1>
 		</form>
 		<p>Here you can configure your installation and get access to support resources</p>
-		
+
 		<h3>Resources</h3>
 		<ul>
 			<li><a href="../">View Stats</a></li>
@@ -41,10 +41,10 @@
 				<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 			</div>
 		</form>
-		
+
 		<h2>Bugs? Suggestions?</h2>
 		Please let us know any wishes you have or any bugs you encounter by opening a ticket in our <a href="https://github.com/h9k/magirc/issues">Issue Tracker</a>
-		
+
 		<h2>Important notes</h2>
 		{if $setup}
 		<div class="warning">
@@ -61,4 +61,15 @@
 	<div class="clear"></div>
 
 </div>
+{/block}
+
+{block name="js" append}
+{jsmin}
+<script type="text/javascript"><!--{literal}
+$(document).ready(function() {
+	$("button").button();
+});
+{/literal}
+--></script>
+{/jsmin}
 {/block}

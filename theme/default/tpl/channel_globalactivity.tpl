@@ -29,7 +29,7 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name", "fnRender": function(oObj) { return '<strong>'+oObj.aData['name']+'<\/strong>'; } },
+			{ "mDataProp": "name" },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },
 			{ "mDataProp": "lines" },

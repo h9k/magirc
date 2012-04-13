@@ -42,8 +42,8 @@ class Magirc {
 			$this->tpl = new Smarty;
 			$this->tpl->template_dir = 'theme/default/tpl';
 			$this->tpl->config_dir = 'theme/default/cfg';
-			$this->tpl->compile_dir = 'tmp/compiled';
-			$this->tpl->cache_dir = 'tmp/cache';
+			$this->tpl->compile_dir = 'tmp';
+			$this->tpl->cache_dir = 'tmp';
 			$this->tpl->autoload_filters = array('pre' => array('jsmin'));
 			$this->tpl->addPluginsDir('lib/smarty-plugins/');
 		}

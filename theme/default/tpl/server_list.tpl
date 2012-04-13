@@ -51,14 +51,11 @@ $(document).ready(function() {
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "online", "fnRender": function (oObj) { 
-				if(server_href == true) {
-					return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>  <a href="irc://'+ oObj.aData['server'] +':6667"><img src="theme/'+theme+'/img/icons/link.png" alt="Connect" title="Connect" \/></a>  <a href="irc://'+ oObj.aData['server'] +':+6697"><img src="theme/'+theme+'/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" \/></a>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; 
+				if(server_href == true) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>  <a href="irc://'+ oObj.aData['server'] +':6667"><img src="theme/'+theme+'/img/icons/link.png" alt="Connect" title="Connect" \/></a>  <a href="irc://'+ oObj.aData['server'] +':+6697"><img src="theme/'+theme+'/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" \/></a>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; }
+				else { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; }
 				}
-				else {
-					return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; 
-				}
-			}},
-			{ "mDataProp": "server", "fnRender": function (oObj) { return "<strong>" + oObj.aData['server'] + "<\/strong>"; } },
+			},
+			{ "mDataProp": "server" },
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }
