@@ -29,7 +29,7 @@
 	<tr>
 		<td><div id="chart_users" style="height: 175px; width: {if $cfg.service_searchirc}446{else}560{/if}px;"></div></td>
 		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
-		{if $cfg.service_searchirc}<td id="searchirc" style="width: 114px; margin: auto;"></td>{/if}
+		{if $cfg.service_searchirc}<td id="searchirc_ranking" style="width: 114px; margin: auto; vertical-align:top;"></td>{/if}
 	</tr>
 </table>
 
@@ -224,7 +224,7 @@ $(document).ready(function() {
 		window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile';
 	});
 	if (searchirc) {
-		$("#searchirc").html($("#searchirc_html").html());
+		$("#searchirc_ranking").html($("#searchirc_html").html());
 	}
 });
 {/literal}
