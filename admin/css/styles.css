@@ -37,9 +37,9 @@ div#main {
 	-webkit-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 	box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 }
-div#main a, div#main a:visited { color:#000099; }
-div#main a:hover, div#main a:active { color:#000033; text-decoration:none; }
 div#content { padding:5px 10px 10px 10px; }
+div.ui-tabs-panel a, div.ui-tabs-panel a:visited { color:#000099; }
+div.ui-tabs-panel a:hover, div.ui-tabs-panel a:active { color:#000033; text-decoration:none; }
 div#footer {
 	text-align:right;
 	font-size:x-small;

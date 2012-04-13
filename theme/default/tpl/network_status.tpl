@@ -192,7 +192,7 @@ $(function() {
 	oTable1 = $("#tbl_biggestchans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/biggest/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel" },
+			{ "mDataProp": "channel", "fnRender": function(oObj) { return '<strong>'+oObj.aData['channel']+'</strong>'; } },
 			{ "mDataProp": "users" }
 		]
 	});
@@ -202,7 +202,7 @@ $(function() {
 	oTable2 = $("#tbl_top10chans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel" },
+			{ "mDataProp": "channel", "fnRender": function(oObj) { return '<strong>'+oObj.aData['channel']+'</strong>'; } },
 			{ "mDataProp": "lines" }
 		]
 	});
