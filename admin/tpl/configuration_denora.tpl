@@ -42,7 +42,7 @@
 
 {jsmin}
 <script type="text/javascript"><!--{literal}
-$(function() {
+$(document).ready(function() {
 	$("#denora-submit").button().click(function() {
 		$("#denora-form").ajaxSubmit({ url: 'index.php/configuration/denora/database', type: 'post', success: function(data) {
 			if (data) $("#success").show().delay(1500).fadeOut(500);

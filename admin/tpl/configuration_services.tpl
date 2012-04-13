@@ -38,7 +38,7 @@
 
 {jsmin}
 <script type="text/javascript"><!--{literal}
-$(function() {
+$(document).ready(function() {
 	$("#services-submit").button().click(function() {
 		$("#services-form").ajaxSubmit({ url: 'index.php/configuration', type: 'post', success: function(data) {
 			if (data) $("#success").show().delay(1500).fadeOut(500);

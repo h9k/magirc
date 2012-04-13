@@ -7,7 +7,7 @@
 
 	<div class="halfleft">
 		<form id="logout" method="post" action="index.php/logout">
-			<h1>Welcome, {$smarty.session.username} <input type="submit" name="logout" value="Logout" /></h1>
+			<h1>Welcome, {$smarty.session.username} <button type="submit" name="logout">Logout</button></h1>
 		</form>
 		<p>Here you can configure your installation and get access to support resources</p>
 
@@ -61,4 +61,15 @@
 	<div class="clear"></div>
 
 </div>
+{/block}
+
+{block name="js" append}
+{jsmin}
+<script type="text/javascript"><!--{literal}
+$(document).ready(function() {
+	$("button").button();
+});
+{/literal}
+--></script>
+{/jsmin}
 {/block}

@@ -45,7 +45,7 @@
 
 {jsmin}
 <script type="text/javascript"><!--{literal}
-$(function() {
+$(document).ready(function() {
 	$("#network-submit").button().click(function() {
 		$("#network-form").ajaxSubmit({ url: 'index.php/configuration', type: 'post', success: function(data) {
 			if (data) $("#success").show().delay(1500).fadeOut(500);

@@ -19,7 +19,7 @@
 {block name="js" append}
 {jsmin}
 <script type="text/javascript"><!--{literal}
-$(function() {
+$(document).ready(function() {
 	$( "#tabs" ).tabs({
 		select: function(event, ui) { window.location.hash = ui.tab.hash; },
 		cache: true,

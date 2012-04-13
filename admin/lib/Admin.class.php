@@ -22,6 +22,8 @@ class Admin {
 	public $cfg;
 
 	function __construct() {
+		$this->db = new Magirc_DB();
+		$this->cfg = new Config();
 		$this->slim = new Slim();
 		$this->tpl = new Smarty();
 		$this->tpl->template_dir = 'tpl';
@@ -31,8 +33,6 @@ class Admin {
 		$this->tpl->error_reporting = E_ALL & ~E_NOTICE;
 		$this->tpl->autoload_filters = array('pre' => array('jsmin'));
 		$this->tpl->addPluginsDir('../lib/smarty-plugins/');
-		$this->db = new Magirc_DB();
-		$this->cfg = new Config();
 		$this->ckeditor = new CKEditor();
 		$this->ckeditor->basePath = BASE_URL.'../js/ckeditor/';
 		$this->ckeditor->returnOutput = true;
