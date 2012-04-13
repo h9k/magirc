@@ -22,7 +22,7 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel", "fnRender": function(oObj) { return '<strong>'+oObj.aData['channel']+'<\/strong>'; } },
+			{ "mDataProp": "channel" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "users_max" }
 		]

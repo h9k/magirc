@@ -30,7 +30,7 @@ $(document).ready(function() {
 		"sAjaxSource": "rest/denora.php/users/activity/"+type+"?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "uname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' <strong>'+oObj.aData['uname']+'</strong>' + getUserExtra(oObj.aData);
+				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['uname'] + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },

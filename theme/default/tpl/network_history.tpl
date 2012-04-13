@@ -4,7 +4,7 @@
 {jsmin}
 <script type="text/javascript"><!--
 {literal}
-$(function() {
+$(document).ready(function() {
     var seriesOptions = [],
         seriesCounter = 0,
         names = ['Servers', 'Channels', 'Users'];

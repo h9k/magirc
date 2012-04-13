@@ -15,13 +15,14 @@
 		{if $cfg.service_searchirc}<li><a href="index.php/network/searchirc" title="searchirc">Searchirc Graphs</a></li>{/if}
 	</ul>
 </div>
+{if $cfg.service_searchirc}<div id="searchirc_html" style="display:none;"><script language="JavaScript" src="http://searchirc.com/official_rank.php?ID={$cfg.service_searchirc}&amp;outof=1"></script></div>{/if}
 {/block}
 
 {block name="js" append}
 {jsmin}
 <script type="text/javascript"><!--{literal}
-$(function() {
-	$( "#tabs" ).tabs({
+$(document).ready(function() {
+	$("#tabs").tabs({
 		select: function(event, ui) { window.location.hash = ui.tab.hash; },
 		cache: true,
 		spinner: 'Loading...',
