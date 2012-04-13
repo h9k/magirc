@@ -1,49 +1,41 @@
 <?php
+$status = $setup->requirementsCheck();
+if ($status['error']) die('Failure. <a href="?step=1">back</a>');
 
-$check = $setup->configCheck();
-$setup->tpl->assign('check', $check);
-if (!$check) { // Dump file to db
-	$setup->tpl->assign('dump', $setup->configDump());
-} else {
-	$version = $setup->getDbVersion();
-	$updated = false;
-	if ($version != DB_VERSION) {
-		if ($version < 2) {
-			$setup->db->insert('magirc_config', array('parameter' => 'live_interval', 'value' => 15));
-			$setup->db->insert('magirc_config', array('parameter' => 'cdn_enable', 'value' => 1));
-		}
-		if ($version < 3) {
-			$setup->db->insert('magirc_config', array('parameter' => 'rewrite_enable', 'value' => 0));
-		}
-		if ($version < 4) {
-			$setup->db->insert('magirc_config', array('parameter' => 'timezone', 'value' => 'UTC'));
-		}
-		if ($version < 5) {
-			$setup->db->insert('magirc_config', array('parameter' => 'welcome_mode', 'value' => 'statuspage'));
-			$setup->db->query("CREATE TABLE IF NOT EXISTS `magirc_content` (
-				`name` varchar(16) NOT NULL default '', `text` text NOT NULL default '',
-				PRIMARY KEY (`name`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
-			$welcome_msg = $setup->db->selectOne('magirc_config', array('parameter' => 'msg_welcome'));
-			$setup->db->insert('magirc_content', array('name' => 'welcome', 'text' => $welcome_msg['value']));
-			$setup->db->delete('magirc_config', array('parameter' => 'msg_welcome'));
-			$setup->db->query("ALTER TABLE `magirc_config` CHANGE `value` `value` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''");
-			$setup->db->query("ALTER TABLE `magirc_config` ENGINE = InnoDB");
-		}
-		if ($version < 6) {
-			$setup->db->insert('magirc_config', array('parameter' => 'block_spchans', 'value' => 0));
-			$setup->db->insert('magirc_config', array('parameter' => 'net_roundrobin', 'value' => ''));
-			$setup->db->insert('magirc_config', array('parameter' => 'service_adsense_id', 'value' => ''));
-			$setup->db->insert('magirc_config', array('parameter' => 'service_adsense_channel', 'value' => ''));
-			$setup->db->insert('magirc_config', array('parameter' => 'service_searchirc', 'value' => ''));
-			$setup->db->insert('magirc_config', array('parameter' => 'service_netsplit', 'value' => ''));
-		}
-		$setup->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
-		$updated = true;
+// Handle saving of the database configuration
+$setup->saveConfig();
+
+// Check Magirc Database connection
+if (file_exists(MAGIRC_CFG_FILE)) {
+	include(MAGIRC_CFG_FILE);
+	if (isset($db) && is_array($db)) {
+		$setup->db->connect("mysql:dbname={$db['database']};host={$db['hostname']}", $db['username'], $db['password']);
+		$status['error'] = $setup->db->error;
+		$setup->tpl->assign('db_magirc', $db);
+	} else {
+		$status['error'] = "Invalid configuration file";
 	}
-	$setup->tpl->assign('version', DB_VERSION);
-	$setup->tpl->assign('updated', $updated);
+} else {
+	$setup->tpl->assign('db_magirc', array('hostname' => 'localhost', 'port' => 3306));
+	$status['error'] = 'new';
 }
-$setup->tpl->assign('admins', $setup->checkAdmins());
 
+// Handle database initialization/upgrade
+$dump = $check = $updated = false;
+if (!$status['error']) {
+	$check = $setup->configCheck();
+	$setup->tpl->assign('check', $check);
+	if (!$check) { // Dump sql file to db
+		$dump = $setup->configDump();
+	} else { // Upgrade db
+		$updated = $setup->configUpgrade();
+	}
+}
+
+$setup->tpl->assign('magirc_conf', MAGIRC_CFG_FILE);
+$setup->tpl->assign('status', $status);
+$setup->tpl->assign('dump', $dump);
+$setup->tpl->assign('updated', $updated);
+$setup->tpl->assign('version', DB_VERSION);
 $setup->tpl->display('step2.tpl');
 ?>

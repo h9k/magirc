@@ -20,7 +20,7 @@ if (version_compare(PHP_VERSION, '5.3.0', '<') || !extension_loaded('pdo') || !i
 session_start();
 
 if (!file_exists('../conf/magirc.cfg.php')) die('<strong>MagIRC</strong> is not configured<br />Please run <a href="../setup/">Setup</a>');
-if (!is_writable('tmp/')) die("The 'admin/tmp/' directory is not writable. Please chmod it to 0777.");
+if (!is_writable('../tmp/')) die("The 'admin/tmp/' directory is not writable. Please chmod it to 0777.");
 
 include_once('../lib/magirc/version.inc.php');
 require_once('../lib/slim/Slim.php');

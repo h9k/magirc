@@ -7,11 +7,13 @@ class Setup {
 	function __construct() {
 		$this->tpl = new Smarty;
 		$this->tpl->template_dir = 'tpl';
-		$this->tpl->compile_dir = 'tmp';
-		$this->tpl->error_reporting = E_ALL & ~E_NOTICE;
+		$this->tpl->compile_dir = '../tmp';
+		$this->tpl->cache_dir = 'tmp';
+		$this->tpl->autoload_filters = array('pre' => array('jsmin'));
+		$this->tpl->addPluginsDir('../lib/smarty-plugins/');
 		$this->db = new DB;
-		// We skip db connection in the first step for check purposes
-		if (@$_GET['step'] > 1) {
+		// We skip db connection in the first steps for check purposes
+		if (@$_GET['step'] > 2) {
 			if (file_exists('../conf/magirc.cfg.php')) {
 				include('../conf/magirc.cfg.php');
 			} else {
@@ -22,10 +24,11 @@ class Setup {
 		}
 	}
 
-	/* Makes preliminary requirements checks */
+	/**
+	 * Makes preliminary requirements checks
+	 * @return array
+	 */
 	function requirementsCheck() {
-		global $magirc_conf;
-
 		$status = array('error' => false);
 
 		if (version_compare("5.3.0", phpversion(), "<") == 1) {
@@ -48,7 +51,7 @@ class Setup {
 			$status['gettext'] = false;
 			$status['error'] = true;
 		}
-		
+
 		if (extension_loaded('mcrypt') == 1) {
 			$status['mcrypt'] = true;
 		} else {
@@ -56,42 +59,28 @@ class Setup {
 			$status['error'] = true;
 		}
 
-		if (file_exists($magirc_conf)) {
-			if (is_writable($magirc_conf)) {
+		if (file_exists(MAGIRC_CFG_FILE)) {
+			if (is_writable(MAGIRC_CFG_FILE)) {
 				$status['writable'] = true;
 			} else {
 				$status['writable'] = false;
 			}
 		} else {
 			$new = true;
-			if (copy('../conf/magirc.cfg.dist.php', $magirc_conf)) {
+			if (copy('../conf/magirc.cfg.dist.php', MAGIRC_CFG_FILE)) {
 				$status['writable'] = true;
 			} else {
 				$status['writable'] = false;
 			}
 		}
 
-		if (is_writable('../tmp/compiled')) {
-			$status['compiled'] = true;
+		if (is_writable('../tmp')) {
+			$status['tmp'] = true;
 		} else {
-			$status['compiled'] = false;
+			$status['tmp'] = false;
 			$status['error'] = true;
 		}
 
-		if (is_writable('../tmp/cache')) {
-			$status['cache'] = true;
-		} else {
-			$status['cache'] = false;
-			$status['error'] = true;
-		}
-		
-		if (is_writable('../admin/tmp')) {
-			$status['admin'] = true;
-		} else {
-			$status['admin'] = false;
-			$status['error'] = true;
-		}
-		
 		if (get_magic_quotes_gpc()) {
 			$status['magic_quotes'] = true;
 			$status['error'] = true;
@@ -102,10 +91,10 @@ class Setup {
 		return $status;
 	}
 
-	/* Save MagIRC SQL configuration file */
+	/**
+	 *  Saves the MagIRC SQL configuration file
+	 */
 	function saveConfig() {
-		global $magirc_conf;
-
 		if (isset($_POST['savedb'])) {
 			$db_buffer =
                     "<?php
@@ -116,16 +105,17 @@ class Setup {
 	\$db['port'] = \"".$_POST['port']."\";
 ?>";
 			$this->tpl->assign('db_buffer', $db_buffer);
-			if (is_writable($magirc_conf)) {
-				$writefile = fopen($magirc_conf,"w");
+			if (is_writable(MAGIRC_CFG_FILE)) {
+				$writefile = fopen(MAGIRC_CFG_FILE,"w");
 				fwrite($writefile, $db_buffer);
 				fclose($writefile);
 			}
 		}
 	}
 
-	/* Checks if the configuration table is up to date
-	 * (not really implemented since we only have one table version till now...)
+	/**
+	 * Checks if the configuration table is there
+	 * @return type
 	 */
 	function configCheck() {
 		$query = "SHOW TABLES LIKE 'magirc_config'";
@@ -133,13 +123,19 @@ class Setup {
 		return $this->db->record;
 	}
 
-	// Gets the Database schema version
-	function getDbVersion() {
+	/**
+	 * Gets the Database schema version
+	 * @return int Version
+	 */
+	private function getDbVersion() {
 		$result = $this->db->selectOne('magirc_config', array('parameter' => 'db_version'));
 		return $result['value'];
 	}
 
-	/* Loads the configuration table schema to the Denora database */
+	/**
+	 * Loads the configuration table schema to the Denora database, for fresh installs
+	 * @return boolean
+	 */
 	function configDump() {
 		$file_content = file('sql/schema.sql');
 		$query = "";
@@ -159,7 +155,50 @@ class Setup {
 		}
 		return true;
 	}
-	
+
+	function configUpgrade() {
+		$version = $this->getDbVersion();
+		$updated = false;
+		if ($version != DB_VERSION) {
+			if ($version < 2) {
+				$this->db->insert('magirc_config', array('parameter' => 'live_interval', 'value' => 15));
+				$this->db->insert('magirc_config', array('parameter' => 'cdn_enable', 'value' => 1));
+			}
+			if ($version < 3) {
+				$this->db->insert('magirc_config', array('parameter' => 'rewrite_enable', 'value' => 0));
+			}
+			if ($version < 4) {
+				$this->db->insert('magirc_config', array('parameter' => 'timezone', 'value' => 'UTC'));
+			}
+			if ($version < 5) {
+				$this->db->insert('magirc_config', array('parameter' => 'welcome_mode', 'value' => 'statuspage'));
+				$this->db->query("CREATE TABLE IF NOT EXISTS `magirc_content` (
+					`name` varchar(16) NOT NULL default '', `text` text NOT NULL default '',
+					PRIMARY KEY (`name`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+				$welcome_msg = $this->db->selectOne('magirc_config', array('parameter' => 'msg_welcome'));
+				$this->db->insert('magirc_content', array('name' => 'welcome', 'text' => $welcome_msg['value']));
+				$this->db->delete('magirc_config', array('parameter' => 'msg_welcome'));
+				$this->db->query("ALTER TABLE `magirc_config` CHANGE `value` `value` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''");
+				$this->db->query("ALTER TABLE `magirc_config` ENGINE = InnoDB");
+			}
+			if ($version < 6) {
+				$this->db->insert('magirc_config', array('parameter' => 'block_spchans', 'value' => 0));
+				$this->db->insert('magirc_config', array('parameter' => 'net_roundrobin', 'value' => ''));
+				$this->db->insert('magirc_config', array('parameter' => 'service_adsense_id', 'value' => ''));
+				$this->db->insert('magirc_config', array('parameter' => 'service_adsense_channel', 'value' => ''));
+				$this->db->insert('magirc_config', array('parameter' => 'service_searchirc', 'value' => ''));
+				$this->db->insert('magirc_config', array('parameter' => 'service_netsplit', 'value' => ''));
+			}
+			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
+			$updated = true;
+		}
+		return $updated;
+	}
+
+	/**
+	 * Checks if there are any admins in the admin table
+	 * @return boolean true: yes, false: no
+	 */
 	function checkAdmins() {
 		$this->db->query("SELECT id FROM magirc_admin", SQL_INIT);
 		return $this->db->record ? true : false;

@@ -10,17 +10,15 @@
  * @version     0.7.3
  */
 
-ini_set('display_errors','off');
+ini_set('display_errors','on');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 
 $_GET['step'] = (isset($_GET['step'])) ? htmlspecialchars($_GET['step']) : 1;
-$magirc_conf = '../conf/magirc.cfg.php';
-$config = array();
-$sql = array();
+define('MAGIRC_CFG_FILE', '../conf/magirc.cfg.php');
 
-if (!is_writable('tmp/')) {
-	die("ERROR: The 'setup/tmp/' directory is not writable. Please chmod it to 0777.");
+if (!is_writable('../tmp/')) {
+	die("ERROR: The 'tmp/' directory is not writable. Please chmod it to 0777.");
 }
 
 include_once('../lib/magirc/version.inc.php');
@@ -31,18 +29,20 @@ require_once('lib/Setup.class.php');
 $setup = new Setup();
 
 switch($_GET['step']) {
-	case 1: // System requirements checks, SQL config check
+	case 1: // System requirements checks
 		include('inc/step1.php');
 		break;
-	case 2: // Create/Update MagIRC SQL database, create admin user if necessary
+	case 2: // SQL config check, Create/Update MagIRC SQL database
 		include('inc/step2.php');
 		break;
 	case 3: // Create admin user if necessary, display link to admin panel when done
 		include('inc/step3.php');
 		break;
-	default:
-		echo "<pre><span style=\"color:red;\">Error:</span> unknown step $_GET[step]</pre>";
+	case 4: // Installation successful
+		include('inc/step4.php');
 		break;
+	default:
+		die("ERROR: Unknown step {$_GET['step']}");
 }
 
 ?>

@@ -39,7 +39,7 @@ div#main {
 }
 div#main a, div#main a:visited { color:#000099; }
 div#main a:hover, div#main a:active { color:#000033; text-decoration:none; }
-div#content { padding:5px 10px; }
+div#content { padding:5px 10px 10px 10px; }
 div#footer {
 	text-align:right;
 	font-size:x-small;
@@ -48,8 +48,8 @@ div#footer {
 	margin:0px auto 10px auto;
 	width:890px;
 }
-div#footer a, div#footer a:visited { color:#FCFCFC; }
-div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:none; }
+div#footer a, div#footer a:visited { color:#FCFCFC; font-size:12px; font-weight:bold; text-decoration:none; }
+div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:underline; }
 div#loading { display:none; float:right; margin-top:25px; }
 
 div.halfleft { width:49%; float:left; }

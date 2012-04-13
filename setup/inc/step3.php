@@ -1,18 +1,16 @@
 <?php
+$status = $setup->requirementsCheck();
+if ($status['error']) die('Failure. <a href="?step=1">back</a>');
 
-$error = false;
-$username = isset($_POST['username']) ? htmlspecialchars($_POST['username']) : NULL;
-$password = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : NULL;
-
-if ($username && $password) {
-	$query = sprintf("INSERT INTO `magirc_admin` SET `username` = %s, `password` = MD5(%s)",
-		$setup->db->escape($username), $setup->db->escape($password));
-	$setup->db->query($query);
-} else {
-	$error = true;
+$success = true;
+if (isset($_POST['username']) && isset($_POST['password'])) {
+	$ps = $setup->db->prepare("INSERT INTO `magirc_admin` SET `username` = :username, `password` = MD5(:password)");
+	$ps->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
+	$ps->bindParam(':password', $_POST['password'], PDO::PARAM_STR);
+	$success = $ps->execute();
 }
-
-$setup->tpl->assign('error', $error);
+$setup->tpl->assign('admins', $setup->checkAdmins());
+$setup->tpl->assign('error', !$success);
 $setup->tpl->display('step3.tpl');
 
 ?>
