@@ -28,7 +28,7 @@ pre { white-space:normal; }
 		{block name="content"}[content placeholder]{/block}
 	</div>
 </div>
-<div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a> v{$smarty.const.VERSION_FULL}</div>
+<div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a></div>
 {/block}
 {block name="js"}
 <script type="text/javascript" src="../js/jquery.min.js"></script>

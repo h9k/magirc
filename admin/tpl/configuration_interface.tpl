@@ -38,6 +38,10 @@
 			<td align="left"><input type="text" size="3" maxlength="3" name="live_interval" value="{$cfg.live_interval}" /> seconds</td>
 		</tr>
 		<tr>
+			<td align="right"><strong>Show MagIRC version in footer</strong></td>
+			<td align="left">yes <input type="radio" name="version_show" value="1"{if $cfg.version_show} checked="checked"{/if} /> <input type="radio" name="version_show" value="0"{if !$cfg.version_show} checked="checked"{/if} /> no</td>
+		</tr>
+		<tr>
 			<td align="right"><strong>Debug mode</strong></td>
 			<td align="left">
 				<select name="debug_mode" id="debug_mode">

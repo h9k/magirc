@@ -189,6 +189,9 @@ class Setup {
 				$this->db->insert('magirc_config', array('parameter' => 'service_searchirc', 'value' => ''));
 				$this->db->insert('magirc_config', array('parameter' => 'service_netsplit', 'value' => ''));
 			}
+			if ($version < 7) {
+				$this->db->insert('magirc_config', array('parameter' => 'version_show', 'value' => '1'));
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}

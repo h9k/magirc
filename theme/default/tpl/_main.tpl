@@ -53,7 +53,7 @@
 		<div style="width:728px; margin:auto;"><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
 	{/if}
 </div>
-<div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a> v{$smarty.const.VERSION_FULL}</div>
+<div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg.version_show} v{$smarty.const.VERSION_FULL}{/if}</div>
 {/block}
 {block name="js"}
 {if $cfg.cdn_enable}
