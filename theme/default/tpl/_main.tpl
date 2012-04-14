@@ -54,7 +54,20 @@
 		<div style="width:728px; margin:auto;"><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
 	{/if}
 </div>
-<div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg.version_show} v{$smarty.const.VERSION_FULL}{/if}</div>
+<div id="footer">
+	{if $cfg.service_addthis}
+	<div class="addthis_toolbox addthis_default_style" style="float:left;">
+	<a class="addthis_button_preferred_1"></a>
+	<a class="addthis_button_preferred_2"></a>
+	<a class="addthis_button_preferred_3"></a>
+	<a class="addthis_button_preferred_4"></a>
+	<a class="addthis_button_compact"></a>
+	<a class="addthis_counter addthis_bubble_style"></a>
+	</div>
+	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+	{/if}
+	powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg.version_show} v{$smarty.const.VERSION_FULL}{/if}
+</div>
 {/block}
 {block name="js"}
 {if $cfg.cdn_enable}
@@ -75,6 +88,9 @@
 <!--
 var url_base = '{$smarty.const.BASE_URL}{if !$cfg.rewrite_enable}index.php/{/if}';
 var theme = '{$cfg.theme}';
+var net_roundrobin = '{$cfg.net_roundrobin}';
+var net_port = '{$cfg.net_port|default:"6667"}';
+var net_port_ssl = '{$cfg.net_port_ssl}';
 //var format_date = 'MMM d yyyy';
 //var format_time = 'HH:mm:ss';
 var format_datetime = 'yyyy-MM-dd HH:mm:ss';
@@ -207,7 +223,7 @@ function getUserStatus(user) {
 	else return '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="Offline" \/>';
 }
 function getUserExtra(user) {
-	var out = "";
+	var out = '';
 	if (user['bot']) out += ' <img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
 	if (user['service']) out += ' <img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
 	if (user['operator']) out += ' <img src="theme/'+theme+'/img/status/operator.png" alt="oper" title="'+user['operator_level']+'" \/>';
@@ -220,6 +236,12 @@ function getCountryFlag(user) {
 	} else {
 		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="Unknown" />';
 	}
+}
+function getChannelLinks(chan) {
+	var out = '';
+	if (net_roundrobin) out += '<a href="irc://'+net_roundrobin+':'+net_port+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/link.png" alt="connect" title="Standard connection" /></a>';
+	if (net_roundrobin && net_port_ssl) out += ' <a href="irc://'+net_roundrobin+':+'+net_port_ssl+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
+	return out;	
 }
 {/literal}
 --></script>

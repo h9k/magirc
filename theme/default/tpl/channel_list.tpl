@@ -24,11 +24,17 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
+/*
 			{ "mDataProp": "channel", "fnRender": function(oObj) { 
 					if(channel_href == true) { return '<strong><a href="irc://'+net_defaulthref+'/'+oObj.aData['channel']+'">'+oObj.aData['channel']+'</a><\/strong>'; } 
 					else { return '<strong>'+oObj.aData['channel']+'<\/strong>'; }		
 				} 
 			},
+*/
+			{ "mDataProp": "channel", "fnRender": function (oObj) {
+				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
+			} },
+
 			{ "mDataProp": "users" },
 			{ "mDataProp": "users_max" }
 		]
@@ -36,6 +42,7 @@ $(document).ready(function() {
 	$("#tbl_channels tbody tr").live("click", function(event) {
 		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
+	$("#tbl_channels tbody tr a").live("click", function(e) { e.stopPropagation(); });
 });
 {/literal}
 --></script>

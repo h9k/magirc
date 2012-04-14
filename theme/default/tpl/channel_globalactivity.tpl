@@ -29,7 +29,9 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name" },
+			{ "mDataProp": "name", "fnRender": function (oObj) {
+				return getChannelLinks(oObj.aData['name']) + ' ' + oObj.aData['name'];
+			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },
 			{ "mDataProp": "lines" },
@@ -43,6 +45,7 @@ $(document).ready(function() {
 	$("#tbl_activity tbody tr").live("click", function(event) {
 		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
+	$("#tbl_activity tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').index() / 2;

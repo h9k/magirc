@@ -509,8 +509,8 @@ tr.even.gradeU td.sorting_3 {
 	background-color: #e2e2e2;
 }
 
-.display tr { height:25px; }
-
+.display tbody tr { height:25px; }
+.display tbody tr img { vertical-align:middle; }
 .clickable tbody tr.even:hover td, .clickable tbody tr.odd:hover td {
 	cursor: pointer;
 	background-color: #FFE97F;

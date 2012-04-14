@@ -1,5 +1,18 @@
 <h1>Server list</h1>
-{if $cfg.net_roundrobin}Connect to network round robin: <a href="irc://{$cfg.net_roundrobin}"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="Connect" title="Connect" /></a>{if $cfg.net_sslroundrobin} <a href="irc://{$cfg.net_sslroundrobin}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" /></a>{/if}<br /><br />{/if}
+{if $cfg.net_roundrobin}
+	Connect to network round robin: 
+	<a href="irc://{$cfg.net_roundrobin}"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="Connect" title="Connect" /></a>
+	{if $cfg.net_sslroundrobin} <a href="irc://{$cfg.net_sslroundrobin}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" /></a>{/if}
+	<br /><br />
+{/if}
+
+{if $cfg.net_roundrobin}
+	Connect to our network round robin <strong>{$cfg.net_roundrobin}</strong>:
+	<a href="irc://{$cfg.net_roundrobin}{if $cfg.net_port}:{$cfg.net_port}{/if}"><img src="theme/{$cfg.theme}/img/icons/server-link.png" alt="standard" title="Standard connection" /></a>
+	{if $cfg.net_port_ssl} <a href="irc://{$cfg.net_roundrobin}:+{$cfg.net_port_ssl}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="ssl" title="Secure connection" /></a>{/if}
+	<br /><br />
+{/if}
+
 <table id="tbl_servers" class="display clickable">
 <thead>
 	<tr>
@@ -23,7 +36,7 @@
 			<tr><th>Online:</th><td><span id="srv_online" class="val"></span></td></tr>
 			<tr><th>Version:</th><td><span id="srv_version" class="val"></span></td></tr>
 			<tr><th>Uptime:</th><td><span id="srv_uptime" class="val"></span> hours</td></tr>
-			<tr><th>Connected since:</th><td><span id="srv_connecttime" class="val"></span></td></tr>
+			{*<tr><th>Connected since:</th><td><span id="srv_connecttime" class="val"></span></td></tr>*}
 			<tr><th>Last split:</th><td><span id="srv_lastsplit" class="val"></span></td></tr>
 		</table>
 	</div>
@@ -50,12 +63,21 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
+/*
 			{ "mDataProp": "online", "fnRender": function (oObj) { 
 				if(server_href == true) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>  <a href="irc://'+ oObj.aData['server'] +':6667"><img src="theme/'+theme+'/img/icons/link.png" alt="Connect" title="Connect" \/></a>  <a href="irc://'+ oObj.aData['server'] +':+6697"><img src="theme/'+theme+'/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" \/></a>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; }
 				else { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; }
 				}
 			},
 			{ "mDataProp": "server" },
+*/
+			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; } },
+			{ "mDataProp": "server", "fnRender": function (oObj) {
+				var out = '<a href="irc://'+oObj.aData['server']+':'+net_port+'"><img src="theme/'+theme+'/img/icons/server-link.png" alt="connect" title="Standard connection" /></a>';
+				if (net_port_ssl) out += ' <a href="irc://'+oObj.aData['server']+':+'+net_port_ssl+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
+				return out + ' ' + oObj.aData['server'];
+			} },
+
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }
@@ -69,7 +91,7 @@ $(document).ready(function() {
 				$("#srv_online").html(data.online ? "Yes" : "No");
 				$("#srv_version").html(data.version);
 				$("#srv_uptime").html(Math.round(data.uptime / 3600));
-				$("#srv_connecttime").html($.format.date(data.connect_time, format_datetime));
+				//$("#srv_connecttime").html($.format.date(data.connect_time, format_datetime));
 				$("#srv_lastsplit").html($.format.date(data.split_time, format_datetime));
 				$("#srv_ping").html(data.ping);
 				$("#srv_maxping").html(data.ping_max);
@@ -88,6 +110,7 @@ $(document).ready(function() {
 			}
 		}, "json");
 	});
+	$("#tbl_servers tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	// Server dialog
 	$("#dialog-server").dialog({
 		bgiframe: true,

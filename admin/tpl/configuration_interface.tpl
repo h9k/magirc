@@ -2,7 +2,7 @@
 	<h1>Interface settings</h1>
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
-			<td align="right"><strong>Theme</strong><br />(this only applies to the frontend)</td>
+			<td align="right"><strong>Theme</strong><br />This only applies to the frontend</td>
 			<td align="left">
 				<select name="theme" id="theme">
 				{foreach from=$themes item=item}
@@ -12,7 +12,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="right"><strong>Default Language</strong><br />(will not override automatic detection by browser)</td>
+			<td align="right"><strong>Default Language</strong><br />Will not override automatic detection by browser</td>
 			<td align="left"><em>English</em></td>
 		</tr>
 		<tr>
@@ -26,15 +26,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="right"><strong>Enable CDN</strong><br />(Improves performance)</td>
+			<td align="right"><strong>Enable CDN</strong><br />Improves performance</td>
 			<td align="left">yes <input type="radio" name="cdn_enable" value="1"{if $cfg.cdn_enable} checked="checked"{/if} /> <input type="radio" name="cdn_enable" value="0"{if !$cfg.cdn_enable} checked="checked"{/if} /> no</td>
 		</tr>
 		<tr>
-			<td align="right"><strong>Enable URL Rewrite</strong><br />(Requires rewriting support on the web server.<br />For apache, please rename htaccess.txt to .htaccess)</td>
+			<td align="right"><strong>Enable URL Rewrite</strong><br />Requires rewriting support on the web server.<br />For apache, please rename htaccess.txt to .htaccess</td>
 			<td align="left">yes <input type="radio" name="rewrite_enable" value="1"{if $cfg.rewrite_enable} checked="checked"{/if} /> <input type="radio" name="rewrite_enable" value="0"{if !$cfg.rewrite_enable} checked="checked"{/if} /> no</td>
 		</tr>
 		<tr>
-			<td align="right"><strong>Live update interval</strong><br />(0 to disable)</td>
+			<td align="right"><strong>Live update interval</strong><br />0 to disable</td>
 			<td align="left"><input type="text" size="3" maxlength="3" name="live_interval" value="{$cfg.live_interval}" /> seconds</td>
 		</tr>
 		<tr>

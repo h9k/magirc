@@ -1,4 +1,4 @@
-<div id="welcome"><h1>Live Network Status</h1></div>
+<div id="welcome"><h1>{if $cfg.live_interval}Live Network Status{else}Network Status{/if}</h1></div>
 
 <table class="details" style="width:100%;">
 	<tr>
@@ -31,7 +31,7 @@
 		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
 		{if $cfg.service_searchirc}<td style="width: 114px; margin: auto; vertical-align: top; text-align: center;">
 			<img height="40" width="114" border="0" alt="Overall_Ranking" src="http://searchirc.com/img/ranked_logo.gif">
-			<br /><a target="_blank" href="http://searchirc.com/rank/{$cfg.service_searchirc}">Teranova</a>
+			<br /><a target="_blank" href="http://searchirc.com/rank/{$cfg.service_searchirc}">{$cfg.net_name}</a>
 			<br /><span id="searchirc_ranking"></span>
 		</td>{/if}
 	</tr>
@@ -198,23 +198,29 @@ $(document).ready(function() {
 	oTable1 = $("#tbl_biggestchans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/biggest/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel" },
+			{ "mDataProp": "channel", "fnRender": function (oObj) {
+				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
+			} },
 			{ "mDataProp": "users" }
 		]
 	});
 	$("#tbl_biggestchans tbody tr").live("click", function(event) {
 		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
+	$("#tbl_biggestchans tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	oTable2 = $("#tbl_top10chans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel" },
+			{ "mDataProp": "channel", "fnRender": function (oObj) {
+				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
+			} },
 			{ "mDataProp": "lines" }
 		]
 	});
 	$("#tbl_top10chans tbody tr").live("click", function(event) {
 		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
+	$("#tbl_top10chans tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	oTable3 = $("#tbl_top10users").dataTable({
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
 		"aoColumns": [
