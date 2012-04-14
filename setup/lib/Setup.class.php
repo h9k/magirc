@@ -192,6 +192,21 @@ class Setup {
 			if ($version < 7) {
 				$this->db->insert('magirc_config', array('parameter' => 'version_show', 'value' => '1'));
 			}
+			if ($version < 8) {
+				$this->db->insert('magirc_config', array('parameter' => 'net_port', 'value' => '6667'));
+				$this->db->insert('magirc_config', array('parameter' => 'net_port_ssl', 'value' => ''));
+				$roundrobin = $this->db->selectOne('magirc_config', array('parameter' => 'net_roundrobin'));
+				if ($roundrobin['value']) {
+					$array = explode(':', $roundrobin['value']);
+					$this->db->update('magirc_config', array('value' => $array[0]), array('parameter' => 'net_roundrobin'));
+					if (count($array) > 1) {
+						$this->db->update('magirc_config', array('value' => $array[1]), array('parameter' => 'net_port'));
+					}
+				}
+				$this->db->insert('magirc_config', array('parameter' => 'service_webchat', 'value' => ''));
+				$this->db->insert('magirc_config', array('parameter' => 'service_mibbit', 'value' => ''));
+				$this->db->insert('magirc_config', array('parameter' => 'service_addthis', 'value' => '0'));
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}

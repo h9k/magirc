@@ -10,8 +10,16 @@
 			<td align="left"><input name="net_url" type="text" id="net_url" value="{$cfg.net_url}" size="32" maxlength="64" /></td>
 		</tr>
 		<tr>
-			<td align="right"><strong>The Round Robin for your Network</strong><br />For example irc.yourdomain.tld:6667</td>
+			<td align="right"><strong>The Round Robin for your Network</strong><br />For example irc.yourdomain.tld</td>
 			<td align="left"><input name="net_roundrobin" type="text" id="net_roundrobin" value="{$cfg.net_roundrobin}" size="32" maxlength="64" /></td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Default port</strong></td>
+			<td align="left"><input name="net_port" type="text" id="net_port" value="{$cfg.net_port}" size="11" maxlength="11" /></td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Default SSL port</strong></td>
+			<td align="left"><input name="net_port_ssl" type="text" id="net_port_ssl" value="{$cfg.net_port_ssl}" size="11" maxlength="11" /></td>
 		</tr>
 		<tr>
 			<td align="right"><strong>IRCd Server Type</strong></td>

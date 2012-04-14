@@ -198,23 +198,36 @@ $(document).ready(function() {
 	oTable1 = $("#tbl_biggestchans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/biggest/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel" },
+			{ "mDataProp": "channel", "fnRender": function (oObj) {
+				var chan = oObj.aData['channel'];
+				var out = '<a href="irc://'+net_roundrobin+':'+net_port+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/link.png" alt="connect" title="Standard connection" /></a>';
+				if (net_port_ssl) out += ' <a href="irc://'+net_roundrobin+':+'+net_port_ssl+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
+				return out + ' ' + chan;
+			} },
 			{ "mDataProp": "users" }
 		]
 	});
 	$("#tbl_biggestchans tbody tr").live("click", function(event) {
 		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
+	$("#tbl_biggestchans tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	oTable2 = $("#tbl_top10chans").dataTable({
 		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel" },
+			{ "mDataProp": "channel", "fnRender": function (oObj) {
+				var chan = oObj.aData['channel'];
+				var out = '';
+				if (net_roundrobin) out += '<a href="irc://'+net_roundrobin+':'+net_port+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/link.png" alt="connect" title="Standard connection" /></a>';
+				if (net_roundrobin && net_port_ssl) out += ' <a href="irc://'+net_roundrobin+':+'+net_port_ssl+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
+				return out + ' ' + chan;
+			} },
 			{ "mDataProp": "lines" }
 		]
 	});
 	$("#tbl_top10chans tbody tr").live("click", function(event) {
 		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
+	$("#tbl_top10chans tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	oTable3 = $("#tbl_top10users").dataTable({
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
 		"aoColumns": [

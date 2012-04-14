@@ -22,7 +22,13 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel" },
+			{ "mDataProp": "channel", "fnRender": function (oObj) {
+				var chan = oObj.aData['channel'];
+				var out = '';
+				if (net_roundrobin) out += '<a href="irc://'+net_roundrobin+':'+net_port+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/link.png" alt="connect" title="Standard connection" /></a>';
+				if (net_roundrobin && net_port_ssl) out += ' <a href="irc://'+net_roundrobin+':+'+net_port_ssl+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
+				return out + ' ' + chan;
+			} },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "users_max" }
 		]
@@ -30,6 +36,7 @@ $(document).ready(function() {
 	$("#tbl_channels tbody tr").live("click", function(event) {
 		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
+	$("#tbl_channels tbody tr a").live("click", function(e) { e.stopPropagation(); });
 });
 {/literal}
 --></script>
