@@ -222,7 +222,7 @@ function getUserStatus(user) {
 	else return '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="Offline" \/>';
 }
 function getUserExtra(user) {
-	var out = "";
+	var out = '';
 	if (user['bot']) out += ' <img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
 	if (user['service']) out += ' <img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
 	if (user['operator']) out += ' <img src="theme/'+theme+'/img/status/operator.png" alt="oper" title="'+user['operator_level']+'" \/>';
@@ -235,6 +235,12 @@ function getCountryFlag(user) {
 	} else {
 		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="Unknown" />';
 	}
+}
+function getChannelLinks(chan) {
+	var out = '';
+	if (net_roundrobin) out += '<a href="irc://'+net_roundrobin+':'+net_port+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/link.png" alt="connect" title="Standard connection" /></a>';
+	if (net_roundrobin && net_port_ssl) out += ' <a href="irc://'+net_roundrobin+':+'+net_port_ssl+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
+	return out;	
 }
 {/literal}
 --></script>

@@ -30,11 +30,7 @@ $(document).ready(function() {
 		"sAjaxSource": "rest/denora.php/channels/activity/"+type+"?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "name", "fnRender": function (oObj) {
-				var chan = oObj.aData['name'];
-				var out = '';
-				if (net_roundrobin) out += '<a href="irc://'+net_roundrobin+':'+net_port+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/link.png" alt="connect" title="Standard connection" /></a>';
-				if (net_roundrobin && net_port_ssl) out += ' <a href="irc://'+net_roundrobin+':+'+net_port_ssl+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
-				return out + ' ' + chan;
+				return getChannelLinks(oObj.aData['name']) + ' ' + oObj.aData['name'];
 			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },
