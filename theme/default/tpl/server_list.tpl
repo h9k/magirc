@@ -1,12 +1,5 @@
 <h1>Server list</h1>
 {if $cfg.net_roundrobin}
-	Connect to network round robin: 
-	<a href="irc://{$cfg.net_roundrobin}"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="Connect" title="Connect" /></a>
-	{if $cfg.net_sslroundrobin} <a href="irc://{$cfg.net_sslroundrobin}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" /></a>{/if}
-	<br /><br />
-{/if}
-
-{if $cfg.net_roundrobin}
 	Connect to our network round robin <strong>{$cfg.net_roundrobin}</strong>:
 	<a href="irc://{$cfg.net_roundrobin}{if $cfg.net_port}:{$cfg.net_port}{/if}"><img src="theme/{$cfg.theme}/img/icons/server-link.png" alt="standard" title="Standard connection" /></a>
 	{if $cfg.net_port_ssl} <a href="irc://{$cfg.net_roundrobin}:+{$cfg.net_port_ssl}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="ssl" title="Secure connection" /></a>{/if}
@@ -55,7 +48,6 @@
 
 {jsmin}
 <script type="text/javascript"><!--
-var server_href = '{$cfg.server_href}';
 {literal}
 $(document).ready(function() {
 	$('#tbl_servers').dataTable({
@@ -63,21 +55,15 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
-/*
 			{ "mDataProp": "online", "fnRender": function (oObj) { 
-				if(server_href == true) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>  <a href="irc://'+ oObj.aData['server'] +':6667"><img src="theme/'+theme+'/img/icons/link.png" alt="Connect" title="Connect" \/></a>  <a href="irc://'+ oObj.aData['server'] +':+6697"><img src="theme/'+theme+'/img/icons/ssl.png" alt="Secure Connection" title="Secure Connection" \/></a>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; }
-				else { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; }
-				}
-			},
-			{ "mDataProp": "server" },
-*/
-			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; } },
-			{ "mDataProp": "server", "fnRender": function (oObj) {
 				var out = '<a href="irc://'+oObj.aData['server']+':'+net_port+'"><img src="theme/'+theme+'/img/icons/server-link.png" alt="connect" title="Standard connection" /></a>';
 				if (net_port_ssl) out += ' <a href="irc://'+oObj.aData['server']+':+'+net_port_ssl+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
-				return out + ' ' + oObj.aData['server'];
+				return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="Server is Online" \/>&nbsp;&nbsp;' + out : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="Server is Offline" \/>'; 
 			} },
-
+			{ "mDataProp": "server", "fnRender": function (oObj) {
+				
+				return oObj.aData['server'];
+			} },
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }

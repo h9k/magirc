@@ -20,20 +20,14 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
 ('net_roundrobin', ''),
-
-('net_sslroundrobin', ''),
-('net_defaulthref', ''),
-
 ('net_port', '6667'),
 ('net_port_ssl', ''),
-
+('channel_href_show', '1'),
 ('welcome_mode', 'statuspage'),
 ('timezone', 'UTC'),
 ('ircd_type', 'unreal32'),
 ('theme', 'default'),
 ('locale', 'en_US'),
-('server_href', '0'),
-('channel_href', '0'),
 ('block_spchans', '0'),
 ('hide_ulined', '1'),
 ('hide_servers', ''),
@@ -50,6 +44,7 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('service_mibbit', ''),
 ('service_addthis', '0'),
 ('version_show', '1');
+
 
 --
 -- Table structure for table `magirc_content`
