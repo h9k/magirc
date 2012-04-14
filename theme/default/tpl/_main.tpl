@@ -6,6 +6,7 @@
 <meta name="ROBOTS" content="INDEX, FOLLOW" />
 <meta name="Keywords" content="{$cfg.net_name} MagIRC IRC Chat Statistics Denora stats phpDenora" />
 <meta name="Description" content="{$cfg.net_name} Network Statistics powered by MagIRC" />
+<meta property='og:title' content='{$cfg.net_name}'/><meta property='og:url' content='{$smarty.const.BASE_URL}'/><meta property='og:image' content='{$smarty.const.BASE_URL}theme/{$cfg.theme}/img/logofb.png'/><meta property='og:site_name' content='{$cfg.net_name}'/><meta property='og:description' content='{$cfg.net_name} Network Statistics'/>
 <base href="{$smarty.const.BASE_URL}" />
 <link rel="icon" href="theme/{$cfg.theme}/img/favicon.ico" type="image/x-icon">
 {block name="css"}
