@@ -228,7 +228,7 @@ class Denora {
 			foreach ($hide_servers as $key => $server) {
 				$hide_servers[$key] = $this->db->escape(trim($server));
 			}
-			$sWhere .= sprintf("WHERE server NOT IN('%s')", implode("','", $hide_servers));
+			$sWhere .= sprintf("WHERE server NOT IN(%s)", implode(",", $hide_servers));
 		}
 		if ($this->cfg->getParam('hide_ulined')) {
 			$sWhere .= $sWhere ? " AND uline = 0" : "WHERE uline = 0";
