@@ -88,7 +88,7 @@ $(document).ready(function() {
 				$("#srv_maxusertime").html($.format.date(data.users_max_time, format_datetime));
 				$("#srv_opers").html(data.opers);
 				$("#srv_maxopers").html(data.opers_max);
-				$("#srv_maxopertime").html($.format.date(data.opers_max_time, format_datetime));
+				if((data.opers_max_time).indexOf("1970") < 0) { $("#srv_maxopertime").html("on " + $.format.date(data.opers_max_time, format_datetime)); }
 				$("#srv_motd_txt").html(data.motd ? data.motd_html : "MOTD not available for this server");
 				$("#dialog-server").dialog("open");
 				$("#srv_motd").scrollTop(0);
