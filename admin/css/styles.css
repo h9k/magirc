@@ -1,9 +1,9 @@
-html { background:#444 url("../img/bg.png") repeat; }
-body { margin:0; padding:0; font-family:'Share', Verdana, Arial; font-size:13px; color:#333; }
+html { background:white url("../img/bg.png") repeat; }
+body { margin:0; padding:0; font-family:'Share', Verdana, Arial; font-size:13px; color:#222; }
 
 img,td,th{border:0}
 img#logo{padding:18px 25px 0px 5px;float:left;}
-h1,h2,h3,h4,h5,h6{color:#333;}
+h1,h2,h3,h4,h5,h6{color:#222;}
 
 div#header { padding:0 10px; margin:0px auto 5px auto; width:880px; height:75px; }
 div#menu { float:left; margin:0; padding:0; }
@@ -16,16 +16,15 @@ div#menu a {
 	padding-top:45px;
 	display:block;
 	text-decoration:none;
-	color:white;
+	color:#777;
 	font-size:18px;
-	text-shadow: #333 1px 1px;
 	-webkit-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
     -moz-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
     -o-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
     transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
 }
-div#menu a:hover { color:orange; background-color:rgba(255,255,255,0.2); }
-div#menu a.active { color:orange; }
+div#menu a:hover { color:white; background-color:rgba(0,0,0,0.2); }
+div#menu a.active { color:black; }
 div#main {
 	width:900px;
 	margin:5px auto;
@@ -37,19 +36,22 @@ div#main {
 	-webkit-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 	box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 }
+
 div#content { padding:5px 10px 10px 10px; }
-div.ui-tabs-panel a, div.ui-tabs-panel a:visited { color:#000099; }
-div.ui-tabs-panel a:hover, div.ui-tabs-panel a:active { color:#000033; text-decoration:none; }
+div.ui-tabs-panel a, div.ui-tabs-panel a:visited { color:#222; }
+div.ui-tabs-panel a:hover, div.ui-tabs-panel a:active { color:black; text-decoration:none; }
+
 div#footer {
 	text-align:right;
-	font-size:x-small;
-	color:#FCFCFC;
-	padding:0px 5px 10px 5px;
+	font-size:small;
+	color:#777;
+	padding:5px 5px 5px 5px;
 	margin:0px auto 10px auto;
 	width:890px;
 }
-div#footer a, div#footer a:visited { color:#FCFCFC; font-size:12px; font-weight:bold; text-decoration:none; }
-div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:underline; }
+div#footer a, div#footer a:visited { color:#888; font-size:12px; font-weight:bold; text-decoration:none; }
+div#footer a:hover, div#footer a:active { color:#888; text-decoration:underline; }
+
 div#loading { display:none; float:right; margin-top:25px; }
 
 div.halfleft { width:49%; float:left; }

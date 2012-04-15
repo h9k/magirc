@@ -9,7 +9,7 @@
 <table id="tbl_servers" class="display clickable">
 <thead>
 	<tr>
-		<th>Status</th>
+		<th>Connection</th>
 		<th>Server</th>
 		<th>Description</th>
 		<th>Users</th>
@@ -55,11 +55,14 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; } },
-			{ "mDataProp": "server", "fnRender": function (oObj) {
+			{ "mDataProp": "online", "fnRender": function (oObj) { 
 				var out = '<a href="irc://'+oObj.aData['server']+':'+net_port+'"><img src="theme/'+theme+'/img/icons/server-link.png" alt="connect" title="Standard connection" /></a>';
 				if (net_port_ssl) out += ' <a href="irc://'+oObj.aData['server']+':+'+net_port_ssl+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
-				return out + ' ' + oObj.aData['server'];
+				return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="Server is Online" \/>&nbsp;&nbsp;' + out : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="Server is Offline" \/>'; 
+			} },
+			{ "mDataProp": "server", "fnRender": function (oObj) {
+				
+				return oObj.aData['server'];
 			} },
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },

@@ -16,12 +16,13 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
 -- Dumping data for table `magirc_config`
 --
 
-INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '8'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '9'),
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
 ('net_roundrobin', ''),
 ('net_port', '6667'),
 ('net_port_ssl', ''),
+('channel_href_show', '1'),
 ('welcome_mode', 'statuspage'),
 ('timezone', 'UTC'),
 ('ircd_type', 'unreal32'),
@@ -43,6 +44,7 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('service_mibbit', ''),
 ('service_addthis', '0'),
 ('version_show', '1');
+
 
 --
 -- Table structure for table `magirc_content`

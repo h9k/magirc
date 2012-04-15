@@ -14,6 +14,8 @@
 
 {jsmin}
 <script type="text/javascript"><!--
+var net_defaulthref = '{$cfg.net_defaulthref}';
+var channel_href = '{$cfg.channel_href}'
 {literal}
 $(document).ready(function() {
 	$('#tbl_channels').dataTable({

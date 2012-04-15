@@ -95,6 +95,7 @@ var net_port_ssl = '{$cfg.net_port_ssl}';
 //var format_time = 'HH:mm:ss';
 var format_datetime = 'yyyy-MM-dd HH:mm:ss';
 var format_datetime_charts = '%Y-%m-%d %H:%M:%S';
+var channel_href_show = '{$cfg.channel_href_show}';
 //var format_datetime_full = 'ddd, MMM d. yyyy';
 {literal}
 $(document).ready(function() {
@@ -239,8 +240,10 @@ function getCountryFlag(user) {
 }
 function getChannelLinks(chan) {
 	var out = '';
-	if (net_roundrobin) out += '<a href="irc://'+net_roundrobin+':'+net_port+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/link.png" alt="connect" title="Standard connection" /></a>';
-	if (net_roundrobin && net_port_ssl) out += ' <a href="irc://'+net_roundrobin+':+'+net_port_ssl+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
+	if(channel_href_show == true) {
+		if (net_roundrobin) out += '<a href="irc://'+net_roundrobin+':'+net_port+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/link.png" alt="connect" title="Standard connection" /></a>';
+		if (net_roundrobin && net_port_ssl) out += ' <a href="irc://'+net_roundrobin+':+'+net_port_ssl+'/'+encodeURIComponent(chan)+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
+	}
 	return out;	
 }
 {/literal}
