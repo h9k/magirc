@@ -101,6 +101,8 @@ $(document).ready(function() {
 		height: 540,
 		width: 700,
 		modal: true,
+		show: 'fade',
+		hide: 'fade',
 		buttons: {
 			"Close": function() {
 				$(this).dialog("close");
