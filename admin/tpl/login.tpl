@@ -8,7 +8,7 @@
 	<h1 id="title">Login</h1>
 	<span id="message">Please insert your credentials</span><br /><br />
 	<noscript>WARNING: Your web browser does not support JavaScript. However this is needed in order to use this application!</noscript>
-	<form id="login" method="post" action="./">
+	<form id="magirc-login" method="post" action="./">
 		<table class="form">
 			<tr>
 				<th><label for="username">Username</label></th>
@@ -45,14 +45,14 @@ $(document).keyup(function(e){
     if(e.keyCode === 13) login();
 });
 function login() {
-	$.post("index.php/login", { username: $("#username").val(), password: $("#password").val() }, function(success) {
-		if (success) {
+	$("#magirc-login").ajaxSubmit({ url: 'index.php/login', type: 'post', success: function(data) {
+		if (data) {
 			window.location = 'index.php';
 		} else {
 			$("#title").html('Login failed');
 			$("#message").html('Please check your credentials and try again');
 		}
-	}, "json");
+	} });
 }
 
 {/literal}
