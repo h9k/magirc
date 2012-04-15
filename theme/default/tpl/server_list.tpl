@@ -78,11 +78,8 @@ $(document).ready(function() {
 				$("#srv_version").html(data.version);
 				$("#srv_uptime").html(Math.round(data.uptime / 3600));
 				//$("#srv_connecttime").html($.format.date(data.connect_time, format_datetime));
-				if((data.split_time).indexOf("1970") >= 0) {
-					$("#srv_lastsplit").html("Never");
-				} else {
-					$("#srv_lastsplit").html($.format.date(data.split_time, format_datetime));
-				}
+				if((data.split_time).indexOf("1970") >= 0) { $("#srv_lastsplit").html("Never");	} 
+				else { $("#srv_lastsplit").html($.format.date(data.split_time, format_datetime)); }
 				$("#srv_ping").html(data.ping);
 				$("#srv_maxping").html(data.ping_max);
 				$("#srv_maxpingtime").html($.format.date(data.ping_max_time, format_datetime));
