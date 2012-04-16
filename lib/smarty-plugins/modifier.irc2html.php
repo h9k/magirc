@@ -46,12 +46,11 @@ function translatecolorcode($matches) {
 }
 
 function smarty_modifier_irc2html($text) {
-	global $charset;
 	$lines = explode("\n", utf8_decode($text));
 	$out = '';
 
 	foreach($lines as $line) {
-		$line = nl2br(htmlentities($line,ENT_COMPAT,$charset));
+		$line = nl2br(htmlentities($line,ENT_COMPAT,'UTF-8'));
 		// replace control codes
 		$line = preg_replace_callback('/[\003](\d{0,2})(,\d{1,2})?([^\003\x0F]*)(?:[\003](?!\d))?/','translatecolorcode',$line);
 		$line = preg_replace('/[\002]([^\002\x0F]*)(?:[\002])?/','<strong>$1</strong>',$line);
