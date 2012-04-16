@@ -1,6 +1,5 @@
 <?php
 
-
 // define the query types
 define('SQL_NONE', 1);
 define('SQL_ALL', 2);
@@ -27,9 +26,16 @@ class DB {
 	}
 
 	function __destruct() {
-		$this->pdo = null;
+		$this->disconnect();
 	}
 
+	/**
+	 * Establish a connection to a Database
+	 * @param string $dsn
+	 * @param string $username
+	 * @param string $password
+	 * @return boolean true: successful, false: failed
+	 */
 	function connect($dsn, $username, $password) {
 		try {
 			$this->pdo = new PDO($dsn, $username, $password);
@@ -43,20 +49,39 @@ class DB {
 		}
 	}
 
+	/**
+	 * Disconnect from the database server
+	 */
 	function disconnect() {
 		$this->pdo = null;
 	}
 
+	/**
+	 * Get the tables
+	 * @return array
+	 */
 	function getTables() {
 		$query = "SHOW TABLES";
 		$this->query($query, SQL_ALL, SQL_INDEX);
 		return $this->record;
 	}
 
+	/**
+	 * Create a prepared statement
+	 * @param string $query
+	 * @return PDOStatement
+	 */
 	function prepare($query) {
 		return $this->pdo->prepare($query);
 	}
 
+	/**
+	 * Runs the given query
+	 * @param string $query
+	 * @param int $type SQL_NONE: without result, SQL_INIT: one result, SQL_ALL: all results
+	 * @param int $format SQL_INDEX: indexed array, SQL_ASSOC: associative array, SQL_OBJ object
+	 * @return boolean true: success, false: failure
+	 */
 	function query($query, $type = SQL_NONE, $format = SQL_INDEX) {
 		try {
 			$this->result = $this->pdo->query($query);
@@ -78,6 +103,11 @@ class DB {
 		return true;
 	}
 
+	/**
+	 * Iterate over the next record
+	 * @param int $format SQL_INDEX: indexed array, SQL_ASSOC: associative array, SQL_OBJ object
+	 * @return mixed record on success, false on failure
+	 */
 	function next($format = SQL_INDEX) {
 		$this->record = $this->result->fetch($format);
 		if ($this->record) {
@@ -87,6 +117,12 @@ class DB {
 		}
 	}
 
+	/**
+	 * Escape the given string
+	 * @param string $input
+	 * @param boolean $quotes true: include 'quotation marks', false: don't
+	 * @return string Escaped string
+	 */
 	function escape($input, $quotes = true) {
 		if ($quotes) {
 			return $this->pdo->quote($input);
@@ -95,10 +131,18 @@ class DB {
 		}
 	}
 
+	/**
+	 * Get the ID of the last inserted row
+	 * @return int ID
+	 */
 	function lastInsertID() {
 		return $this->pdo->lastInsertId();
 	}
 
+	/**
+	 * Number of returned rows
+	 * @return int Count
+	 */
 	function numRows() {
 		try {
 			return $this->result->rowCount();
@@ -106,6 +150,11 @@ class DB {
 			die($e->getMessage());
 		}
 	}
+
+	/**
+	 * Fetch the first column of the last result
+	 * @return mixed Value
+	 */
 	function fetchColumn() {
 		try {
 			return $this->result->fetchColumn();
@@ -113,12 +162,28 @@ class DB {
 			die($e->getMessage());
 		}
 	}
+
+	/**
+	 * Return the amount of found rows from the last query
+	 * @return int Rows
+	 */
 	function foundRows() {
 		$ps = $this->prepare("SELECT FOUND_ROWS()");
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
 
+	/**
+	 * Build and run a SELECT query
+	 * @param string $table Table
+	 * @param array $where (column => value)
+	 * @param string $sort ORDER BY ...
+	 * @param string $order ASC/DESC
+	 * @param int $limit LIMIT ...
+	 * @param int $type SQL_NONE: without result, SQL_INIT: one result, SQL_ALL: all results
+	 * @param int $format SQL_INDEX: indexed array, SQL_ASSOC: associative array, SQL_OBJ object
+	 * @return mixed
+	 */
 	private function select($table, $where = NULL, $sort = NULL, $order = 'ASC', $limit = 0, $type = SQL_ALL, $format = SQL_ASSOC) {
 		$query = "SELECT * FROM `{$table}`";
 
@@ -142,13 +207,37 @@ class DB {
 		return $this->record;
 	}
 
+	/**
+	 * Build and run a SELECT query and return one row
+	 * @param string $table Table
+	 * @param array $where (column => value)
+	 * @param string $sort ORDER BY ...
+	 * @param string $order ASC/DESC
+	 * @param int $limit LIMIT ...
+	 * @return mixed
+	 */
 	function selectOne($table, $where = NULL, $sort = NULL, $order = 'ASC', $limit = 0) {
 		return $this->select($table, $where, $sort, $order, $limit, SQL_INIT, $format = SQL_ASSOC);
 	}
+	/**
+	 * Build and run a SELECT query and return all rows
+	 * @param string $table Table
+	 * @param array $where (column => value)
+	 * @param string $sort ORDER BY ...
+	 * @param string $order ASC/DESC
+	 * @param int $limit LIMIT ...
+	 * @return mixed
+	 */
 	function selectAll($table, $where = NULL, $sort = NULL, $order = 'ASC', $limit = 0) {
 		return $this->select($table, $where, $sort, $order, $limit, SQL_ALL, $format = SQL_ASSOC);
 	}
 
+	/**
+	 * Build and run an INSERT query
+	 * @param string $table Table
+	 * @param array $array Values (column => value)
+	 * @return int Last inserted ID
+	 */
 	function insert($table, $array) {
 		$query = "INSERT INTO `{$table}` SET ";
 
@@ -164,6 +253,13 @@ class DB {
 		}
 	}
 
+	/**
+	 * Build and run an UPDATE query
+	 * @param string $table Table
+	 * @param array $array Values (column => value)
+	 * @param array $where WHERE (column => value)
+	 * @return mixed
+	 */
 	function update($table, $array, $where) {
 		$data = null;
 		foreach($array as $key => $value) {
@@ -182,6 +278,12 @@ class DB {
 		return $this->query($query);
 	}
 
+	/**
+	 * Build and run a DELETE query
+	 * @param string $table Table
+	 * @param mixed $data int: id, array: (column => value)
+	 * @return mixed
+	 */
 	function delete($table, $data) {
 		if (is_array($data)) {
 			$query = "DELETE FROM `{$table}` WHERE ";
@@ -195,15 +297,12 @@ class DB {
 		return $this->query($query);
 	}
 
-	function log($type, $level, $event) {
-		$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
-		$query = sprintf("INSERT INTO `history` (`user_id`, `ip_address`, `type`, `level`, `event`)
-			VALUES (%d, '%s', '%s', '%s', %s)",
-		$user_id, $_SERVER['REMOTE_ADDR'], $type, $level, $this->escape($event));
-		return $this->query($query);
-	}
-
-	// Total data set length
+	/**
+	 * Gate the total data set length (used by DataTables)
+	 * @param string $sQuery SQL Query
+	 * @param array $aParams (column => value)
+	 * @return mixed
+	 */
 	function datatablesTotal($sQuery, $aParams = array()) {
 		$sQuery = preg_replace("/SELECT .+ FROM/", "SELECT COUNT(*) FROM", $sQuery);
 		$ps = $this->prepare($sQuery);
@@ -214,6 +313,10 @@ class DB {
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
 
+	/**
+	 * Build the LIMIT portion of a query (used by DataTables)
+	 * @return string LIMIT statement
+	 */
 	function datatablesPaging() {
 		$sLimit = "";
 		if (isset($_GET['iDisplayStart']) && isset($_GET['iDisplayLength']) && $_GET['iDisplayLength'] != '-1') {
@@ -223,6 +326,11 @@ class DB {
 		return $sLimit;
 	}
 
+	/**
+	 * Build the ORDER BY portion of a query (used by DataTables)
+	 * @param array $aColumns Column names
+	 * @return string ORDER BY statement
+	 */
 	function datatablesOrdering($aColumns) {
 		$sOrder = "";
 		if (isset($_GET['iSortCol_0'])) {
@@ -241,6 +349,11 @@ class DB {
 		return $sOrder;
 	}
 
+	/**
+	 * Build the WHERE portion of a query to filter results (used by DataTables)
+	 * @param array $aColumns Column names
+	 * @return string WHERE statement
+	 */
 	function datatablesFiltering($aColumns) {
 		$sWhere = "";
 		if (@$_GET['sSearch'] != "") {
@@ -254,7 +367,13 @@ class DB {
 		return $sWhere;
 	}
 
-	// Output array, to be converted in JSON
+	/**
+	 * Output the server-side array for DataTables, to be converted in JSON
+	 * @param int $iTotal Total records
+	 * @param int $iFilteredTotal Total displayed records
+	 * @param array $aaData Data
+	 * @return array (echo, total, displayed, data)
+	 */
 	function datatablesOutput($iTotal, $iFilteredTotal, $aaData) {
 		return array(
 			'sEcho' => (int) @$_GET['sEcho'],

@@ -1,6 +1,5 @@
 <?php
 
-
 class Config {
 
 	public $config;
@@ -9,7 +8,10 @@ class Config {
 		$this->config = $this->loadConfig();
 	}
 
-	// Load the configuraiton
+	/**
+	 * Load the configuration and return it
+	 * @return array (parameter => value)
+	 */
 	function loadConfig() {
 		$db = new Magirc_DB;
 		$config = array();
@@ -23,12 +25,18 @@ class Config {
 		return $config;
 	}
 
-	// Reload the configuration
+	/**
+	 * Reload the configuration
+	 */
 	function reloadConfig() {
 		$this->config = $this->loadConfig();
 	}
 
-	// Return requested configuration parameter
+	/**
+	 * Get the value of the requested parameter
+	 * @param string $param Parameter
+	 * @return string Value
+	 */
 	function getParam($param) {
 		return @$this->config[$param];
 	}

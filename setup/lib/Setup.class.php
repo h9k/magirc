@@ -156,6 +156,10 @@ class Setup {
 		return true;
 	}
 
+	/**
+	 * Upgrade the MagIRC database
+	 * @return boolean true: updated, false: no update needed
+	 */
 	function configUpgrade() {
 		$version = $this->getDbVersion();
 		$updated = false;

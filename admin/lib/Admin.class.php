@@ -61,7 +61,12 @@ class Admin {
 		);
 	}
 
-	// login function
+	/**
+	 * Admin Login
+	 * @param string $username
+	 * @param string $password
+	 * @return boolean true: successful, false: failed
+	 */
 	function login($username, $password) {
 		if (!isset($username) || !isset($password)) {
 			return false;
@@ -75,7 +80,10 @@ class Admin {
 		}
 	}
 
-	// Returns session status
+	/**
+	 * Returns session status
+	 * @return boolean true: valid session, false: no valid session
+	 */
 	function sessionStatus() {
 		if (!isset($_SESSION["username"])) {
 			$_SESSION["message"] = "Access denied";
@@ -88,7 +96,12 @@ class Admin {
 		return true;
 	}
 
-	/* Saves the given configuration parameter and value */
+	/**
+	 * Saves the given configuration parameter and value
+	 * @param string $parameter
+	 * @param string $value
+	 * @return boolean true: updated, false: not updated
+	 */
 	function saveConfig($parameter, $value) {
 		$this->cfg->config[$parameter] = $value;
 		return $this->db->update('magirc_config', array('value' => $value), array('parameter' => $parameter));
@@ -106,6 +119,12 @@ class Admin {
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
 
+	/**
+	 * Saves the HTML content for the given page
+	 * @param string $name Page name
+	 * @param string $text HTML content
+	 * @return boolean true: updated, false: not updated
+	 */
 	function saveContent($name, $text) {
 		$name = str_replace('content_', '', $name);
 		return $this->db->update('magirc_content', array('text' => $text), array('name' => $name));

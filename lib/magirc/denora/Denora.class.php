@@ -495,6 +495,13 @@ class Denora {
 		return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
 	}
 
+	/**
+	 * Gets the global channel activity
+	 * @param int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @param boolean $datatables true: datatables format, false: standard format
+	 * @return array Data
+	 * @todo refactor
+	 */
 	function getChannelGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 		$secret_mode = Protocol::chan_secret_mode;
@@ -541,6 +548,14 @@ class Denora {
 		return $aaData;
 	}
 
+	/**
+	 * Gets the channel activity for the given channel
+	 * @param string $chan Channel
+	 * @param int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @param boolean $datatables true: datatables format, false: standard format
+	 * @return User
+	 * @todo refactor
+	 */
 	function getChannelActivity($chan, $type, $datatables = false) {
 		$aaData = array();
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats WHERE chan=:channel AND type=:type AND letters > 0 ";
@@ -574,6 +589,12 @@ class Denora {
 		return $aaData;
 	}
 
+	/**
+	 * Get the hourly average activity for the given channel
+	 * @param string $chan Channel
+	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @return mixed
+	 */
 	function getChannelHourlyActivity($chan, $type) {
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM cstats WHERE chan=:channel AND type=:type";
@@ -592,6 +613,13 @@ class Denora {
 		}
 	}
 
+	/**
+	 * Get the global user activity
+	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @param boolean $datatables true: datatables format, false: standard format
+	 * @return array
+	 * @todo refactor
+	 */
 	function getUserGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 
@@ -639,6 +667,15 @@ class Denora {
 		return $datatables ? $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData) : $aaData;
 	}
 
+	/**
+	 * Get the average hourly activity for the given user
+	 * @param string $mode stats: user is treated as stats user, nick: user is treated as nickname
+	 * @param string $user User
+	 * @param string $chan Channel
+	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @return mixed
+	 * @todo refactor
+	 */
 	function getUserHourlyActivity($mode, $user, $chan, $type) {
 		$info = $this->getUserData($mode, $user);
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
@@ -774,6 +811,14 @@ class Denora {
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
 	}
 
+	/**
+	 * Get the user activity of the given user
+	 * @param string $mode stats: user is treated as stats user, nick: user is treated as nickname
+	 * @param string $user User
+	 * @param string $chan Channel
+	 * @return mixed
+	 * @todo refactor
+	 */
 	function getUserActivity($mode, $user, $chan) {
 		$info = $this->getUserData($mode, $user);
 		if ($chan == 'global') {
