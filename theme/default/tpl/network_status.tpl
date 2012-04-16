@@ -186,16 +186,14 @@ $(document).ready(function() {
 		}
 		return data;
 	}
-	$.extend($.fn.dataTable.defaults, {
-        "bProcessing": false,
+	oTable1 = $("#tbl_biggestchans").dataTable({
+		"bProcessing": false,
 		"bFilter": false,
 		"bInfo": false,
 		"bLengthChange": false,
 		"bPaginate": false,
 		"bSort": false,
-		"bEscapeRegex": false
-    });
-	oTable1 = $("#tbl_biggestchans").dataTable({
+		"bEscapeRegex": false,
 		"sAjaxSource": "rest/denora.php/channels/biggest/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel", "fnRender": function (oObj) {
@@ -209,6 +207,13 @@ $(document).ready(function() {
 	});
 	$("#tbl_biggestchans tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	oTable2 = $("#tbl_top10chans").dataTable({
+		"bProcessing": false,
+		"bFilter": false,
+		"bInfo": false,
+		"bLengthChange": false,
+		"bPaginate": false,
+		"bSort": false,
+		"bEscapeRegex": false,
 		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel", "fnRender": function (oObj) {
@@ -222,6 +227,13 @@ $(document).ready(function() {
 	});
 	$("#tbl_top10chans tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	oTable3 = $("#tbl_top10users").dataTable({
+		"bProcessing": false,
+		"bFilter": false,
+		"bInfo": false,
+		"bLengthChange": false,
+		"bPaginate": false,
+		"bSort": false,
+		"bEscapeRegex": false,
 		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "uname", "fnRender": function(oObj) {
