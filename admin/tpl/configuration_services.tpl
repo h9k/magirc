@@ -4,8 +4,8 @@
 		<tr>
 			<td align="right">
 				<strong>Webchat URL</strong>
-				<br />Example: http://webchat.mynet.tld/?chan=%s
-				<br />where %s stands for the channel name
+				<br />The URL-encoded channel name gets appended
+				<br />Example: http://webchat.mynet.tld/?chan=
 			</td>
 			<td align="left"><input name="service_webchat" type="text" id="service_webchat" value="{$cfg.service_webchat}" size="32" maxlength="64" /></td>
 		</tr>
