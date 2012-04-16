@@ -13,10 +13,10 @@
 </table>
 
 <ul id="chanmenu" style="display:none;">
-	{if $cfg.net_roundrobin}<li data-action="irc"><a href="#">irc standard connection</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.net_port_ssl}<li data-action="ircs"><a href="#">irc secure connection</a></li>{/if}
-	{if $cfg.service_webchat}<li data-action="webchat"><a href="#">webchat</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.service_mibbit}<li data-action="mibbit"><a href="#">mibbit</a></li>{/if}
+	{if $cfg.net_roundrobin}<li data-action="irc"><a href="#"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="" title="Standard connection" style="vertical-align:middle;" /> irc standard connection</a></li>{/if}
+	{if $cfg.net_roundrobin && $cfg.net_port_ssl}<li data-action="ircs"><a href="#"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="" title="Secure connection" style="vertical-align:middle;" /> irc secure connection</a></li>{/if}
+	{if $cfg.service_webchat}<li data-action="webchat"><a href="#"><img src="theme/{$cfg.theme}/img/icons/webchat.png" alt="" title="Webchat" style="vertical-align:middle;" /> webchat</a></li>{/if}
+	{if $cfg.net_roundrobin && $cfg.service_mibbit}<li data-action="mibbit"><a href="#"><img src="theme/{$cfg.theme}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> mibbit</a></li>{/if}
 </ul>
 
 {jsmin}
@@ -34,7 +34,7 @@ $(document).ready(function() {
 			{ "mDataProp": "channel", "fnRender": function (oObj) {
 				//return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
 				if (net_roundrobin || service_webchat) {
-					return '<button type="button" title="join..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:20px; width:30px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>' + ' ' + oObj.aData['channel'];
+					return '<button type="button" title="join..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:20px; width:32px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-link"></span></button>' + ' ' + oObj.aData['channel'];
 				} else {
 					oObj.aData['channel'];
 				}
@@ -70,7 +70,6 @@ $(document).ready(function() {
 	}).hide().css({position: 'absolute', zIndex: 1});
 		
 	$('.chanbutton').live('click', function(event) {
-		//menu.data('active-button', this);
 		menu.data('channel', $(this).parent().parent().attr('id'));
 		if (menu.is(':visible') ){
 			menu.hide();
