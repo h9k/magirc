@@ -14,6 +14,8 @@
 {block name="js" append}
 {jsmin}
 <script type="text/javascript">
+var target = '{$target|escape:'url'}';
+var mode = '{$mode}';
 {literal}
 $(document).ready(function() {
 	$("#tabs").tabs({
@@ -25,6 +27,9 @@ $(document).ready(function() {
 				$( anchor.hash ).html("Unable to load contents");
 			}
 		}
+	});
+	$.getJSON('rest/denora.php/users/'+mode+'/'+target+'/checkstats', function(data) {
+		if (!data) tabs.tabs("remove", 1);
 	});
 });
 {/literal}

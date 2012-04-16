@@ -457,6 +457,19 @@ class Denora {
 	}
 
 	/**
+	 * Checks if the given channel is being monitored by chanstats
+	 * @param string $chan Channel
+	 * @return boolean true: yes, false: no
+	 */
+	function checkChannelStats($chan) {
+		$sQuery = "SELECT COUNT(*) FROM cstats WHERE chan=:channel";
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
+	}
+
+	/**
 	 * Get the users currently in the specified channel
 	 * @todo implement server-side datatables support
 	 * @param string $chan Channel
@@ -646,6 +659,12 @@ class Denora {
 		}
 	}
 
+	/**
+	 * Checks if the given user exists
+	 * @param string $user User
+	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
+	 * @return boolean true: yes, false: no
+	 */
 	function checkUser($user, $mode) {
 		if ($mode == "stats") {
 			$query = "SELECT uname FROM ustats WHERE LOWER(uname) = LOWER(:user)";
@@ -656,6 +675,23 @@ class Denora {
 		$stmt->bindParam(':user', $user, SQL_STR);
 		$stmt->execute();
 		return $stmt->fetch(PDO::FETCH_COLUMN) ? true : false;
+	}
+
+	/**
+	 * Checks if the given user is being monitored by chanstats
+	 * @param string $user User
+	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
+	 * @return boolean true: yes, false: no
+	 */
+	function checkUserStats($user, $mode) {
+		if ($mode != 'stats') {
+			$user = $this->getUnameFromNick($user);
+		}
+		$sQuery = "SELECT COUNT(*) FROM ustats WHERE uname=:user";
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindParam(':user', $user, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
 
 	/**

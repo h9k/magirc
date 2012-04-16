@@ -30,7 +30,6 @@
 
 {jsmin}
 <script type="text/javascript">
-var target = '{$target|escape:'url'}';
 {literal}
 $(document).ready(function() {
 	$.getJSON('rest/denora.php/channels/'+target, function(result) {

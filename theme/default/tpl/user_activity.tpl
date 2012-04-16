@@ -40,8 +40,6 @@
 
 {jsmin}
 <script type="text/javascript">
-var target = '{$target|escape:'url'}';
-var mode = '{$mode}';
 {literal}
 $(document).ready(function() {
 	var chan = 'global';

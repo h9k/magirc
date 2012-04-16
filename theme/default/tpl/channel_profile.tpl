@@ -16,9 +16,10 @@
 {block name="js" append}
 {jsmin}
 <script type="text/javascript">
+var target = '{$target|escape:'url'}';
 {literal}
 $(document).ready(function() {
-	$("#tabs").tabs({
+	var tabs = $("#tabs").tabs({
 		select: function(event, ui) { window.location.hash = ui.tab.hash; },
 		cache: true,
 		spinner: 'Loading...',
@@ -27,6 +28,9 @@ $(document).ready(function() {
 				$( anchor.hash ).html("Unable to load contents");
 			}
 		}
+	});
+	$.getJSON('rest/denora.php/channels/'+target+'/checkstats', function(data) {
+		if (!data) tabs.tabs("remove", 3);
 	});
 });
 {/literal}
