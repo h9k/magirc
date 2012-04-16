@@ -77,7 +77,7 @@ class Denora {
 			return "mode_l" . strtolower($mode);
 		}
 	}
-	
+
 	/**
 	 * Return the mode data formatted for SQL
 	 * Example: o -> mode_lo_data, C -> mode_uc_data
@@ -284,7 +284,7 @@ class Denora {
 	/**
 	 * Gets the list of current channels
 	 * @param boolean $datatables Set true to enable server-side datatables functionality
-	 * @return array of Channel 
+	 * @return array of Channel
 	 */
 	function getChannelList($datatables = false) {
 		$aaData = array();
@@ -306,7 +306,7 @@ class Denora {
 			}
 			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(",", $hide_channels));
 		}
-		
+
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time,
 			topic, topicauthor AS topic_author, topictime AS topic_time, kickcount AS kicks, %s, %s FROM chan WHERE %s",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::chan_modes))),
@@ -333,7 +333,7 @@ class Denora {
 	/**
 	 * Get the biggest current channels
 	 * @param int $limit
-	 * @return array of Channel 
+	 * @return array of Channel
 	 */
 	function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
@@ -355,11 +355,11 @@ class Denora {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');
 	}
-	
+
 	/**
 	 * Get the most active current channels
 	 * @param int $limit
-	 * @return array of channel stats 
+	 * @return array of channel stats
 	 */
 	function getChannelTop($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
@@ -385,7 +385,7 @@ class Denora {
 	/**
 	 * Get the most active current users
 	 * @param int $limit
-	 * @return array of user stats 
+	 * @return array of user stats
 	 */
 	function getUsersTop($limit = 10) {
 		$aaData = array();
@@ -393,12 +393,14 @@ class Denora {
 		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
-		foreach ($data as $row) {
-			$user = $this->getUser('stats', $row['uname']);
-			if (!$user) $user = new User();
-			$user->uname = $row['uname'];
-			$user->lines = $row['lines'];
-			$aaData[] = $user;
+		if (is_array($data)) {
+			foreach ($data as $row) {
+				$user = $this->getUser('stats', $row['uname']);
+				if (!$user) $user = new User();
+				$user->uname = $row['uname'];
+				$user->lines = $row['lines'];
+				$aaData[] = $user;
+			}
 		}
 		return $aaData;
 	}
@@ -406,7 +408,7 @@ class Denora {
 	/**
 	 * Get the specified channel
 	 * @param string $chan Channel
-	 * @return Channel 
+	 * @return Channel
 	 */
 	function getChannel($chan) {
 		$sQuery = sprintf("SELECT channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time,
@@ -458,7 +460,7 @@ class Denora {
 	 * Get the users currently in the specified channel
 	 * @todo implement server-side datatables support
 	 * @param string $chan Channel
-	 * @return array of User 
+	 * @return array of User
 	 */
 	function getChannelUsers($chan) {
 		if ($this->checkChannel($chan) != 200) {
@@ -567,10 +569,14 @@ class Denora {
 		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		$result = $ps->fetch(PDO::FETCH_NUM);
-		foreach ($result as $key => $val) {
-			$result[$key] = (int) $val;
+		if (is_array($result)) {
+			foreach ($result as $key => $val) {
+				$result[$key] = (int) $val;
+			}
+			return $result;
+		} else {
+			return null;
 		}
-		return $result;
 	}
 
 	function getUserGlobalActivity($type, $datatables = false) {
@@ -593,27 +599,29 @@ class Denora {
 		if ($datatables) {
 			$iFilteredTotal = $this->db->foundRows();
 		}
-		foreach ($data as $row) {
-			if ($datatables) {
-				$row["DT_RowId"] = $row['uname'];
+		if (is_array($data)) {
+			foreach ($data as $row) {
+				if ($datatables) {
+					$row["DT_RowId"] = $row['uname'];
+				}
+				$user = $this->getUser('stats', $row['uname']);
+				if (!$user) {
+					$user = new User();
+					$user->nickname = $row['uname'];
+					$user->country = 'Unknown';
+					$user->country_code = '';
+					$user->online = false;
+					$user->away = false;
+					$user->bot = false;
+					$user->service = false;
+					$user->operator = false;
+					$user->helper = false;
+				}
+				foreach ($row as $key => $val) {
+					$user->$key = $val;
+				}
+				$aaData[] = $user;
 			}
-			$user = $this->getUser('stats', $row['uname']);
-			if (!$user) {
-				$user = new User();
-				$user->nickname = $row['uname'];
-				$user->country = 'Unknown';
-				$user->country_code = '';
-				$user->online = false;
-				$user->away = false;
-				$user->bot = false;
-				$user->service = false;
-				$user->operator = false;
-				$user->helper = false;
-			}
-			foreach ($row as $key => $val) {
-				$user->$key = $val;
-			}
-			$aaData[] = $user;
 		}
 		return $datatables ? $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData) : $aaData;
 	}
@@ -628,10 +636,14 @@ class Denora {
 		$ps->bindParam(':uname', $info['uname'], PDO::PARAM_STR);
 		$ps->execute();
 		$result = $ps->fetch(PDO::FETCH_NUM);
-		foreach ($result as $key => $val) {
-			$result[$key] = (int) $val;
+		if (is_array($result)) {
+			foreach ($result as $key => $val) {
+				$result[$key] = (int) $val;
+			}
+			return $result;
+		} else {
+			return null;
 		}
-		return $result;
 	}
 
 	function checkUser($user, $mode) {
@@ -667,7 +679,7 @@ class Denora {
 	 * Get a user based on its nickname or stats user
 	 * @param string $mode 'nick': nickname, 'stats': chanstats user
 	 * @param string $user
-	 * @return User 
+	 * @return User
 	 */
 	function getUser($mode, $user) {
 		$info = $this->getUserData($mode, $user);
@@ -750,12 +762,16 @@ class Denora {
 		$ps->bindParam(':chan', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
-		foreach ($data as $key => $type) {
-			foreach ($type as $field => $val) {
-				$data[$key][$field] = (int) $val;
+		if (is_array($data)) {
+			foreach ($data as $key => $type) {
+				foreach ($type as $field => $val) {
+					$data[$key][$field] = (int) $val;
+				}
 			}
+			return $data;
+		} else {
+			return null;
 		}
-		return $data;
 	}
 
 	/**
