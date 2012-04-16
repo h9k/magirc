@@ -2,7 +2,7 @@
 <div id="chart-countries" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 var target = '{$target|escape:'url'}';
 {literal}
 $(document).ready(function() {
@@ -19,5 +19,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

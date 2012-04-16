@@ -21,7 +21,7 @@
 </table>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 var target = '{$target|escape:'url'}';
 {literal}
 $(document).ready(function() {
@@ -70,5 +70,5 @@ $(document).ready(function() {
 	updateChart();
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

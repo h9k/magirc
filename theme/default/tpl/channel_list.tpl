@@ -13,7 +13,7 @@
 </table>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 {literal}
 $(document).ready(function() {
 	$('#tbl_channels').dataTable({
@@ -35,5 +35,5 @@ $(document).ready(function() {
 	$("#tbl_channels tbody tr a").live("click", function(e) { e.stopPropagation(); });
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

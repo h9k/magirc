@@ -14,7 +14,7 @@
 <div id="nodata" style="display:none;">Information for this user currently unavailable</div>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 var target = '{$target|escape:'url'}';
 var mode = '{$mode}';
 {literal}
@@ -57,5 +57,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

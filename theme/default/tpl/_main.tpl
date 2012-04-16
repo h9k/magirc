@@ -37,7 +37,7 @@
 <div id="main">
 	{block name="content"}[content placeholder]{/block}
 	{if $cfg.service_adsense_id}
-		<script type="text/javascript"><!--
+		<script type="text/javascript">
 		google_ad_client = "{$cfg.service_adsense_id}";
 		google_ad_width = 728;
 		google_ad_height = 90;
@@ -50,7 +50,7 @@
 		google_color_link = "333333";
 		google_color_text = "666666";
 		google_color_url = "0066CC";
-		//--></script>
+		</script>
 		<div style="width:728px; margin:auto;"><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
 	{/if}
 </div>
@@ -71,7 +71,7 @@
 {/block}
 {block name="js"}
 {if $cfg.cdn_enable}
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.18/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.js"></script>
 {else}
@@ -85,17 +85,14 @@
 <script type="text/javascript" src="js/jquery.dateformat.js"></script>
 {jsmin}
 <script type="text/javascript">
-<!--
+
 var url_base = '{$smarty.const.BASE_URL}{if !$cfg.rewrite_enable}index.php/{/if}';
 var theme = '{$cfg.theme}';
 var net_roundrobin = '{$cfg.net_roundrobin}';
 var net_port = '{$cfg.net_port|default:"6667"}';
 var net_port_ssl = '{$cfg.net_port_ssl}';
-//var format_date = 'MMM d yyyy';
-//var format_time = 'HH:mm:ss';
 var format_datetime = 'yyyy-MM-dd HH:mm:ss';
 var format_datetime_charts = '%Y-%m-%d %H:%M:%S';
-//var format_datetime_full = 'ddd, MMM d. yyyy';
 {literal}
 $(document).ready(function() {
 	$("#loading").ajaxStart(function(){
@@ -250,7 +247,7 @@ function getTimeElapsed(seconds) {
 	return days + " Days " + hours + " Hours " + minutes + " Minutes";
 }
 {/literal}
---></script>
+</script>
 {/jsmin}
 {/block}
 </body>

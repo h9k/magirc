@@ -19,7 +19,7 @@
 </table>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 {literal}
 $(document).ready(function() {
 	var type = 3;
@@ -53,5 +53,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

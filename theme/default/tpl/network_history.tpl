@@ -2,7 +2,7 @@
 <div id="chart-history" style="height: 350px; min-width: 700px"></div>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 {literal}
 $(document).ready(function() {
     var seriesOptions = [],
@@ -63,5 +63,5 @@ $(document).ready(function() {
 
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

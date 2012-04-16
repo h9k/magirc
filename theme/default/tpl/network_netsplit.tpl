@@ -26,7 +26,7 @@
 <br />More on <a href="http://irc.netsplit.de/networks/{$cfg.service_netsplit}/" rel="external" target="_blank">Netsplit.de</a>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 var netsplit = '{$cfg.service_netsplit}';
 {literal}
 $(document).ready(function() {
@@ -55,5 +55,5 @@ $(document).ready(function() {
 	updateNetsplit(type);
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

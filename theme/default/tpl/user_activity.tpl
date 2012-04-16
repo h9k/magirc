@@ -39,7 +39,7 @@
 </table>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 var target = '{$target|escape:'url'}';
 var mode = '{$mode}';
 {literal}
@@ -107,5 +107,5 @@ $(document).ready(function() {
 	updateChart();
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

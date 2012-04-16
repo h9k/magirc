@@ -92,7 +92,7 @@
 	</tr>
 </table>
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 var refresh_interval = {$cfg.live_interval};
 var welcome_msg = '{$cfg.welcome_mode}';
 var searchirc = '{$cfg.service_searchirc}';
@@ -238,5 +238,5 @@ $(document).ready(function() {
 	}
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

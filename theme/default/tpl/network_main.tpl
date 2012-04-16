@@ -20,7 +20,8 @@
 
 {block name="js" append}
 {jsmin}
-<script type="text/javascript"><!--{literal}
+<script type="text/javascript">
+{literal}
 $(document).ready(function() {
 	$("#tabs").tabs({
 		select: function(event, ui) { window.location.hash = ui.tab.hash; },
@@ -34,6 +35,6 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}
 {/block}

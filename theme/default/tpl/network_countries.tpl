@@ -2,7 +2,7 @@
 <div id="chart-countries" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 {literal}
 $(document).ready(function() {
     $.getJSON('rest/denora.php/countrystats', function(data) {
@@ -18,5 +18,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

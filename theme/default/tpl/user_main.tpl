@@ -13,7 +13,7 @@
 
 {block name="js" append}
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 {literal}
 $(document).ready(function() {
 	$("#tabs").tabs({
@@ -28,6 +28,6 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}
 {/block}

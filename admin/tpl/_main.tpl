@@ -37,7 +37,7 @@
 {/block}
 {block name="js"}
 {if $cfg.cdn_enable}
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.18/jquery-ui.min.js"></script>
 {else}
 <script type="text/javascript" src="../js/jquery.min.js"></script>

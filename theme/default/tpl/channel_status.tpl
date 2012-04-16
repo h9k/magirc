@@ -29,7 +29,7 @@
 <div class="clear"></div>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 var target = '{$target|escape:'url'}';
 {literal}
 $(document).ready(function() {
@@ -60,5 +60,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

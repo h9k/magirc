@@ -13,7 +13,7 @@
 </table>
 
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 {literal}
 $(document).ready(function() {
 	$('#tbl_operators').dataTable({
@@ -33,5 +33,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}
