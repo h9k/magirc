@@ -12,17 +12,8 @@
 	</tbody>
 </table>
 
-<ul id="chanmenu" style="display:none;">
-	{if $cfg.net_roundrobin}<li data-action="irc"><a href="#"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="" title="Standard connection" style="vertical-align:middle;" /> irc standard connection</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.net_port_ssl}<li data-action="ircs"><a href="#"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="" title="Secure connection" style="vertical-align:middle;" /> irc secure connection</a></li>{/if}
-	{if $cfg.service_webchat}<li data-action="webchat"><a href="#"><img src="theme/{$cfg.theme}/img/icons/webchat.png" alt="" title="Webchat" style="vertical-align:middle;" /> webchat</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.service_mibbit}<li data-action="mibbit"><a href="#"><img src="theme/{$cfg.theme}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> mibbit</a></li>{/if}
-</ul>
-
 {jsmin}
 <script type="text/javascript">
-var service_webchat = '{$cfg.service_webchat}';
-var service_mibbit = '{$cfg.service_mibbit}';
 {literal}
 $(document).ready(function() {
 	$('#tbl_channels').dataTable({
@@ -32,12 +23,7 @@ $(document).ready(function() {
 		"sAjaxSource": "rest/denora.php/channels?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel", "fnRender": function (oObj) {
-				//return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
-				if (net_roundrobin || service_webchat) {
-					return '<button type="button" title="join..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:20px; width:32px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-link"></span></button>' + ' ' + oObj.aData['channel'];
-				} else {
-					oObj.aData['channel'];
-				}
+				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
 			} },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "users_max" }
@@ -47,46 +33,6 @@ $(document).ready(function() {
 		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
 	$("#tbl_channels tbody tr a").live("click", function(e) { e.stopPropagation(); });
-	
-	var menu = $('#chanmenu').menu({
-		selected: function(event, ui) {
-			$(this).hide();
-			var chan = encodeURIComponent(menu.data('channel'));
-			switch (ui.item.data('action')) {
-				case 'irc':
-					location.href = 'irc://'+net_roundrobin+':'+net_port+'/'+chan.replace('%23', '');
-					break;
-				case 'ircs':
-					location.href = 'irc://'+net_roundrobin+':+'+net_port_ssl+'/'+chan.replace('%23', '');
-					break;
-				case 'webchat':
-					location.href = service_webchat + chan;
-					break;
-				case 'mibbit':
-					location.href = 'http://widget.mibbit.com/?settings='+service_mibbit+'&server='+net_roundrobin+'&channel='+chan+'&promptPass=true';
-					break;
-			}
-		}
-	}).hide().css({position: 'absolute', zIndex: 1});
-		
-	$('.chanbutton').live('click', function(event) {
-		menu.data('channel', $(this).parent().parent().attr('id'));
-		if (menu.is(':visible') ){
-			menu.hide();
-			return false;
-		}
-		menu.menu('deactivate').show();
-		menu.position({
-			my: "right top",
-			at: "right bottom",
-			of: this
-		});
-		$(document).one("click", function() {
-			menu.hide();
-		});
-		return false;
-	});
-	
 });
 {/literal}
 </script>
