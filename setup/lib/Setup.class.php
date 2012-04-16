@@ -98,11 +98,11 @@ class Setup {
 		if (isset($_POST['savedb'])) {
 			$db_buffer =
                     "<?php
-	\$db['username'] = \"".$_POST['username']."\";
-	\$db['password'] = \"".$_POST['password']."\";
-	\$db['database'] = \"".$_POST['database']."\";
-	\$db['hostname'] = \"".$_POST['hostname']."\";
-	\$db['port'] = \"".$_POST['port']."\";
+	\$db['username'] = '{$_POST['username']}';
+	\$db['password'] = '{$_POST['password']}';
+	\$db['database'] = '{$_POST['database']}';
+	\$db['hostname'] = '{$_POST['hostname']}';
+	\$db['port'] = '{$_POST['port']}';
 ?>";
 			$this->tpl->assign('db_buffer', $db_buffer);
 			if (is_writable(MAGIRC_CFG_FILE)) {

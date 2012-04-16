@@ -161,11 +161,11 @@ try {
 			$db['hostname'] = (isset($_POST['hostname'])) ? $_POST['hostname'] : $db['hostname'];
 			$db['port'] = (isset($_POST['port'])) ? $_POST['port'] : $db['port'];
 			$db_buffer = "<?php\n".
-				"\$db['username'] = \"{$db['username']}\";\n".
-				"\$db['password'] = \"{$db['password']}\";\n".
-				"\$db['database'] = \"{$db['database']}\";\n".
-				"\$db['hostname'] = \"{$db['hostname']}\";\n".
-				"\$db['port'] = \"{$db['port']}\";\n".
+				"\$db['username'] = '{$db['username']}';\n".
+				"\$db['password'] = '{$db['password']}';\n".
+				"\$db['database'] = '{$db['database']}';\n".
+				"\$db['hostname'] = '{$db['hostname']}';\n".
+				"\$db['port'] = '{$db['port']}';\n".
 				"?>";
 			if (is_writable($db_config_file)) {
 				$writefile = fopen($db_config_file,"w");
