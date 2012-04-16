@@ -21,6 +21,7 @@
 {block name="js" append}
 {jsmin}
 <script type="text/javascript">
+var netsplit = '{$cfg.service_netsplit}';
 {literal}
 $(document).ready(function() {
 	$("#tabs").tabs({
@@ -33,6 +34,12 @@ $(document).ready(function() {
 			}
 		}
 	});
+	// Temporary fix to make sure netsplit generates the graphs we need
+	if (netsplit) {
+		$.get('http://irc.netsplit.de/networks/details.php.en?net='+netsplit+'&submenu=weeks');
+		$.get('http://irc.netsplit.de/networks/details.php.en?net='+netsplit+'&submenu=months');
+		$.get('http://irc.netsplit.de/networks/details.php.en?net='+netsplit+'&submenu=years');
+	}
 });
 {/literal}
 </script>

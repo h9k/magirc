@@ -27,7 +27,6 @@
 
 {jsmin}
 <script type="text/javascript">
-var netsplit = '{$cfg.service_netsplit}';
 {literal}
 $(document).ready(function() {
 	var types_lang = { 'weeks': 'weeks', 'months': 'months', 'years': 'years' };
@@ -47,8 +46,8 @@ $(document).ready(function() {
 			$("#netsplit_complete").hide();
 			$("#netsplit_normal").show();
 			$("#netsplit_relation").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_uc.png');
-			$("#netsplit_channels").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_uc.png');
-			$("#netsplit_servers").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_uc.png');
+			$("#netsplit_channels").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_c.png');
+			$("#netsplit_servers").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_s.png');
 			$(".netsplit_range").html(types_lang[type]);
 		}
 	}
