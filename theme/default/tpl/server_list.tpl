@@ -28,7 +28,7 @@
 			<tr><th>Description:</th><td><span id="srv_description" class="val"></span></td></tr>
 			<tr><th>Online:</th><td><span id="srv_online" class="val"></span></td></tr>
 			<tr><th>Version:</th><td><span id="srv_version" class="val"></span></td></tr>
-			<tr><th>Uptime:</th><td><span id="srv_uptime" class="val"></span> hours</td></tr>
+			<tr><th>Uptime:</th><td><span id="srv_uptime" class="val"></span></td></tr>
 			{*<tr><th>Connected since:</th><td><span id="srv_connecttime" class="val"></span></td></tr>*}
 			<tr><th>Last split:</th><td><span id="srv_lastsplit" class="val"></span></td></tr>
 		</table>
@@ -73,9 +73,9 @@ $(document).ready(function() {
 				$("#srv_description").html(data.description);
 				$("#srv_online").html(data.online ? "Yes" : "No");
 				$("#srv_version").html(data.version);
-				$("#srv_uptime").html(Math.round(data.uptime / 3600));
+				$("#srv_uptime").html(getTimeElapsed(data.uptime));
 				//$("#srv_connecttime").html($.format.date(data.connect_time, format_datetime));
-				if((data.split_time).indexOf("1970") >= 0) { $("#srv_lastsplit").html("Never");	} 
+				if((data.split_time).indexOf("1970") >= 0) { $("#srv_lastsplit").html("Never");	}
 				else { $("#srv_lastsplit").html($.format.date(data.split_time, format_datetime)); }
 				$("#srv_ping").html(data.ping);
 				$("#srv_maxping").html(data.ping_max);
