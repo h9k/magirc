@@ -340,30 +340,35 @@ $magirc->slim->get('/operators', function() use($magirc) {
 });
 
 /**
- * Get a List of IRC Operators
- *
- * This will show a list of IRC Operators along with the server that they reside
- * on as well as nick, country, level, away, etc...
+ * Get the client stats (global or per channel)
  *
  * Example: http://www.denorastats.org/magirc/rest/denora.php/clientstats/%23<channel>
  *
  **/
-$magirc->slim->get('/clientstats(/:chan)', function($chan = null) use($magirc) {
+$magirc->slim->get('/clients(/:chan)/percent', function($chan = null) use($magirc) {
 	if ($chan) $magirc->checkPermission('channel', $chan);
 	$magirc->jsonOutput($magirc->denora->getClientStats($chan));
 });
 
+$magirc->slim->get('/clients(/:chan)', function($chan = null) use($magirc) {
+	if ($chan) $magirc->checkPermission('channel', $chan);
+	$magirc->jsonOutput($magirc->denora->getPieStats('clients', $chan), true);
+});
+
 /**
- * Get a List of IRC Operators
- *
- * This will show country stats calculated to the nearth hundredth.
+ * Get the country stats (global or per channel)
  *
  * Example: http://www.denorastats.org/magirc/rest/denora.php/countrystats/%23<channel>
  *
  **/
-$magirc->slim->get('/countrystats(/:chan)', function($chan = null) use($magirc) {
+$magirc->slim->get('/countries(/:chan)/percent', function($chan = null) use($magirc) {
 	if ($chan) $magirc->checkPermission('channel', $chan);
 	$magirc->jsonOutput($magirc->denora->getCountryStats($chan));
+});
+
+$magirc->slim->get('/countries(/:chan)', function($chan = null) use($magirc) {
+	if ($chan) $magirc->checkPermission('channel', $chan);
+	$magirc->jsonOutput($magirc->denora->getPieStats('countries', $chan), true);
 });
 
 // Go! :)

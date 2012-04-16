@@ -120,9 +120,16 @@ class Denora {
 	 * @param string $chan Channel (null for global)
 	 * @return array Data
 	 */
-	private function getPieStats($type, $chan = null) {
-		$type = ($type == 'clients') ? 'ctcpversion' : 'country';
-		$query = "SELECT user.$type AS name, COUNT(*) AS count FROM user
+	function getPieStats($type, $chan = null) {
+		$query = "SELECT ";
+		if ($type == 'clients') {
+			$type = 'ctcpversion';
+			$query .= " user.ctcpversion AS client, ";
+		} else {
+			$type = 'country';
+			$query .= " user.country, user.countrycode AS country_code, ";
+		}
+		$query .= "COUNT(*) AS count FROM user
 			JOIN server ON server.servid = user.servid";
 		if ($chan) {
 			$query .= " JOIN ison ON ison.nickid = user.nickid
@@ -149,7 +156,7 @@ class Denora {
 	 * @return array Data
 	 */
 	function getClientStats($chan = null) {
-		return $this->makeData($this->getPieStats('clients', $chan), $this->getUserCount($chan));
+		return $this->makeData($this->getPieStats('clients', $chan), $this->getUserCount($chan), 'client');
 	}
 
 	/**
@@ -158,16 +165,17 @@ class Denora {
 	 * @return array Data
 	 */
 	function getCountryStats($chan = null) {
-		return $this->makeData($this->getPieStats('countries', $chan), $this->getUserCount($chan));
+		return $this->makeData($this->getPieStats('countries', $chan), $this->getUserCount($chan), 'country');
 	}
 
 	/**
 	 * Prepare data for use by pie charts
 	 * @param array $result Array of data
 	 * @param type $sum user count
+	 * @param string $name country / client
 	 * @return array of arrays (string 'name', double 'value')
 	 */
-	private function makeData($result, $sum) {
+	private function makeData($result, $sum, $name) {
 		$data = array();
 		$unknown = 0;
 		$other = 0;
@@ -175,10 +183,10 @@ class Denora {
 			$percent = round($val["count"] / $sum * 100, 2);
 			if ($percent < 2) {
 				$other += $val["count"];
-			} elseif ($val["name"] == null || $val["name"] == "Unknown") {
+			} elseif (in_array ($val[$name], array(null, "", "Unknown"))) {
 				$unknown += $val["count"];
 			} else {
-				$data[] = array($val["name"], $percent);
+				$data[] = array($val[$name], $percent);
 			}
 		}
 		if ($unknown > 0) {
