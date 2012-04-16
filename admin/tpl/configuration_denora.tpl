@@ -41,7 +41,7 @@
 </div>
 
 {jsmin}
-<script type="text/javascript"><!--{literal}
+<script type="text/javascript">{literal}
 $(document).ready(function() {
 	$("#denora-submit").button().click(function() {
 		$("#denora-form").ajaxSubmit({ url: 'index.php/configuration/denora/database', type: 'post', success: function(data) {
@@ -61,5 +61,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

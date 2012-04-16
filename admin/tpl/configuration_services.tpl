@@ -54,7 +54,7 @@
 </form>
 
 {jsmin}
-<script type="text/javascript"><!--{literal}
+<script type="text/javascript">{literal}
 $(document).ready(function() {
 	$("#services-submit").button().click(function() {
 		$("#services-form").ajaxSubmit({ url: 'index.php/configuration', type: 'post', success: function(data) {
@@ -64,5 +64,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

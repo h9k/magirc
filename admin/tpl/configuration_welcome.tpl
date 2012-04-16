@@ -10,7 +10,7 @@
 <br /><button id="welcome-submit" type="button">Save</button>
 
 {jsmin}
-<script type="text/javascript"><!--{literal}
+<script type="text/javascript">{literal}
 $(document).ready(function() {
 	$("#welcome-submit").button().click(function() {
 		var success = true;
@@ -38,5 +38,5 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}

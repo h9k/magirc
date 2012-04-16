@@ -26,7 +26,7 @@
 
 {block name="js" append}
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 {literal}
 $("#dialog-login").dialog({
 	autoOpen: true,
@@ -56,6 +56,6 @@ function login() {
 }
 
 {/literal}
---></script>
+</script>
 {/jsmin}
 {/block}

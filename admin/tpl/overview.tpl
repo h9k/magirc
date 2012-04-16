@@ -65,11 +65,11 @@
 
 {block name="js" append}
 {jsmin}
-<script type="text/javascript"><!--{literal}
+<script type="text/javascript">{literal}
 $(document).ready(function() {
 	$("button").button();
 });
 {/literal}
---></script>
+</script>
 {/jsmin}
 {/block}

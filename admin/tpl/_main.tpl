@@ -45,7 +45,7 @@
 {/if}
 <script type="text/javascript" src="../js/jquery.form.js"></script>
 {jsmin}
-<script type="text/javascript"><!--
+<script type="text/javascript">
 {literal}
 var url_base = '{$smarty.const.BASE_URL}';
 $(document).ready(function() {
@@ -56,7 +56,7 @@ $(document).ready(function() {
 	});
 });
 {/literal}
---></script>
+</script>
 {/jsmin}
 {/block}
 </body>
