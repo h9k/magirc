@@ -52,6 +52,13 @@ try {
 
 	// Handle POST login/logout
 	$admin->slim->post('/login', function() use ($admin) {
+		if ($admin->login($_POST['username'], $_POST['password'])) {
+			$admin->slim->redirect(BASE_URL.'index.php/overview');
+		} else {
+			$admin->slim->redirect(BASE_URL);
+		}
+	});
+	$admin->slim->post('/ajaxlogin', function() use ($admin) {
 		$admin->slim->contentType('application/json');
 		echo json_encode($admin->login($_POST['username'], $_POST['password']));
 	});
