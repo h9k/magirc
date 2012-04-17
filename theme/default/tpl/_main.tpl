@@ -284,7 +284,11 @@ function getCountryFlag(user) {
 	}
 }
 function getChannelLinks(chan) {
-	return '<button type="button" title="join..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:20px; width:32px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>';
+	if (net_roundrobin || service_webchat) {
+		return '<button type="button" title="join..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:18px; width:30px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>';
+	} else {
+		return ''
+	}
 }
 function getTimeElapsed(seconds) {
 	var days = Math.floor(seconds / 86400);
