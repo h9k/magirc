@@ -162,7 +162,7 @@ class Magirc {
 		$out = '';
 
 		foreach ($lines as $line) {
-			$line = nl2br(htmlentities($line, ENT_COMPAT, 'UTF-8'));
+			$line = nl2br(htmlentities(utf8_decode($line), ENT_COMPAT));
 			// replace control codes
 			$line = preg_replace_callback('/[\003](\d{0,2})(,\d{1,2})?([^\003\x0F]*)(?:[\003](?!\d))?/', function($matches) {
 						$colors = array('#FFFFFF', '#000000', '#00007F', '#009300', '#FF0000', '#7F0000', '#9C009C', '#FC7F00', '#FFFF00', '#00FC00', '#009393', '#00FFFF', '#0000FC', '#FF00FF', '#7F7F7F', '#D2D2D2');
