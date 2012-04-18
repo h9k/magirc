@@ -64,7 +64,7 @@ Class User {
 		$this->online = $this->online == 'Y';
 		$this->away = $this->away == 'Y';
 		$this->service = $this->service == 'Y';
-		if (Protocol::host_cloaking && !empty($this->hostname)) $this->hostname = $this->hostname_cloaked;
+		if (Protocol::host_cloaking && !empty($this->hostname_cloaked)) $this->hostname = $this->hostname_cloaked;
 		$this->client_html = Magirc::irc2html($this->client);
 		// User modes
 		for ($j = 97; $j <= 122; $j++) {

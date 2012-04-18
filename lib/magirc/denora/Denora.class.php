@@ -27,7 +27,7 @@ class Denora {
 		}
 		// Load the required classes
 		$this->db = new DB();
-		$this->db->connect("mysql:dbname={$db['database']};host={$db['hostname']}", $db['username'], $db['password']) || die('Error opening Denora database<br />' . $this->error);
+		$this->db->connect("mysql:dbname={$db['database']};host={$db['hostname']}", $db['username'], $db['password']) || die('Error opening Denora database<br />' . $this->db->error);
 		$this->cfg = new Config();
 		require_once(__DIR__ . '/Objects.class.php');
 	}
