@@ -85,6 +85,9 @@ class Magirc {
 			bindtextdomain($domain, './locale/');
 			bind_textdomain_codeset($domain, "UTF-8");
 			textdomain($domain);
+			if (!ini_get("safe_mode")) {
+				@putenv("LC_ALL={$locale}.utf8");
+			}
 			define('LOCALE', $locale);
 			define('LANG', substr($locale, 0, 2));
 		}
