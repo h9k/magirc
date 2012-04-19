@@ -1,0 +1,34 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MagIRC\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-19 10:26+0100\n"
+"PO-Revision-Date: 2012-04-19 10:26+0100\n"
+"Last-Translator: Sebastian Vassiliou <admin@hosting9000.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: ../..\n"
+
+#: ../../strings.c:2
+msgid "Network"
+msgstr ""
+
+#: ../../strings.c:5
+msgid "Servers"
+msgstr ""
+
+#: ../../strings.c:8
+msgid "Channels"
+msgstr ""
+
+#: ../../strings.c:11
+msgid "Users"
+msgstr ""
+

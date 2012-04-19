@@ -7,7 +7,7 @@
  * @copyright   2012 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     0.7.3
+ * @version     0.8.0
  */
 
 ini_set('display_errors','on');
@@ -93,6 +93,11 @@ try {
 	});
 	$admin->slim->get('/configuration/interface', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$locales = array();
+		foreach (glob("../locale/*") as $filename) {
+			if (is_dir($filename)) $locales[] = basename($filename);
+		}
+		$admin->tpl->assign('locales', $locales);
 		$themes = array();
 		foreach (glob("../theme/*") as $filename) {
 			$themes[] = basename($filename);
