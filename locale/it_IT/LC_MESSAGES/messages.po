@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-19 18:08+0100\n"
-"PO-Revision-Date: 2012-04-19 18:08+0100\n"
+"POT-Creation-Date: 2012-04-19 18:27+0100\n"
+"PO-Revision-Date: 2012-04-19 18:27+0100\n"
 "Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Attività del canale %1"
 #: ../../strings.c:74
 #: ../../strings.c:515
 #: ../../strings.c:560
-#: ../../strings.c:800
+#: ../../strings.c:794
 msgid "Total"
 msgstr "Totale"
 
@@ -34,7 +34,7 @@ msgstr "Totale"
 #: ../../strings.c:380
 #: ../../strings.c:518
 #: ../../strings.c:563
-#: ../../strings.c:803
+#: ../../strings.c:797
 msgid "Today"
 msgstr "Oggi"
 
@@ -42,7 +42,7 @@ msgstr "Oggi"
 #: ../../strings.c:80
 #: ../../strings.c:521
 #: ../../strings.c:566
-#: ../../strings.c:806
+#: ../../strings.c:800
 msgid "This Week"
 msgstr "Questa settimana"
 
@@ -50,7 +50,7 @@ msgstr "Questa settimana"
 #: ../../strings.c:83
 #: ../../strings.c:524
 #: ../../strings.c:569
-#: ../../strings.c:809
+#: ../../strings.c:803
 msgid "This Month"
 msgstr "Questo meso"
 
@@ -208,7 +208,7 @@ msgstr "Picco utenti"
 #: ../../strings.c:137
 #: ../../strings.c:335
 #: ../../strings.c:668
-#: ../../strings.c:791
+#: ../../strings.c:785
 msgid "Channels"
 msgstr "Canali"
 
@@ -230,7 +230,7 @@ msgstr "Cronologia"
 #: ../../strings.c:248
 #: ../../strings.c:437
 #: ../../strings.c:632
-#: ../../strings.c:833
+#: ../../strings.c:827
 msgid "Status"
 msgstr "Stato"
 
@@ -262,7 +262,7 @@ msgstr "Topic impostato da"
 #: ../../strings.c:476
 #: ../../strings.c:485
 #: ../../strings.c:494
-#: ../../strings.c:821
+#: ../../strings.c:815
 msgid "on"
 msgstr "il"
 
@@ -327,7 +327,7 @@ msgstr "Benvenuto"
 #: ../../strings.c:257
 #: ../../strings.c:338
 #: ../../strings.c:449
-#: ../../strings.c:797
+#: ../../strings.c:791
 msgid "Operators"
 msgstr "Operatori"
 
@@ -411,7 +411,7 @@ msgstr "Stato della Rete"
 #: ../../strings.c:446
 #: ../../strings.c:638
 #: ../../strings.c:671
-#: ../../strings.c:794
+#: ../../strings.c:788
 msgid "Users"
 msgstr "Utenti"
 
@@ -419,7 +419,7 @@ msgstr "Utenti"
 #: ../../strings.c:497
 #: ../../strings.c:500
 #: ../../strings.c:665
-#: ../../strings.c:788
+#: ../../strings.c:782
 msgid "Servers"
 msgstr "Server"
 
@@ -472,7 +472,7 @@ msgid "Description"
 msgstr "Descrizione"
 
 #: ../../strings.c:458
-#: ../../strings.c:719
+#: ../../strings.c:713
 msgid "Online"
 msgstr "Online"
 
@@ -554,262 +554,233 @@ msgstr "Info"
 
 #: ../../strings.c:677
 msgid "Language"
-msgstr ""
+msgstr "Lingua"
 
 #: ../../strings.c:698
+msgid "yyyy-MM-dd HH:mm:ss"
+msgstr "dd.MM.yyyy HH:mm:ss"
+
 #: ../../strings.c:701
-msgid "Mibbit"
-msgstr ""
+msgid "%Y-%m-%d %H:%M:%S"
+msgstr "&d.%m.%Y %H:%M:%S"
 
 #: ../../strings.c:704
-msgid "yyyy-MM-dd HH:mm:ss"
-msgstr ""
+msgid "Unknown"
+msgstr "Sconosciuto"
 
 #: ../../strings.c:707
-msgid "%Y-%m-%d %H:%M:%S"
-msgstr ""
+msgid "Away as"
+msgstr "Assente come"
 
 #: ../../strings.c:710
-msgid "Unknown"
-msgstr ""
-
-#: ../../strings.c:713
-msgid "Away as"
-msgstr ""
+msgid "Online as"
+msgstr "Online come"
 
 #: ../../strings.c:716
-#, fuzzy
-msgid "Online as"
-msgstr "Online"
+msgid "Offline"
+msgstr "Offline"
+
+#: ../../strings.c:719
+msgid "Bot"
+msgstr "Bot"
 
 #: ../../strings.c:722
-#, fuzzy
-msgid "Offline"
-msgstr "Online"
+msgid "Service"
+msgstr "Servizio"
 
 #: ../../strings.c:725
-msgid "Bot"
-msgstr ""
+msgid "Available for help"
+msgstr "Disponibile per aiuto"
 
 #: ../../strings.c:728
-#, fuzzy
-msgid "Service"
-msgstr "Server"
+msgid "join"
+msgstr "entra"
 
 #: ../../strings.c:731
-msgid "Available for help"
-msgstr ""
+msgid "days"
+msgstr "giorni"
 
 #: ../../strings.c:734
-#, fuzzy
-msgid "join"
-msgstr "il"
+msgid "hours"
+msgstr "ore"
 
 #: ../../strings.c:737
-#, fuzzy
-msgid "days"
-msgstr "Oggi"
+msgid "minutes"
+msgstr "minuti"
 
 #: ../../strings.c:740
-#, fuzzy
-msgid "hours"
-msgstr "Parole"
+msgid "All"
+msgstr "Tutto"
 
 #: ../../strings.c:743
-#, fuzzy
-msgid "minutes"
-msgstr "Righe"
+msgid "1d"
+msgstr "1g"
 
 #: ../../strings.c:746
-msgid "All"
-msgstr ""
+msgid "1w"
+msgstr "1s"
 
 #: ../../strings.c:749
-msgid "1d"
-msgstr ""
-
 #: ../../strings.c:752
-msgid "1w"
-msgstr ""
-
 #: ../../strings.c:755
-#: ../../strings.c:758
-#: ../../strings.c:761
 msgid "1m"
-msgstr ""
+msgstr "1m"
+
+#: ../../strings.c:758
+msgid "1y"
+msgstr "1a"
+
+#: ../../strings.c:761
+msgid "YTD"
+msgstr "AFO"
 
 #: ../../strings.c:764
-msgid "1y"
-msgstr ""
+msgid "Unable to load contents"
+msgstr "Impossibile caricare il contenuto"
 
 #: ../../strings.c:767
-msgid "YTD"
-msgstr ""
+msgid "Message"
+msgstr "Messaggio"
 
 #: ../../strings.c:770
-msgid "Unable to load contents"
-msgstr ""
+msgid "Connected since"
+msgstr "Connesso dal"
 
 #: ../../strings.c:773
-msgid "Message"
-msgstr ""
+msgid "Last quit"
+msgstr "Ultimo quit"
 
 #: ../../strings.c:776
-#, fuzzy
-msgid "Connected since"
-msgstr "Online da"
+msgid "Users online"
+msgstr "Utenti online"
 
 #: ../../strings.c:779
-#, fuzzy
-msgid "Last quit"
-msgstr "Ultimo split"
-
-#: ../../strings.c:782
-msgid "Users online"
-msgstr ""
-
-#: ../../strings.c:785
-#, fuzzy
 msgid "Servers online"
-msgstr "Lista server"
+msgstr "Server online"
+
+#: ../../strings.c:806
+msgid "Yes"
+msgstr "Sì"
+
+#: ../../strings.c:809
+msgid "No"
+msgstr "No"
 
 #: ../../strings.c:812
-msgid "Yes"
-msgstr ""
-
-#: ../../strings.c:815
-msgid "No"
-msgstr ""
+msgid "Never"
+msgstr "Mai"
 
 #: ../../strings.c:818
-#, fuzzy
-msgid "Never"
-msgstr "Server"
+msgid "MOTD not available for this server"
+msgstr "MOTD non disponibile per questo server"
+
+#: ../../strings.c:821
+msgid "Failed"
+msgstr "Fallito"
 
 #: ../../strings.c:824
-msgid "MOTD not available for this server"
-msgstr ""
-
-#: ../../strings.c:827
-msgid "Failed"
-msgstr ""
+msgid "Close"
+msgstr "Chiudi"
 
 #: ../../strings.c:830
-msgid "Close"
-msgstr ""
+msgid "Country Statistics"
+msgstr "Statistiche dei paesi"
+
+#: ../../strings.c:833
+msgid "Client Statistics"
+msgstr "Statistiche dei client"
 
 #: ../../strings.c:836
-#, fuzzy
-msgid "Country Statistics"
-msgstr "Statistiche dei paesi attuali per %1"
+msgid "none"
+msgstr "nessuno"
 
 #: ../../strings.c:839
-#, fuzzy
-msgid "Client Statistics"
-msgstr "Statistiche dei client attuali"
+msgid "Relation of users and channels during the last 2 weeks"
+msgstr "Utenti e canali durante le ultime due settimane"
 
 #: ../../strings.c:842
-#, fuzzy
-msgid "none"
-msgstr "il"
+msgid "Relation of users and channels during the last 2 months"
+msgstr "Utenti e canali durante gli ultimi due mesi"
 
 #: ../../strings.c:845
-#, fuzzy
-msgid "Relation of users and channels during the last 2 weeks"
-msgstr "Relazione degli utenti e canali durante le ultime 2"
+msgid "Relation of users and channels during the last 2 years"
+msgstr "Utenti e canali durante gli ultimi due anni"
 
 #: ../../strings.c:848
-#, fuzzy
-msgid "Relation of users and channels during the last 2 months"
-msgstr "Relazione degli utenti e canali durante le ultime 2"
+msgid "Channels during the last 2 weeks"
+msgstr "Canali durante le ultime due settimane"
 
 #: ../../strings.c:851
-#, fuzzy
-msgid "Relation of users and channels during the last 2 years"
-msgstr "Relazione degli utenti e canali durante le ultime 2"
+msgid "Channels during the last 2 months"
+msgstr "Canali durante gli ultimi due mesi"
 
 #: ../../strings.c:854
-#, fuzzy
-msgid "Channels during the last 2 weeks"
-msgstr "Canali durante gli ultimi 2"
+msgid "Channels during the last 2 years"
+msgstr "Canali durante gli ultimi due anni"
 
 #: ../../strings.c:857
-#, fuzzy
-msgid "Channels during the last 2 months"
-msgstr "Canali durante gli ultimi 2"
+msgid "Servers during the last 2 weeks"
+msgstr "Server durante le ultime due settimane"
 
 #: ../../strings.c:860
-#, fuzzy
-msgid "Channels during the last 2 years"
-msgstr "Canali durante gli ultimi 2"
+msgid "Servers during the last 2 months"
+msgstr "Server durante gli ultimi due mesi"
 
 #: ../../strings.c:863
-#, fuzzy
-msgid "Servers during the last 2 weeks"
-msgstr "Server durante gli ultimi 2"
+msgid "Servers during the last 2 years"
+msgstr "Server durante gli ultimi due anni"
 
 #: ../../strings.c:866
-#, fuzzy
-msgid "Servers during the last 2 months"
-msgstr "Server durante gli ultimi 2"
+msgid "Processing..."
+msgstr "Elaborazione..."
 
 #: ../../strings.c:869
-#, fuzzy
-msgid "Servers during the last 2 years"
-msgstr "Server durante gli ultimi 2"
+msgid "Show _MENU_ entries"
+msgstr "Visualizza _MENU_ elementi"
 
 #: ../../strings.c:872
-msgid "Processing..."
-msgstr ""
+msgid "No matching records found"
+msgstr "La ricerca non ha portato alcun risultato"
 
 #: ../../strings.c:875
-msgid "Show _MENU_ entries"
-msgstr ""
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr "Vista da _START_ a _END_ di _TOTAL_ elementi"
 
 #: ../../strings.c:878
-msgid "No matching records found"
-msgstr ""
+msgid "Showing 0 to 0 of 0 entries"
+msgstr "Vista da 0 a 0 di 0 elementi"
 
 #: ../../strings.c:881
-msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr ""
+msgid "(filtered from _MAX_ total entries)"
+msgstr "(filtrato da _MAX_ elementi totali)"
 
 #: ../../strings.c:884
-msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+msgid "Search"
+msgstr "Cerca"
 
 #: ../../strings.c:887
-msgid "(filtered from _MAX_ total entries)"
-msgstr ""
+msgid "click/return to sort ascending"
+msgstr "clicca/invio per ordinare ascendente"
 
 #: ../../strings.c:890
-msgid "Search"
-msgstr ""
+msgid "click/return to sort descending"
+msgstr "clicca/invio per ordinare discendente"
 
 #: ../../strings.c:893
-msgid "click/return to sort ascending"
-msgstr ""
+msgid "First"
+msgstr "Inizio"
 
 #: ../../strings.c:896
-msgid "click/return to sort descending"
-msgstr ""
+msgid "Previous"
+msgstr "Precedente"
 
 #: ../../strings.c:899
-msgid "First"
-msgstr ""
+msgid "Next"
+msgstr "Successivo"
 
 #: ../../strings.c:902
-msgid "Previous"
-msgstr ""
-
-#: ../../strings.c:905
-msgid "Next"
-msgstr ""
-
-#: ../../strings.c:908
-#, fuzzy
 msgid "Last"
-msgstr "Ultimo ping"
+msgstr "Ultimo"
 
 #~ msgid "weeks"
 #~ msgstr "settimane"

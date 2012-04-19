@@ -88,7 +88,7 @@
 	{if $cfg.net_roundrobin}<li data-action="irc"><a href="#"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="" title="{t}Standard connection{/t}" style="vertical-align:middle;" /> {t}IRC standard connection{/t}</a></li>{/if}
 	{if $cfg.net_roundrobin && $cfg.net_port_ssl}<li data-action="ircs"><a href="#"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="" title="{t}Secure connection{/t}" style="vertical-align:middle;" /> {t}IRC secure connection{/t}</a></li>{/if}
 	{if $cfg.service_webchat}<li data-action="webchat"><a href="#"><img src="theme/{$cfg.theme}/img/icons/webchat.png" alt="" title="{t}Webchat{/t}" style="vertical-align:middle;" /> {t}Webchat{/t}</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.service_mibbit}<li data-action="mibbit"><a href="#"><img src="theme/{$cfg.theme}/img/icons/mibbit.png" alt="" title="{t}Mibbit{/t}" style="vertical-align:middle;" /> {t}Mibbit{/t}</a></li>{/if}
+	{if $cfg.net_roundrobin && $cfg.service_mibbit}<li data-action="mibbit"><a href="#"><img src="theme/{$cfg.theme}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> Mibbit</a></li>{/if}
 </ul>
 {/block}
 {block name="js"}

@@ -695,12 +695,6 @@ gettext("Webchat");
 gettext("Webchat");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
-gettext("Mibbit");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
-gettext("Mibbit");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("yyyy-MM-dd HH:mm:ss");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
