@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-19 18:42+0100\n"
-"PO-Revision-Date: 2012-04-19 18:48+0100\n"
+"POT-Creation-Date: 2012-04-19 19:04+0100\n"
+"PO-Revision-Date: 2012-04-19 19:04+0100\n"
 "Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Attività del canale %1"
 #: ../../strings.c:74
 #: ../../strings.c:515
 #: ../../strings.c:560
-#: ../../strings.c:794
+#: ../../strings.c:791
 msgid "Total"
 msgstr "Totale"
 
@@ -34,7 +34,7 @@ msgstr "Totale"
 #: ../../strings.c:380
 #: ../../strings.c:518
 #: ../../strings.c:563
-#: ../../strings.c:797
+#: ../../strings.c:794
 msgid "Today"
 msgstr "Oggi"
 
@@ -42,7 +42,7 @@ msgstr "Oggi"
 #: ../../strings.c:80
 #: ../../strings.c:521
 #: ../../strings.c:566
-#: ../../strings.c:800
+#: ../../strings.c:797
 msgid "This Week"
 msgstr "Questa settimana"
 
@@ -50,7 +50,7 @@ msgstr "Questa settimana"
 #: ../../strings.c:83
 #: ../../strings.c:524
 #: ../../strings.c:569
-#: ../../strings.c:803
+#: ../../strings.c:800
 msgid "This Month"
 msgstr "Questo mese"
 
@@ -208,7 +208,7 @@ msgstr "Picco utenti"
 #: ../../strings.c:137
 #: ../../strings.c:335
 #: ../../strings.c:668
-#: ../../strings.c:785
+#: ../../strings.c:782
 msgid "Channels"
 msgstr "Canali"
 
@@ -230,7 +230,7 @@ msgstr "Cronologia"
 #: ../../strings.c:248
 #: ../../strings.c:437
 #: ../../strings.c:632
-#: ../../strings.c:827
+#: ../../strings.c:824
 msgid "Status"
 msgstr "Stato"
 
@@ -262,7 +262,7 @@ msgstr "Topic impostato da"
 #: ../../strings.c:476
 #: ../../strings.c:485
 #: ../../strings.c:494
-#: ../../strings.c:815
+#: ../../strings.c:812
 msgid "on"
 msgstr "il"
 
@@ -327,7 +327,7 @@ msgstr "Benvenuto"
 #: ../../strings.c:257
 #: ../../strings.c:338
 #: ../../strings.c:449
-#: ../../strings.c:791
+#: ../../strings.c:788
 msgid "Operators"
 msgstr "Operatori"
 
@@ -411,7 +411,7 @@ msgstr "Stato della Rete"
 #: ../../strings.c:446
 #: ../../strings.c:638
 #: ../../strings.c:671
-#: ../../strings.c:788
+#: ../../strings.c:785
 msgid "Users"
 msgstr "Utenti"
 
@@ -419,7 +419,7 @@ msgstr "Utenti"
 #: ../../strings.c:497
 #: ../../strings.c:500
 #: ../../strings.c:665
-#: ../../strings.c:782
+#: ../../strings.c:779
 msgid "Servers"
 msgstr "Server"
 
@@ -631,164 +631,163 @@ msgid "1y"
 msgstr "1a"
 
 #: ../../strings.c:761
-msgid "YTD"
-msgstr "AFO"
-
-#: ../../strings.c:764
 msgid "Unable to load contents"
 msgstr "Impossibile caricare il contenuto"
 
-#: ../../strings.c:767
+#: ../../strings.c:764
 msgid "Message"
 msgstr "Messaggio"
 
-#: ../../strings.c:770
+#: ../../strings.c:767
 msgid "Connected since"
 msgstr "Connesso dal"
 
-#: ../../strings.c:773
+#: ../../strings.c:770
 msgid "Last quit"
 msgstr "Ultimo quit"
 
-#: ../../strings.c:776
+#: ../../strings.c:773
 msgid "Users online"
 msgstr "Utenti online"
 
-#: ../../strings.c:779
+#: ../../strings.c:776
 msgid "Servers online"
 msgstr "Server online"
 
-#: ../../strings.c:806
+#: ../../strings.c:803
 msgid "Yes"
 msgstr "Sì"
 
-#: ../../strings.c:809
+#: ../../strings.c:806
 msgid "No"
 msgstr "No"
 
-#: ../../strings.c:812
+#: ../../strings.c:809
 msgid "Never"
 msgstr "Mai"
 
-#: ../../strings.c:818
+#: ../../strings.c:815
 msgid "MOTD not available for this server"
 msgstr "MOTD non disponibile per questo server"
 
-#: ../../strings.c:821
+#: ../../strings.c:818
 msgid "Failed"
 msgstr "Fallito"
 
-#: ../../strings.c:824
+#: ../../strings.c:821
 msgid "Close"
 msgstr "Chiudi"
 
-#: ../../strings.c:830
+#: ../../strings.c:827
 msgid "Country Statistics"
 msgstr "Statistiche dei paesi"
 
-#: ../../strings.c:833
+#: ../../strings.c:830
 msgid "Client Statistics"
 msgstr "Statistiche dei client"
 
-#: ../../strings.c:836
+#: ../../strings.c:833
 msgid "none"
 msgstr "nessuno"
 
-#: ../../strings.c:839
+#: ../../strings.c:836
 msgid "Relation of users and channels during the last 2 weeks"
 msgstr "Utenti e canali durante le ultime due settimane"
 
-#: ../../strings.c:842
+#: ../../strings.c:839
 msgid "Relation of users and channels during the last 2 months"
 msgstr "Utenti e canali durante gli ultimi due mesi"
 
-#: ../../strings.c:845
+#: ../../strings.c:842
 msgid "Relation of users and channels during the last 2 years"
 msgstr "Utenti e canali durante gli ultimi due anni"
 
-#: ../../strings.c:848
+#: ../../strings.c:845
 msgid "Channels during the last 2 weeks"
 msgstr "Canali durante le ultime due settimane"
 
-#: ../../strings.c:851
+#: ../../strings.c:848
 msgid "Channels during the last 2 months"
 msgstr "Canali durante gli ultimi due mesi"
 
-#: ../../strings.c:854
+#: ../../strings.c:851
 msgid "Channels during the last 2 years"
 msgstr "Canali durante gli ultimi due anni"
 
-#: ../../strings.c:857
+#: ../../strings.c:854
 msgid "Servers during the last 2 weeks"
 msgstr "Server durante le ultime due settimane"
 
-#: ../../strings.c:860
+#: ../../strings.c:857
 msgid "Servers during the last 2 months"
 msgstr "Server durante gli ultimi due mesi"
 
-#: ../../strings.c:863
+#: ../../strings.c:860
 msgid "Servers during the last 2 years"
 msgstr "Server durante gli ultimi due anni"
 
-#: ../../strings.c:866
+#: ../../strings.c:863
 msgid "Processing..."
 msgstr "Elaborazione..."
 
-#: ../../strings.c:869
+#: ../../strings.c:866
 msgid "Please wait - loading..."
 msgstr "Prego attendere - caricamento in corso..."
 
-#: ../../strings.c:872
+#: ../../strings.c:869
 msgid "Show _MENU_ entries"
 msgstr "Visualizza _MENU_ elementi"
 
-#: ../../strings.c:875
+#: ../../strings.c:872
 msgid "No matching records found"
 msgstr "La ricerca non ha portato alcun risultato"
 
-#: ../../strings.c:878
+#: ../../strings.c:875
 msgid "No data available in table"
 msgstr "Nessun dato disponibile nella tabella"
 
-#: ../../strings.c:881
+#: ../../strings.c:878
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "Vista da _START_ a _END_ di _TOTAL_ elementi"
 
-#: ../../strings.c:884
+#: ../../strings.c:881
 msgid "Showing 0 to 0 of 0 entries"
 msgstr "Vista da 0 a 0 di 0 elementi"
 
-#: ../../strings.c:887
+#: ../../strings.c:884
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(filtrato da _MAX_ elementi totali)"
 
-#: ../../strings.c:890
+#: ../../strings.c:887
 msgid "Search"
 msgstr "Cerca"
 
-#: ../../strings.c:893
+#: ../../strings.c:890
 msgid "click/return to sort ascending"
 msgstr "clicca/invio per ordinare ascendente"
 
-#: ../../strings.c:896
+#: ../../strings.c:893
 msgid "click/return to sort descending"
 msgstr "clicca/invio per ordinare discendente"
 
-#: ../../strings.c:899
+#: ../../strings.c:896
 msgid "First"
 msgstr "Inizio"
 
-#: ../../strings.c:902
+#: ../../strings.c:899
 msgid "Previous"
 msgstr "Precedente"
 
-#: ../../strings.c:905
+#: ../../strings.c:902
 msgid "Next"
 msgstr "Successivo"
 
-#: ../../strings.c:908
+#: ../../strings.c:905
 msgid "Last"
 msgstr "Ultimo"
+
+#~ msgid "YTD"
+#~ msgstr "AFO"
 
 #~ msgid "weeks"
 #~ msgstr "settimane"
