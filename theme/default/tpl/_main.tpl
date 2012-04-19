@@ -60,7 +60,7 @@
 			<td align="left">
 				<div id="selectlocale">
 					<form method="get" action="./">
-					{t}Language{/t}: <select name="locale" id="locale" onchange="this.form.submit();">
+					{t}Language{/t}: <select name="locale" id="locale">
 					{foreach from=$locales item=item}
 						<option value="{$item}"{if $smarty.const.LOCALE eq $item} selected="selected"{/if}>{$item}</option>
 					{/foreach}
@@ -104,6 +104,7 @@
 <script type="text/javascript" src="js/datatables.fnReloadAjax.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jquery.dateformat.js"></script>
 {jsmin}
 <script type="text/javascript">
@@ -123,6 +124,10 @@ $(document).ready(function() {
 		$(this).show();
 	}).ajaxStop(function(){
 		$(this).hide();
+	});
+	$("#locale").change(function(data) {
+		$.cookie("magirc_locale", $("#locale").val());
+		window.location.reload();
 	});
 	// Datatable default settings
 	$.extend($.fn.dataTable.defaults, {
