@@ -1,0 +1,555 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MagIRC\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-19 13:09+0100\n"
+"PO-Revision-Date: 2012-04-19 13:09+0100\n"
+"Last-Translator: Sebastian Vassiliou <admin@hosting9000.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: ../..\n"
+
+#: ../../strings.c:2
+msgid "Channel activity for %1"
+msgstr "Kanaal activiteit voor %1"
+
+#: ../../strings.c:5
+#: ../../strings.c:74
+#: ../../strings.c:533
+#: ../../strings.c:578
+msgid "Total"
+msgstr "Totaal"
+
+#: ../../strings.c:8
+#: ../../strings.c:77
+#: ../../strings.c:329
+#: ../../strings.c:398
+#: ../../strings.c:536
+#: ../../strings.c:581
+msgid "Today"
+msgstr "Vandaag"
+
+#: ../../strings.c:11
+#: ../../strings.c:80
+#: ../../strings.c:539
+#: ../../strings.c:584
+msgid "This Week"
+msgstr "Deze week"
+
+#: ../../strings.c:14
+#: ../../strings.c:83
+#: ../../strings.c:542
+#: ../../strings.c:587
+msgid "This Month"
+msgstr "Deze maand"
+
+#: ../../strings.c:17
+#: ../../strings.c:215
+#: ../../strings.c:314
+#: ../../strings.c:590
+#: ../../strings.c:626
+msgid "Nickname"
+msgstr "Nicknaam"
+
+#: ../../strings.c:20
+#: ../../strings.c:89
+#: ../../strings.c:548
+#: ../../strings.c:593
+msgid "Letters"
+msgstr "Letters"
+
+#: ../../strings.c:23
+#: ../../strings.c:92
+#: ../../strings.c:551
+#: ../../strings.c:596
+msgid "Words"
+msgstr "Woorden"
+
+#: ../../strings.c:26
+#: ../../strings.c:95
+#: ../../strings.c:425
+#: ../../strings.c:434
+#: ../../strings.c:554
+#: ../../strings.c:599
+msgid "Lines"
+msgstr "Regels"
+
+#: ../../strings.c:29
+#: ../../strings.c:98
+#: ../../strings.c:557
+#: ../../strings.c:602
+msgid "Actions"
+msgstr "Acties"
+
+#: ../../strings.c:32
+#: ../../strings.c:101
+#: ../../strings.c:560
+#: ../../strings.c:605
+msgid "Smileys"
+msgstr "Smileys"
+
+#: ../../strings.c:35
+#: ../../strings.c:104
+#: ../../strings.c:188
+#: ../../strings.c:563
+#: ../../strings.c:608
+msgid "Kicks"
+msgstr "Kicks"
+
+#: ../../strings.c:38
+#: ../../strings.c:107
+#: ../../strings.c:185
+#: ../../strings.c:218
+#: ../../strings.c:566
+#: ../../strings.c:611
+msgid "Modes"
+msgstr "Modes"
+
+#: ../../strings.c:41
+#: ../../strings.c:110
+#: ../../strings.c:569
+#: ../../strings.c:614
+msgid "Topics"
+msgstr "Topics"
+
+#: ../../strings.c:44
+#: ../../strings.c:56
+#: ../../strings.c:68
+#: ../../strings.c:113
+#: ../../strings.c:131
+#: ../../strings.c:146
+#: ../../strings.c:164
+#: ../../strings.c:221
+#: ../../strings.c:233
+#: ../../strings.c:236
+#: ../../strings.c:269
+#: ../../strings.c:323
+#: ../../strings.c:419
+#: ../../strings.c:428
+#: ../../strings.c:437
+#: ../../strings.c:470
+#: ../../strings.c:524
+#: ../../strings.c:572
+#: ../../strings.c:617
+#: ../../strings.c:665
+#: ../../strings.c:677
+#: ../../strings.c:692
+msgid "Loading"
+msgstr "Bezig met laden"
+
+#: ../../strings.c:47
+msgid "Current Client Statistics for %1"
+msgstr "Huidige bezoekerstatistieken voor %1"
+
+#: ../../strings.c:50
+#: ../../strings.c:227
+#: ../../strings.c:647
+msgid "Client"
+msgstr "Bezoekers"
+
+#: ../../strings.c:53
+#: ../../strings.c:65
+#: ../../strings.c:230
+msgid "Count"
+msgstr "Aantal"
+
+#: ../../strings.c:59
+msgid "Current Country Statistics for %1"
+msgstr "Huidige landstatistieken voor %1"
+
+#: ../../strings.c:62
+#: ../../strings.c:644
+msgid "Country"
+msgstr "Land"
+
+#: ../../strings.c:71
+msgid "Global channel activity"
+msgstr "Globale kanaal activiteit"
+
+#: ../../strings.c:86
+#: ../../strings.c:122
+#: ../../strings.c:149
+#: ../../strings.c:413
+#: ../../strings.c:422
+msgid "Channel"
+msgstr "Kanaal"
+
+#: ../../strings.c:116
+msgid "Channel history"
+msgstr "Kanaal historie"
+
+#: ../../strings.c:119
+msgid "Channel list"
+msgstr "Kanaal lijst"
+
+#: ../../strings.c:125
+#: ../../strings.c:176
+#: ../../strings.c:497
+msgid "Current users"
+msgstr "Huidige gebruikers"
+
+#: ../../strings.c:128
+#: ../../strings.c:500
+msgid "Max users"
+msgstr "Max gebruikers"
+
+#: ../../strings.c:134
+#: ../../strings.c:137
+#: ../../strings.c:353
+#: ../../strings.c:686
+msgid "Channels"
+msgstr "Kanalen"
+
+#: ../../strings.c:140
+#: ../../strings.c:161
+#: ../../strings.c:659
+#: ../../strings.c:674
+msgid "Activity"
+msgstr "Activiteit"
+
+#: ../../strings.c:143
+#: ../../strings.c:260
+#: ../../strings.c:521
+#: ../../strings.c:662
+msgid "History"
+msgstr "Historie"
+
+#: ../../strings.c:152
+#: ../../strings.c:248
+#: ../../strings.c:455
+#: ../../strings.c:650
+msgid "Status"
+msgstr "Status"
+
+#: ../../strings.c:155
+#: ../../strings.c:251
+msgid "Countries"
+msgstr "Landen"
+
+#: ../../strings.c:158
+#: ../../strings.c:254
+msgid "Clients"
+msgstr "Gebruikers"
+
+#: ../../strings.c:167
+msgid "Channel info for %1"
+msgstr "Kanaal informatie over %1"
+
+#: ../../strings.c:170
+msgid "Topic set by"
+msgstr "Topic gezet door"
+
+#: ../../strings.c:173
+#: ../../strings.c:182
+#: ../../strings.c:377
+#: ../../strings.c:383
+#: ../../strings.c:389
+#: ../../strings.c:395
+#: ../../strings.c:401
+#: ../../strings.c:494
+#: ../../strings.c:503
+#: ../../strings.c:512
+msgid "on"
+msgstr "op"
+
+#: ../../strings.c:179
+msgid "User peak"
+msgstr "Gebruikers piek"
+
+#: ../../strings.c:191
+msgid "Join this channel"
+msgstr "Bezoek dit kanaal"
+
+#: ../../strings.c:194
+#: ../../strings.c:449
+msgid "Standard connection"
+msgstr "Standaard verbinding"
+
+#: ../../strings.c:197
+msgid "IRC standard connection"
+msgstr "IRC standaard verbinding"
+
+#: ../../strings.c:200
+#: ../../strings.c:452
+msgid "Secure connection"
+msgstr "Beveiligde verbinding"
+
+#: ../../strings.c:203
+msgid "IRC secure connection"
+msgstr "IRC beveiligde verbinding"
+
+#: ../../strings.c:206
+#: ../../strings.c:209
+msgid "Webchat"
+msgstr "Webchat"
+
+#: ../../strings.c:212
+msgid "Users currently in channel"
+msgstr "Gebruikers momenteel aanwezig in kanaal"
+
+#: ../../strings.c:224
+msgid "Current Client Statistics"
+msgstr "Huidige bezoeker statistieken"
+
+#: ../../strings.c:239
+msgid "Network Usage History"
+msgstr "Netwerk gebruik historie"
+
+#: ../../strings.c:242
+#: ../../strings.c:680
+msgid "Network"
+msgstr "Netwerk"
+
+#: ../../strings.c:245
+msgid "Welcome"
+msgstr "Welkom"
+
+#: ../../strings.c:257
+#: ../../strings.c:356
+#: ../../strings.c:467
+msgid "Operators"
+msgstr "Beheerders"
+
+#: ../../strings.c:263
+msgid "Netsplit Graphs"
+msgstr "Netsplit grafieken"
+
+#: ../../strings.c:266
+msgid "Searchirc Graphs"
+msgstr "Searchirc grafieken"
+
+#: ../../strings.c:272
+msgid "Netsplit.de Graphs"
+msgstr "Netsplit.de grafieken"
+
+#: ../../strings.c:275
+msgid "Last two weeks"
+msgstr "Afgelopen twee weken"
+
+#: ../../strings.c:278
+msgid "Last two months"
+msgstr "Afgelopen twee maanden"
+
+#: ../../strings.c:281
+msgid "Last two years"
+msgstr "Afgelopen twee jaren"
+
+#: ../../strings.c:284
+msgid "Complete history"
+msgstr "Volledige historie"
+
+#: ../../strings.c:287
+msgid "Relation of users and channels during the last 2"
+msgstr "Relatie tussen gebruikers en kanalen gedurende de afgelopen 2"
+
+#: ../../strings.c:290
+#: ../../strings.c:296
+#: ../../strings.c:302
+msgid "weeks"
+msgstr "weken"
+
+#: ../../strings.c:293
+msgid "Channels during the last 2"
+msgstr "Kanalen gedurende de afgelopen"
+
+#: ../../strings.c:299
+msgid "Servers during the last 2"
+msgstr "Servers gedurende de laatste 2"
+
+#: ../../strings.c:305
+msgid "Complete measured history about users and channels"
+msgstr "Compleet gemeten historie over gebruikers en kanalen"
+
+#: ../../strings.c:308
+#: ../../strings.c:341
+msgid "More on"
+msgstr "Meer over"
+
+#: ../../strings.c:311
+msgid "Operators currently online"
+msgstr "Beheerders momenteel online"
+
+#: ../../strings.c:317
+#: ../../strings.c:458
+#: ../../strings.c:641
+msgid "Server"
+msgstr "Server"
+
+#: ../../strings.c:320
+msgid "Online since"
+msgstr "Online sinds"
+
+#: ../../strings.c:326
+msgid "SearchIRC Graphs"
+msgstr "SearchIRC grafieken"
+
+#: ../../strings.c:332
+msgid "Past month"
+msgstr "Vorige maand"
+
+#: ../../strings.c:335
+msgid "Past week"
+msgstr "Vorige week"
+
+#: ../../strings.c:338
+msgid "Past year"
+msgstr "Vorig jaar"
+
+#: ../../strings.c:344
+msgid "Live Network Status"
+msgstr "Actuele netwerk status"
+
+#: ../../strings.c:347
+msgid "Network Status"
+msgstr "Netwerk status"
+
+#: ../../strings.c:350
+#: ../../strings.c:416
+#: ../../strings.c:464
+#: ../../strings.c:656
+#: ../../strings.c:689
+msgid "Users"
+msgstr "Gebruikers"
+
+#: ../../strings.c:359
+#: ../../strings.c:515
+#: ../../strings.c:518
+#: ../../strings.c:683
+msgid "Servers"
+msgstr "Servers"
+
+#: ../../strings.c:362
+#: ../../strings.c:365
+#: ../../strings.c:368
+#: ../../strings.c:371
+msgid "Current"
+msgstr "Huidige"
+
+#: ../../strings.c:374
+#: ../../strings.c:380
+#: ../../strings.c:386
+#: ../../strings.c:392
+msgid "Peak"
+msgstr "Piek"
+
+#: ../../strings.c:404
+msgid "Current 10 Biggest Chans"
+msgstr "Huidige 10 grootste kanalen"
+
+#: ../../strings.c:407
+msgid "Top 10 Channels Today"
+msgstr "Top 10 kanalen vandaag"
+
+#: ../../strings.c:410
+msgid "Top 10 Users Today"
+msgstr "Top 10 gebruikers vandaag"
+
+#: ../../strings.c:431
+#: ../../strings.c:668
+msgid "User"
+msgstr "Gebruiker"
+
+#: ../../strings.c:440
+msgid "Server history"
+msgstr "Serverhistorie"
+
+#: ../../strings.c:443
+msgid "Server list"
+msgstr "Serverlijst"
+
+#: ../../strings.c:446
+msgid "Connect to our network round robin"
+msgstr "Verbind met onze round robin"
+
+#: ../../strings.c:461
+#: ../../strings.c:473
+msgid "Description"
+msgstr "Omschrijving"
+
+#: ../../strings.c:476
+msgid "Online"
+msgstr "Online"
+
+#: ../../strings.c:479
+msgid "Version"
+msgstr "Versie"
+
+#: ../../strings.c:482
+msgid "Uptime"
+msgstr "Uptime"
+
+#: ../../strings.c:485
+msgid "Last split"
+msgstr "Laatste split"
+
+#: ../../strings.c:488
+msgid "Last ping"
+msgstr "Laatste ping"
+
+#: ../../strings.c:491
+msgid "Highest ping"
+msgstr "Hoogste ping"
+
+#: ../../strings.c:506
+msgid "Current opers"
+msgstr "Huidige beheerders"
+
+#: ../../strings.c:509
+msgid "Max opers"
+msgstr "Maximum beheerders"
+
+#: ../../strings.c:527
+msgid "User activity for %1"
+msgstr "Gebruikers activiteit voor %1"
+
+#: ../../strings.c:530
+msgid "Global"
+msgstr "Globaal"
+
+#: ../../strings.c:545
+msgid "Type"
+msgstr "Type"
+
+#: ../../strings.c:575
+msgid "Global user activity"
+msgstr "Globale gebruikers activiteit"
+
+#: ../../strings.c:620
+msgid "User history"
+msgstr "Gebruikers historie"
+
+#: ../../strings.c:623
+msgid "User info for %1"
+msgstr "Gebruikers informatie over %1"
+
+#: ../../strings.c:629
+msgid "Aliases"
+msgstr "Aliases"
+
+#: ../../strings.c:632
+msgid "Stats Username"
+msgstr "Stats gebruikersnaam"
+
+#: ../../strings.c:635
+msgid "Real name"
+msgstr "Echte naam"
+
+#: ../../strings.c:638
+msgid "Hostname"
+msgstr "Hostnaam"
+
+#: ../../strings.c:653
+msgid "Information for this user currently unavailable"
+msgstr "Informatie over deze gebruiker momenteel niet beschikbaar"
+
+#: ../../strings.c:671
+msgid "Info"
+msgstr "Informatie"
+
