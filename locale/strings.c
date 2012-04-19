@@ -758,9 +758,6 @@ gettext("1m");
 gettext("1y");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
-gettext("YTD");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("Unable to load contents");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */

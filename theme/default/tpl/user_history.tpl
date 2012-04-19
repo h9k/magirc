@@ -31,9 +31,6 @@ $(document).ready(function() {
 					count: 6,
 					text: mLang.zoom_6m
 				}, {
-					type: 'ytd',
-					text: mLang.zoom_YTD
-				}, {
 					type: 'year',
 					count: 1,
 					text: mLang.zoom_1y

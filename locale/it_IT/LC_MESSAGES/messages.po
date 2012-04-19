@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-19 18:42+0100\n"
-"PO-Revision-Date: 2012-04-19 18:42+0100\n"
+"PO-Revision-Date: 2012-04-19 18:48+0100\n"
 "Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -562,7 +562,7 @@ msgstr "dd.MM.yyyy HH:mm:ss"
 
 #: ../../strings.c:701
 msgid "%Y-%m-%d %H:%M:%S"
-msgstr "&d.%m.%Y %H:%M:%S"
+msgstr "%d.%m.%Y %H:%M:%S"
 
 #: ../../strings.c:704
 msgid "Unknown"

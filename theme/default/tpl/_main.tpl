@@ -138,7 +138,6 @@ var mLang = {
 	"zoom_3m": "{t}1m{/t}",
 	"zoom_6m": "{t}1m{/t}",
 	"zoom_1y": "{t}1y{/t}",
-	"zoom_YTD": "{t}YTD{/t}",
 	"LoadError": "{t}Unable to load contents{/t}",
 	"Message": "{t}Message{/t}",
 	"ConnectedSince": "{t}Connected since{/t}",
@@ -267,9 +266,6 @@ $(document).ready(function() {
 				type: 'month',
 				count: 6,
 				text: mLang.zoom_6m
-			}, {
-				type: 'ytd',
-				text: mLang.zoom_YTD
 			}, {
 				type: 'year',
 				count: 1,
