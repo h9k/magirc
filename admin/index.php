@@ -13,9 +13,9 @@
 ini_set('display_errors','on');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
-if (version_compare(PHP_VERSION, '5.3.0', '<') || !extension_loaded('pdo') || !in_array('mysql', PDO::getAvailableDrivers()) || !extension_loaded('gettext') || !extension_loaded('mcrypt') || get_magic_quotes_gpc()) die('ERROR: System requirements not met. Please run <a href="../setup/">Setup</a>.');
-if (!file_exists('../conf/magirc.cfg.php')) die('ERROR: MagIRC is not configured. Please run <a href="../setup/">Setup</a>.');
-if (!is_writable('../tmp/')) die('ERROR: Unable to write temporary files. Please run <a href="../setup/">Setup</a>.');
+if (version_compare(PHP_VERSION, '5.3.0', '<') || !extension_loaded('pdo') || !in_array('mysql', PDO::getAvailableDrivers()) || !extension_loaded('gettext') || !extension_loaded('mcrypt') || get_magic_quotes_gpc()) die('ERROR: System requirements not met. Please run Setup.');
+if (!file_exists('../conf/magirc.cfg.php')) die('ERROR: MagIRC is not configured. Please run Setup.');
+if (!is_writable('../tmp/')) die('ERROR: Unable to write temporary files. Please run Setup.');
 
 session_start();
 
