@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-19 18:06+0100\n"
-"PO-Revision-Date: 2012-04-19 18:08+0100\n"
+"POT-Creation-Date: 2012-04-19 18:16+0100\n"
+"PO-Revision-Date: 2012-04-19 18:17+0100\n"
 "Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../../strings.c:2
 msgid "Channel activity for %1"
-msgstr "Kanal-Aktivität für %1"
+msgstr "Raum-Aktivität für %1"
 
 #: ../../strings.c:5
 #: ../../strings.c:74
@@ -175,7 +175,7 @@ msgstr "Land"
 
 #: ../../strings.c:71
 msgid "Global channel activity"
-msgstr "Globale Kanal-Aktivität"
+msgstr "Globale Raum-Aktivität"
 
 #: ../../strings.c:86
 #: ../../strings.c:122
@@ -183,15 +183,15 @@ msgstr "Globale Kanal-Aktivität"
 #: ../../strings.c:395
 #: ../../strings.c:404
 msgid "Channel"
-msgstr "Kanal"
+msgstr "Raum"
 
 #: ../../strings.c:116
 msgid "Channel history"
-msgstr "Kanal-Verlauf"
+msgstr "Raum-Verlauf"
 
 #: ../../strings.c:119
 msgid "Channel list"
-msgstr "Kanalliste"
+msgstr "Raumliste"
 
 #: ../../strings.c:125
 #: ../../strings.c:176
@@ -210,7 +210,7 @@ msgstr "Benutzerspitze"
 #: ../../strings.c:668
 #: ../../strings.c:791
 msgid "Channels"
-msgstr "Kanäle"
+msgstr "Räume"
 
 #: ../../strings.c:140
 #: ../../strings.c:161
@@ -246,7 +246,7 @@ msgstr "Clients"
 
 #: ../../strings.c:167
 msgid "Channel info for %1"
-msgstr "Kanal-Info für %1"
+msgstr "Raum-Info für %1"
 
 #: ../../strings.c:170
 msgid "Topic set by"
@@ -272,7 +272,7 @@ msgstr "Maximale Benutzer"
 
 #: ../../strings.c:191
 msgid "Join this channel"
-msgstr "Diesem Kanal beitreten"
+msgstr "Diesem Raum beitreten"
 
 #: ../../strings.c:194
 #: ../../strings.c:431
@@ -305,7 +305,7 @@ msgstr "Web-Chat"
 
 #: ../../strings.c:212
 msgid "Users currently in channel"
-msgstr "Derzeitige Benutzer im Kanal"
+msgstr "Derzeitige Benutzer im Raum"
 
 #: ../../strings.c:224
 msgid "Current Client Statistics"
@@ -361,7 +361,7 @@ msgstr "Kompletter Verlauf"
 
 #: ../../strings.c:287
 msgid "Complete measured history about users and channels"
-msgstr "Komplett gemessener Verlauf von Benutzer und Kanälen"
+msgstr "Komplett gemessener Verlauf von Benutzer und Räume"
 
 #: ../../strings.c:290
 #: ../../strings.c:323
@@ -439,11 +439,11 @@ msgstr "Spitze"
 
 #: ../../strings.c:386
 msgid "Current 10 Biggest Chans"
-msgstr "Jetzige 10 größte Kanäle"
+msgstr "Jetzige 10 größte Räume"
 
 #: ../../strings.c:389
 msgid "Top 10 Channels Today"
-msgstr "Top 10 Kanäle heute"
+msgstr "Top 10 Räume heute"
 
 #: ../../strings.c:392
 msgid "Top 10 Users Today"
@@ -559,15 +559,15 @@ msgstr "Sprache"
 #: ../../strings.c:698
 #: ../../strings.c:701
 msgid "Mibbit"
-msgstr ""
+msgstr "Mibbit"
 
 #: ../../strings.c:704
 msgid "yyyy-MM-dd HH:mm:ss"
-msgstr ""
+msgstr "dd.MM.yyy HH:mm:ss"
 
 #: ../../strings.c:707
 msgid "%Y-%m-%d %H:%M:%S"
-msgstr ""
+msgstr "%d.%m.%Y %H:%M:%S"
 
 #: ../../strings.c:710
 msgid "Unknown"
@@ -578,47 +578,40 @@ msgid "Away as"
 msgstr "Abwesend als"
 
 #: ../../strings.c:716
-#, fuzzy
 msgid "Online as"
-msgstr "Online"
+msgstr "Online als"
 
 #: ../../strings.c:722
-#, fuzzy
 msgid "Offline"
-msgstr "Online"
+msgstr "Offline"
 
 #: ../../strings.c:725
 msgid "Bot"
 msgstr "Bot"
 
 #: ../../strings.c:728
-#, fuzzy
 msgid "Service"
-msgstr "Server"
+msgstr "Dienst"
 
 #: ../../strings.c:731
 msgid "Available for help"
 msgstr "Für Hilfe verfügbar"
 
 #: ../../strings.c:734
-#, fuzzy
 msgid "join"
-msgstr "am"
+msgstr "beitreten"
 
 #: ../../strings.c:737
-#, fuzzy
 msgid "days"
-msgstr "Heute"
+msgstr "Tage"
 
 #: ../../strings.c:740
-#, fuzzy
 msgid "hours"
-msgstr "Wörter"
+msgstr "Stunden"
 
 #: ../../strings.c:743
-#, fuzzy
 msgid "minutes"
-msgstr "Zeilen"
+msgstr "Minuten"
 
 #: ../../strings.c:746
 msgid "All"
@@ -655,23 +648,20 @@ msgid "Message"
 msgstr "Nachricht"
 
 #: ../../strings.c:776
-#, fuzzy
 msgid "Connected since"
-msgstr "Online seit"
+msgstr "Verbunden seit"
 
 #: ../../strings.c:779
-#, fuzzy
 msgid "Last quit"
-msgstr "Letztes Split"
+msgstr "Letztes Quit"
 
 #: ../../strings.c:782
 msgid "Users online"
 msgstr "Benutzer online"
 
 #: ../../strings.c:785
-#, fuzzy
 msgid "Servers online"
-msgstr "Serverliste"
+msgstr "Server online"
 
 #: ../../strings.c:812
 msgid "Yes"
@@ -682,9 +672,8 @@ msgid "No"
 msgstr "Nein"
 
 #: ../../strings.c:818
-#, fuzzy
 msgid "Never"
-msgstr "Server"
+msgstr "Nie"
 
 #: ../../strings.c:824
 msgid "MOTD not available for this server"
@@ -699,117 +688,104 @@ msgid "Close"
 msgstr "Schließen"
 
 #: ../../strings.c:836
-#, fuzzy
 msgid "Country Statistics"
-msgstr "Momentane Land-Statistiken für %1"
+msgstr "Länderstatistiken"
 
 #: ../../strings.c:839
-#, fuzzy
 msgid "Client Statistics"
-msgstr "Derzeitige Client-Statistiken"
+msgstr "Clientstatistiken"
 
 #: ../../strings.c:842
-#, fuzzy
 msgid "none"
-msgstr "am"
+msgstr "keine"
 
 #: ../../strings.c:845
-#, fuzzy
 msgid "Relation of users and channels during the last 2 weeks"
-msgstr "Relation zwischen Benutzer und Kanäle während der letzten 2"
+msgstr "Benutzer und Channels während der letzten zwei Wochen"
 
 #: ../../strings.c:848
-#, fuzzy
 msgid "Relation of users and channels during the last 2 months"
-msgstr "Relation zwischen Benutzer und Kanäle während der letzten 2"
+msgstr "Benutzer und Channels während der letzten zwei Monate"
 
 #: ../../strings.c:851
-#, fuzzy
 msgid "Relation of users and channels during the last 2 years"
-msgstr "Relation zwischen Benutzer und Kanäle während der letzten 2"
+msgstr "Benutzer und Channels während der letzten zwei Jahre"
 
 #: ../../strings.c:854
-#, fuzzy
 msgid "Channels during the last 2 weeks"
-msgstr "Kanäle während der letzten 2"
+msgstr "Räume während der letzten zwei Wochen"
 
 #: ../../strings.c:857
-#, fuzzy
 msgid "Channels during the last 2 months"
-msgstr "Kanäle während der letzten 2"
+msgstr "Räume während der letzten zwei Monate"
 
 #: ../../strings.c:860
-#, fuzzy
 msgid "Channels during the last 2 years"
-msgstr "Kanäle während der letzten 2"
+msgstr "Räume während der letzten zwei Jahre"
 
 #: ../../strings.c:863
-#, fuzzy
 msgid "Servers during the last 2 weeks"
-msgstr "Server während der letzten 2"
+msgstr "Server während der letzten zwei Wochen"
 
 #: ../../strings.c:866
-#, fuzzy
 msgid "Servers during the last 2 months"
-msgstr "Server während der letzten 2"
+msgstr "Server während der letzten zwei Monate"
 
 #: ../../strings.c:869
-#, fuzzy
 msgid "Servers during the last 2 years"
-msgstr "Server während der letzten 2"
+msgstr "Server während der letzten zwei Jahre"
 
 #: ../../strings.c:872
 msgid "Processing..."
-msgstr ""
+msgstr "Verarbeitung..."
 
 #: ../../strings.c:875
 msgid "Show _MENU_ entries"
-msgstr ""
+msgstr "_MENU_ Einträge anzeigen"
 
 #: ../../strings.c:878
 msgid "No matching records found"
-msgstr ""
+msgstr "Keine Einträge vorhanden"
 
 #: ../../strings.c:881
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr ""
+msgstr "_START_ bis _END_ von _TOTAL_ Einträgen"
 
 #: ../../strings.c:884
 msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+msgstr "0 bis 0 von 0 Einträgen"
 
 #: ../../strings.c:887
 msgid "(filtered from _MAX_ total entries)"
-msgstr ""
+msgstr "(gefiltert von _MAX_ Einträgen)"
 
 #: ../../strings.c:890
 msgid "Search"
-msgstr ""
+msgstr "Suchen"
 
 #: ../../strings.c:893
 msgid "click/return to sort ascending"
-msgstr ""
+msgstr "Klick/Eingabe um aufsteigend zu sortieren"
 
 #: ../../strings.c:896
 msgid "click/return to sort descending"
-msgstr ""
+msgstr "Klick/Eingabe um absteigend zu sortieren"
 
 #: ../../strings.c:899
 msgid "First"
-msgstr ""
+msgstr "Erster"
 
 #: ../../strings.c:902
 msgid "Previous"
-msgstr ""
+msgstr "Zurück"
 
 #: ../../strings.c:905
 msgid "Next"
-msgstr ""
+msgstr "Nächster"
 
 #: ../../strings.c:908
-#, fuzzy
 msgid "Last"
-msgstr "Letztes Ping"
+msgstr "Letzter"
 
 #~ msgid "weeks"
 #~ msgstr "Wochen"
