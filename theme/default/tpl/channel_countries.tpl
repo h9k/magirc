@@ -1,12 +1,12 @@
-<h1>Current Country Statistics for {$target}</h1>
+<h1>{t 1=$target}Current Country Statistics for %1{/t}</h1>
 <div id="chart-countries" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <table id="tbl_countries" class="display">
 	<thead>
-		<tr><th>Country</th><th>Count</th></tr>
+		<tr><th>{t}Country{/t}</th><th>{t}Count{/t}</th></tr>
 	</thead>
 	<tbody>
-		<tr><td colspan="2">Loading...</td></tr>
+		<tr><td colspan="2">{t}Loading{/t}...</td></tr>
 	</tbody>
 </table>
 

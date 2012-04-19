@@ -1,14 +1,14 @@
-<h1>Channel list</h1>
+<h1>{t}Channel list{/t}</h1>
 <table id="tbl_channels" class="display clickable">
 	<thead>
 		<tr>
-			<th>Channel</th>
-			<th>Current users</th>
-			<th>Max users</th>
+			<th>{t}Channel{/t}</th>
+			<th>{t}Current users{/t}</th>
+			<th>{t}Max users{/t}</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr><td colspan="3">Loading...</td></tr>
+		<tr><td colspan="3">{t}Loading{/t}...</td></tr>
 	</tbody>
 </table>
 

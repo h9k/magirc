@@ -32,7 +32,7 @@
 			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}user"{if $section eq 'user'} class="active"{/if}><span>&nbsp;{t}Users{/t}</span></a></li>
 		</ul>
 	</div>
-	<div id="loading"><img src="theme/{$cfg.theme}/img/loading.gif" alt="loading..." /></div>
+	<div id="loading"><img src="theme/{$cfg.theme}/img/loading.gif" alt="{t}Loading{/t}..." /></div>
 </div>
 <div id="main">
 	{block name="content"}[content placeholder]{/block}

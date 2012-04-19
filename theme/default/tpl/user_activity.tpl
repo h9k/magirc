@@ -1,8 +1,8 @@
-<h1>User activity for {$target}</h1>
+<h1>{t 1=$target}User activity for %1{/t}</h1>
 
 <form>
 	<div id="radio" class="choser">
-		<input type="radio" id="radio0" name="radio" checked="checked" value="global" /><label for="radio0">Global</label>
+		<input type="radio" id="radio0" name="radio" checked="checked" value="global" /><label for="radio0">{t}Global{/t}</label>
 	</div>
 </form>
 
@@ -10,30 +10,30 @@
 
 <form>
 	<div id="type" class="choser">
-		<input type="radio" id="type0" name="type" /><label for="type0">Total</label>
-		<input type="radio" id="type1" name="type" /><label for="type1">Today</label>
-		<input type="radio" id="type2" name="type" /><label for="type2">This Week</label>
-		<input type="radio" id="type3" name="type" checked="checked" /><label for="type3">This Month</label>
+		<input type="radio" id="type0" name="type" /><label for="type0">{t}Total{/t}</label>
+		<input type="radio" id="type1" name="type" /><label for="type1">{t}Today{/t}</label>
+		<input type="radio" id="type2" name="type" /><label for="type2">{t}This Week{/t}</label>
+		<input type="radio" id="type3" name="type" checked="checked" /><label for="type3">{t}This Month{/t}</label>
 	</div>
 </form>
 
 <table id="tbl_activity" class="display">
 	<thead>
 		<tr>
-			<th>Type</th>
-			<th>Letters</th>
-			<th>Words</th>
-			<th>Lines</th>
-			<th>Actions</th>
-			<th>Smileys</th>
-			<th>Kicks</th>
-			<th>Modes</th>
-			<th>Topics</th>
+			<th>{t}Type{/t}</th>
+			<th>{t}Letters{/t}</th>
+			<th>{t}Words{/t}</th>
+			<th>{t}Lines{/t}</th>
+			<th>{t}Actions{/t}</th>
+			<th>{t}Smileys{/t}</th>
+			<th>{t}Kicks{/t}</th>
+			<th>{t}Modes{/t}</th>
+			<th>{t}Topics{/t}</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="9">Loading...</td>
+			<td colspan="9">{t}Loading{/t}...</td>
 		</tr>
 	</tbody>
 </table>

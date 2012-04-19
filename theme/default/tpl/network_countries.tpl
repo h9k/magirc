@@ -6,7 +6,7 @@
 		<tr><th>Country</th><th>Count</th></tr>
 	</thead>
 	<tbody>
-		<tr><td colspan="2">Loading...</td></tr>
+		<tr><td colspan="2">{t}Loading{/t}...</td></tr>
 	</tbody>
 </table>
 
