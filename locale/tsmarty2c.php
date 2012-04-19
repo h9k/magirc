@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * tsmarty2c.php - rips gettext strings from smarty template
@@ -19,21 +18,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA *
  * ------------------------------------------------------------------------- *
  *
- * This command line script rips gettext strings from smarty file, 
- * and prints them to stdout in C format, that can later be used with the 
- * standard gettext tools.
- *
- * Usage:
- * ./tsmarty2c.php <filename or directory> <file2> <..> > smarty.c
- *
- * If a parameter is a directory, the template files within will be parsed.
- *
  * @package	smarty-gettext
- * @version	$Id$
  * @link	http://smarty-gettext.sf.net/
  * @author	Sagi Bashari <sagi@boom.org.il>
  * @copyright 2004-2005 Sagi Bashari
+ * Adapted to MagIRC
  */
+
+date_default_timezone_set('UTC');
 
 // smarty open tag
 $ldq = preg_quote('{');
@@ -60,6 +52,7 @@ function fs($str)
 function do_file($file)
 {
 	$content = @file_get_contents($file);
+	$output = "";
 
 	if (empty($content)) {
 		return;
@@ -75,22 +68,24 @@ function do_file($file)
 	
 	for ($i=0; $i < count($matches[0]); $i++) {
 		// TODO: add line number
-		echo "/* $file */\n"; // credit: Mike van Lammeren 2005-02-14
+		$output .= "/* $file */\n"; // credit: Mike van Lammeren 2005-02-14
 		
 		if (preg_match('/plural\s*=\s*["\']?\s*(.[^\"\']*)\s*["\']?/', $matches[2][$i], $match)) {
-			echo 'ngettext("'.fs($matches[3][$i]).'","'.fs($match[1]).'",x);'."\n";
+			$output .= 'ngettext("'.fs($matches[3][$i]).'","'.fs($match[1]).'",x);'."\n";
 		} else {
-			echo 'gettext("'.fs($matches[3][$i]).'");'."\n";
+			$output .= 'gettext("'.fs($matches[3][$i]).'");'."\n";
 		}
 
-		echo "\n";
+		$output .= "\n";
 	}
+	return $output;
 }
 
 // go through a directory
 function do_dir($dir)
 {
 	$d = dir($dir);
+	$output = "";
 
 	while (false !== ($entry = $d->read())) {
 		if ($entry == '.' || $entry == '..') {
@@ -105,20 +100,18 @@ function do_dir($dir)
 			$pi = pathinfo($entry);
 			
 			if (isset($pi['extension']) && in_array($pi['extension'], $GLOBALS['extensions'])) {
-				do_file($entry);
+				$output .= do_file($entry);
 			}
 		}
 	}
 
 	$d->close();
+	return $output;
 }
 
-for ($ac=1; $ac < $_SERVER['argc']; $ac++) {
-	if (is_dir($_SERVER['argv'][$ac])) { // go through directory
-		do_dir($_SERVER['argv'][$ac]);
-	} else { // do file
-		do_file($_SERVER['argv'][$ac]);
-	}
-}
+$output = do_dir(__DIR__.'/../theme/default/tpl/');
+$writefile = fopen(__DIR__.'/strings.c',"w");
+fwrite($writefile, $output);
+fclose($writefile);
 
 ?>

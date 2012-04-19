@@ -120,7 +120,7 @@ var format_datetime_charts = '{t}%Y-%m-%d %H:%M:%S{/t}';
 {/jsmin}
 var mLang = {
 	"Unknown": "{t}Unknown{/t}",
-	"AwayAs": "{t}AwayAs{/t}",
+	"AwayAs": "{t}Away as{/t}",
 	"OnlineAs": "{t}Online as{/t}",
 	"Online": "{t}Online{/t}",
 	"Offline": "{t}Offline{/t}",
