@@ -22,7 +22,7 @@ $(document).ready(function() {
 					return '<b>'+ this.point.name +'<\/b>: '+ Math.round(this.percentage * 100) / 100 +' %';
 				}
 			},
-			series: [{ type: 'pie', name: 'Country Statistics', data: data }]
+			series: [{ type: 'pie', name: mLang.CountryStatistics, data: data }]
 		});
 	});
 	$('#tbl_countries').dataTable({

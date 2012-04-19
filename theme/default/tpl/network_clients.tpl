@@ -22,7 +22,7 @@ $(document).ready(function() {
 					return '<b>'+ this.point.name +'<\/b>: '+ Math.round(this.percentage * 100) / 100 +' %';
 				}
 			},
-			series: [{ type: 'pie', name: 'Client Statistics', data: data }]
+			series: [{ type: 'pie', name: mLang.ClientStatistics, data: data }]
 		});
 	});
 	$('#tbl_clients').dataTable({
@@ -31,7 +31,7 @@ $(document).ready(function() {
 		"sAjaxSource": "rest/denora.php/clients?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "client", "fnRender": function (oObj) {
-				return oObj.aData['client'] ? oObj.aData['client'] : 'Unknown';
+				return oObj.aData['client'] ? oObj.aData['client'] : mLang.Unknown;
 			} },
 			{ "mDataProp": "count" }
 		]

@@ -29,17 +29,11 @@ $(document).ready(function() {
 			$("#user_realname").html(result.realname);
 			status = getUserStatus(result);
 			if (result.online) {
-				if (result.away) {
-					//status += ' Away';
-					if (result.away_msg) status_extra += '<br \/>Message: ' + result.away_msg;
-				} else {
-					//status += ' Online';
-				}
-				status_extra += '<br \/>Connected since ' + $.format.date(result.connect_time, format_datetime);
+				if (result.away && result.away_msg) status_extra += '<br \/>'+mLang.Message+': ' + result.away_msg;
+				status_extra += '<br \/>'+mLang.ConnectedSince+' ' + $.format.date(result.connect_time, format_datetime);
 			} else {
-				//status += ' Offline';
-				if (result.lastquit_time) status_extra += '<br \/>Last quit ' + $.format.date(result.quit_time, format_datetime);
-				if (result.lastquit_msg) status_extra += '<br \/>Message: ' + result.quit_msg;
+				if (result.lastquit_time) status_extra += '<br \/>'+mLang.LastQuit+' ' + $.format.date(result.quit_time, format_datetime);
+				if (result.lastquit_msg) status_extra += '<br \/>'+mLang.Message+' ' + result.quit_msg;
 			}
 			status += getUserExtra(result);
 			$("#user_status").html(status);

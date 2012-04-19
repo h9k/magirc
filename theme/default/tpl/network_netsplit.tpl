@@ -10,11 +10,11 @@
 </form>
 
 <div id="netsplit_normal" style="width:560px; margin:auto;">
-	<h2>{t}Relation of users and channels during the last 2{/t} <span class="netsplit_range">{t}weeks{/t}</span></h2>
+	<h2><span id="netsplit_range_relation"></span></h2>
 	<img id="netsplit_relation" src="" alt="" />
-	<h2>{t}Channels during the last 2{/t} <span class="netsplit_range">{t}weeks{/t}</span></h2>
+	<h2><span id="netsplit_range_channels"></span></h2>
 	<img id="netsplit_channels" src="" alt="" />
-	<h2>{t}Servers during the last 2{/t} <span class="netsplit_range">{t}weeks{/t}</span></h2>
+	<h2><span id="netsplit_range_servers"></span></h2>
 	<img id="netsplit_servers" src="" alt="" />
 </div>
 
@@ -29,7 +29,9 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	var types_lang = { 'weeks': 'weeks', 'months': 'months', 'years': 'years' };
+	var types_lang_relation = { 'weeks': mLang.NetsplitRelWeeks, 'months': mLang.NetsplitRelMonths, 'years': mLang.NetsplitRelYears };
+	var types_lang_channels = { 'weeks': mLang.NetsplitChanWeeks, 'months': mLang.NetsplitChanMonths, 'years': mLang.NetsplitChanYears };
+	var types_lang_servers = { 'weeks': mLang.NetsplitSrvWeeks, 'months': mLang.NetsplitSrvMonths, 'years': mLang.NetsplitSrvYears };
 	var types = [ 'weeks', 'months', 'years', 'history' ];
 	var type = types[0];
 	$("#netsplit_type").buttonset();
@@ -48,7 +50,9 @@ $(document).ready(function() {
 			$("#netsplit_relation").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_uc.png');
 			$("#netsplit_channels").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_c.png');
 			$("#netsplit_servers").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_s.png');
-			$(".netsplit_range").html(types_lang[type]);
+			$("#netsplit_range_relation").html(types_lang_relation[type]);
+			$("#netsplit_range_relation").html(types_lang_channels[type]);
+			$("#netsplit_range_relation").html(types_lang_servers[type]);
 		}
 	}
 	updateNetsplit(type);

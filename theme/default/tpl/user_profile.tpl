@@ -24,7 +24,7 @@ $(document).ready(function() {
 		spinner: '{t}Loading{/t}...',
 		ajaxOptions: {
 			error: function( xhr, status, index, anchor ) {
-				$( anchor.hash ).html("Unable to load contents");
+				$( anchor.hash ).html(mLang.LoadError);
 			}
 		}
 	});

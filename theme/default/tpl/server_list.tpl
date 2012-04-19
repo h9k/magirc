@@ -54,12 +54,12 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "asc" ]],
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="online" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="offline" \/>'; } },
-			{ "mDataProp": "server", "fnRender": function (oObj) {
+			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
+			{ "mDataProp": "server"/*, "fnRender": function (oObj) {
 				var out = '<a href="irc://'+oObj.aData['server']+':'+net_port+'"><img src="theme/'+theme+'/img/icons/server-link.png" alt="connect" title="Standard connection" /></a>';
 				if (net_port_ssl) out += ' <a href="irc://'+oObj.aData['server']+':+'+net_port_ssl+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
 				return out + ' ' + oObj.aData['server'];
-			} },
+			}*/ },
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }
@@ -71,10 +71,10 @@ $(document).ready(function() {
 				if (data) {
 					$("#dialog-server").dialog("option", "title", data.server);
 					$("#srv_description").html(data.description);
-					$("#srv_online").html(data.online ? "Yes" : "No");
+					$("#srv_online").html(data.online ? mLang.Yes : mLang.No);
 					$("#srv_version").html(data.version);
 					$("#srv_uptime").html(getTimeElapsed(data.uptime));
-					if((data.split_time).indexOf("1970") >= 0) { $("#srv_lastsplit").html("Never");	}
+					if((data.split_time).indexOf("1970") >= 0) { $("#srv_lastsplit").html(mLang.Never);	}
 					else { $("#srv_lastsplit").html($.format.date(data.split_time, format_datetime)); }
 					$("#srv_ping").html(data.ping);
 					$("#srv_maxping").html(data.ping_max);
@@ -84,12 +84,12 @@ $(document).ready(function() {
 					$("#srv_maxusertime").html($.format.date(data.users_max_time, format_datetime));
 					$("#srv_opers").html(data.opers);
 					$("#srv_maxopers").html(data.opers_max);
-					if((data.opers_max_time).indexOf("1970") < 0) { $("#srv_maxopertime").html("on " + $.format.date(data.opers_max_time, format_datetime)); }
-					$("#srv_motd_txt").html(data.motd ? data.motd_html : "MOTD not available for this server");
+					if((data.opers_max_time).indexOf("1970") < 0) { $("#srv_maxopertime").html(mLang.On+" " + $.format.date(data.opers_max_time, format_datetime)); }
+					$("#srv_motd_txt").html(data.motd ? data.motd_html : mLang.NoMotd);
 					$("#dialog-server").dialog("open");
 					$("#srv_motd").scrollTop(0);
 				} else {
-					alert("Failed");
+					alert(mLang.Failed);
 				}
 			}, "json");
 		}

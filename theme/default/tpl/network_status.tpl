@@ -108,15 +108,15 @@ $(document).ready(function() {
 	var chart_users = new Highcharts.Chart({
 		chart: { type: 'line', renderTo: 'chart_users', events: { load: startCron() } },
 		yAxis: { title: { text: null } },
-		series: [{ name: 'Servers', data: initData(), visible:false }, { name: 'Channels', data: initData(), visible:false }, { name: 'Users', data: initData() }, { name: 'Operators', data: initData(), visible:false }],
+		series: [{ name: mLang.Servers, data: initData(), visible:false }, { name: mLang.Channels, data: initData(), visible:false }, { name: mLang.Users, data: initData() }, { name: mLang.Operators, data: initData(), visible:false }],
 		legend: { enabled: true }
 	});
 	var chart_status = new Highcharts.Chart({
 		chart: { renderTo: 'chart_status', type: 'column', events: { load: startCron() } },
-		xAxis: { type: 'linear', categories: [ 'Users', 'Channels', 'Operators', 'Servers' ], labels: { rotation: -45, align: 'right' } },
+		xAxis: { type: 'linear', categories: [ mLang.Users, mLang.Channels, mLang.Operators, mLang.Servers ], labels: { rotation: -45, align: 'right' } },
 		yAxis: { min: 0, title: { text: null } },
 		tooltip: { formatter: function() { return '<b>'+ this.x +'</b>: '+ Highcharts.numberFormat(this.y, 0); } },
-		series: [{ name: 'Status', data: [0, 0, 0] }]
+		series: [{ name: mLang.Status, data: [0, 0, 0] }]
 	});
 
 	function startCron() {

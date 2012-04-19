@@ -13,38 +13,38 @@ $(document).ready(function() {
 				buttons: [{
 					type: 'day',
 					count: 1,
-					text: '1d'
+					text: mLang.zoom_1d
 				},{
 					type: 'week',
 					count: 1,
-					text: '1w'
+					text: mLang.zoom_1w
 				},{
 					type: 'month',
 					count: 1,
-					text: '1m'
+					text: mLang.zoom_1m
 				}, {
 					type: 'month',
 					count: 3,
-					text: '3m'
+					text: mLang.zoom_3m
 				}, {
 					type: 'month',
 					count: 6,
-					text: '6m'
+					text: mLang.zoom_6m
 				}, {
 					type: 'ytd',
-					text: 'YTD'
+					text: mLang.zoom_YTD
 				}, {
 					type: 'year',
 					count: 1,
-					text: '1y'
+					text: mLang.zoom_1y
 				}, {
 					type: 'all',
-					text: 'All'
+					text: mLang.zoom_All
 				}],
 				selected: 3
 			},
             series: [{
-                name: 'Channels online',
+                name: mLang.Channels,
                 data: data,
                 step: false,
                 tooltip: { valueDecimals: 0 }

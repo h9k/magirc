@@ -85,16 +85,16 @@
 	</table>
 </div>
 <ul id="chanmenu" style="display:none;">
-	{if $cfg.net_roundrobin}<li data-action="irc"><a href="#"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="" title="Standard connection" style="vertical-align:middle;" /> irc standard connection</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.net_port_ssl}<li data-action="ircs"><a href="#"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="" title="Secure connection" style="vertical-align:middle;" /> irc secure connection</a></li>{/if}
-	{if $cfg.service_webchat}<li data-action="webchat"><a href="#"><img src="theme/{$cfg.theme}/img/icons/webchat.png" alt="" title="Webchat" style="vertical-align:middle;" /> webchat</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.service_mibbit}<li data-action="mibbit"><a href="#"><img src="theme/{$cfg.theme}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> mibbit</a></li>{/if}
+	{if $cfg.net_roundrobin}<li data-action="irc"><a href="#"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="" title="{t}Standard connection{/t}" style="vertical-align:middle;" /> {t}IRC standard connection{/t}</a></li>{/if}
+	{if $cfg.net_roundrobin && $cfg.net_port_ssl}<li data-action="ircs"><a href="#"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="" title="{t}Secure connection{/t}" style="vertical-align:middle;" /> {t}IRC secure connection{/t}</a></li>{/if}
+	{if $cfg.service_webchat}<li data-action="webchat"><a href="#"><img src="theme/{$cfg.theme}/img/icons/webchat.png" alt="" title="{t}Webchat{/t}" style="vertical-align:middle;" /> {t}Webchat{/t}</a></li>{/if}
+	{if $cfg.net_roundrobin && $cfg.service_mibbit}<li data-action="mibbit"><a href="#"><img src="theme/{$cfg.theme}/img/icons/mibbit.png" alt="" title="{t}Mibbit{/t}" style="vertical-align:middle;" /> {t}Mibbit{/t}</a></li>{/if}
 </ul>
 {/block}
 {block name="js"}
 {if $cfg.cdn_enable}
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.19/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.js"></script>
 {else}
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -108,7 +108,6 @@
 <script type="text/javascript" src="js/jquery.dateformat.js"></script>
 {jsmin}
 <script type="text/javascript">
-
 var url_base = '{$smarty.const.BASE_URL}{if !$cfg.rewrite_enable}index.php/{/if}';
 var theme = '{$cfg.theme}';
 var net_roundrobin = '{$cfg.net_roundrobin}';
@@ -116,8 +115,87 @@ var net_port = '{$cfg.net_port|default:"6667"}';
 var net_port_ssl = '{$cfg.net_port_ssl}';
 var service_webchat = '{$cfg.service_webchat}';
 var service_mibbit = '{$cfg.service_mibbit}';
-var format_datetime = 'yyyy-MM-dd HH:mm:ss';
-var format_datetime_charts = '%Y-%m-%d %H:%M:%S';
+var format_datetime = '{t}yyyy-MM-dd HH:mm:ss{/t}';
+var format_datetime_charts = '{t}%Y-%m-%d %H:%M:%S{/t}';
+{/jsmin}
+var mLang = {
+	"Unknown": "{t}Unknown{/t}",
+	"AwayAs": "{t}AwayAs{/t}",
+	"OnlineAs": "{t}Online as{/t}",
+	"Online": "{t}Online{/t}",
+	"Offline": "{t}Offline{/t}",
+	"Bot": "{t}Bot{/t}",
+	"Service": "{t}Service{/t}",
+	"Helper": "{t}Available for help{/t}",
+	"Join": "{t}join{/t}",
+	"Days": "{t}days{/t}",
+	"Hours": "{t}hours{/t}",
+	"Minutes": "{t}minutes{/t}",
+	"zoom_All": "{t}All{/t}",
+	"zoom_1d": "{t}1d{/t}",
+	"zoom_1w": "{t}1w{/t}",
+	"zoom_1m": "{t}1m{/t}",
+	"zoom_3m": "{t}1m{/t}",
+	"zoom_6m": "{t}1m{/t}",
+	"zoom_1y": "{t}1y{/t}",
+	"zoom_YTD": "{t}YTD{/t}",
+	"LoadError": "{t}Unable to load contents{/t}",
+	"Message": "{t}Message{/t}",
+	"ConnectedSince": "{t}Connected since{/t}",
+	"LastQuit": "{t}Last quit{/t}",
+	"UsersOnline": "{t}Users online{/t}",
+	"ServersOnline": "{t}Servers online{/t}",
+	"Servers": "{t}Servers{/t}",
+	"Channels": "{t}Channels{/t}",
+	"Users": "{t}Users{/t}",
+	"Operators": "{t}Operators{/t}",
+	"Total": "{t}Total{/t}",
+	"Today": "{t}Today{/t}",
+	"ThisWeek": "{t}This Week{/t}",
+	"ThisMonth": "{t}This Month{/t}",
+	"Yes": "{t}Yes{/t}",
+	"No": "{t}No{/t}",
+	"Never": "{t}Never{/t}",
+	"On": "{t}on{/t}",
+	"NoMotd": "{t}MOTD not available for this server{/t}",
+	"Failed": "{t}Failed{/t}",
+	"Close": "{t}Close{/t}",
+	"Status": "{t}Status{/t}",
+	"CountryStatistics": "{t}Country Statistics{/t}",
+	"ClientStatistics": "{t}Client Statistics{/t}",
+	"None": "{t}none{/t}",
+	"NetsplitRelWeeks": "{t}Relation of users and channels during the last 2 weeks{/t}",
+	"NetsplitRelMonths": "{t}Relation of users and channels during the last 2 months{/t}",
+	"NetsplitRelYears": "{t}Relation of users and channels during the last 2 years{/t}",
+	"NetsplitChanWeeks": "{t}Channels during the last 2 weeks{/t}",
+	"NetsplitChanMonths": "{t}Channels during the last 2 months{/t}",
+	"NetsplitChanYears": "{t}Channels during the last 2 years{/t}",
+	"NetsplitSrvWeeks": "{t}Servers during the last 2 weeks{/t}",
+	"NetsplitSrvMonths": "{t}Servers during the last 2 months{/t}",
+	"NetsplitSrvYears": "{t}Servers during the last 2 years{/t}",
+	"DataTables": {
+		"sProcessing":   "{t}Processing...{/t}",
+		"sLengthMenu":   "{t}Show _MENU_ entries{/t}",
+		"sZeroRecords":  "{t}No matching records found{/t}",
+		"sInfo":         "{t}Showing _START_ to _END_ of _TOTAL_ entries{/t}",
+		"sInfoEmpty":    "{t}Showing 0 to 0 of 0 entries{/t}",
+		"sInfoFiltered": "{t}(filtered from _MAX_ total entries){/t}",
+		"sInfoPostFix":  "",
+		"sSearch":       "{t}Search{/t}:",
+		"sUrl":          "",
+		"oAria": {
+			"sSortAscending": " - {t}click/return to sort ascending{/t}",
+			"sSortDescending": " - {t}click/return to sort descending{/t}"
+		},
+		"oPaginate": {
+			"sFirst":    "{t}First{/t}",
+			"sPrevious": "{t}Previous{/t}",
+			"sNext":     "{t}Next{/t}",
+			"sLast":     "{t}Last{/t}"
+		}
+	}
+}
+{jsmin}
 {literal}
 $(document).ready(function() {
 	$("#loading").ajaxStart(function(){
@@ -135,7 +213,8 @@ $(document).ready(function() {
 		"bServerSide": false,
 		"bJQueryUI": true,
 		"bAutoWidth": false,
-		"sPaginationType": "full_numbers"
+		"sPaginationType": "full_numbers"/*,
+		"oLanguage": mLang.DataTables*/
     });
 	// Highcharts default settings
 	Highcharts.setOptions({
@@ -168,33 +247,33 @@ $(document).ready(function() {
 			buttons: [{
 				type: 'day',
 				count: 1,
-				text: '1d'
+				text: mLang.zoom_1d
 			},{
 				type: 'week',
 				count: 1,
-				text: '1w'
+				text: mLang.zoom_1w
 			},{
 				type: 'month',
 				count: 1,
-				text: '1m'
+				text: mLang.zoom_1m
 			}, {
 				type: 'month',
 				count: 3,
-				text: '3m'
+				text: mLang.zoom_3m
 			}, {
 				type: 'month',
 				count: 6,
-				text: '6m'
+				text: mLang.zoom_6m
 			}, {
 				type: 'ytd',
-				text: 'YTD'
+				text: mLang.zoom_YTD
 			}, {
 				type: 'year',
 				count: 1,
-				text: '1y'
+				text: mLang.zoom_1y
 			}, {
 				type: 'all',
-				text: 'All'
+				text: mLang.zoom_All
 			}],
 			selected: 3
 		},
@@ -285,28 +364,28 @@ $(document).ready(function() {
 });
 
 function getUserStatus(user) {
-	if (user['away']) return '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="Away as '+user['nickname']+'" \/>';
-	else if (user['online']) return '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="Online as '+user['nickname']+'" \/>';
-	else return '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="Offline" \/>';
+	if (user['away']) return '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="'+mLang.AwayAs+' '+user['nickname']+'" \/>';
+	else if (user['online']) return '<img src="theme/'+theme+'/img/status/user-online.png" alt="online" title="'+mLang.OnlineAs+' '+user['nickname']+'" \/>';
+	else return '<img src="theme/'+theme+'/img/status/user-offline.png" alt="offline" title="'+mLang.Offline+'" \/>';
 }
 function getUserExtra(user) {
 	var out = '';
-	if (user['bot']) out += ' <img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="Bot" \/>';
-	if (user['service']) out += ' <img src="theme/'+theme+'/img/status/service.png" alt="service" title="Service" \/>';
+	if (user['bot']) out += ' <img src="theme/'+theme+'/img/status/bot.png" alt="bot" title="'+mLang.Bot+'" \/>';
+	if (user['service']) out += ' <img src="theme/'+theme+'/img/status/service.png" alt="service" title="'+mLang.Service+'" \/>';
 	if (user['operator']) out += ' <img src="theme/'+theme+'/img/status/operator.png" alt="oper" title="'+user['operator_level']+'" \/>';
-	if (user['helper']) out += ' <img src="theme/'+theme+'/img/status/help.png" alt="help" title="Available for help" \/>';
+	if (user['helper']) out += ' <img src="theme/'+theme+'/img/status/help.png" alt="help" title="'+mLang.Helper+'" \/>';
 	return out;
 }
 function getCountryFlag(user) {
 	if (user['country_code'] != null && user['country_code'] != '' && user['country_code'] != '??' && user['country_code'] != 'local') {
 		return '<img src="theme/'+theme+'/img/flags/'+user['country_code'].toLowerCase()+'.png" alt="'+user['country_code']+'" title="'+user['country']+'" />';
 	} else {
-		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="Unknown" />';
+		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="'+mLang.Unknown+'" />';
 	}
 }
 function getChannelLinks(chan) {
 	if (net_roundrobin || service_webchat) {
-		return '<button type="button" title="join..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:18px; width:30px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>';
+		return '<button type="button" title="'+mLang.Join+'..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:18px; width:30px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>';
 	} else {
 		return ''
 	}
@@ -315,7 +394,7 @@ function getTimeElapsed(seconds) {
 	var days = Math.floor(seconds / 86400);
 	var hours = Math.floor((seconds - (days * 86400 ))/3600)
 	var minutes = Math.floor((seconds - (days * 86400 ) - (hours *3600 ))/60)
-	return days + " Days " + hours + " Hours " + minutes + " Minutes";
+	return days + " " + mLang.Days + " " + hours + " " + mLang.Hours + " " + minutes + " " + mLang.Minutes;
 }
 {/literal}
 </script>

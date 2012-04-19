@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-19 14:57+0100\n"
-"PO-Revision-Date: 2012-04-19 15:40+0100\n"
+"PO-Revision-Date: 2012-04-19 17:27+0100\n"
 "Last-Translator: Sebastian Vassiliou <admin@hosting9000.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -520,11 +520,11 @@ msgstr "Type"
 
 #: ../../strings.c:575
 msgid "Global user activity"
-msgstr "Activité globale de l'utilisateur"
+msgstr "Activité globale des utilisateurs"
 
 #: ../../strings.c:620
 msgid "User history"
-msgstr "Historique utilisateur"
+msgstr "Historique utilisateurs"
 
 #: ../../strings.c:623
 msgid "User info for %1"

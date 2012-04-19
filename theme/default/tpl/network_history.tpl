@@ -7,11 +7,12 @@
 $(document).ready(function() {
     var seriesOptions = [],
         seriesCounter = 0,
-        names = ['Servers', 'Channels', 'Users'];
+        names = ['servers', 'channels', 'users'],
+		namesLang = { 'servers': mLang.Servers, 'channels': mLang.Channels, 'users': mLang.Users };
 
     $.each(names, function(i, name) {
         $.getJSON('rest/denora.php/'+ name.toLowerCase() +'/hourlystats', function(data) {
-            seriesOptions[i] = { name: name, data: data };
+            seriesOptions[i] = { name: namesLang[name], data: data };
             seriesCounter++;
             if (seriesCounter == names.length) {
                 createChart();
@@ -27,33 +28,33 @@ $(document).ready(function() {
 				buttons: [{
 					type: 'day',
 					count: 1,
-					text: '1d'
+					text: mLang.zoom_1d
 				},{
 					type: 'week',
 					count: 1,
-					text: '1w'
+					text: mLang.zoom_1w
 				},{
 					type: 'month',
 					count: 1,
-					text: '1m'
+					text: mLang.zoom_1m
 				}, {
 					type: 'month',
 					count: 3,
-					text: '3m'
+					text: mLang.zoom_3m
 				}, {
 					type: 'month',
 					count: 6,
-					text: '6m'
+					text: mLang.zoom_6m
 				}, {
 					type: 'ytd',
-					text: 'YTD'
+					text: mLang.zoom_YTD
 				}, {
 					type: 'year',
 					count: 1,
-					text: '1y'
+					text: mLang.zoom_1y
 				}, {
 					type: 'all',
-					text: 'All'
+					text: mLang.zoom_All
 				}],
 				selected: 3
 			},

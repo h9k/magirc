@@ -63,7 +63,7 @@ $(document).ready(function() {
 		$("#chan_users").html(result.users);
 		$("#chan_users_max").html(result.users_max);
 		$("#chan_users_max_time").html($.format.date(result.users_max_time, format_datetime));
-		$("#chan_modes").html(result.modes ? "+"+result.modes : 'None');
+		$("#chan_modes").html(result.modes ? "+"+result.modes : mLang.None);
 		$("#chan_kicks").html(result.kicks);
 	});
 	$('#tbl_users').dataTable({

@@ -67,10 +67,10 @@ $(document).ready(function() {
 		"aoColumns": [
 			{ "mDataProp": "type", "fnRender": function (oObj) {
 				switch (oObj.aData['type']) {
-					case 0: return 'Total';
-					case 1: return 'Today';
-					case 2: return 'This Week';
-					case 3: return 'This Month';
+					case 0: return mLang.Total;
+					case 1: return mLang.Today;
+					case 2: return mLang.ThisWeek;
+					case 3: return mLang.ThisMonth;
 				}
 			} },
 			{ "mDataProp": "letters" },
