@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-19 18:20+0100\n"
-"PO-Revision-Date: 2012-04-19 18:20+0100\n"
+"POT-Creation-Date: 2012-04-19 18:42+0100\n"
+"PO-Revision-Date: 2012-04-19 18:42+0100\n"
 "Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -735,50 +735,58 @@ msgid "Processing..."
 msgstr "Verarbeitung..."
 
 #: ../../strings.c:869
+msgid "Please wait - loading..."
+msgstr "Bitte warten - Ladevorgang..."
+
+#: ../../strings.c:872
 msgid "Show _MENU_ entries"
 msgstr "_MENU_ Einträge anzeigen"
 
-#: ../../strings.c:872
+#: ../../strings.c:875
 msgid "No matching records found"
 msgstr "Keine Einträge vorhanden"
 
-#: ../../strings.c:875
+#: ../../strings.c:878
+msgid "No data available in table"
+msgstr "Keine Daten in der Tabelle vorhanden"
+
+#: ../../strings.c:881
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "_START_ bis _END_ von _TOTAL_ Einträgen"
 
-#: ../../strings.c:878
+#: ../../strings.c:884
 msgid "Showing 0 to 0 of 0 entries"
 msgstr "0 bis 0 von 0 Einträgen"
 
-#: ../../strings.c:881
+#: ../../strings.c:887
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(gefiltert von _MAX_ Einträgen)"
 
-#: ../../strings.c:884
+#: ../../strings.c:890
 msgid "Search"
 msgstr "Suchen"
 
-#: ../../strings.c:887
+#: ../../strings.c:893
 msgid "click/return to sort ascending"
 msgstr "Klick/Eingabe um aufsteigend zu sortieren"
 
-#: ../../strings.c:890
+#: ../../strings.c:896
 msgid "click/return to sort descending"
 msgstr "Klick/Eingabe um absteigend zu sortieren"
 
-#: ../../strings.c:893
+#: ../../strings.c:899
 msgid "First"
 msgstr "Erster"
 
-#: ../../strings.c:896
+#: ../../strings.c:902
 msgid "Previous"
 msgstr "Zurück"
 
-#: ../../strings.c:899
+#: ../../strings.c:905
 msgid "Next"
 msgstr "Nächster"
 
-#: ../../strings.c:902
+#: ../../strings.c:908
 msgid "Last"
 msgstr "Letzter"
 

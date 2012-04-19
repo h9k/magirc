@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-19 18:08+0100\n"
-"PO-Revision-Date: 2012-04-19 18:08+0100\n"
+"POT-Creation-Date: 2012-04-19 18:43+0100\n"
+"PO-Revision-Date: 2012-04-19 18:43+0100\n"
 "Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 #: ../../strings.c:74
 #: ../../strings.c:515
 #: ../../strings.c:560
-#: ../../strings.c:800
+#: ../../strings.c:794
 msgid "Total"
 msgstr ""
 
@@ -34,7 +34,7 @@ msgstr ""
 #: ../../strings.c:380
 #: ../../strings.c:518
 #: ../../strings.c:563
-#: ../../strings.c:803
+#: ../../strings.c:797
 msgid "Today"
 msgstr ""
 
@@ -42,7 +42,7 @@ msgstr ""
 #: ../../strings.c:80
 #: ../../strings.c:521
 #: ../../strings.c:566
-#: ../../strings.c:806
+#: ../../strings.c:800
 msgid "This Week"
 msgstr ""
 
@@ -50,7 +50,7 @@ msgstr ""
 #: ../../strings.c:83
 #: ../../strings.c:524
 #: ../../strings.c:569
-#: ../../strings.c:809
+#: ../../strings.c:803
 msgid "This Month"
 msgstr ""
 
@@ -208,7 +208,7 @@ msgstr ""
 #: ../../strings.c:137
 #: ../../strings.c:335
 #: ../../strings.c:668
-#: ../../strings.c:791
+#: ../../strings.c:785
 msgid "Channels"
 msgstr ""
 
@@ -230,7 +230,7 @@ msgstr ""
 #: ../../strings.c:248
 #: ../../strings.c:437
 #: ../../strings.c:632
-#: ../../strings.c:833
+#: ../../strings.c:827
 msgid "Status"
 msgstr ""
 
@@ -262,7 +262,7 @@ msgstr ""
 #: ../../strings.c:476
 #: ../../strings.c:485
 #: ../../strings.c:494
-#: ../../strings.c:821
+#: ../../strings.c:815
 msgid "on"
 msgstr ""
 
@@ -327,7 +327,7 @@ msgstr ""
 #: ../../strings.c:257
 #: ../../strings.c:338
 #: ../../strings.c:449
-#: ../../strings.c:797
+#: ../../strings.c:791
 msgid "Operators"
 msgstr ""
 
@@ -411,7 +411,7 @@ msgstr ""
 #: ../../strings.c:446
 #: ../../strings.c:638
 #: ../../strings.c:671
-#: ../../strings.c:794
+#: ../../strings.c:788
 msgid "Users"
 msgstr ""
 
@@ -419,7 +419,7 @@ msgstr ""
 #: ../../strings.c:497
 #: ../../strings.c:500
 #: ../../strings.c:665
-#: ../../strings.c:788
+#: ../../strings.c:782
 msgid "Servers"
 msgstr ""
 
@@ -472,7 +472,7 @@ msgid "Description"
 msgstr ""
 
 #: ../../strings.c:458
-#: ../../strings.c:719
+#: ../../strings.c:713
 msgid "Online"
 msgstr ""
 
@@ -557,194 +557,197 @@ msgid "Language"
 msgstr ""
 
 #: ../../strings.c:698
-#: ../../strings.c:701
-msgid "Mibbit"
-msgstr ""
-
-#: ../../strings.c:704
 msgid "yyyy-MM-dd HH:mm:ss"
 msgstr ""
 
-#: ../../strings.c:707
+#: ../../strings.c:701
 msgid "%Y-%m-%d %H:%M:%S"
 msgstr ""
 
-#: ../../strings.c:710
+#: ../../strings.c:704
 msgid "Unknown"
 msgstr ""
 
-#: ../../strings.c:713
+#: ../../strings.c:707
 msgid "Away as"
 msgstr ""
 
-#: ../../strings.c:716
+#: ../../strings.c:710
 msgid "Online as"
 msgstr ""
 
-#: ../../strings.c:722
+#: ../../strings.c:716
 msgid "Offline"
 msgstr ""
 
-#: ../../strings.c:725
+#: ../../strings.c:719
 msgid "Bot"
 msgstr ""
 
-#: ../../strings.c:728
+#: ../../strings.c:722
 msgid "Service"
 msgstr ""
 
-#: ../../strings.c:731
+#: ../../strings.c:725
 msgid "Available for help"
 msgstr ""
 
-#: ../../strings.c:734
+#: ../../strings.c:728
 msgid "join"
 msgstr ""
 
-#: ../../strings.c:737
+#: ../../strings.c:731
 msgid "days"
 msgstr ""
 
-#: ../../strings.c:740
+#: ../../strings.c:734
 msgid "hours"
 msgstr ""
 
-#: ../../strings.c:743
+#: ../../strings.c:737
 msgid "minutes"
 msgstr ""
 
-#: ../../strings.c:746
+#: ../../strings.c:740
 msgid "All"
 msgstr ""
 
-#: ../../strings.c:749
+#: ../../strings.c:743
 msgid "1d"
 msgstr ""
 
-#: ../../strings.c:752
+#: ../../strings.c:746
 msgid "1w"
 msgstr ""
 
+#: ../../strings.c:749
+#: ../../strings.c:752
 #: ../../strings.c:755
-#: ../../strings.c:758
-#: ../../strings.c:761
 msgid "1m"
 msgstr ""
 
-#: ../../strings.c:764
+#: ../../strings.c:758
 msgid "1y"
 msgstr ""
 
-#: ../../strings.c:767
+#: ../../strings.c:761
 msgid "YTD"
 msgstr ""
 
-#: ../../strings.c:770
+#: ../../strings.c:764
 msgid "Unable to load contents"
 msgstr ""
 
-#: ../../strings.c:773
+#: ../../strings.c:767
 msgid "Message"
 msgstr ""
 
-#: ../../strings.c:776
+#: ../../strings.c:770
 msgid "Connected since"
 msgstr ""
 
-#: ../../strings.c:779
+#: ../../strings.c:773
 msgid "Last quit"
 msgstr ""
 
-#: ../../strings.c:782
+#: ../../strings.c:776
 msgid "Users online"
 msgstr ""
 
-#: ../../strings.c:785
+#: ../../strings.c:779
 msgid "Servers online"
 msgstr ""
 
-#: ../../strings.c:812
+#: ../../strings.c:806
 msgid "Yes"
 msgstr ""
 
-#: ../../strings.c:815
+#: ../../strings.c:809
 msgid "No"
 msgstr ""
 
-#: ../../strings.c:818
+#: ../../strings.c:812
 msgid "Never"
 msgstr ""
 
-#: ../../strings.c:824
+#: ../../strings.c:818
 msgid "MOTD not available for this server"
 msgstr ""
 
-#: ../../strings.c:827
+#: ../../strings.c:821
 msgid "Failed"
 msgstr ""
 
-#: ../../strings.c:830
+#: ../../strings.c:824
 msgid "Close"
 msgstr ""
 
-#: ../../strings.c:836
+#: ../../strings.c:830
 msgid "Country Statistics"
 msgstr ""
 
-#: ../../strings.c:839
+#: ../../strings.c:833
 msgid "Client Statistics"
 msgstr ""
 
-#: ../../strings.c:842
+#: ../../strings.c:836
 msgid "none"
 msgstr ""
 
-#: ../../strings.c:845
+#: ../../strings.c:839
 msgid "Relation of users and channels during the last 2 weeks"
 msgstr ""
 
-#: ../../strings.c:848
+#: ../../strings.c:842
 msgid "Relation of users and channels during the last 2 months"
 msgstr ""
 
-#: ../../strings.c:851
+#: ../../strings.c:845
 msgid "Relation of users and channels during the last 2 years"
 msgstr ""
 
-#: ../../strings.c:854
+#: ../../strings.c:848
 msgid "Channels during the last 2 weeks"
 msgstr ""
 
-#: ../../strings.c:857
+#: ../../strings.c:851
 msgid "Channels during the last 2 months"
 msgstr ""
 
-#: ../../strings.c:860
+#: ../../strings.c:854
 msgid "Channels during the last 2 years"
 msgstr ""
 
-#: ../../strings.c:863
+#: ../../strings.c:857
 msgid "Servers during the last 2 weeks"
 msgstr ""
 
-#: ../../strings.c:866
+#: ../../strings.c:860
 msgid "Servers during the last 2 months"
 msgstr ""
 
-#: ../../strings.c:869
+#: ../../strings.c:863
 msgid "Servers during the last 2 years"
 msgstr ""
 
-#: ../../strings.c:872
+#: ../../strings.c:866
 msgid "Processing..."
 msgstr ""
 
-#: ../../strings.c:875
+#: ../../strings.c:869
+msgid "Please wait - loading..."
+msgstr ""
+
+#: ../../strings.c:872
 msgid "Show _MENU_ entries"
 msgstr ""
 
-#: ../../strings.c:878
+#: ../../strings.c:875
 msgid "No matching records found"
+msgstr ""
+
+#: ../../strings.c:878
+msgid "No data available in table"
 msgstr ""
 
 #: ../../strings.c:881

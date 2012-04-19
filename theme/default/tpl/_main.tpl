@@ -174,24 +174,27 @@ var mLang = {
 	"NetsplitSrvMonths": "{t}Servers during the last 2 months{/t}",
 	"NetsplitSrvYears": "{t}Servers during the last 2 years{/t}",
 	"DataTables": {
-		"sProcessing":   "{t}Processing...{/t}",
-		"sLengthMenu":   "{t}Show _MENU_ entries{/t}",
-		"sZeroRecords":  "{t}No matching records found{/t}",
-		"sInfo":         "{t}Showing _START_ to _END_ of _TOTAL_ entries{/t}",
-		"sInfoEmpty":    "{t}Showing 0 to 0 of 0 entries{/t}",
+		"sProcessing": "{t}Processing...{/t}",
+		"sLoadingRecords": "{t}Please wait - loading...{/t}",
+		"sLengthMenu": "{t}Show _MENU_ entries{/t}",
+		"sZeroRecords": "{t}No matching records found{/t}",
+		"sEmptyTable": "{t}No data available in table{/t}",
+		"sInfo": "{t}Showing _START_ to _END_ of _TOTAL_ entries{/t}",
+		"sInfoEmpty": "{t}Showing 0 to 0 of 0 entries{/t}",
 		"sInfoFiltered": "{t}(filtered from _MAX_ total entries){/t}",
-		"sInfoPostFix":  "",
-		"sSearch":       "{t}Search{/t}:",
-		"sUrl":          "",
+		"sInfoPostFix": "",
+		"sInfoThousands": "'",
+		"sSearch": "{t}Search{/t}:",
+		"sUrl": "",
 		"oAria": {
 			"sSortAscending": " - {t}click/return to sort ascending{/t}",
 			"sSortDescending": " - {t}click/return to sort descending{/t}"
 		},
 		"oPaginate": {
-			"sFirst":    "{t}First{/t}",
+			"sFirst": "{t}First{/t}",
 			"sPrevious": "{t}Previous{/t}",
-			"sNext":     "{t}Next{/t}",
-			"sLast":     "{t}Last{/t}"
+			"sNext": "{t}Next{/t}",
+			"sLast": "{t}Last{/t}"
 		}
 	}
 }
@@ -213,8 +216,8 @@ $(document).ready(function() {
 		"bServerSide": false,
 		"bJQueryUI": true,
 		"bAutoWidth": false,
-		"sPaginationType": "full_numbers"/*,
-		"oLanguage": mLang.DataTables*/
+		"sPaginationType": "full_numbers",
+		"oLanguage": mLang.DataTables
     });
 	// Highcharts default settings
 	Highcharts.setOptions({

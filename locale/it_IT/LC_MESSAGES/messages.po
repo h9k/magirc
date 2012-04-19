@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-19 18:27+0100\n"
-"PO-Revision-Date: 2012-04-19 18:27+0100\n"
+"POT-Creation-Date: 2012-04-19 18:42+0100\n"
+"PO-Revision-Date: 2012-04-19 18:42+0100\n"
 "Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "Questa settimana"
 #: ../../strings.c:569
 #: ../../strings.c:803
 msgid "This Month"
-msgstr "Questo meso"
+msgstr "Questo mese"
 
 #: ../../strings.c:17
 #: ../../strings.c:215
@@ -735,50 +735,58 @@ msgid "Processing..."
 msgstr "Elaborazione..."
 
 #: ../../strings.c:869
+msgid "Please wait - loading..."
+msgstr "Prego attendere - caricamento in corso..."
+
+#: ../../strings.c:872
 msgid "Show _MENU_ entries"
 msgstr "Visualizza _MENU_ elementi"
 
-#: ../../strings.c:872
+#: ../../strings.c:875
 msgid "No matching records found"
 msgstr "La ricerca non ha portato alcun risultato"
 
-#: ../../strings.c:875
+#: ../../strings.c:878
+msgid "No data available in table"
+msgstr "Nessun dato disponibile nella tabella"
+
+#: ../../strings.c:881
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "Vista da _START_ a _END_ di _TOTAL_ elementi"
 
-#: ../../strings.c:878
+#: ../../strings.c:884
 msgid "Showing 0 to 0 of 0 entries"
 msgstr "Vista da 0 a 0 di 0 elementi"
 
-#: ../../strings.c:881
+#: ../../strings.c:887
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(filtrato da _MAX_ elementi totali)"
 
-#: ../../strings.c:884
+#: ../../strings.c:890
 msgid "Search"
 msgstr "Cerca"
 
-#: ../../strings.c:887
+#: ../../strings.c:893
 msgid "click/return to sort ascending"
 msgstr "clicca/invio per ordinare ascendente"
 
-#: ../../strings.c:890
+#: ../../strings.c:896
 msgid "click/return to sort descending"
 msgstr "clicca/invio per ordinare discendente"
 
-#: ../../strings.c:893
+#: ../../strings.c:899
 msgid "First"
 msgstr "Inizio"
 
-#: ../../strings.c:896
+#: ../../strings.c:902
 msgid "Previous"
 msgstr "Precedente"
 
-#: ../../strings.c:899
+#: ../../strings.c:905
 msgid "Next"
 msgstr "Successivo"
 
-#: ../../strings.c:902
+#: ../../strings.c:908
 msgid "Last"
 msgstr "Ultimo"
 

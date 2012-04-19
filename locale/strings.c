@@ -866,10 +866,16 @@ gettext("Servers during the last 2 years");
 gettext("Processing...");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
+gettext("Please wait - loading...");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("Show _MENU_ entries");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("No matching records found");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
+gettext("No data available in table");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("Showing _START_ to _END_ of _TOTAL_ entries");
