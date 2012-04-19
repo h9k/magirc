@@ -1,17 +1,17 @@
-<h1>User info for {$target}</h1>
+<h1>{t 1=$target}User info for %1{/t}</h1>
 
 <table id="tbl_details" class="details">
-	<tr><th>Nickname:</th><td><span id="user_nick" class="val"></span></td></tr>
-	<tr><th>Aliases:</th><td><span id="user_aliases" class="val"></span></td></tr>
-	<tr><th>Stats Username:</th><td><span id="user_uname" class="val"></span></td></tr>
-	<tr><th>Real name:</th><td><span id="user_realname" class="val"></span></td></tr>
-	<tr><th>Hostname:</th><td><span id="user_hostname" class="val"></span></td></tr>
-	<tr><th>Server:</th><td><span id="user_server" class="val"></span></td></tr>
-	<tr><th>Country:</th><td><span id="user_country" class="val"></span></td></tr>
-	<tr><th>Client:</th><td><span id="user_client" class="val"></span></td></tr>
-	<tr><th>Status:</th><td><span id="user_status" class="val"></span><span id="user_status_extra"></span></td></tr>
+	<tr><th>{t}Nickname{/t}:</th><td><span id="user_nick" class="val"></span></td></tr>
+	<tr><th>{t}Aliases{/t}:</th><td><span id="user_aliases" class="val"></span></td></tr>
+	<tr><th>{t}Stats Username{/t}:</th><td><span id="user_uname" class="val"></span></td></tr>
+	<tr><th>{t}Real name{/t}:</th><td><span id="user_realname" class="val"></span></td></tr>
+	<tr><th>{t}Hostname{/t}:</th><td><span id="user_hostname" class="val"></span></td></tr>
+	<tr><th>{t}Server{/t}:</th><td><span id="user_server" class="val"></span></td></tr>
+	<tr><th>{t}Country{/t}:</th><td><span id="user_country" class="val"></span></td></tr>
+	<tr><th>{t}Client{/t}:</th><td><span id="user_client" class="val"></span></td></tr>
+	<tr><th>{t}Status{/t}:</th><td><span id="user_status" class="val"></span><span id="user_status_extra"></span></td></tr>
 </table>
-<div id="nodata" style="display:none;">Information for this user currently unavailable</div>
+<div id="nodata" style="display:none;">{t}Information for this user currently unavailable{/t}</div>
 
 {jsmin}
 <script type="text/javascript">

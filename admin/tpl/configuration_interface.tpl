@@ -13,7 +13,13 @@
 		</tr>
 		<tr>
 			<td align="right"><strong>Default Language</strong><br />Will not override automatic detection by browser</td>
-			<td align="left"><em>English</em></td>
+			<td align="left">
+				<select name="locale" id="locale">
+				{foreach from=$locales item=item}
+					<option value="{$item}"{if $cfg.locale eq $item} selected="selected"{/if}>{$item}</option>
+				{/foreach}
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td align="right"><strong>Timezone</strong></td>

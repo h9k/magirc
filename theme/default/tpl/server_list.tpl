@@ -1,23 +1,23 @@
-<h1>Server list</h1>
+<h1>{t}Server list{/t}</h1>
 {if $cfg.net_roundrobin}
-	Connect to our network round robin <strong>{$cfg.net_roundrobin}</strong>:
-	<a href="irc://{$cfg.net_roundrobin}{if $cfg.net_port}:{$cfg.net_port}{/if}"><img src="theme/{$cfg.theme}/img/icons/server-link.png" alt="standard" title="Standard connection" /></a>
-	{if $cfg.net_port_ssl} <a href="irc://{$cfg.net_roundrobin}:+{$cfg.net_port_ssl}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="ssl" title="Secure connection" /></a>{/if}
+	{t}Connect to our network round robin{/t} <strong>{$cfg.net_roundrobin}</strong>:
+	<a href="irc://{$cfg.net_roundrobin}{if $cfg.net_port}:{$cfg.net_port}{/if}"><img src="theme/{$cfg.theme}/img/icons/server-link.png" alt="standard" title="{t}Standard connection{/t}" /></a>
+	{if $cfg.net_port_ssl} <a href="irc://{$cfg.net_roundrobin}:+{$cfg.net_port_ssl}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="ssl" title="{t}Secure connection{/t}" /></a>{/if}
 	<br /><br />
 {/if}
 
 <table id="tbl_servers" class="display clickable">
 <thead>
 	<tr>
-		<th>Status</th>
-		<th>Server</th>
-		<th>Description</th>
-		<th>Users</th>
-		<th>Operators</th>
+		<th>{t}Status{/t}</th>
+		<th>{t}Server{/t}</th>
+		<th>{t}Description{/t}</th>
+		<th>{t}Users{/t}</th>
+		<th>{t}Operators{/t}</th>
 	</tr>
 </thead>
 <tbody>
-	<tr><td colspan="5">Loading...</td></tr>
+	<tr><td colspan="5">{t}Loading{/t}...</td></tr>
 </tbody>
 </table>
 </div>
@@ -25,22 +25,21 @@
 <div id="dialog-server" title="Server">
 	<div class="halfleft">
 		<table class="details">
-			<tr><th>Description:</th><td><span id="srv_description" class="val"></span></td></tr>
-			<tr><th>Online:</th><td><span id="srv_online" class="val"></span></td></tr>
-			<tr><th>Version:</th><td><span id="srv_version" class="val"></span></td></tr>
-			<tr><th>Uptime:</th><td><span id="srv_uptime" class="val"></span></td></tr>
-			{*<tr><th>Connected since:</th><td><span id="srv_connecttime" class="val"></span></td></tr>*}
-			<tr><th>Last split:</th><td><span id="srv_lastsplit" class="val"></span></td></tr>
+			<tr><th>{t}Description{/t}:</th><td><span id="srv_description" class="val"></span></td></tr>
+			<tr><th>{t}Online{/t}:</th><td><span id="srv_online" class="val"></span></td></tr>
+			<tr><th>{t}Version{/t}:</th><td><span id="srv_version" class="val"></span></td></tr>
+			<tr><th>{t}Uptime{/t}:</th><td><span id="srv_uptime" class="val"></span></td></tr>
+			<tr><th>{t}Last split{/t}:</th><td><span id="srv_lastsplit" class="val"></span></td></tr>
 		</table>
 	</div>
 	<div class="halfright">
 		<table class="details">
-			<tr><th>Last ping:</th><td><span id="srv_ping" class="val"></span></td></tr>
-			<tr><th>Highest ping:</th><td><span id="srv_maxping" class="val"></span> on <span id="srv_maxpingtime"></td></tr>
-			<tr><th>Current users:</th><td><span id="srv_users" class="val"></span></td></tr>
-			<tr><th>Max users:</th><td><span id="srv_maxusers" class="val"></span> on <span id="srv_maxusertime"></td></tr>
-			<tr><th>Current opers:</th><td><span id="srv_opers" class="val"></span></td></tr>
-			<tr><th>Max opers:</th><td><span id="srv_maxopers" class="val"></span> on <span id="srv_maxopertime"></td></tr>
+			<tr><th>{t}Last ping{/t}:</th><td><span id="srv_ping" class="val"></span></td></tr>
+			<tr><th>{t}Highest ping{/t}:</th><td><span id="srv_maxping" class="val"></span> {t}on{/t} <span id="srv_maxpingtime"></td></tr>
+			<tr><th>{t}Current users{/t}:</th><td><span id="srv_users" class="val"></span></td></tr>
+			<tr><th>{t}Max users{/t}:</th><td><span id="srv_maxusers" class="val"></span> {t}on{/t} <span id="srv_maxusertime"></td></tr>
+			<tr><th>{t}Current opers{/t}:</th><td><span id="srv_opers" class="val"></span></td></tr>
+			<tr><th>{t}Max opers{/t}:</th><td><span id="srv_maxopers" class="val"></span> {t}on{/t} <span id="srv_maxopertime"></td></tr>
 		</table>
 	</div>
 	<div id="srv_motd" class="motd clear" title="MOTD"><pre id="srv_motd_txt"></pre></div>

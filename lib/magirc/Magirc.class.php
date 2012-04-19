@@ -70,17 +70,60 @@ class Magirc {
 
 		if ($api_mode == "web") {
 			// Set the locale
-			$locale = $this->cfg->getParam('locale');
+			$locales = $this->getLocales();
+			if (isset($_GET['locale']) && in_array($_GET['locale'], $locales)) {
+				setcookie('magirc_locale', $_GET['locale']);
+				$locale = $_GET['locale'];
+			} elseif (isset($_COOKIE['magirc_locale']) && in_array($_COOKIE['magirc_locale'], $locales)) {
+				$locale = $_COOKIE['magirc_locale'];
+			} else {
+				$locale = $this->detectLocale($locales);
+			}
+			// Configure gettext
 			$domain = "messages";
-			/*if (!ini_get("safe_mode")) {
-				putenv("LC_ALL={$locale}.utf8");
-			}*/
 			setlocale(LC_ALL, $locale);
 			bindtextdomain($domain, './locale/');
 			bind_textdomain_codeset($domain, "UTF-8");
 			textdomain($domain);
-			#define('LANG', substr($locale, 0, 2));
+			if (!ini_get("safe_mode")) {
+				@putenv("LC_ALL={$locale}.utf8");
+			}
+			define('LOCALE', $locale);
+			define('LANG', substr($locale, 0, 2));
 		}
+	}
+
+	/**
+	 * Gets a list of available locales
+	 * @return array
+	 */
+	private function getLocales() {
+		$locales = array();
+		foreach (glob("locale/*") as $filename) {
+			if (is_dir($filename)) $locales[] = basename($filename);
+		}
+		return $locales;
+	}
+
+	/**
+	 * Detects the best locale based on HTTP ACCEPT_LANGUAGE
+	 * @param array $available_languages Array of available locales
+	 * @return string Locale
+	 */
+	private function detectLocale($available_locales) {
+		$hits = array();
+		preg_match_all("/([[:alpha:]]{1,8})(-([[:alpha:]|-]{1,8}))?(\s*;\s*q\s*=\s*(1\.0{0,3}|0\.\d{0,3}))?\s*(,|$)/i", $_SERVER['HTTP_ACCEPT_LANGUAGE'], $hits, PREG_SET_ORDER);
+		$bestlang = $this->cfg->getParam('locale');
+		$bestqval = 0;
+		foreach ($hits as $arr) {
+			$langprefix = strtolower ($arr[1]);
+			$qvalue = empty($arr[5]) ? 1.0 : floatval($arr[5]);
+			if (in_array($langprefix,$available_locales) && ($qvalue > $bestqval)) {
+				$bestlang = $langprefix;
+				$bestqval = $qvalue;
+			}
+		}
+		return $bestlang;
 	}
 
 	/**

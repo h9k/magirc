@@ -1,26 +1,26 @@
-<div id="welcome"><h1>{if $cfg.live_interval}Live Network Status{else}Network Status{/if}</h1></div>
+<div id="welcome"><h1>{if $cfg.live_interval}{t}Live Network Status{/t}{else}{t}Network Status{/t}{/if}</h1></div>
 
 <table class="details" style="width:100%;">
 	<tr>
-		<th colspan="2"><h3>Users</h3></th>
-		<th colspan="2"><h3>Channels</h3></th>
-		<th colspan="2"><h3>Operators</h3></th>
-		<th colspan="2"><h3>Servers</h3></th>
+		<th colspan="2"><h3>{t}Users{/t}</h3></th>
+		<th colspan="2"><h3>{t}Channels{/t}</h3></th>
+		<th colspan="2"><h3>{t}Operators{/t}</h3></th>
+		<th colspan="2"><h3>{t}Servers{/t}</h3></th>
 	</tr>
 	<tr>
-		<th>Current:</th><td><span id="net_users" class="val"></span></td>
-		<th>Current:</th><td><span id="net_chans" class="val"></span></td>
-		<th>Current:</th><td><span id="net_opers" class="val"></span></td>
-		<th>Current:</th><td><span id="net_servers" class="val"></span></td>
+		<th>{t}Current{/t}:</th><td><span id="net_users" class="val"></span></td>
+		<th>{t}Current{/t}:</th><td><span id="net_chans" class="val"></span></td>
+		<th>{t}Current{/t}:</th><td><span id="net_opers" class="val"></span></td>
+		<th>{t}Current{/t}:</th><td><span id="net_servers" class="val"></span></td>
 	</tr>
 	<tr>
-		<th>Peak:</th><td><span id="net_users_max" class="val"></span> on <span id="net_users_max_time"></span></td>
-		<th>Peak:</th><td><span id="net_chans_max" class="val"></span> on <span id="net_chans_max_time"></span></td>
-		<th>Peak:</th><td><span id="net_opers_max" class="val"></span> on <span id="net_opers_max_time"></span></td>
-		<th>Peak:</th><td><span id="net_servers_max" class="val"></span> on <span id="net_servers_max_time"></span></td>
+		<th>{t}Peak{/t}:</th><td><span id="net_users_max" class="val"></span> {t}on{/t} <span id="net_users_max_time"></span></td>
+		<th>{t}Peak{/t}:</th><td><span id="net_chans_max" class="val"></span> {t}on{/t} <span id="net_chans_max_time"></span></td>
+		<th>{t}Peak{/t}:</th><td><span id="net_opers_max" class="val"></span> {t}on{/t} <span id="net_opers_max_time"></span></td>
+		<th>{t}Peak{/t}:</th><td><span id="net_servers_max" class="val"></span> {t}on{/t} <span id="net_servers_max_time"></span></td>
 	</tr>
 	<tr>
-		<th>Today:</th><td><span id="net_users_today" class="val"></span> on <span id="net_users_today_time"></span></td>
+		<th>{t}Today{/t}:</th><td><span id="net_users_today" class="val"></span> {t}on{/t} <span id="net_users_today_time"></span></td>
 		<td colspan="2" rowspan="3">&nbsp;</td>
 	</tr>
 </table>
@@ -39,22 +39,22 @@
 
 <table class="details" style="width:100%;">
 	<tr>
-		<th style="width:33%;"><h3>Current 10 Biggest Chans</h3></th>
-		<th style="width:33%;"><h3>Top 10 Channels Today</h3></th>
-		<th style="width:33%;"><h3>Top 10 Users Today</h3></th>
+		<th style="width:33%;"><h3>{t}Current 10 Biggest Chans{/t}</h3></th>
+		<th style="width:33%;"><h3>{t}Top 10 Channels Today{/t}</h3></th>
+		<th style="width:33%;"><h3>{t}Top 10 Users Today{/t}</h3></th>
 	</tr>
 	<tr>
 		<td valign="top">
 			<table id="tbl_biggestchans" class="display clickable">
 				<thead>
 					<tr>
-						<th>Channel</th>
-						<th>Users</th>
+						<th>{t}Channel{/t}</th>
+						<th>{t}Users{/t}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="2">Loading...</td>
+						<td colspan="2">{t}Loading{/t}...</td>
 					</tr>
 				</tbody>
 			</table>
@@ -63,13 +63,13 @@
 			<table id="tbl_top10chans" class="display clickable">
 				<thead>
 					<tr>
-						<th>Channel</th>
-						<th>Lines</th>
+						<th>{t}Channel{/t}</th>
+						<th>{t}Lines{/t}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="2">Loading...</td>
+						<td colspan="2">{t}{t}Loading{/t}...{/t}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -78,13 +78,13 @@
 			<table id="tbl_top10users" class="display clickable">
 				<thead>
 					<tr>
-						<th>User</th>
-						<th>Lines</th>
+						<th>{t}User{/t}</th>
+						<th>{t}Lines{/t}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="2">Loading...</td>
+						<td colspan="2">{t}{t}Loading{/t}...{/t}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -106,7 +106,7 @@ $(document).ready(function() {
 	var count = 0;
 
 	var chart_users = new Highcharts.Chart({
-		chart: { type: 'area', renderTo: 'chart_users', events: { load: startCron() } },
+		chart: { type: 'line', renderTo: 'chart_users', events: { load: startCron() } },
 		yAxis: { title: { text: null } },
 		series: [{ name: 'Servers', data: initData(), visible:false }, { name: 'Channels', data: initData(), visible:false }, { name: 'Users', data: initData() }, { name: 'Operators', data: initData(), visible:false }],
 		legend: { enabled: true }

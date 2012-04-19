@@ -1,4 +1,4 @@
-<h1>Network Usage History</h1>
+<h1>{t}Network Usage History{/t}</h1>
 <div id="chart-history" style="height: 350px; min-width: 700px"></div>
 
 {jsmin}

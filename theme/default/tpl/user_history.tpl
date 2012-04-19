@@ -1,4 +1,4 @@
-<h1>User history</h1>
+<h1>{t}User history{/t}</h1>
 <div id="chart-history" style="height: 350px; min-width: 700px"></div>
 
 {jsmin}

@@ -1,20 +1,20 @@
-<h1>Global channel activity</h1>
+<h1>{t}Global channel activity{/t}</h1>
 
 <form>
 	<div id="radio" class="choser">
-		<input type="radio" id="radio0" name="radio" /><label for="radio0">Total</label>
-		<input type="radio" id="radio1" name="radio" /><label for="radio1">Today</label>
-		<input type="radio" id="radio2" name="radio" /><label for="radio2">This Week</label>
-		<input type="radio" id="radio3" name="radio" checked="checked" /><label for="radio3">This Month</label>
+		<input type="radio" id="radio0" name="radio" /><label for="radio0">{t}Total{/t}</label>
+		<input type="radio" id="radio1" name="radio" /><label for="radio1">{t}Today{/t}</label>
+		<input type="radio" id="radio2" name="radio" /><label for="radio2">{t}This Week{/t}</label>
+		<input type="radio" id="radio3" name="radio" checked="checked" /><label for="radio3">{t}This Month{/t}</label>
 	</div>
 </form>
 
 <table id="tbl_activity" class="display clickable">
 	<thead>
-		<tr><th>Channel</th><th>Letters</th><th>Words</th><th>Lines</th><th>Actions</th><th>Smileys</th><th>Kicks</th><th>Modes</th><th>Topics</th></tr>
+		<tr><th>{t}Channel{/t}</th><th>{t}Letters{/t}</th><th>{t}Words{/t}</th><th>{t}Lines{/t}</th><th>{t}Actions{/t}</th><th>{t}Smileys{/t}</th><th>{t}Kicks{/t}</th><th>{t}Modes{/t}</th><th>{t}Topics{/t}</th></tr>
 	</thead>
 	<tbody>
-		<tr><td colspan="9">Loading...</td></tr>
+		<tr><td colspan="9">{t}Loading{/t}...</td></tr>
 	</tbody>
 </table>
 

@@ -1,12 +1,12 @@
-<h1>Current Client Statistics for {$target}</h1>
+<h1>{t 1=$target}Current Client Statistics for %1{/t}</h1>
 <div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <table id="tbl_clients" class="display">
 	<thead>
-		<tr><th>Client</th><th>Count</th></tr>
+		<tr><th>{t}Client{/t}</th><th>{t}Count{/t}</th></tr>
 	</thead>
 	<tbody>
-		<tr><td colspan="2">Loading...</td></tr>
+		<tr><td colspan="2">{t}Loading{/t}...</td></tr>
 	</tbody>
 </table>
 
