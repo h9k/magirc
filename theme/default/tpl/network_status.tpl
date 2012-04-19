@@ -106,7 +106,7 @@ $(document).ready(function() {
 	var count = 0;
 
 	var chart_users = new Highcharts.Chart({
-		chart: { type: 'area', renderTo: 'chart_users', events: { load: startCron() } },
+		chart: { type: 'line', renderTo: 'chart_users', events: { load: startCron() } },
 		yAxis: { title: { text: null } },
 		series: [{ name: 'Servers', data: initData(), visible:false }, { name: 'Channels', data: initData(), visible:false }, { name: 'Users', data: initData() }, { name: 'Operators', data: initData(), visible:false }],
 		legend: { enabled: true }
