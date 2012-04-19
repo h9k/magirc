@@ -2,8 +2,10 @@
 
 <div class="halfleft">
 
-<div id="chan_topic" class="topic"></div>
-<div style="text-align:right;">{t}Topic set by{/t} <span id="chan_topic_author" class="val"></span> {t}on{/t} <span id="chan_topic_time" class="val"></span></div>
+<div id="chan_topic_container">
+	<div id="chan_topic" class="topic"></div>
+	<div style="text-align:right;">{t}Topic set by{/t} <span id="chan_topic_author" class="val"></span> {t}on{/t} <span id="chan_topic_time" class="val"></span></div>
+</div>
 <br />
 <table class="details">
 	<tr><th>{t}Current users{/t}:</th><td><span id="chan_users" class="val"></span></td></tr>
@@ -51,13 +53,17 @@
 {literal}
 $(document).ready(function() {
 	$.getJSON('rest/denora.php/channels/'+target, function(result) {
-		$("#chan_topic").html(result.topic_html);
-		$("#chan_topic_author").html(result.topic_author);
-		$("#chan_topic_time").html($.format.date(result.topic_time, format_datetime));
+		if (result.topic_html) {
+			$("#chan_topic").html(result.topic_html);
+			$("#chan_topic_author").html(result.topic_author);
+			$("#chan_topic_time").html($.format.date(result.topic_time, format_datetime));
+		} else {
+			$("#chan_topic_container").hide();
+		}
 		$("#chan_users").html(result.users);
 		$("#chan_users_max").html(result.users_max);
 		$("#chan_users_max_time").html($.format.date(result.users_max_time, format_datetime));
-		$("#chan_modes").html("+"+result.modes);
+		$("#chan_modes").html(result.modes ? "+"+result.modes : 'None');
 		$("#chan_kicks").html(result.kicks);
 	});
 	$('#tbl_users').dataTable({
