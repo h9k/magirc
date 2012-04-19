@@ -203,7 +203,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_biggestchans tbody tr").live("click", function(event) {
-		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
+		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
 	$("#tbl_biggestchans tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	oTable2 = $("#tbl_top10chans").dataTable({
@@ -223,7 +223,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_top10chans tbody tr").live("click", function(event) {
-		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
+		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
 	$("#tbl_top10chans tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	oTable3 = $("#tbl_top10users").dataTable({
@@ -243,7 +243,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_top10users tbody tr").live("click", function(event) {
-		window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile';
+		if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile';
 	});
 	if (searchirc) {
 		$("#searchirc_ranking").html($(".searchirc6").html());

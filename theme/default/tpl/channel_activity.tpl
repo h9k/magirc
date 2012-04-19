@@ -58,7 +58,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_activity tbody tr").live("click", function(event) {
-		window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile#activity';
+		if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile#activity';
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {

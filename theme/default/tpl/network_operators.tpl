@@ -29,7 +29,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_operators tbody tr").live("click", function() {
-		window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
+		if (this.id) window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
 	});
 });
 {/literal}

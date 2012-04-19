@@ -55,7 +55,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_users tbody tr").live("click", function(event) {
-		window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
+		if (this.id) window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
 	});
 });
 {/literal}

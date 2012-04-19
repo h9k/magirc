@@ -43,7 +43,7 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_activity tbody tr").live("click", function(event) {
-		window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
+		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
 	$("#tbl_activity tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	$("#radio").buttonset();

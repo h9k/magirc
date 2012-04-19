@@ -67,32 +67,33 @@ $(document).ready(function() {
 		]
 	});
 	$("#tbl_servers tbody tr").live("click", function() {
-		$.getJSON("rest/denora.php/servers/"+this.id, function(data){
-			if (data) {
-				$("#dialog-server").dialog("option", "title", data.server);
-				$("#srv_description").html(data.description);
-				$("#srv_online").html(data.online ? "Yes" : "No");
-				$("#srv_version").html(data.version);
-				$("#srv_uptime").html(getTimeElapsed(data.uptime));
-				//$("#srv_connecttime").html($.format.date(data.connect_time, format_datetime));
-				if((data.split_time).indexOf("1970") >= 0) { $("#srv_lastsplit").html("Never");	}
-				else { $("#srv_lastsplit").html($.format.date(data.split_time, format_datetime)); }
-				$("#srv_ping").html(data.ping);
-				$("#srv_maxping").html(data.ping_max);
-				$("#srv_maxpingtime").html($.format.date(data.ping_max_time, format_datetime));
-				$("#srv_users").html(data.users);
-				$("#srv_maxusers").html(data.users_max);
-				$("#srv_maxusertime").html($.format.date(data.users_max_time, format_datetime));
-				$("#srv_opers").html(data.opers);
-				$("#srv_maxopers").html(data.opers_max);
-				if((data.opers_max_time).indexOf("1970") < 0) { $("#srv_maxopertime").html("on " + $.format.date(data.opers_max_time, format_datetime)); }
-				$("#srv_motd_txt").html(data.motd ? data.motd_html : "MOTD not available for this server");
-				$("#dialog-server").dialog("open");
-				$("#srv_motd").scrollTop(0);
-			} else {
-				alert("Failed");
-			}
-		}, "json");
+		if (this.id) {
+			$.getJSON("rest/denora.php/servers/"+this.id, function(data){
+				if (data) {
+					$("#dialog-server").dialog("option", "title", data.server);
+					$("#srv_description").html(data.description);
+					$("#srv_online").html(data.online ? "Yes" : "No");
+					$("#srv_version").html(data.version);
+					$("#srv_uptime").html(getTimeElapsed(data.uptime));
+					if((data.split_time).indexOf("1970") >= 0) { $("#srv_lastsplit").html("Never");	}
+					else { $("#srv_lastsplit").html($.format.date(data.split_time, format_datetime)); }
+					$("#srv_ping").html(data.ping);
+					$("#srv_maxping").html(data.ping_max);
+					$("#srv_maxpingtime").html($.format.date(data.ping_max_time, format_datetime));
+					$("#srv_users").html(data.users);
+					$("#srv_maxusers").html(data.users_max);
+					$("#srv_maxusertime").html($.format.date(data.users_max_time, format_datetime));
+					$("#srv_opers").html(data.opers);
+					$("#srv_maxopers").html(data.opers_max);
+					if((data.opers_max_time).indexOf("1970") < 0) { $("#srv_maxopertime").html("on " + $.format.date(data.opers_max_time, format_datetime)); }
+					$("#srv_motd_txt").html(data.motd ? data.motd_html : "MOTD not available for this server");
+					$("#dialog-server").dialog("open");
+					$("#srv_motd").scrollTop(0);
+				} else {
+					alert("Failed");
+				}
+			}, "json");
+		}
 	});
 	$("#tbl_servers tbody tr a").live("click", function(e) { e.stopPropagation(); });
 	// Server dialog
