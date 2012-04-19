@@ -81,7 +81,7 @@ class Magirc {
 			}
 			// Configure gettext
 			$domain = "messages";
-			setlocale(LC_ALL, $locale);
+			setlocale(LC_ALL, $locale.'UTF-8', $locale);
 			bindtextdomain($domain, './locale/');
 			bind_textdomain_codeset($domain, "UTF-8");
 			textdomain($domain);
