@@ -40,7 +40,6 @@ div#main {
 div.ui-tabs-panel a, div.ui-tabs-panel a:visited { color:#000099; }
 div.ui-tabs-panel a:hover, div.ui-tabs-panel a:active { color:#000033; text-decoration:none; }
 div#footer {
-	text-align:right;
 	font-size:x-small;
 	color:#FCFCFC;
 	padding:0px 5px 10px 5px;
@@ -49,6 +48,8 @@ div#footer {
 }
 div#footer a, div#footer a:visited { color:#FCFCFC; font-size:12px; font-weight:bold; text-decoration:none; }
 div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:underline; }
+div#footer table { width: 100%; }
+div#footer table tr td { width:33%; }
 div#loading { display:none; float:right; margin-top:25px; }
 
 div.halfleft { width:49%; float:left; }

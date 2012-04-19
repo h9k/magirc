@@ -55,18 +55,34 @@
 	{/if}
 </div>
 <div id="footer">
-	{if $cfg.service_addthis}
-	<div class="addthis_toolbox addthis_default_style" style="float:left;">
-	<a class="addthis_button_preferred_1"></a>
-	<a class="addthis_button_preferred_2"></a>
-	<a class="addthis_button_preferred_3"></a>
-	<a class="addthis_button_preferred_4"></a>
-	<a class="addthis_button_compact"></a>
-	<a class="addthis_counter addthis_bubble_style"></a>
-	</div>
-	<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
-	{/if}
-	powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg.version_show} v{$smarty.const.VERSION_FULL}{/if}
+	<table>
+		<tr>
+			<td align="left">
+				<div id="selectlocale">
+					<form method="get" action="./">
+					{t}Language{/t}: <select name="locale" id="locale" onchange="this.form.submit();">
+					{foreach from=$locales item=item}
+						<option value="{$item}"{if $smarty.const.LOCALE eq $item} selected="selected"{/if}>{$item}</option>
+					{/foreach}
+					</select>
+				</div>
+			</td>
+			<td align="center">
+				{if $cfg.service_addthis}
+				<div class="addthis_toolbox addthis_default_style">
+				<a class="addthis_button_preferred_1"></a>
+				<a class="addthis_button_preferred_2"></a>
+				<a class="addthis_button_preferred_3"></a>
+				<a class="addthis_button_preferred_4"></a>
+				<a class="addthis_button_compact"></a>
+				<a class="addthis_counter addthis_bubble_style"></a>
+				</div>
+				<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+				{/if}
+			</td>
+			<td align="right">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg.version_show} v{$smarty.const.VERSION_FULL}{/if}</td>
+		</tr>
+	</table>
 </div>
 <ul id="chanmenu" style="display:none;">
 	{if $cfg.net_roundrobin}<li data-action="irc"><a href="#"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="" title="Standard connection" style="vertical-align:middle;" /> irc standard connection</a></li>{/if}

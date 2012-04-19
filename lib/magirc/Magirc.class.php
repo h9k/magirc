@@ -71,9 +71,9 @@ class Magirc {
 		if ($api_mode == "web") {
 			// Set the locale
 			$locales = $this->getLocales();
-			if (isset($_POST['locale']) && in_array($_POST['locale'], $locales)) {
-				setcookie('magirc_locale', $_POST['locale']);
-				$locale = $_POST['locale'];
+			if (isset($_GET['locale']) && in_array($_GET['locale'], $locales)) {
+				setcookie('magirc_locale', $_GET['locale']);
+				$locale = $_GET['locale'];
 			} elseif (isset($_COOKIE['magirc_locale']) && in_array($_COOKIE['magirc_locale'], $locales)) {
 				$locale = $_COOKIE['magirc_locale'];
 			} else {
@@ -96,7 +96,7 @@ class Magirc {
 	 */
 	private function getLocales() {
 		$locales = array();
-		foreach (glob("../locale/*") as $filename) {
+		foreach (glob("locale/*") as $filename) {
 			if (is_dir($filename)) $locales[] = basename($filename);
 		}
 		return $locales;

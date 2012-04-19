@@ -34,6 +34,11 @@ try {
 	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
 	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
 	$magirc->tpl->assign('cfg', $magirc->cfg->config);
+	$locales = array();
+	foreach (glob("locale/*") as $filename) {
+		if (is_dir($filename)) $locales[] = basename($filename);
+	}
+	$magirc->tpl->assign('locales', $locales);
 	if ($magirc->cfg->getParam('db_version') < DB_VERSION) die('Upgrade in progress. Please wait a few minutes, thank you.');
 
 	if ($magirc->cfg->getParam('debug_mode') < 1) {
