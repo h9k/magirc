@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-19 19:04+0100\n"
-"PO-Revision-Date: 2012-04-19 19:04+0100\n"
-"Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
+"POT-Creation-Date: 2012-04-20 13:28+0100\n"
+"PO-Revision-Date: 2012-04-20 13:28+0100\n"
+"Last-Translator: Sebastian Vassiliou <admin@hosting9000.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -554,261 +554,237 @@ msgstr "Informatie"
 
 #: ../../strings.c:677
 msgid "Language"
-msgstr ""
+msgstr "Taal"
 
 #: ../../strings.c:698
 msgid "yyyy-MM-dd HH:mm:ss"
-msgstr ""
+msgstr "dd-MM-yyyy HH:mm:ss"
 
 #: ../../strings.c:701
 msgid "%Y-%m-%d %H:%M:%S"
-msgstr ""
+msgstr "%d-%m-%Y %H:%M:%S"
 
 #: ../../strings.c:704
 msgid "Unknown"
-msgstr ""
+msgstr "Onbekend"
 
 #: ../../strings.c:707
 msgid "Away as"
-msgstr ""
+msgstr "Afwezig als"
 
 #: ../../strings.c:710
-#, fuzzy
 msgid "Online as"
-msgstr "Online"
+msgstr "Online als"
 
 #: ../../strings.c:716
-#, fuzzy
 msgid "Offline"
-msgstr "Online"
+msgstr "Offline"
 
 #: ../../strings.c:719
 msgid "Bot"
-msgstr ""
+msgstr "Bot"
 
 #: ../../strings.c:722
-#, fuzzy
 msgid "Service"
-msgstr "Server"
+msgstr "Service"
 
 #: ../../strings.c:725
 msgid "Available for help"
-msgstr ""
+msgstr "Beschikbaar voor hulp"
 
 #: ../../strings.c:728
-#, fuzzy
 msgid "join"
-msgstr "op"
+msgstr "bezoek"
 
 #: ../../strings.c:731
-#, fuzzy
 msgid "days"
-msgstr "Vandaag"
+msgstr "dagen"
 
 #: ../../strings.c:734
-#, fuzzy
 msgid "hours"
-msgstr "Woorden"
+msgstr "uren"
 
 #: ../../strings.c:737
-#, fuzzy
 msgid "minutes"
-msgstr "Regels"
+msgstr "minuten"
 
 #: ../../strings.c:740
 msgid "All"
-msgstr ""
+msgstr "Alles"
 
 #: ../../strings.c:743
 msgid "1d"
-msgstr ""
+msgstr "1d"
 
 #: ../../strings.c:746
 msgid "1w"
-msgstr ""
+msgstr "1w"
 
 #: ../../strings.c:749
 #: ../../strings.c:752
 #: ../../strings.c:755
 msgid "1m"
-msgstr ""
+msgstr "1m"
 
 #: ../../strings.c:758
 msgid "1y"
-msgstr ""
+msgstr "1j"
 
 #: ../../strings.c:761
 msgid "Unable to load contents"
-msgstr ""
+msgstr "Niet mogelijk om inhoud te laden"
 
 #: ../../strings.c:764
 msgid "Message"
-msgstr ""
+msgstr "Bericht"
 
 #: ../../strings.c:767
-#, fuzzy
 msgid "Connected since"
-msgstr "Online sinds"
+msgstr "Verbonden sinds"
 
 #: ../../strings.c:770
-#, fuzzy
 msgid "Last quit"
-msgstr "Laatste split"
+msgstr "Laatste quit"
 
 #: ../../strings.c:773
 msgid "Users online"
-msgstr ""
+msgstr "Gebruikers online"
 
 #: ../../strings.c:776
-#, fuzzy
 msgid "Servers online"
-msgstr "Serverlijst"
+msgstr "Servers online"
 
 #: ../../strings.c:803
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: ../../strings.c:806
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: ../../strings.c:809
-#, fuzzy
 msgid "Never"
-msgstr "Server"
+msgstr "Nooit"
 
 #: ../../strings.c:815
 msgid "MOTD not available for this server"
-msgstr ""
+msgstr "MOTD voor deze server niet beschikbaar"
 
 #: ../../strings.c:818
 msgid "Failed"
-msgstr ""
+msgstr "Gefaald"
 
 #: ../../strings.c:821
 msgid "Close"
-msgstr ""
+msgstr "Sluit"
 
 #: ../../strings.c:827
-#, fuzzy
 msgid "Country Statistics"
-msgstr "Huidige landstatistieken voor %1"
+msgstr "Land Statistieken"
 
 #: ../../strings.c:830
-#, fuzzy
 msgid "Client Statistics"
-msgstr "Huidige bezoeker statistieken"
+msgstr "Bezoekers statistieken"
 
 #: ../../strings.c:833
-#, fuzzy
 msgid "none"
-msgstr "op"
+msgstr "geen"
 
 #: ../../strings.c:836
-#, fuzzy
 msgid "Relation of users and channels during the last 2 weeks"
-msgstr "Relatie tussen gebruikers en kanalen gedurende de afgelopen 2"
+msgstr "Relatie tussen gebruikers en kanalen gedurende de afgelopen 2 weken"
 
 #: ../../strings.c:839
-#, fuzzy
 msgid "Relation of users and channels during the last 2 months"
-msgstr "Relatie tussen gebruikers en kanalen gedurende de afgelopen 2"
+msgstr "Relatie tussen gebruikers en kanalen gedurende de afgelopen 2 maanden"
 
 #: ../../strings.c:842
-#, fuzzy
 msgid "Relation of users and channels during the last 2 years"
-msgstr "Relatie tussen gebruikers en kanalen gedurende de afgelopen 2"
+msgstr "Relatie tussen gebruikers en kanalen gedurende de afgelopen 2 jaren"
 
 #: ../../strings.c:845
-#, fuzzy
 msgid "Channels during the last 2 weeks"
-msgstr "Kanalen gedurende de afgelopen"
+msgstr "Kanalen gedurende de afgelopen 2 weken"
 
 #: ../../strings.c:848
-#, fuzzy
 msgid "Channels during the last 2 months"
-msgstr "Kanalen gedurende de afgelopen"
+msgstr "Kanalen gedurende de afgelopen 2 maanden"
 
 #: ../../strings.c:851
-#, fuzzy
 msgid "Channels during the last 2 years"
-msgstr "Kanalen gedurende de afgelopen"
+msgstr "Kanalen gedurende de afgelopen 2 jaren"
 
 #: ../../strings.c:854
-#, fuzzy
 msgid "Servers during the last 2 weeks"
-msgstr "Servers gedurende de laatste 2"
+msgstr "Servers gedurende de laatste 2 weken"
 
 #: ../../strings.c:857
-#, fuzzy
 msgid "Servers during the last 2 months"
-msgstr "Servers gedurende de laatste 2"
+msgstr "Servers gedurende de laatste 2 maanden"
 
 #: ../../strings.c:860
-#, fuzzy
 msgid "Servers during the last 2 years"
-msgstr "Servers gedurende de laatste 2"
+msgstr "Servers gedurende de laatste 2 jaren"
 
 #: ../../strings.c:863
 msgid "Processing..."
-msgstr ""
+msgstr "Verwerken..."
 
 #: ../../strings.c:866
 msgid "Please wait - loading..."
-msgstr ""
+msgstr "Een ogenblik geduld..."
 
 #: ../../strings.c:869
 msgid "Show _MENU_ entries"
-msgstr ""
+msgstr "Laat _MENU_ resultaten zien"
 
 #: ../../strings.c:872
 msgid "No matching records found"
-msgstr ""
+msgstr "Geen resultaten gevonden"
 
 #: ../../strings.c:875
 msgid "No data available in table"
-msgstr ""
+msgstr "Geen gegevens aanwezig in tabel"
 
 #: ../../strings.c:878
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr ""
+msgstr "Weergave _START_ tot _END_ van _TOTAL_ resultaten"
 
 #: ../../strings.c:881
 msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+msgstr "Bekijk 0 tot 0 van 0 resultaten"
 
 #: ../../strings.c:884
 msgid "(filtered from _MAX_ total entries)"
-msgstr ""
+msgstr "(gefilterd uit _MAX_ resultaten)"
 
 #: ../../strings.c:887
 msgid "Search"
-msgstr ""
+msgstr "Zoeken"
 
 #: ../../strings.c:890
 msgid "click/return to sort ascending"
-msgstr ""
+msgstr "klik om aflopend te sorteren"
 
 #: ../../strings.c:893
 msgid "click/return to sort descending"
-msgstr ""
+msgstr "klik om oplopend te sorteren"
 
 #: ../../strings.c:896
 msgid "First"
-msgstr ""
+msgstr "Eerste"
 
 #: ../../strings.c:899
 msgid "Previous"
-msgstr ""
+msgstr "Vorige"
 
 #: ../../strings.c:902
 msgid "Next"
-msgstr ""
+msgstr "Volgende"
 
 #: ../../strings.c:905
-#, fuzzy
 msgid "Last"
-msgstr "Laatste ping"
+msgstr "Laatste"
 
 #~ msgid "weeks"
 #~ msgstr "weken"
