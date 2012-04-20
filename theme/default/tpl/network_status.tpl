@@ -2,32 +2,33 @@
 
 <table class="details" style="width:100%;">
 	<tr>
-		<th colspan="2"><h3>{t}Users{/t}</h3></th>
-		<th colspan="2"><h3>{t}Channels{/t}</h3></th>
-		<th colspan="2"><h3>{t}Operators{/t}</h3></th>
 		<th colspan="2"><h3>{t}Servers{/t}</h3></th>
+		<th colspan="2"><h3>{t}Channels{/t}</h3></th>
+		<th colspan="2"><h3>{t}Users{/t}</h3></th>
+		<th colspan="2"><h3>{t}Operators{/t}</h3></th>
 	</tr>
 	<tr>
-		<th>{t}Current{/t}:</th><td><span id="net_users" class="val"></span></td>
-		<th>{t}Current{/t}:</th><td><span id="net_chans" class="val"></span></td>
-		<th>{t}Current{/t}:</th><td><span id="net_opers" class="val"></span></td>
 		<th>{t}Current{/t}:</th><td><span id="net_servers" class="val"></span></td>
+		<th>{t}Current{/t}:</th><td><span id="net_chans" class="val"></span></td>
+		<th>{t}Current{/t}:</th><td><span id="net_users" class="val"></span></td>
+		<th>{t}Current{/t}:</th><td><span id="net_opers" class="val"></span></td>
 	</tr>
 	<tr>
-		<th>{t}Peak{/t}:</th><td><span id="net_users_max" class="val"></span> {t}on{/t} <span id="net_users_max_time"></span></td>
-		<th>{t}Peak{/t}:</th><td><span id="net_chans_max" class="val"></span> {t}on{/t} <span id="net_chans_max_time"></span></td>
-		<th>{t}Peak{/t}:</th><td><span id="net_opers_max" class="val"></span> {t}on{/t} <span id="net_opers_max_time"></span></td>
 		<th>{t}Peak{/t}:</th><td><span id="net_servers_max" class="val"></span> {t}on{/t} <span id="net_servers_max_time"></span></td>
+		<th>{t}Peak{/t}:</th><td><span id="net_chans_max" class="val"></span> {t}on{/t} <span id="net_chans_max_time"></span></td>
+		<th>{t}Peak{/t}:</th><td><span id="net_users_max" class="val"></span> {t}on{/t} <span id="net_users_max_time"></span></td>
+		<th>{t}Peak{/t}:</th><td><span id="net_opers_max" class="val"></span> {t}on{/t} <span id="net_opers_max_time"></span></td>
 	</tr>
 	<tr>
+		<td colspan="4" rowspan="2">&nbsp;</td>
 		<th>{t}Today{/t}:</th><td><span id="net_users_today" class="val"></span> {t}on{/t} <span id="net_users_today_time"></span></td>
-		<td colspan="2" rowspan="3">&nbsp;</td>
+		<td rowspan="2">&nbsp;</td>
 	</tr>
 </table>
 
 <table>
 	<tr>
-		<td><div id="chart_users" style="height: 175px; width: {if $cfg.service_searchirc}446{else}560{/if}px;"></div></td>
+		<td><div id="chart_line" style="height: 175px; width: {if $cfg.service_searchirc}446{else}560{/if}px;"></div></td>
 		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
 		{if $cfg.service_searchirc}<td style="width: 114px; margin: auto; vertical-align: top; text-align: center;">
 			<img height="40" width="114" border="0" alt="Overall_Ranking" src="http://searchirc.com/img/ranked_logo.gif">
@@ -105,15 +106,15 @@ $(document).ready(function() {
 	}
 	var count = 0;
 
-	var chart_users = new Highcharts.Chart({
-		chart: { type: 'line', renderTo: 'chart_users', events: { load: startCron() } },
+	var chart_line = new Highcharts.Chart({
+		chart: { type: 'line', renderTo: 'chart_line', events: { load: startCron() } },
 		yAxis: { title: { text: null } },
 		series: [{ name: mLang.Servers, data: initData(), visible:false }, { name: mLang.Channels, data: initData(), visible:false }, { name: mLang.Users, data: initData() }, { name: mLang.Operators, data: initData(), visible:false }],
 		legend: { enabled: true }
 	});
 	var chart_status = new Highcharts.Chart({
 		chart: { renderTo: 'chart_status', type: 'column', events: { load: startCron() } },
-		xAxis: { type: 'linear', categories: [ mLang.Users, mLang.Channels, mLang.Operators, mLang.Servers ], labels: { rotation: -45, align: 'right' } },
+		xAxis: { type: 'linear', categories: [ mLang.Servers, mLang.Channels, mLang.Users, mLang.Operators,  ], labels: { rotation: -45, align: 'right' } },
 		yAxis: { min: 0, title: { text: null } },
 		tooltip: { formatter: function() { return '<b>'+ this.x +'</b>: '+ Highcharts.numberFormat(this.y, 0); } },
 		series: [{ name: mLang.Status, data: [0, 0, 0] }]
@@ -133,11 +134,11 @@ $(document).ready(function() {
 	function updateStatus() {
 		$.getJSON('rest/denora.php/network/status', function(result) {
 			var x = (new Date()).getTime();
-			chart_users.series[0].addPoint([x, result.servers.val], true, true);
-			chart_users.series[1].addPoint([x, result.chans.val], true, true);
-			chart_users.series[2].addPoint([x, result.users.val], true, true);
-			chart_users.series[3].addPoint([x, result.opers.val], true, true);
-			chart_status.series[0].setData([result.users.val, result.chans.val, result.opers.val, result.servers.val]);
+			chart_line.series[0].addPoint([x, result.servers.val], true, true);
+			chart_line.series[1].addPoint([x, result.chans.val], true, true);
+			chart_line.series[2].addPoint([x, result.users.val], true, true);
+			chart_line.series[3].addPoint([x, result.opers.val], true, true);
+			chart_status.series[0].setData([result.servers.val, result.chans.val, result.users.val, result.opers.val ]);
 			$("#net_users").html(result.users.val);
 			if ($("#net_users").html() > $("#net_users_max")) {
 				$("#net_users_max").html(result.users.val);

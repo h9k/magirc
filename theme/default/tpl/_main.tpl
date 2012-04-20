@@ -57,7 +57,7 @@
 <div id="footer">
 	<table>
 		<tr>
-			<td align="left">
+			<td style="text-align:left;">
 				<div id="selectlocale">
 					<form method="get" action="./">
 					{t}Language{/t}: <select name="locale" id="locale">
@@ -65,9 +65,10 @@
 						<option value="{$item}"{if $smarty.const.LOCALE eq $item} selected="selected"{/if}>{$item}</option>
 					{/foreach}
 					</select>
+					</form>
 				</div>
 			</td>
-			<td align="center">
+			<td style="text-align:center;">
 				{if $cfg.service_addthis}
 				<div class="addthis_toolbox addthis_default_style">
 				<a class="addthis_button_preferred_1"></a>
@@ -80,7 +81,7 @@
 				<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
 				{/if}
 			</td>
-			<td align="right">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg.version_show} v{$smarty.const.VERSION_FULL}{/if}</td>
+			<td style="text-align:right;">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg.version_show} v{$smarty.const.VERSION_FULL}{/if}</td>
 		</tr>
 	</table>
 </div>
