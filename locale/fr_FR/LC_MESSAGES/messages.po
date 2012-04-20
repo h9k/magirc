@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-20 16:18+0100\n"
-"PO-Revision-Date: 2012-04-20 16:18+0100\n"
+"POT-Creation-Date: 2012-04-20 16:34+0100\n"
+"PO-Revision-Date: 2012-04-20 16:34+0100\n"
 "Last-Translator: Sebastian Vassiliou <admin@hosting9000.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -151,7 +151,7 @@ msgstr "Chargement"
 
 #: ../../strings.c:47
 msgid "Current Client Statistics for %1"
-msgstr "Statistiques actuelles des clients pour %1"
+msgstr "Statistiques clients pour %1"
 
 #: ../../strings.c:50
 #: ../../strings.c:227
@@ -168,7 +168,7 @@ msgstr "Nombre"
 
 #: ../../strings.c:59
 msgid "Current Country Statistics for %1"
-msgstr "Statistiques actuelles des pays pour %1"
+msgstr "Statistiques pays pour %1"
 
 #: ../../strings.c:62
 #: ../../strings.c:239
@@ -312,11 +312,11 @@ msgstr "Utilisateurs actuellement sur le canal"
 
 #: ../../strings.c:224
 msgid "Current Client Statistics"
-msgstr "Statistiques actuelles des clients"
+msgstr "Statistiques clients"
 
 #: ../../strings.c:236
 msgid "Current Country Statistics"
-msgstr "Statistiques actuelles des pays"
+msgstr "Statistiques pays"
 
 #: ../../strings.c:248
 msgid "Network Usage History"
@@ -340,11 +340,11 @@ msgstr "Opérateurs"
 
 #: ../../strings.c:272
 msgid "Netsplit Graphs"
-msgstr "Graphiques Netsplit"
+msgstr "Graphiques Netsplit.de"
 
 #: ../../strings.c:275
 msgid "Searchirc Graphs"
-msgstr "Graphiques Searchirc"
+msgstr "Graphiques SearchIRC"
 
 #: ../../strings.c:281
 msgid "Netsplit.de Graphs"
@@ -387,7 +387,7 @@ msgstr "Serveur"
 
 #: ../../strings.c:311
 msgid "Online since"
-msgstr "En ligne depuis"
+msgstr "En ligne depuis le"
 
 #: ../../strings.c:317
 msgid "SearchIRC Graphs"
@@ -471,7 +471,7 @@ msgstr "Liste des serveurs"
 
 #: ../../strings.c:437
 msgid "Connect to our network round robin"
-msgstr "Connectez-vous à notre "
+msgstr "Connectez-vous à notre réseau via"
 
 #: ../../strings.c:452
 #: ../../strings.c:464
