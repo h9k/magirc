@@ -61,9 +61,6 @@ class Magirc {
 
 		// Initialize modules
 		define('IRCD', $this->cfg->getParam('ircd_type'));
-		/*if ($api_mode == "web" || $api_mode == "anope") {
-			$this->anope = new Anope();
-		}*/
 		if ($api_mode == "web" || $api_mode == "denora") {
 			$this->denora = new Denora();
 		}
