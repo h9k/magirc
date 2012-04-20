@@ -156,19 +156,19 @@ table.display thead th div.DataTables_sort_wrapper span {
 }
 
 .paginate_disabled_previous {
-	background-image: url('../img/datatables/back_disabled.jpg');
+	background-image: url('../img/datatables/back_disabled.png');
 }
 
 .paginate_enabled_previous {
-	background-image: url('../img/datatables/back_enabled.jpg');
+	background-image: url('../img/datatables/back_enabled.png');
 }
 
 .paginate_disabled_next {
-	background-image: url('../img/datatables/forward_disabled.jpg');
+	background-image: url('../img/datatables/forward_disabled.png');
 }
 
 .paginate_enabled_next {
-	background-image: url('../img/datatables/forward_enabled.jpg');
+	background-image: url('../img/datatables/forward_enabled.png');
 }
 
 
