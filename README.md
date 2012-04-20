@@ -60,6 +60,52 @@ To use this feature **enable** the following parameters by removing the '#' in f
 
     ustatsregistered;
 
+Web Server configuration
+------------------------
+### Apache
+To enable URL rewriting make sure your apache has the `mod_rewrite` module enabled. Then rename `htaccess.txt` to `.htaccess` and enable rewriting in the MagIRC Admin Panel.
+This is optional, MagIRC also works without rewriting on Apache.
+
+### Nginx
+Your Nginx configuration file should contain this code, if Magirc is in the document root :
+
+    index index.php index.html;
+    location / {
+            try_files $uri $uri/ /index.php;
+    }
+
+    location ~ ^(/.*\.php)(/.*)?$ {
+            try_files $1 =404;
+            include /etc/nginx/fastcgi.conf;
+            fastcgi_pass  backend;
+            fastcgi_index index.php;
+           #fastcgi_intercept_errors on;
+    }
+
+or this for a directory in document root (`document_root/magirc_directory`) :
+
+    index index.php index.html;
+    location /magirc_directory {
+            try_files $uri $uri/ /magirc_directory/index.php;
+    }
+
+    location ~ ^(/magirc_directory/.*\.php)(/.*)?$ {
+            try_files $1 =404;
+            include /etc/nginx/fastcgi.conf;
+            fastcgi_pass  backend;
+            fastcgi_index index.php;
+           #fastcgi_intercept_errors on;
+    }
+
+This will work with or without Magirc rewrite.
+Comment out `fastcgi_intercept_errors on;` to override Magirc 404 blue pages.
+Don't forget to replace `fastcgi_pass  backend;` by your actual backend.
+
+### lighttpd
+Your lighttpd configuration file should contain this code (along with other settings you may need). This code requires lighttpd >= 1.4.24.
+
+    url.rewrite-if-not-file = ("^" => "/index.php")
+
 Installation
 ------------
 1. Pull the latest MagIRC package from https://github.com/h9k/magirc/.
