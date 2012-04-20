@@ -534,7 +534,7 @@ class Denora {
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS chan AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM cstats
 			 JOIN chan ON BINARY LOWER(cstats.chan)=LOWER(chan.channel) WHERE cstats.type=:type AND %s", $sWhere);
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
+			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => (int) $type));
 			$sFiltering = $this->db->datatablesFiltering(array('cstats.chan', 'chan.topic'));
 			$sOrdering = $this->db->datatablesOrdering(array('chan', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
 			$sPaging = $this->db->datatablesPaging();
