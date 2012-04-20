@@ -69,7 +69,7 @@ class Magirc {
 			// Set the locale
 			$locales = $this->getLocales();
 			if (isset($_GET['locale']) && in_array($_GET['locale'], $locales)) {
-				setcookie('magirc_locale', $_GET['locale']);
+				setcookie('magirc_locale', $_GET['locale'], time()+60*60*24*30, '/');
 				$locale = $_GET['locale'];
 			} elseif (isset($_COOKIE['magirc_locale']) && in_array($_COOKIE['magirc_locale'], $locales)) {
 				$locale = $_COOKIE['magirc_locale'];

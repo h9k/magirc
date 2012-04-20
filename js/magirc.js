@@ -5,7 +5,7 @@ $(document).ready(function() {
 		$(this).hide();
 	});
 	$("#locale").change(function(data) {
-		$.cookie("magirc_locale", $("#locale").val());
+		$.cookie("magirc_locale", $("#locale").val(), { expires: 30, path: '/' });
 		window.location.reload();
 	});
 	$.format.date.defaultShortDateFormat = "dd/MM/yyyy";
