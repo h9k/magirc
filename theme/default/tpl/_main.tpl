@@ -199,7 +199,7 @@ var mLang = {
 	}
 }
 </script>
-<script type="text/javascript" src="js/magirc.js"></script>
+<script type="text/javascript" src="js/magirc.min.js"></script>
 {/block}
 </body>
 </html>
