@@ -5,10 +5,11 @@
 			<th>{t}Channel{/t}</th>
 			<th>{t}Current users{/t}</th>
 			<th>{t}Max users{/t}</th>
+			<th>{t}Modes{/t}</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr><td colspan="3">{t}Loading{/t}...</td></tr>
+		<tr><td colspan="4">{t}Loading{/t}...</td></tr>
 	</tbody>
 </table>
 
@@ -26,7 +27,10 @@ $(document).ready(function() {
 				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
 			} },
 			{ "mDataProp": "users" },
-			{ "mDataProp": "users_max" }
+			{ "mDataProp": "users_max" },
+			{ "mDataProp": "modes", "fnRender": function (oObj) {
+				if (oObj.aData['modes']) return '+'+oObj.aData['modes'];
+			} }
 		]
 	});
 	$("#tbl_channels tbody tr").live("click", function(event) {
