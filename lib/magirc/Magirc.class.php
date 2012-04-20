@@ -80,11 +80,12 @@ class Magirc {
 				$locale = $this->detectLocale($locales);
 			}
 			// Configure gettext
+			require_once(PATH_ROOT.'lib/gettext/gettext.inc');
 			$domain = "messages";
-			setlocale(LC_ALL, $locale.'.UTF-8', $locale);
-			bindtextdomain($domain, './locale/');
-			bind_textdomain_codeset($domain, "UTF-8");
-			textdomain($domain);
+			T_setlocale(LC_ALL, $locale.'.UTF-8', $locale);
+			T_bindtextdomain($domain, PATH_ROOT.'locale/');
+			T_bind_textdomain_codeset($domain, 'UTF-8');
+			T_textdomain($domain);
 			if (!ini_get("safe_mode")) {
 				@putenv("LC_ALL={$locale}.utf8");
 			}
