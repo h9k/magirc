@@ -758,10 +758,10 @@ gettext("1w");
 gettext("1m");
 
 /* C:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
-gettext("1m");
+gettext("3m");
 
 /* C:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
-gettext("1m");
+gettext("6m");
 
 /* C:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("1y");

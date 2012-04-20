@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-20 16:12+0100\n"
-"PO-Revision-Date: 2012-04-20 16:12+0100\n"
+"POT-Creation-Date: 2012-04-20 16:18+0100\n"
+"PO-Revision-Date: 2012-04-20 16:18+0100\n"
 "Last-Translator: Sebastian Vassiliou <admin@hosting9000.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -627,10 +627,16 @@ msgid "1w"
 msgstr "1s"
 
 #: ../../strings.c:758
-#: ../../strings.c:761
-#: ../../strings.c:764
 msgid "1m"
 msgstr "1m"
+
+#: ../../strings.c:761
+msgid "3m"
+msgstr "3m"
+
+#: ../../strings.c:764
+msgid "6m"
+msgstr "6m"
 
 #: ../../strings.c:767
 msgid "1y"
