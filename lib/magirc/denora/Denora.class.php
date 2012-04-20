@@ -568,7 +568,7 @@ class Denora {
 		$aaData = array();
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats WHERE chan=:channel AND type=:type AND letters > 0 ";
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type, ':channel' => $chan));
+			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => (int) $type, ':channel' => $chan));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
 			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
 			$sPaging = $this->db->datatablesPaging();
@@ -578,7 +578,11 @@ class Denora {
 		$ps->bindParam(':type', $type, PDO::PARAM_INT);
 		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
 		$ps->execute();
-		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
+		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
+		if ($datatables) {
+			$iFilteredTotal = $this->db->foundRows();
+		}
+		foreach ($data as $row) {
 			if ($datatables) {
 				$row["DT_RowId"] = $row['uname'];
 			}
@@ -591,7 +595,6 @@ class Denora {
 			$aaData[] = $user;
 		}
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
 			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
 		}
 		return $aaData;
