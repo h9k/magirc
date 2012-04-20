@@ -8,20 +8,20 @@ $(document).ready(function() {
 		$.cookie("magirc_locale", $("#locale").val());
 		window.location.reload();
 	});
-	jQuery.format.date.defaultShortDateFormat = "dd/MM/yyyy";
-	jQuery.format.date.defaultLongDateFormat = "dd/MM/yyyy hh:mm:ss";
-	jQuery(".shortDateFormat").each(function (idx, elem) {
-		if (jQuery(elem).is(":input")) {
-			jQuery(elem).val(jQuery.format.date(jQuery(elem).val(), jQuery.format.date.defaultShortDateFormat));
+	$.format.date.defaultShortDateFormat = "dd/MM/yyyy";
+	$.format.date.defaultLongDateFormat = "dd/MM/yyyy hh:mm:ss";
+	$(".shortDateFormat").each(function (idx, elem) {
+		if ($(elem).is(":input")) {
+			$(elem).val($.format.date($(elem).val(), $.format.date.defaultShortDateFormat));
 		} else {
-			jQuery(elem).text(jQuery.format.date(jQuery(elem).text(), jQuery.format.date.defaultShortDateFormat));
+			$(elem).text($.format.date($(elem).text(), $.format.date.defaultShortDateFormat));
 		}
 	});
-	jQuery(".longDateFormat").each(function (idx, elem) {
-		if (jQuery(elem).is(":input")) {
-			jQuery(elem).val(jQuery.format.date(jQuery(elem).val(), jQuery.format.date.defaultLongDateFormat));
+	$(".longDateFormat").each(function (idx, elem) {
+		if ($(elem).is(":input")) {
+			$(elem).val($.format.date($(elem).val(), $.format.date.defaultLongDateFormat));
 		} else {
-			jQuery(elem).text(jQuery.format.date(jQuery(elem).text(), jQuery.format.date.defaultLongDateFormat));
+			$(elem).text($.format.date($(elem).text(), $.format.date.defaultLongDateFormat));
 		}
 	});
 	// Datatable default settings
@@ -33,38 +33,38 @@ $(document).ready(function() {
 		"sPaginationType": "full_numbers",
 		"oLanguage": mLang.DataTables
     });
-	jQuery.fn.dataTableExt.aTypes.unshift(
-		function(sData) {
-			if (sData !== null && sData.match(/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
+	$.fn.dataTableExt.aTypes.unshift(function(sData) {
+		if (sData !== null && typeof(sData)=='string') {
+			if (sData.match(/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
 				return 'date-euro';
-			} else if (sData !== null && sData.match(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
+			} else if (sData.match(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
 				return 'date-uk';
 			}
-			return null;
 		}
-	);
+		return null;
+	});
 	function calcDate(date, dateSplit) {
 		var dtDate = date.split(' ');
 		var dtTime = dtDate[1].split(':');
 		dtDate = dtDate[0].split(dateSplit);
 		return (dtDate[2] + dtDate[1] + dtDate[0] + dtTime[0] + dtTime[1] + dtTime[2]) * 1;
 	}
-	jQuery.fn.dataTableExt.oSort['date-euro-asc'] = function(a, b) {
+	$.fn.dataTableExt.oSort['date-euro-asc'] = function(a, b) {
 		var x = calcDate(a, '.');
 		var y = calcDate(b, '.');
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	};
-	jQuery.fn.dataTableExt.oSort['date-euro-desc'] = function(a, b) {
+	$.fn.dataTableExt.oSort['date-euro-desc'] = function(a, b) {
 		var x = calcDate(a, '.');
 		var y = calcDate(b, '.');
 		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
 	};
-	jQuery.fn.dataTableExt.oSort['date-uk-asc'] = function(a, b) {
+	$.fn.dataTableExt.oSort['date-uk-asc'] = function(a, b) {
 		var x = calcDate(a, '/');
 		var y = calcDate(b, '/');
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	};
-	jQuery.fn.dataTableExt.oSort['date-uk-desc'] = function(a, b) {
+	$.fn.dataTableExt.oSort['date-uk-desc'] = function(a, b) {
 		var x = calcDate(a, '/');
 		var y = calcDate(b, '/');
 		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
