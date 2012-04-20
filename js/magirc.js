@@ -37,37 +37,37 @@ $(document).ready(function() {
 		function(sData) {
 			if (sData !== null && sData.match(/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
 				return 'date-euro';
+			} else if (sData !== null && sData.match(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
+				return 'date-uk';
 			}
 			return null;
 		}
 	);
+	function calcDate(date, dateSplit) {
+		var dtDate = date.split(' ');
+		var dtTime = dtDate[1].split(':');
+		dtDate = dtDate[0].split(dateSplit);
+		return (dtDate[2] + dtDate[1] + dtDate[0] + dtTime[0] + dtTime[1] + dtTime[2]) * 1;
+	}
 	jQuery.fn.dataTableExt.oSort['date-euro-asc'] = function(a, b) {
-		var frDatea = a.split(' ');
-		var frTimea = frDatea[1].split(':');
-		var frDatea2 = frDatea[0].split('.');
-		var x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + frTimea[2]) * 1;
-
-		var frDateb = b.split(' ');
-		var frTimeb = frDateb[1].split(':');
-		frDateb = frDateb[0].split('.');
-		var y = (frDateb[2] + frDateb[1] + frDateb[0] + frTimeb[0] + frTimeb[1] + frTimeb[2]) * 1;
-
-		var z = ((x < y) ? -1 : ((x > y) ? 1 : 0));
-		return z;
+		var x = calcDate(a, '.');
+		var y = calcDate(b, '.');
+		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	};
 	jQuery.fn.dataTableExt.oSort['date-euro-desc'] = function(a, b) {
-		var frDatea = a.split(' ');
-		var frTimea = frDatea[1].split(':');
-		var frDatea2 = frDatea[0].split('.');
-		var x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + frTimea[2]) * 1;
-
-		var frDateb = b.split(' ');
-		var frTimeb = frDateb[1].split(':');
-		frDateb = frDateb[0].split('.');
-		var y = (frDateb[2] + frDateb[1] + frDateb[0] + frTimeb[0] + frTimeb[1] + frTimeb[2]) * 1;
-
-		var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
-		return z;
+		var x = calcDate(a, '.');
+		var y = calcDate(b, '.');
+		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+	};
+	jQuery.fn.dataTableExt.oSort['date-uk-asc'] = function(a, b) {
+		var x = calcDate(a, '/');
+		var y = calcDate(b, '/');
+		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+	};
+	jQuery.fn.dataTableExt.oSort['date-uk-desc'] = function(a, b) {
+		var x = calcDate(a, '/');
+		var y = calcDate(b, '/');
+		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
 	};
 	// Highcharts default settings
 	Highcharts.setOptions({
