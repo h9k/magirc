@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-20 16:17+0100\n"
-"PO-Revision-Date: 2012-04-20 16:17+0100\n"
+"PO-Revision-Date: 2012-04-20 16:20+0100\n"
 "Last-Translator: Sebastian Vassiliou <admin@hosting9000.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -632,11 +632,11 @@ msgstr "1M"
 
 #: ../../strings.c:761
 msgid "3m"
-msgstr "3m"
+msgstr "3M"
 
 #: ../../strings.c:764
 msgid "6m"
-msgstr "6m"
+msgstr "6M"
 
 #: ../../strings.c:767
 msgid "1y"
