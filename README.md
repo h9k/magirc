@@ -6,7 +6,7 @@ Thank you for your interest in MagIRC, a PHP-based Web Frontend for IRC Services
 About MagIRC
 ------------
 This software is a complete rewrite of phpDenora, a PHP-based Web Frontend for the [Denora Stats](http://www.denorastats.org) project.
-In the future it will interface with other IRC services like [Anope](http://www.anope.org/) but the priority for now is to replace phpDenora since it is aged.
+In the future it will interface with other IRC services like [Anope](http://www.anope.org/) but the priority for now is to replace phpDenora since it is aged and ugly.
 
 Main features
 -------------
@@ -26,10 +26,10 @@ Requirements
 
 Limitations
 -----------
-The current version is considered to be **alpha** and has some known limitations:
+The current version is considered to be **beta** and has some known limitations:
 
-* English only: MagIRC already has gettext localization built in, but it will be activated only once the software is nearly finished to avoid too much work maintaining language files for rapidly changing code. This is scheduled for the **beta** release.
-* Only one default theme: MagIRC allows to install additional themes, but things need to be sorted out before fully this. This is scheduled for the **release candidate**.
+* **Templating is not officially supported**: This means you are free to create your own templates for MagIRC, but we will not support you and will not guarantee troublefree operation between different versions of MagIRC, as things change rather often during development. This is scheduled for the **release candidate**.
+* **No guarantees for API stability**: You are free to use the RESTful API MagIRC provides, however it is very likely that some things might change. The **release candidate** version will include an API definition that should not change for the whole MagIRC v1.0.x series.
 
 Required Denora settings
 ------------------------
@@ -108,17 +108,17 @@ Your lighttpd configuration file should contain this code (along with other sett
 
 Installation
 ------------
-1. Pull the latest MagIRC package from https://github.com/h9k/magirc/.
+1. Pull the latest MagIRC package from https://github.com/h9k/magirc
 2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
-   Example: http://`yourpathtomagirc`/setup
+   Example: http://`yourpathtomagirc`/setup/
 
 Note: If you are on Apache you can enable mod_rewrite by using "a2enmod rewrite; service apache2 restart"
 and rename htaccess.txt in the root  to .htaccess.
 
 Upgrading
 ---------
-1. Pull the latest MagIRC package from https://github.com/h9k/magirc/.
+1. Pull the latest MagIRC package from https://github.com/h9k/magirc
 2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
