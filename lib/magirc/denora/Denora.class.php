@@ -277,9 +277,12 @@ class Denora {
 	function getOperatorList() {
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
-			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service,
-			%s FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE",
-				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
+			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s",
+			implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
+		if ($this->cfg->getParam('denora_version') > '1.4') {
+			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
+		}
+		$query .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE";
 		if (Protocol::ircd == "unreal32") {
 			$query .= " (u.mode_un = 'Y' OR u.mode_ua = 'Y' OR u.mode_la = 'Y' OR u.mode_uc = 'Y' OR u.mode_lo = 'Y')";
 		} else {
@@ -497,8 +500,11 @@ class Denora {
 		$query = "SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service,
-			i.mode_lq AS cmode_lq, i.mode_la AS cmode_la, i.mode_lo AS cmode_lo, i.mode_lh AS cmode_lh, i.mode_lv AS cmode_lv
-		FROM ison i, chan c, user u, server s
+			i.mode_lq AS cmode_lq, i.mode_la AS cmode_la, i.mode_lo AS cmode_lo, i.mode_lh AS cmode_lh, i.mode_lv AS cmode_lv";
+		if ($this->cfg->getParam('denora_version') > '1.4') {
+			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
+		}
+		$query .= " FROM ison i, chan c, user u, server s
 		WHERE LOWER(c.channel) = LOWER(:channel)
 			AND i.chanid = c.chanid
 			AND i.nickid = u.nickid
@@ -776,9 +782,12 @@ class Denora {
 		$info = $this->getUserData($mode, $user);
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
-			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service
-			FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE u.nick = :nickname",
+			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
+		if ($this->cfg->getParam('denora_version') > '1.4') {
+			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
+		}
+		$query .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE u.nick = :nickname";
 		$ps = $this->db->prepare($query);
 		$ps->bindParam(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();

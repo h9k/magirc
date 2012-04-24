@@ -40,6 +40,8 @@ Class User {
 	public $swhois;
 	public $connect_time;
 	public $server;
+	public $server_country;
+	public $server_country_code;
 	public $away;
 	public $away_msg;
 	public $client;
@@ -110,6 +112,11 @@ Class User {
 			if ($this->mode_lo) $this->operator_level = "Operator";
 		}
 		if ($this->operator_level) $this->operator = true;
+		// Get the server country if user country is local
+		if ($this->country_code == 'local' && $this->server_country_code) {
+			$this->country = $this->server_country;
+			$this->country_code = $this->server_country_code;
+		}
 	}
 
 	private function hasMode($mode) {
