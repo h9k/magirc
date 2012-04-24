@@ -26,6 +26,7 @@
 	<div class="halfleft">
 		<table class="details">
 			<tr><th>{t}Description{/t}:</th><td><span id="srv_description" class="val"></span></td></tr>
+			{if $cfg.denora_version > '1.4'}<tr><th>{t}Country{/t}:</th><td><span id="srv_country" class="val"></span></td></tr>{/if}
 			<tr><th>{t}Online{/t}:</th><td><span id="srv_online" class="val"></span></td></tr>
 			<tr><th>{t}Version{/t}:</th><td><span id="srv_version" class="val"></span></td></tr>
 			<tr><th>{t}Uptime{/t}:</th><td><span id="srv_uptime" class="val"></span></td></tr>
@@ -55,11 +56,7 @@ $(document).ready(function() {
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
-			{ "mDataProp": "server"/*, "fnRender": function (oObj) {
-				var out = '<a href="irc://'+oObj.aData['server']+':'+net_port+'"><img src="theme/'+theme+'/img/icons/server-link.png" alt="connect" title="Standard connection" /></a>';
-				if (net_port_ssl) out += ' <a href="irc://'+oObj.aData['server']+':+'+net_port_ssl+'"><img src="theme/'+theme+'/img/icons/ssl.png" alt="connect" title="Secure connection" /></a>';
-				return out + ' ' + oObj.aData['server'];
-			}*/ },
+			{ "mDataProp": "server", "fnRender": function (oObj) { return denora_version > '1.4' ? getCountryFlag(oObj.aData) + ' ' + oObj.aData['server'] : oObj.aData['server']; } },
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }
@@ -71,6 +68,7 @@ $(document).ready(function() {
 				if (data) {
 					$("#dialog-server").dialog("option", "title", data.server);
 					$("#srv_description").html(data.description);
+					if (denora_version > '1.4') $("#srv_country").html(getCountryFlag(data)+' '+data.country);
 					$("#srv_online").html(data.online ? mLang.Yes : mLang.No);
 					$("#srv_version").html(data.version);
 					$("#srv_uptime").html(getTimeElapsed(data.uptime));

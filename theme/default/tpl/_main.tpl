@@ -116,6 +116,7 @@ var net_port = '{$cfg.net_port|default:"6667"}';
 var net_port_ssl = '{$cfg.net_port_ssl}';
 var service_webchat = '{$cfg.service_webchat}';
 var service_mibbit = '{$cfg.service_mibbit}';
+var denora_version = '{$cfg.denora_version}';
 var format_datetime = '{t}yyyy-MM-dd HH:mm:ss{/t}';
 var format_datetime_charts = '{t}%Y-%m-%d %H:%M:%S{/t}';
 {/jsmin}

@@ -241,7 +241,11 @@ class Denora {
 		if ($this->cfg->getParam('hide_ulined')) {
 			$sWhere .= $sWhere ? " AND uline = 0" : "WHERE uline = 0";
 		}
-		$query = "SELECT server, online, comment AS description, currentusers AS users, opers FROM server $sWhere";
+		$query = "SELECT server, online, comment AS description, currentusers AS users, opers";
+		if ($this->cfg->getParam('denora_version') > '1.4') {
+			$query .= ", country, countrycode AS country_code";
+		}
+		$query .= " FROM server $sWhere";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_CLASS, 'Server');
@@ -255,8 +259,11 @@ class Denora {
 	function getServer($server) {
 		$query = "SELECT server, online, comment AS description, connecttime AS connect_time, lastsplit AS split_time, version,
 			uptime, motd, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time, ping, highestping AS ping_max,
-			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time
-			FROM server WHERE server = :server";
+			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time";
+		if ($this->cfg->getParam('denora_version') > '1.4') {
+			$query .= ", country, countrycode AS country_code";
+		}
+		$query .= " FROM server WHERE server = :server";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindParam(':server', $server, PDO::PARAM_STR);
 		$stmt->execute();

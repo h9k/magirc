@@ -20,6 +20,8 @@ Class Server {
 	public $opers;
 	public $opers_max;
 	public $opers_max_time;
+	public $country;
+	public $country_code;
 
 	function __construct() {
 		$this->online = $this->online == 'Y';
