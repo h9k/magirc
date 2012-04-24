@@ -1,4 +1,4 @@
-<h1>{t}Current Client Statistics{/t}</h1>
+<h1>{t 1=$target}Current Client Statistics for %1{/t}</h1>
 <div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <table id="tbl_clients" class="display">
@@ -14,7 +14,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/network/clients/percent', function(data) {
+    $.getJSON('rest/denora.php/servers/'+target+'/clients/percent', function(data) {
         new Highcharts.Chart({
 			chart: { renderTo: 'chart-clients' },
 			tooltip: {
@@ -28,7 +28,7 @@ $(document).ready(function() {
 	$('#tbl_clients').dataTable({
 		"iDisplayLength": 10,
 		"aaSorting": [[ 1, "desc" ]],
-		"sAjaxSource": "rest/denora.php/network/clients?format=datatables",
+		"sAjaxSource": "rest/denora.php/servers/"+target+"/clients?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "client", "fnRender": function (oObj) {
 				return oObj.aData['client'] ? oObj.aData['client'] : mLang.Unknown;

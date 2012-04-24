@@ -7,7 +7,7 @@
  * @copyright   2012 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     0.8.0
+ * @version     0.8.1
  **/
 
 include_once('../lib/magirc/version.inc.php');
@@ -49,6 +49,35 @@ $magirc->slim->get('/network/status', function() use($magirc) {
 $magirc->slim->get('/network/max', function() use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getMaxValues());
 });
+
+/**
+ * Get the global client stats
+ *
+ * Example: http://www.denorastats.org/magirc/rest/denora.php/network/clients
+ *
+ **/
+$magirc->slim->get('/network/clients/percent', function() use($magirc) {
+	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getClientStats(), $magirc->denora->getUserCount(), 'client'));
+});
+
+$magirc->slim->get('/network/clients', function($chan = null) use($magirc) {
+	$magirc->jsonOutput($magirc->denora->getClientStats(), true);
+});
+
+/**
+ * Get the global country stats
+ *
+ * Example: http://www.denorastats.org/magirc/rest/denora.php/network/countries
+ *
+ **/
+$magirc->slim->get('/network/countries/percent', function() use($magirc) {
+	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getCountryStats(), $magirc->denora->getUserCount(), 'country'));
+});
+
+$magirc->slim->get('/network/countries', function() use($magirc) {
+	$magirc->jsonOutput($magirc->denora->getCountryStats(), true);
+});
+
 /**
  * Get List of Servers
  *
@@ -83,6 +112,34 @@ $magirc->slim->get('/servers/hourlystats', function() use($magirc) {
  **/
 $magirc->slim->get('/servers/:server', function($server) use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getServer($server));
+});
+
+/**
+ * Get the per server client stats
+ *
+ * Example: http://www.denorastats.org/magirc/rest/denora.php/servers/<server>/clients
+ *
+ **/
+$magirc->slim->get('/servers/:server/clients/percent', function($server) use($magirc) {
+	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getClientStats('server', $server), $magirc->denora->getUserCount('server', $server), 'client'));
+});
+
+$magirc->slim->get('/servers/:server/clients', function($server) use($magirc) {
+	$magirc->jsonOutput($magirc->denora->getClientStats('server', $server), true);
+});
+
+/**
+ * Get the per server country stats
+ *
+ * Example: http://www.denorastats.org/magirc/rest/denora.php/servers/<server>/countries
+ *
+ **/
+$magirc->slim->get('/servers/:server/countries/percent', function($server) use($magirc) {
+	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getCountryStats('server', $server), $magirc->denora->getUserCount('server', $server), 'country'));
+});
+
+$magirc->slim->get('/servers/:server/countries', function($server) use($magirc) {
+	$magirc->jsonOutput($magirc->denora->getCountryStats('server', $server), true);
 });
 
 /**
@@ -215,6 +272,38 @@ $magirc->slim->get('/channels/:chan/checkstats', function($chan) use($magirc) {
 	$magirc->jsonOutput($magirc->denora->checkChannelStats($chan));
 });
 
+/**
+ * Get the per channel client stats
+ *
+ * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>/clients
+ *
+ **/
+$magirc->slim->get('/channels/:chan/clients/percent', function($chan) use($magirc) {
+	$magirc->checkPermission('channel', $chan);
+	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getClientStats('channel', $chan), $magirc->denora->getUserCount('channel', $chan), 'client'));
+});
+
+$magirc->slim->get('/channels/:chan/clients', function($chan) use($magirc) {
+	$magirc->checkPermission('channel', $chan);
+	$magirc->jsonOutput($magirc->denora->getClientStats('channel', $chan), true);
+});
+
+/**
+ * Get the per channel country stats
+ *
+ * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>/countries
+ *
+ **/
+$magirc->slim->get('/channels/:chan/countries/percent', function($chan) use($magirc) {
+	$magirc->checkPermission('channel', $chan);
+	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getCountryStats('channel', $chan), $magirc->denora->getUserCount('channel', $chan), 'country'));
+});
+
+$magirc->slim->get('/channels/:chan/countries', function($chan) use($magirc) {
+	$magirc->checkPermission('channel', $chan);
+	$magirc->jsonOutput($magirc->denora->getCountryStats('channel', $chan), true);
+});
+
 
 /**
  * Get Hourly User Stats
@@ -337,38 +426,6 @@ $magirc->slim->get('/users/:mode/:user/checkstats', function($mode, $user) use($
  **/
 $magirc->slim->get('/operators', function() use($magirc) {
 	$magirc->jsonOutput($magirc->denora->getOperatorList(), true, 'nickname');
-});
-
-/**
- * Get the client stats (global or per channel)
- *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/clientstats/%23<channel>
- *
- **/
-$magirc->slim->get('/clients(/:chan)/percent', function($chan = null) use($magirc) {
-	if ($chan) $magirc->checkPermission('channel', $chan);
-	$magirc->jsonOutput($magirc->denora->getClientStats($chan));
-});
-
-$magirc->slim->get('/clients(/:chan)', function($chan = null) use($magirc) {
-	if ($chan) $magirc->checkPermission('channel', $chan);
-	$magirc->jsonOutput($magirc->denora->getPieStats('clients', $chan), true);
-});
-
-/**
- * Get the country stats (global or per channel)
- *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/countrystats/%23<channel>
- *
- **/
-$magirc->slim->get('/countries(/:chan)/percent', function($chan = null) use($magirc) {
-	if ($chan) $magirc->checkPermission('channel', $chan);
-	$magirc->jsonOutput($magirc->denora->getCountryStats($chan));
-});
-
-$magirc->slim->get('/countries(/:chan)', function($chan = null) use($magirc) {
-	if ($chan) $magirc->checkPermission('channel', $chan);
-	$magirc->jsonOutput($magirc->denora->getPieStats('countries', $chan), true);
 });
 
 // Go! :)

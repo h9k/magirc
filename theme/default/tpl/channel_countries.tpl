@@ -14,7 +14,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/countries/'+target+'/percent', function(data) {
+    $.getJSON('rest/denora.php/channels/'+target+'/countries/percent', function(data) {
 		new Highcharts.Chart({
 			chart: { renderTo: 'chart-countries' },
 			tooltip: {
@@ -28,7 +28,7 @@ $(document).ready(function() {
 	$('#tbl_countries').dataTable({
 		"iDisplayLength": 10,
 		"aaSorting": [[ 1, "desc" ]],
-		"sAjaxSource": "rest/denora.php/countries/"+target+"?format=datatables",
+		"sAjaxSource": "rest/denora.php/channels/"+target+"/countries?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "country", "fnRender": function(oObj) {
 				return getCountryFlag(oObj.aData) + ' ' + oObj.aData['country'];

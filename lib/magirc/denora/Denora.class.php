@@ -91,16 +91,20 @@ class Denora {
 
 	/**
 	 * Get the global or channel-specific user count
-	 * @param string $chan Channel (null for global)
+	 * @param string $mode Mode ('server', 'channel', null: global)
+	 * @param string $target Target (channel or server name, depends on $mode)
 	 * @return int User count
 	 */
-	private function getUserCount($chan = null) {
+	function getUserCount($mode = null, $target = null) {
 		$query = "SELECT COUNT(*) FROM user
 			JOIN server ON server.servid = user.servid";
-		if ($chan) {
+		if ($mode == 'channel' && $target) {
 			$query .= " JOIN ison ON ison.nickid = user.nickid
 			JOIN chan ON chan.chanid = ison.chanid
 			WHERE LOWER(chan.channel)=LOWER(:chan) AND user.online = 'Y'";
+		} elseif ($mode == 'server' && $target) {
+			$query .= " WHERE LOWER(user.server)=LOWER(:server)
+				AND user.online='Y'";
 		} else {
 			$query .= " WHERE user.online = 'Y'";
 		}
@@ -109,7 +113,8 @@ class Denora {
 			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode(Protocol::services_protection_mode));
 		}
 		$stmt = $this->db->prepare($query);
-		if ($chan != 'global') $stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
+		if ($mode == 'channel' && $target) $stmt->bindParam(':chan', $target, PDO::PARAM_STR);
+		if ($mode == 'server' && $target) $stmt->bindParam(':server', $target, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetch(PDO::FETCH_COLUMN);
 	}
@@ -117,10 +122,11 @@ class Denora {
 	/**
 	 * Get CTCP/GeoIP statistics for use by pie charts
 	 * @param string $type Type ('clients': client stats, 'countries': country stats)
-	 * @param string $chan Channel (null for global)
+	 * @param string $mode Mode ('server', 'channel', null: global)
+	 * @param string $target Target (channel or server name, depends on $mode)
 	 * @return array Data
 	 */
-	function getPieStats($type, $chan = null) {
+	private function getPieStats($type, $mode = null, $target = null) {
 		$query = "SELECT ";
 		if ($type == 'clients') {
 			$type = 'ctcpversion';
@@ -131,10 +137,13 @@ class Denora {
 		}
 		$query .= "COUNT(*) AS count FROM user
 			JOIN server ON server.servid = user.servid";
-		if ($chan) {
+		if ($mode == 'channel' && $target) {
 			$query .= " JOIN ison ON ison.nickid = user.nickid
 				JOIN chan ON chan.chanid = ison.chanid
 				WHERE LOWER(chan.channel)=LOWER(:chan)
+				AND user.online='Y'";
+		} elseif ($mode == 'server' && $target) {
+			$query .= " WHERE LOWER(user.server)=LOWER(:server)
 				AND user.online='Y'";
 		} else {
 			$query .= " WHERE user.online='Y'";
@@ -145,27 +154,30 @@ class Denora {
 		}
 		$query .= " GROUP by user.$type ORDER BY count DESC";
 		$stmt = $this->db->prepare($query);
-		if ($chan != 'global') $stmt->bindParam(':chan', $chan, PDO::PARAM_STR);
+		if ($mode == 'channel' && $target) $stmt->bindParam(':chan', $target, PDO::PARAM_STR);
+		if ($mode == 'server' && $target) $stmt->bindParam(':server', $target, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	/**
 	 * Get CTCP client statistics
-	 * @param string $chan Channel (null for global)
+	 * @param string $mode Mode ('server', 'channel', null: global)
+	 * @param string $target Target
 	 * @return array Data
 	 */
-	function getClientStats($chan = null) {
-		return $this->makeData($this->getPieStats('clients', $chan), $this->getUserCount($chan), 'client');
+	function getClientStats($mode = null, $target = null) {
+		return $this->getPieStats('clients', $mode, $target);
 	}
 
 	/**
 	 * Get GeoIP country statistics
-	 * @param string $chan Channel (null for global)
+	 * @param string $mode Mode ('server', 'channel', null: global)
+	 * @param string $target Target
 	 * @return array Data
 	 */
-	function getCountryStats($chan = null) {
-		return $this->makeData($this->getPieStats('countries', $chan), $this->getUserCount($chan), 'country');
+	function getCountryStats($mode = null, $target = null) {
+		return $this->getPieStats('countries', $mode, $target);
 	}
 
 	/**
@@ -175,7 +187,7 @@ class Denora {
 	 * @param string $name country / client
 	 * @return array of arrays (string 'name', double 'value')
 	 */
-	private function makeData($result, $sum, $name) {
+	function makePieData($result, $sum, $name) {
 		$data = array();
 		$unknown = 0;
 		$other = 0;

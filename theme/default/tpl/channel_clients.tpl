@@ -14,7 +14,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/clients/'+target+'/percent', function(data) {
+    $.getJSON('rest/denora.php/channels/'+target+'/clients/percent', function(data) {
         new Highcharts.Chart({
 			chart: { renderTo: 'chart-clients' },
 			tooltip: {
@@ -28,7 +28,7 @@ $(document).ready(function() {
 	$('#tbl_clients').dataTable({
 		"iDisplayLength": 10,
 		"aaSorting": [[ 1, "desc" ]],
-		"sAjaxSource": "rest/denora.php/clients/"+target+"?format=datatables",
+		"sAjaxSource": "rest/denora.php/channels/"+target+"/clients?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "client", "fnRender": function (oObj) {
 				return oObj.aData['client'] ? oObj.aData['client'] : mLang.Unknown;
