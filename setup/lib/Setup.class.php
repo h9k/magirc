@@ -211,6 +211,9 @@ class Setup {
 				$this->db->insert('magirc_config', array('parameter' => 'service_mibbit', 'value' => ''));
 				$this->db->insert('magirc_config', array('parameter' => 'service_addthis', 'value' => '0'));
 			}
+			if ($version < 9) {
+				$this->db->insert('magirc_config', array('parameter' => 'denora_version', 'value' => '1.4'));
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
 -- Dumping data for table `magirc_config`
 --
 
-INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '8'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '9'),
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
 ('net_roundrobin', ''),
@@ -24,6 +24,7 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('net_port_ssl', ''),
 ('welcome_mode', 'statuspage'),
 ('timezone', 'UTC'),
+('denora_version', '1.4');
 ('ircd_type', 'unreal32'),
 ('theme', 'default'),
 ('locale', 'en_US'),
