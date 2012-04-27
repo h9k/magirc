@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-24 11:57+0100\n"
-"PO-Revision-Date: 2012-04-24 11:58+0100\n"
+"PO-Revision-Date: 2012-04-24 13:56+0100\n"
 "Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -480,7 +480,7 @@ msgstr "Serverhistorie"
 
 #: ../../strings.c:461
 msgid "Server info for %1"
-msgstr "Servers informatie over %1"
+msgstr "Server informatie over %1"
 
 #: ../../strings.c:464
 #: ../../strings.c:530
@@ -522,7 +522,7 @@ msgstr "Maximum beheerders"
 
 #: ../../strings.c:509
 msgid "Message of the day"
-msgstr "Boodschap van de dag"
+msgstr "Bericht van de dag"
 
 #: ../../strings.c:512
 msgid "Server list"
