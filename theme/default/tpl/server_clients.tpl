@@ -16,13 +16,33 @@
 $(document).ready(function() {
     $.getJSON('rest/denora.php/servers/'+target+'/clients/percent', function(data) {
         new Highcharts.Chart({
-			chart: { renderTo: 'chart-clients' },
+			chart: { renderTo: 'chart-clients', type: 'pie' },
 			tooltip: {
 				formatter: function() {
-					return '<b>'+ this.point.name +'<\/b>: '+ Math.round(this.percentage * 100) / 100 +' %';
+					return '<b>'+ this.point.name +'<\/b>: '+ this.y +'%';
 				}
 			},
-			series: [{ type: 'pie', name: mLang.ClientStatistics, data: data }]
+			series: [{
+				name: 'Clients',
+				data: data.clients,
+				size: '60%',
+				dataLabels: {
+					formatter: function() {
+						return this.y > 5 ? this.point.name : null;
+					},
+					color: 'white',
+					distance: -30
+				}
+			}, {
+				name: 'Versions',
+				data: data.versions,
+				innerSize: '60%',
+				dataLabels: {
+					formatter: function() {
+						return this.y > 1 ? '<b>'+ this.point.name +':</b> '+ this.y +'%' : null;
+					}
+				}
+			}]
 		});
 	});
 	$('#tbl_clients').dataTable({

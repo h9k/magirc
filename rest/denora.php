@@ -57,7 +57,7 @@ $magirc->slim->get('/network/max', function() use($magirc) {
  *
  **/
 $magirc->slim->get('/network/clients/percent', function() use($magirc) {
-	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getClientStats(), $magirc->denora->getUserCount(), 'client'));
+	$magirc->jsonOutput($magirc->denora->makeClientPieData($magirc->denora->getClientStats(), $magirc->denora->getUserCount()));
 });
 
 $magirc->slim->get('/network/clients', function($chan = null) use($magirc) {
@@ -71,7 +71,7 @@ $magirc->slim->get('/network/clients', function($chan = null) use($magirc) {
  *
  **/
 $magirc->slim->get('/network/countries/percent', function() use($magirc) {
-	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getCountryStats(), $magirc->denora->getUserCount(), 'country'));
+	$magirc->jsonOutput($magirc->denora->makeCountryPieData($magirc->denora->getCountryStats(), $magirc->denora->getUserCount()));
 });
 
 $magirc->slim->get('/network/countries', function() use($magirc) {
@@ -121,7 +121,7 @@ $magirc->slim->get('/servers/:server', function($server) use($magirc) {
  *
  **/
 $magirc->slim->get('/servers/:server/clients/percent', function($server) use($magirc) {
-	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getClientStats('server', $server), $magirc->denora->getUserCount('server', $server), 'client'));
+	$magirc->jsonOutput($magirc->denora->makeClientPieData($magirc->denora->getClientStats('server', $server), $magirc->denora->getUserCount('server', $server)));
 });
 
 $magirc->slim->get('/servers/:server/clients', function($server) use($magirc) {
@@ -135,7 +135,7 @@ $magirc->slim->get('/servers/:server/clients', function($server) use($magirc) {
  *
  **/
 $magirc->slim->get('/servers/:server/countries/percent', function($server) use($magirc) {
-	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getCountryStats('server', $server), $magirc->denora->getUserCount('server', $server), 'country'));
+	$magirc->jsonOutput($magirc->denora->makeCountryPieData($magirc->denora->getCountryStats('server', $server), $magirc->denora->getUserCount('server', $server)));
 });
 
 $magirc->slim->get('/servers/:server/countries', function($server) use($magirc) {
@@ -280,7 +280,7 @@ $magirc->slim->get('/channels/:chan/checkstats', function($chan) use($magirc) {
  **/
 $magirc->slim->get('/channels/:chan/clients/percent', function($chan) use($magirc) {
 	$magirc->checkPermission('channel', $chan);
-	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getClientStats('channel', $chan), $magirc->denora->getUserCount('channel', $chan), 'client'));
+	$magirc->jsonOutput($magirc->denora->makeClientPieData($magirc->denora->getClientStats('channel', $chan), $magirc->denora->getUserCount('channel', $chan)));
 });
 
 $magirc->slim->get('/channels/:chan/clients', function($chan) use($magirc) {
@@ -296,7 +296,7 @@ $magirc->slim->get('/channels/:chan/clients', function($chan) use($magirc) {
  **/
 $magirc->slim->get('/channels/:chan/countries/percent', function($chan) use($magirc) {
 	$magirc->checkPermission('channel', $chan);
-	$magirc->jsonOutput($magirc->denora->makePieData($magirc->denora->getCountryStats('channel', $chan), $magirc->denora->getUserCount('channel', $chan), 'country'));
+	$magirc->jsonOutput($magirc->denora->makeCountryPieData($magirc->denora->getCountryStats('channel', $chan), $magirc->denora->getUserCount('channel', $chan)));
 });
 
 $magirc->slim->get('/channels/:chan/countries', function($chan) use($magirc) {

@@ -181,13 +181,12 @@ class Denora {
 	}
 
 	/**
-	 * Prepare data for use by pie charts
+	 * Prepare data for use by country pie charts
 	 * @param array $result Array of data
 	 * @param type $sum user count
-	 * @param string $name country / client
 	 * @return array of arrays (string 'name', double 'value')
 	 */
-	function makePieData($result, $sum, $name) {
+	function makeCountryPieData($result, $sum) {
 		$data = array();
 		$unknown = 0;
 		$other = 0;
@@ -195,10 +194,10 @@ class Denora {
 			$percent = round($val["count"] / $sum * 100, 2);
 			if ($percent < 2) {
 				$other += $val["count"];
-			} elseif (in_array ($val[$name], array(null, "", "Unknown"))) {
+			} elseif (in_array ($val['country'], array(null, "", "Unknown"))) {
 				$unknown += $val["count"];
 			} else {
-				$data[] = array($val[$name], $percent);
+				$data[] = array($val['country'], $percent);
 			}
 		}
 		if ($unknown > 0) {
@@ -206,6 +205,50 @@ class Denora {
 		}
 		if ($other > 0) {
 			$data[] = array("Other", round($other / $sum * 100, 2));
+		}
+		return $data;
+	}
+
+	/**
+	 * Prepare data for use by client pie charts
+	 * @param array $result Array of data
+	 * @param type $sum user count
+	 * @return array (clients => (name, y), versions (name, y))
+	 */
+	function makeClientPieData($result, $sum) {
+		$clients = array();
+		foreach ($result as $client) {
+			// Determine client name and version
+			preg_match('/^(.*?)\s*(\S*\d\S*)/', str_replace(array('(',')','[',']','{','}'), '', $client['client']), $matches);
+			if (count($matches) == 3) {
+				$name = $matches[1];
+				$version = $matches[2][0] == 'v' ? substr($matches[2], 1) : $matches[2];
+			} else {
+				$name = $client['client'] ? $client['client'] : 'Unknown';
+				$version = '';
+			}
+			$name = trim($name);
+			$version = trim($version);
+
+			if (!array_key_exists($name, $clients)) {
+				$clients[$name] = array('count' => $client['count'], 'versions' => array());
+			} else {
+				$clients[$name]['count'] += $client['count'];
+			}
+			if (isset($clients[$name]['versions'][$version])) {
+				$clients[$name]['versions'][$version] += $client['count'];
+			} else {
+				$clients[$name]['versions'][$version] = $client['count'];
+			}
+		}
+
+		// Prepare data for output
+		$data = array('clients' => array(), 'versions' => array());
+		foreach ($clients as $name => $client) {
+			$data['clients'][] = array('name' => $name, 'y' => (double) round($client['count'] / $sum * 100, 2));
+			foreach ($client['versions'] as $version => $count) {
+				$data['versions'][] = array('name' => $name.' '.$version, 'y' => (double) round($count / $sum * 100, 2));
+			}
 		}
 		return $data;
 	}
