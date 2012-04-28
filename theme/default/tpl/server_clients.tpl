@@ -15,16 +15,36 @@
 {literal}
 $(document).ready(function() {
     $.getJSON('rest/denora.php/servers/'+target+'/clients/percent', function(data) {
+		var colors = Highcharts.getOptions().colors;
+		var clientData = data.clients;
+		var versionData = data.versions;
+		var i = 0, j = 0, name = '';
+		$.each(clientData, function(key, value) {
+			clientData[key]['color'] = colors[i++];
+			if (i > 8) i = 0;
+		});
+		i = -1;
+		$.each(versionData, function(key, value) {
+			if (name != value['cat']) {
+				name = value['cat'];
+				i++;
+				j = 0;
+			}
+			var brightness = 0.2 - (j / 10 / 5);
+			versionData[key]['color'] = Highcharts.Color(colors[i]).brighten(brightness).get();
+			if (i > 8) i = 0;
+			j++;
+		});
         new Highcharts.Chart({
 			chart: { renderTo: 'chart-clients', type: 'pie' },
 			tooltip: {
 				formatter: function() {
-					return '<b>'+ this.point.name +'<\/b>: '+ this.y +'%';
+					return '<b>'+ this.point.name + (this.point.version ? ' ' + this.point.version : '') +'<\/b>: '+ this.y +'%'+' ('+this.point.count+')';
 				}
 			},
 			series: [{
 				name: 'Clients',
-				data: data.clients,
+				data: clientData,
 				size: '60%',
 				dataLabels: {
 					formatter: function() {
@@ -35,11 +55,11 @@ $(document).ready(function() {
 				}
 			}, {
 				name: 'Versions',
-				data: data.versions,
+				data: versionData,
 				innerSize: '60%',
 				dataLabels: {
 					formatter: function() {
-						return this.y > 1 ? '<b>'+ this.point.name +':</b> '+ this.y +'%' : null;
+						return this.y > 1 ? '<b>'+ this.point.name + (this.point.version ? ' ' + this.point.version : '') + ':</b> '+ this.y +'%'+' ('+this.point.count+')' : null;
 					}
 				}
 			}]

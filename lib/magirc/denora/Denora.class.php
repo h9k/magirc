@@ -229,7 +229,7 @@ class Denora {
 			}
 			$name = trim($name);
 			$version = trim($version);
-
+			// Categorize the versions
 			if (!array_key_exists($name, $clients)) {
 				$clients[$name] = array('count' => $client['count'], 'versions' => array());
 			} else {
@@ -241,14 +241,47 @@ class Denora {
 				$clients[$name]['versions'][$version] = $client['count'];
 			}
 		}
+		// Sort by count descending
+		uasort($clients, function($a, $b) {
+			return $a['count'] < $b['count'];
+		});
+		foreach ($clients as $key => $val) {
+			arsort($clients[$key]['versions']);
+		}
 
 		// Prepare data for output
 		$data = array('clients' => array(), 'versions' => array());
+		$unknown = array('count' => 0, 'versions' => array());
+		$other = array('count' => 0, 'versions' => array());
 		foreach ($clients as $name => $client) {
-			$data['clients'][] = array('name' => $name, 'y' => (double) round($client['count'] / $sum * 100, 2));
-			foreach ($client['versions'] as $version => $count) {
-				$data['versions'][] = array('name' => $name.' '.$version, 'y' => (double) round($count / $sum * 100, 2));
+			$percent = round($client['count'] / $sum * 100, 2);
+			if ($percent < 2) { // Too small, so consider as "Other"
+				$other['count'] += $client['count'];
+				foreach ($client['versions'] as $version => $count) {
+					$other['versions'][] = array('name' => $name, 'version' => $version, 'cat' => 'Other', 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
+				}
+			} elseif ($name == 'Unknown') { // We want unknown to show up at the end, so we separate it
+				$unknown['count'] += $client['count'];
+				foreach ($client['versions'] as $version => $count) {
+					$unknown['versions'][] = array('name' => $name, 'version' => $version, 'cat' => $name, 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
+				}
+			} else {
+				$data['clients'][] = array('name' => $name, 'count' => (int) $client['count'], 'y' => (double) $percent);
+				foreach ($client['versions'] as $version => $count) {
+					$data['versions'][] = array('name' => $name, 'version' => $version, 'cat' => $name, 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
+				}
 			}
+		}
+		// Append unknown and other slices
+		if ($unknown['count'] > 0) {
+			$unknown['percent'] = round($unknown['count'] / $sum * 100, 2);
+			$data['clients'][] = array('name' => "Unknown", 'count' => (int) $unknown['count'], 'y' => (double) $unknown['percent']);
+			$data['versions'] = array_merge($data['versions'], $unknown['versions']);
+		}
+		if ($other['count'] > 0) {
+			$other['percent'] = round($other['count'] / $sum * 100, 2);
+			$data['clients'][] = array('name' => "Other", 'count' => (int) $other['count'], 'y' => (double) $other['percent']);
+			$data['versions'] = array_merge($data['versions'], $other['versions']);
 		}
 		return $data;
 	}
