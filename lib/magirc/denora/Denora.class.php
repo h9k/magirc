@@ -184,7 +184,7 @@ class Denora {
 	 * Prepare data for use by country pie charts
 	 * @param array $result Array of data
 	 * @param type $sum user count
-	 * @return array of arrays (string 'name', double 'value')
+	 * @return array of arrays (string 'name', int 'count', double 'y')
 	 */
 	function makeCountryPieData($result, $sum) {
 		$data = array();
@@ -197,14 +197,14 @@ class Denora {
 			} elseif (in_array ($val['country'], array(null, "", "Unknown"))) {
 				$unknown += $val["count"];
 			} else {
-				$data[] = array($val['country'], $percent);
+				$data[] = array('name' => $val['country'], 'count' => $val["count"], 'y' => $percent);
 			}
 		}
 		if ($unknown > 0) {
-			$data[] = array("Unknown", round($unknown / $sum * 100, 2));
+			$data[] = array('name' => "Unknown", 'count' => $unknown, 'y' => round($unknown / $sum * 100, 2));
 		}
 		if ($other > 0) {
-			$data[] = array("Other", round($other / $sum * 100, 2));
+			$data[] = array('name' => "Other", 'count' => $other, 'y' => round($other / $sum * 100, 2));
 		}
 		return $data;
 	}
@@ -213,7 +213,7 @@ class Denora {
 	 * Prepare data for use by client pie charts
 	 * @param array $result Array of data
 	 * @param type $sum user count
-	 * @return array (clients => (name, y), versions (name, y))
+	 * @return array (clients => (name, count, y), versions (name, version, cat, count, y))
 	 */
 	function makeClientPieData($result, $sum) {
 		$clients = array();

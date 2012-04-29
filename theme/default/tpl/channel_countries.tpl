@@ -19,10 +19,19 @@ $(document).ready(function() {
 			chart: { renderTo: 'chart-countries' },
 			tooltip: {
 				formatter: function() {
-					return '<b>'+ this.point.name +'<\/b>: '+ Math.round(this.percentage * 100) / 100 +' %';
+					return '<b>'+ this.point.name +'<\/b>: '+ this.y +' %'+' (' + this.point.count +')';
 				}
 			},
-			series: [{ type: 'pie', name: mLang.CountryStatistics, data: data }]
+			series: [{
+				type: 'pie',
+				name: mLang.CountryStatistics,
+				data: data,
+				dataLabels: {
+					formatter: function() {
+						return '<b>'+ this.point.name +'<\/b>: '+ this.y +' %'+' (' + this.point.count +')';
+					}
+				}
+			}]
 		});
 	});
 	$('#tbl_countries').dataTable({
