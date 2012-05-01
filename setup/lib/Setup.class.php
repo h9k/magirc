@@ -66,8 +66,7 @@ class Setup {
 				$status['writable'] = false;
 			}
 		} else {
-			$new = true;
-			if (copy('../conf/magirc.cfg.dist.php', MAGIRC_CFG_FILE)) {
+			if (@copy('../conf/magirc.cfg.dist.php', MAGIRC_CFG_FILE)) {
 				$status['writable'] = true;
 			} else {
 				$status['writable'] = false;

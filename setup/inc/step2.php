@@ -16,7 +16,7 @@ if (file_exists(MAGIRC_CFG_FILE)) {
 		$status['error'] = "Invalid configuration file";
 	}
 } else {
-	$setup->tpl->assign('db_magirc', array('hostname' => 'localhost', 'port' => 3306));
+	$setup->tpl->assign('db_magirc', array('username' => '', 'password' => '', 'database' => '', 'hostname' => 'localhost', 'port' => 3306));
 	$status['error'] = 'new';
 }
 
