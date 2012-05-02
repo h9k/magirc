@@ -28,8 +28,8 @@ $(document).ready(function() {
 			} },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "users_max" },
-			{ "mDataProp": "modes", "fnRender": function (oObj) {
-				if (oObj.aData['modes']) return '+'+oObj.aData['modes'];
+			{ "mDataProp": "modes", "bSortable": false, "fnRender": function (oObj) {
+				return (oObj.aData['modes']) ? '+'+oObj.aData['modes'] : '';
 			} }
 		]
 	});
