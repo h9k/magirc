@@ -194,7 +194,7 @@ class Denora {
 			$percent = round($val["count"] / $sum * 100, 2);
 			if ($percent < 2) {
 				$other += $val["count"];
-			} elseif (in_array ($val['country'], array(null, "", "Unknown"))) {
+			} elseif (in_array ($val['country'], array(null, "", "Unknown", "localhost"))) {
 				$unknown += $val["count"];
 			} else {
 				$data[] = array('name' => $val['country'], 'count' => $val["count"], 'y' => $percent);
