@@ -201,10 +201,10 @@ class Denora {
 			}
 		}
 		if ($unknown > 0) {
-			$data[] = array('name' => "Unknown", 'count' => $unknown, 'y' => round($unknown / $sum * 100, 2));
+			$data[] = array('name' => T_gettext('Unknown'), 'count' => $unknown, 'y' => round($unknown / $sum * 100, 2));
 		}
 		if ($other > 0) {
-			$data[] = array('name' => "Other", 'count' => $other, 'y' => round($other / $sum * 100, 2));
+			$data[] = array('name' => T_gettext('Other'), 'count' => $other, 'y' => round($other / $sum * 100, 2));
 		}
 		return $data;
 	}
@@ -224,7 +224,7 @@ class Denora {
 				$name = $matches[1];
 				$version = $matches[2][0] == 'v' ? substr($matches[2], 1) : $matches[2];
 			} else {
-				$name = $client['client'] ? $client['client'] : 'Unknown';
+				$name = $client['client'] ? $client['client'] : T_gettext('Unknown');
 				$version = '';
 			}
 			$name = trim($name);
@@ -256,13 +256,13 @@ class Denora {
 		$other_various = 0;
 		foreach ($clients as $name => $client) {
 			$percent = round($client['count'] / $sum * 100, 2);
-			if ($percent < 2 || $name == 'Unknown') { // Too small or unknown
+			if ($percent < 2 || $name == T_gettext('Unknown')) { // Too small or unknown
 				$other['count'] += $client['count'];
 				foreach ($client['versions'] as $version => $count) {
 					if ($count < $min_count) {
 						$other_various += $count;
 					} else {
-						$other['versions'][] = array('name' => $name, 'version' => $version, 'cat' => 'Other', 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
+						$other['versions'][] = array('name' => $name, 'version' => $version, 'cat' => T_gettext('Other'), 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
 					}
 				}
 			} else {
@@ -276,17 +276,17 @@ class Denora {
 					}
 				}
 				if ($data_various) {
-					$data['versions'][] = array('name' => $name, 'version' => '(various)', 'cat' => $name, 'count' => (int) $data_various, 'y' => (double) round($data_various / $sum * 100, 2));
+					$data['versions'][] = array('name' => $name, 'version' => '('.T_gettext('various').')', 'cat' => $name, 'count' => (int) $data_various, 'y' => (double) round($data_various / $sum * 100, 2));
 				}
 			}
 		}
 		if ($other_various) {
-			$other['versions'][] = array('name' => 'Various', 'version' => '', 'cat' => 'Other', 'count' => (int) $other_various, 'y' => (double) round($other_various / $sum * 100, 2));;
+			$other['versions'][] = array('name' => T_gettext('Various'), 'version' => '', 'cat' => T_gettext('Other'), 'count' => (int) $other_various, 'y' => (double) round($other_various / $sum * 100, 2));;
 		}
 		// Append other slices
 		if ($other['count'] > 0) {
 			$other['percent'] = round($other['count'] / $sum * 100, 2);
-			$data['clients'][] = array('name' => "Other", 'count' => (int) $other['count'], 'y' => (double) $other['percent']);
+			$data['clients'][] = array('name' => T_gettext('Other'), 'count' => (int) $other['count'], 'y' => (double) $other['percent']);
 			$data['versions'] = array_merge($data['versions'], $other['versions']);
 		}
 		#echo "<pre>"; print_r($data); exit;

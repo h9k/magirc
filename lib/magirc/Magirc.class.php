@@ -65,7 +65,7 @@ class Magirc {
 			$this->denora = new Denora();
 		}
 
-		if ($api_mode == "web") {
+		#if ($api_mode == "web") {
 			// Set the locale
 			$locales = $this->getLocales();
 			if (isset($_GET['locale']) && in_array($_GET['locale'], $locales)) {
@@ -88,7 +88,7 @@ class Magirc {
 			}
 			define('LOCALE', $locale);
 			define('LANG', substr($locale, 0, 2));
-		}
+		#}
 	}
 
 	/**
@@ -97,7 +97,7 @@ class Magirc {
 	 */
 	private function getLocales() {
 		$locales = array();
-		foreach (glob("locale/*") as $filename) {
+		foreach (glob(PATH_ROOT."locale/*") as $filename) {
 			if (is_dir($filename)) $locales[] = basename($filename);
 		}
 		return $locales;
