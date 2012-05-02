@@ -4,11 +4,11 @@
 	<table border="0" cellspacing="2" cellpadding="2">
 		<tr>
 			<td align="right"><strong>Network Name:</strong></td>
-			<td>{$cfg.net_name}</td>
+			<td>{$cfg->net_name}</td>
 		</tr>
 		<tr>
 			<td align="right"><strong>Network Homepage URL: </strong></td>
-			<td>{$cfg.net_url}</td>
+			<td>{$cfg->net_url}</td>
 		</tr>
 		<tr>
 			<td align="right"><strong>MagIRC URL: </strong></td>
@@ -25,11 +25,11 @@
 		<tr>
 			<td>&nbsp;</td>
 			<td>
-				<input type="hidden" name="netname" value="{$cfg.net_name}" />
-				<input type="hidden" name="netpage" value="{$cfg.net_url}" />
+				<input type="hidden" name="netname" value="{$cfg->net_name}" />
+				<input type="hidden" name="netpage" value="{$cfg->net_url}" />
 				<input type="hidden" name="homepage" value="http://{$magirc_url}" />
 				<input type="hidden" name="magirc" value="{$smarty.const.VERSION_FULL}" />
-				<input type="hidden" name="ircd" value="{$cfg.ircd_type}" />
+				<input type="hidden" name="ircd" value="{$cfg->ircd_type}" />
 			</td>
 		</tr>
 	</table>

@@ -60,35 +60,33 @@ class Magirc {
 		$this->cfg = new Config();
 
 		// Initialize modules
-		define('IRCD', $this->cfg->getParam('ircd_type'));
+		define('IRCD', $this->cfg->ircd_type);
 		if ($api_mode == "web" || $api_mode == "denora") {
 			$this->denora = new Denora();
 		}
 
-		#if ($api_mode == "web") {
-			// Set the locale
-			$locales = $this->getLocales();
-			if (isset($_GET['locale']) && in_array($_GET['locale'], $locales)) {
-				setcookie('magirc_locale', $_GET['locale'], time()+60*60*24*30, '/');
-				$locale = $_GET['locale'];
-			} elseif (isset($_COOKIE['magirc_locale']) && in_array($_COOKIE['magirc_locale'], $locales)) {
-				$locale = $_COOKIE['magirc_locale'];
-			} else {
-				$locale = $this->detectLocale($locales);
-			}
-			// Configure gettext
-			require_once(PATH_ROOT.'lib/gettext/gettext.inc');
-			$domain = "messages";
-			T_setlocale(LC_ALL, $locale.'.UTF-8', $locale);
-			T_bindtextdomain($domain, PATH_ROOT.'locale/');
-			T_bind_textdomain_codeset($domain, 'UTF-8');
-			T_textdomain($domain);
-			if (!ini_get("safe_mode")) {
-				@putenv("LC_ALL={$locale}.utf8");
-			}
-			define('LOCALE', $locale);
-			define('LANG', substr($locale, 0, 2));
-		#}
+		// Set the locale
+		$locales = $this->getLocales();
+		if (isset($_GET['locale']) && in_array($_GET['locale'], $locales)) {
+			setcookie('magirc_locale', $_GET['locale'], time()+60*60*24*30, '/');
+			$locale = $_GET['locale'];
+		} elseif (isset($_COOKIE['magirc_locale']) && in_array($_COOKIE['magirc_locale'], $locales)) {
+			$locale = $_COOKIE['magirc_locale'];
+		} else {
+			$locale = $this->detectLocale($locales);
+		}
+		// Configure gettext
+		require_once(PATH_ROOT.'lib/gettext/gettext.inc');
+		$domain = "messages";
+		T_setlocale(LC_ALL, $locale.'.UTF-8', $locale);
+		T_bindtextdomain($domain, PATH_ROOT.'locale/');
+		T_bind_textdomain_codeset($domain, 'UTF-8');
+		T_textdomain($domain);
+		if (!ini_get("safe_mode")) {
+			@putenv("LC_ALL={$locale}.utf8");
+		}
+		define('LOCALE', $locale);
+		define('LANG', substr($locale, 0, 2));
 	}
 
 	/**
@@ -110,7 +108,7 @@ class Magirc {
 	 */
 	private function detectLocale($available_locales) {
 		$hits = array();
-		$bestlang = $this->cfg->getParam('locale');
+		$bestlang = $this->cfg->locale;
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 			preg_match_all("/([[:alpha:]]{1,8})(-([[:alpha:]|-]{1,8}))?(\s*;\s*q\s*=\s*(1\.0{0,3}|0\.\d{0,3}))?\s*(,|$)/i", $_SERVER['HTTP_ACCEPT_LANGUAGE'], $hits, PREG_SET_ORDER);
 			$bestqval = 0;

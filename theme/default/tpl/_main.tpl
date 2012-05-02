@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{block name="title"}{$cfg.net_name} - {/block}</title>
+<title>{block name="title"}{$cfg->net_name} - {/block}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="ROBOTS" content="INDEX, FOLLOW" />
-<meta name="Keywords" content="{$cfg.net_name} MagIRC IRC Chat Statistics Denora stats phpDenora" />
-<meta name="Description" content="{$cfg.net_name} Network Statistics powered by MagIRC" />
-<meta property='og:title' content='{$cfg.net_name}'/><meta property='og:url' content='{$smarty.const.BASE_URL}'/><meta property='og:image' content='{$smarty.const.BASE_URL}theme/{$cfg.theme}/img/logofb.png'/><meta property='og:site_name' content='{$cfg.net_name}'/><meta property='og:description' content='{$cfg.net_name} Network Statistics'/>
+<meta name="Keywords" content="{$cfg->net_name} MagIRC IRC Chat Statistics Denora stats phpDenora" />
+<meta name="Description" content="{$cfg->net_name} Network Statistics powered by MagIRC" />
+<meta property='og:title' content='{$cfg->net_name}'/><meta property='og:url' content='{$smarty.const.BASE_URL}'/><meta property='og:image' content='{$smarty.const.BASE_URL}theme/{$cfg->theme}/img/logofb.png'/><meta property='og:site_name' content='{$cfg->net_name}'/><meta property='og:description' content='{$cfg->net_name} Network Statistics'/>
 <base href="{$smarty.const.BASE_URL}" />
-<link rel="icon" href="theme/{$cfg.theme}/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="theme/{$cfg->theme}/img/favicon.ico" type="image/x-icon">
 {block name="css"}
-<link href="theme/{$cfg.theme}/css/styles.css" rel="stylesheet" type="text/css" />
-<link href="theme/{$cfg.theme}/css/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="theme/{$cfg.theme}/css/datatables.css" rel="stylesheet" type="text/css" />
-{if $cfg.cdn_enable}
+<link href="theme/{$cfg->theme}/css/styles.css" rel="stylesheet" type="text/css" />
+<link href="theme/{$cfg->theme}/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="theme/{$cfg->theme}/css/datatables.css" rel="stylesheet" type="text/css" />
+{if $cfg->cdn_enable}
 <link href='http://fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
 {else}
-<link href="theme/{$cfg.theme}/css/font.css" rel="stylesheet" type="text/css" />
+<link href="theme/{$cfg->theme}/css/font.css" rel="stylesheet" type="text/css" />
 {/if}
 {/block}
 </head>
 <body>
 {block name="body"}
 <div id="header">
-	<a href="./"><img src="theme/{$cfg.theme}/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
+	<a href="./"><img src="theme/{$cfg->theme}/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
 	<div id="menu">
 		<ul>
-			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;{t}Network{/t}</span></a></li>
-			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}server"{if $section eq 'server'} class="active"{/if}><span>&nbsp;{t}Servers{/t}</span></a></li>
-			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}channel"{if $section eq 'channel'} class="active"{/if}><span>&nbsp;{t}Channels{/t}</span></a></li>
-			<li><a href="{if !$cfg.rewrite_enable}index.php/{/if}user"{if $section eq 'user'} class="active"{/if}><span>&nbsp;{t}Users{/t}</span></a></li>
+			<li><a href="{if !$cfg->rewrite_enable}index.php/{/if}network"{if $section eq 'network'} class="active"{/if}><span>&nbsp;{t}Network{/t}</span></a></li>
+			<li><a href="{if !$cfg->rewrite_enable}index.php/{/if}server"{if $section eq 'server'} class="active"{/if}><span>&nbsp;{t}Servers{/t}</span></a></li>
+			<li><a href="{if !$cfg->rewrite_enable}index.php/{/if}channel"{if $section eq 'channel'} class="active"{/if}><span>&nbsp;{t}Channels{/t}</span></a></li>
+			<li><a href="{if !$cfg->rewrite_enable}index.php/{/if}user"{if $section eq 'user'} class="active"{/if}><span>&nbsp;{t}Users{/t}</span></a></li>
 		</ul>
 	</div>
-	<div id="loading"><img src="theme/{$cfg.theme}/img/loading.gif" alt="{t}Loading{/t}..." /></div>
+	<div id="loading"><img src="theme/{$cfg->theme}/img/loading.gif" alt="{t}Loading{/t}..." /></div>
 </div>
 <div id="main">
 	{block name="content"}[content placeholder]{/block}
-	{if $cfg.service_adsense_id}
+	{if $cfg->service_adsense_id}
 		<script type="text/javascript">
-		google_ad_client = "{$cfg.service_adsense_id}";
+		google_ad_client = "{$cfg->service_adsense_id}";
 		google_ad_width = 728;
 		google_ad_height = 90;
 		google_ad_format = "728x90_as";
 		google_ad_type = "text_image";
-		google_ad_channel ="{$cfg.service_adsense_channel}";
+		google_ad_channel ="{$cfg->service_adsense_channel}";
 		google_alternate_color = "f9f3df";
 		google_color_border = "CCCCCC";
 		google_color_bg = "FFFFFF";
@@ -69,7 +69,7 @@
 				</div>
 			</td>
 			<td style="text-align:center;">
-				{if $cfg.service_addthis}
+				{if $cfg->service_addthis}
 				<div class="addthis_toolbox addthis_default_style">
 				<a class="addthis_button_preferred_1"></a>
 				<a class="addthis_button_preferred_2"></a>
@@ -81,19 +81,19 @@
 				<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
 				{/if}
 			</td>
-			<td style="text-align:right;">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg.version_show} v{$smarty.const.VERSION_FULL}{/if}</td>
+			<td style="text-align:right;">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg->version_show} v{$smarty.const.VERSION_FULL}{/if}</td>
 		</tr>
 	</table>
 </div>
 <ul id="chanmenu" style="display:none;">
-	{if $cfg.net_roundrobin}<li data-action="irc"><a href="#"><img src="theme/{$cfg.theme}/img/icons/link.png" alt="" title="{t}Standard connection{/t}" style="vertical-align:middle;" /> {t}IRC standard connection{/t}</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.net_port_ssl}<li data-action="ircs"><a href="#"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="" title="{t}Secure connection{/t}" style="vertical-align:middle;" /> {t}IRC secure connection{/t}</a></li>{/if}
-	{if $cfg.service_webchat}<li data-action="webchat"><a href="#"><img src="theme/{$cfg.theme}/img/icons/webchat.png" alt="" title="{t}Webchat{/t}" style="vertical-align:middle;" /> {t}Webchat{/t}</a></li>{/if}
-	{if $cfg.net_roundrobin && $cfg.service_mibbit}<li data-action="mibbit"><a href="#"><img src="theme/{$cfg.theme}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> Mibbit</a></li>{/if}
+	{if $cfg->net_roundrobin}<li data-action="irc"><a href="#"><img src="theme/{$cfg->theme}/img/icons/link.png" alt="" title="{t}Standard connection{/t}" style="vertical-align:middle;" /> {t}IRC standard connection{/t}</a></li>{/if}
+	{if $cfg->net_roundrobin && $cfg->net_port_ssl}<li data-action="ircs"><a href="#"><img src="theme/{$cfg->theme}/img/icons/ssl.png" alt="" title="{t}Secure connection{/t}" style="vertical-align:middle;" /> {t}IRC secure connection{/t}</a></li>{/if}
+	{if $cfg->service_webchat}<li data-action="webchat"><a href="#"><img src="theme/{$cfg->theme}/img/icons/webchat.png" alt="" title="{t}Webchat{/t}" style="vertical-align:middle;" /> {t}Webchat{/t}</a></li>{/if}
+	{if $cfg->net_roundrobin && $cfg->service_mibbit}<li data-action="mibbit"><a href="#"><img src="theme/{$cfg->theme}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> Mibbit</a></li>{/if}
 </ul>
 {/block}
 {block name="js"}
-{if $cfg.cdn_enable}
+{if $cfg->cdn_enable}
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.19/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.js"></script>
@@ -109,14 +109,14 @@
 <script type="text/javascript" src="js/jquery.dateformat.js"></script>
 {jsmin}
 <script type="text/javascript">
-var url_base = '{$smarty.const.BASE_URL}{if !$cfg.rewrite_enable}index.php/{/if}';
-var theme = '{$cfg.theme}';
-var net_roundrobin = '{$cfg.net_roundrobin}';
-var net_port = '{$cfg.net_port|default:"6667"}';
-var net_port_ssl = '{$cfg.net_port_ssl}';
-var service_webchat = '{$cfg.service_webchat}';
-var service_mibbit = '{$cfg.service_mibbit}';
-var denora_version = '{$cfg.denora_version}';
+var url_base = '{$smarty.const.BASE_URL}{if !$cfg->rewrite_enable}index.php/{/if}';
+var theme = '{$cfg->theme}';
+var net_roundrobin = '{$cfg->net_roundrobin}';
+var net_port = '{$cfg->net_port|default:"6667"}';
+var net_port_ssl = '{$cfg->net_port_ssl}';
+var service_webchat = '{$cfg->service_webchat}';
+var service_mibbit = '{$cfg->service_mibbit}';
+var denora_version = '{$cfg->denora_version}';
 var format_datetime = '{t}yyyy-MM-dd HH:mm:ss{/t}';
 var format_datetime_charts = '{t}%Y-%m-%d %H:%M:%S{/t}';
 {/jsmin}

@@ -4,7 +4,7 @@
 
 {block name="js"}{/block}
 
-{block name="css"}<link href="theme/{$cfg.theme}/css/bsod.css" rel="stylesheet" type="text/css" />{/block}
+{block name="css"}<link href="theme/{$cfg->theme}/css/bsod.css" rel="stylesheet" type="text/css" />{/block}
 
 {block name="body"}
 *** STOP: {$err_msg}

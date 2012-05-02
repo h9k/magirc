@@ -108,7 +108,7 @@ class Denora {
 		} else {
 			$query .= " WHERE user.online = 'Y'";
 		}
-		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
+		if ($this->cfg->hide_ulined) $query .= " AND server.uline = 0";
 		if (Protocol::services_protection_mode) {
 			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode(Protocol::services_protection_mode));
 		}
@@ -148,7 +148,7 @@ class Denora {
 		} else {
 			$query .= " WHERE user.online='Y'";
 		}
-		if ($this->cfg->getParam('hide_ulined')) $query .= " AND server.uline = 0";
+		if ($this->cfg->hide_ulined) $query .= " AND server.uline = 0";
 		if (Protocol::services_protection_mode) {
 			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode(Protocol::services_protection_mode));
 		}
@@ -325,7 +325,7 @@ class Denora {
 	 */
 	function getServerList() {
 		$sWhere = "";
-		$hide_servers = $this->cfg->getParam('hide_servers');
+		$hide_servers = $this->cfg->hide_servers;
 		if ($hide_servers) {
 			$hide_servers = explode(",", $hide_servers);
 			foreach ($hide_servers as $key => $server) {
@@ -333,11 +333,11 @@ class Denora {
 			}
 			$sWhere .= sprintf("WHERE server NOT IN(%s)", implode(",", $hide_servers));
 		}
-		if ($this->cfg->getParam('hide_ulined')) {
+		if ($this->cfg->hide_ulined) {
 			$sWhere .= $sWhere ? " AND uline = 0" : "WHERE uline = 0";
 		}
 		$query = "SELECT server, online, comment AS description, currentusers AS users, opers";
-		if ($this->cfg->getParam('denora_version') > '1.4') {
+		if ($this->cfg->denora_version > '1.4') {
 			$query .= ", country, countrycode AS country_code";
 		}
 		$query .= " FROM server $sWhere";
@@ -355,7 +355,7 @@ class Denora {
 		$query = "SELECT server, online, comment AS description, connecttime AS connect_time, lastsplit AS split_time, version,
 			uptime, motd, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time, ping, highestping AS ping_max,
 			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time";
-		if ($this->cfg->getParam('denora_version') > '1.4') {
+		if ($this->cfg->denora_version > '1.4') {
 			$query .= ", country, countrycode AS country_code";
 		}
 		$query .= " FROM server WHERE server = :server";
@@ -374,7 +374,7 @@ class Denora {
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s",
 			implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
-		if ($this->cfg->getParam('denora_version') > '1.4') {
+		if ($this->cfg->denora_version > '1.4') {
 			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
 		}
 		$query .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE";
@@ -387,7 +387,7 @@ class Denora {
 		if (Protocol::oper_hidden_mode) $query .= " AND u." . Denora::getSqlMode(Protocol::oper_hidden_mode) . " = 'N'";
 		if (Protocol::services_protection_mode) $query .= " AND u." . Denora::getSqlMode(Protocol::services_protection_mode) . " = 'N'";
 		$query .= " AND u.server = s.server";
-		if ($this->cfg->getParam('hide_ulined')) $query .= " AND s.uline = '0'";
+		if ($this->cfg->hide_ulined) $query .= " AND s.uline = '0'";
 		$query .= " ORDER BY u.nick ASC";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
@@ -411,7 +411,7 @@ class Denora {
 		if ($private_mode) {
 			$sWhere .= sprintf(" AND %s='N'", Denora::getSqlMode($private_mode));
 		}
-		$hide_channels = $this->cfg->getParam('hide_chans');
+		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
 			$hide_channels = explode(",", $hide_channels);
 			foreach ($hide_channels as $key => $channel) {
@@ -458,7 +458,7 @@ class Denora {
 		if ($private_mode) {
 			$query .= sprintf(" AND %s='N'", Denora::getSqlMode($private_mode));
 		}
-		$hide_chans = explode(",", $this->cfg->getParam('hide_chans'));
+		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
 			$query .= " AND LOWER(channel) NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
 		}
@@ -484,7 +484,7 @@ class Denora {
 		if ($private_mode) {
 			$query .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
 		}
-		$hide_chans = explode(",", $this->cfg->getParam('hide_chans'));
+		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
 			$query .= " AND cstats.chan NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
 		}
@@ -542,7 +542,7 @@ class Denora {
 	 */
 	function checkChannel($chan) {
 		$noshow = array();
-		$no = explode(",", $this->cfg->getParam('hide_chans'));
+		$no = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($no); $i++) {
 			$noshow[$i] = strtolower($no[$i]);
 		}
@@ -557,7 +557,7 @@ class Denora {
 		if (!$data) {
 			return 404;
 		} else {
-			if ($this->cfg->getParam('block_spchans')) {
+			if ($this->cfg->block_spchans) {
 				if (Protocol::chan_secret_mode && @$data[Denora::getSqlMode(Protocol::chan_secret_mode)] == 'Y' ) return 403;
 				if (Protocol::chan_private_mode && @$data[Denora::getSqlMode(Protocol::chan_private_mode)] == 'Y' ) return 403;
 			}
@@ -596,7 +596,7 @@ class Denora {
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service,
 			i.mode_lq AS cmode_lq, i.mode_la AS cmode_la, i.mode_lo AS cmode_lo, i.mode_lh AS cmode_lh, i.mode_lv AS cmode_lv";
-		if ($this->cfg->getParam('denora_version') > '1.4') {
+		if ($this->cfg->denora_version > '1.4') {
 			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
 		}
 		$query .= " FROM ison i, chan c, user u, server s
@@ -630,7 +630,7 @@ class Denora {
 		if ($private_mode) {
 			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
 		}
-		$hide_channels = $this->cfg->getParam('hide_chans');
+		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
 			$hide_channels = explode(",", $hide_channels);
 			foreach ($hide_channels as $key => $channel) {
@@ -879,7 +879,7 @@ class Denora {
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
-		if ($this->cfg->getParam('denora_version') > '1.4') {
+		if ($this->cfg->denora_version > '1.4') {
 			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
 		}
 		$query .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE u.nick = :nickname";
@@ -914,7 +914,7 @@ class Denora {
 		if ($private_mode) {
 			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
 		}
-		$hide_channels = $this->cfg->getParam('hide_chans');
+		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
 			$hide_channels = explode(",", $hide_channels);
 			foreach ($hide_channels as $key => $channel) {
@@ -948,7 +948,7 @@ class Denora {
 				FROM ustats WHERE uname=:uname AND chan=:chan ORDER BY ustats.letters DESC";
 		} else {
 			$sWhere = "";
-			$hide_channels = $this->cfg->getParam('hide_chans');
+			$hide_channels = $this->cfg->hide_chans;
 			if ($hide_channels) {
 				$hide_channels = explode(",", $hide_channels);
 				foreach ($hide_channels as $key => $channel) {

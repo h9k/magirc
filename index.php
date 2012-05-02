@@ -29,24 +29,24 @@ require_once('lib/magirc/denora/Denora.class.php');
 $magirc = new Magirc;
 
 try {
-	define('DEBUG', $magirc->cfg->getParam('debug_mode'));
+	define('DEBUG', $magirc->cfg->debug_mode);
 	define('BASE_URL', sprintf("%s://%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
-	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->getParam('theme').'/tpl';
-	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->getParam('theme').'/cfg';
-	$magirc->tpl->assign('cfg', $magirc->cfg->config);
+	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->theme.'/tpl';
+	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->theme.'/cfg';
+	$magirc->tpl->assign('cfg', $magirc->cfg);
 	$locales = array();
 	foreach (glob("locale/*") as $filename) {
 		if (is_dir($filename)) $locales[] = basename($filename);
 	}
 	$magirc->tpl->assign('locales', $locales);
-	if ($magirc->cfg->getParam('db_version') < DB_VERSION) die('Upgrade in progress. Please wait a few minutes, thank you.');
+	if ($magirc->cfg->db_version < DB_VERSION) die('Upgrade in progress. Please wait a few minutes, thank you.');
 
-	if ($magirc->cfg->getParam('debug_mode') < 1) {
+	if ($magirc->cfg->debug_mode < 1) {
 		ini_set('display_errors','off');
 		error_reporting(E_ERROR);
 	} else {
 		$magirc->tpl->force_compile = true;
-		/*if ($magirc->cfg->getParam('debug_mode') > 1) {
+		/*if ($magirc->cfg->debug_mode') > 1) {
 			$magirc->tpl->debugging = true;
 		}*/
 	}
@@ -66,7 +66,7 @@ try {
 	});
 	$magirc->slim->get('/:section/:target/:action', function($section, $target, $action) use($magirc) {
 		$tpl_file = basename($section) . '_' . basename($action) . '.tpl';
-		$tpl_path = 'theme/' . $magirc->cfg->getParam("theme") . '/tpl/' . $tpl_file;
+		$tpl_path = 'theme/' . $magirc->cfg->theme . '/tpl/' . $tpl_file;
 		if (file_exists($tpl_path)) {
 			$mode = null;
 			if ($section == 'channel') {
@@ -96,7 +96,7 @@ try {
 	});
 	$magirc->slim->get('/:section(/:action)', function($section, $action = 'main') use($magirc) {
 		$tpl_file = basename($section) . '_' . basename($action) . '.tpl';
-		$tpl_path = 'theme/' . $magirc->cfg->getParam("theme") . '/tpl/' . $tpl_file;
+		$tpl_path = 'theme/' . $magirc->cfg->theme . '/tpl/' . $tpl_file;
 		if (file_exists($tpl_path)) {
 			$magirc->tpl->assign('section', $section);
 			$magirc->tpl->display($tpl_file);

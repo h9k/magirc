@@ -13,23 +13,23 @@
 	<tr><th>{t}Modes{/t}:</th><td><span id="chan_modes" class="val"></span></td></tr>
 	<tr><th>{t}Kicks{/t}:</th><td><span id="chan_kicks" class="val"></span></td></tr>
 </table>
-{if $cfg.net_roundrobin || $cfg.service_webchat}
+{if $cfg->net_roundrobin || $cfg->service_webchat}
 <h2>{t}Join this channel{/t}</h2>
-	{if $cfg.net_roundrobin}
-		<img src="theme/{$cfg.theme}/img/icons/link.png" alt="" title="{t}Standard connection{/t}" style="vertical-align:middle;" />
-		<a href="irc://{$cfg.net_roundrobin}:{$cfg.net_port|default:"6667"}/{$target|escape:"url"}">{t}IRC standard connection{/t}</a><br />
+	{if $cfg->net_roundrobin}
+		<img src="theme/{$cfg->theme}/img/icons/link.png" alt="" title="{t}Standard connection{/t}" style="vertical-align:middle;" />
+		<a href="irc://{$cfg->net_roundrobin}:{$cfg->net_port|default:"6667"}/{$target|escape:"url"}">{t}IRC standard connection{/t}</a><br />
 	{/if}
-	{if $cfg.net_roundrobin && $cfg.net_port_ssl}
-		<img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="" title="{t}Secure connection{/t}" style="vertical-align:middle;" />
-		<a href="irc://{$cfg.net_roundrobin}:+{$cfg.net_port_ssl}/{$target|escape:"url"}">{t}IRC secure connection{/t}</a><br />
+	{if $cfg->net_roundrobin && $cfg->net_port_ssl}
+		<img src="theme/{$cfg->theme}/img/icons/ssl.png" alt="" title="{t}Secure connection{/t}" style="vertical-align:middle;" />
+		<a href="irc://{$cfg->net_roundrobin}:+{$cfg->net_port_ssl}/{$target|escape:"url"}">{t}IRC secure connection{/t}</a><br />
 	{/if}
-	{if $cfg.service_webchat}
-		<img src="theme/{$cfg.theme}/img/icons/webchat.png" alt="" title="{t}Webchat{/t}" style="vertical-align:middle;" />
-		<a href="{$cfg.service_webchat}{$target|escape:"url"}">{t}Webchat{/t}</a><br />
+	{if $cfg->service_webchat}
+		<img src="theme/{$cfg->theme}/img/icons/webchat.png" alt="" title="{t}Webchat{/t}" style="vertical-align:middle;" />
+		<a href="{$cfg->service_webchat}{$target|escape:"url"}">{t}Webchat{/t}</a><br />
 	{/if}
-	{if $cfg.net_roundrobin && $cfg.service_mibbit}
-		<img src="theme/{$cfg.theme}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" />
-		<a href="http://widget.mibbit.com/?settings={$cfg.service_mibbit}&amp;server={$cfg.net_roundrobin}&amp;channel={$target|escape:"url"}&amp;promptPass=true">Mibbit</a><br />
+	{if $cfg->net_roundrobin && $cfg->service_mibbit}
+		<img src="theme/{$cfg->theme}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" />
+		<a href="http://widget.mibbit.com/?settings={$cfg->service_mibbit}&amp;server={$cfg->net_roundrobin}&amp;channel={$target|escape:"url"}&amp;promptPass=true">Mibbit</a><br />
 	{/if}
 {/if}
 </div>

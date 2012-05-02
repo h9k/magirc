@@ -1,8 +1,8 @@
 <h1>{t}Server list{/t}</h1>
-{if $cfg.net_roundrobin}
-	{t}Connect to our network round robin{/t} <strong>{$cfg.net_roundrobin}</strong>:
-	<a href="irc://{$cfg.net_roundrobin}{if $cfg.net_port}:{$cfg.net_port}{/if}"><img src="theme/{$cfg.theme}/img/icons/server-link.png" alt="standard" title="{t}Standard connection{/t}" /></a>
-	{if $cfg.net_port_ssl} <a href="irc://{$cfg.net_roundrobin}:+{$cfg.net_port_ssl}"><img src="theme/{$cfg.theme}/img/icons/ssl.png" alt="ssl" title="{t}Secure connection{/t}" /></a>{/if}
+{if $cfg->net_roundrobin}
+	{t}Connect to our network round robin{/t} <strong>{$cfg->net_roundrobin}</strong>:
+	<a href="irc://{$cfg->net_roundrobin}{if $cfg->net_port}:{$cfg->net_port}{/if}"><img src="theme/{$cfg->theme}/img/icons/server-link.png" alt="standard" title="{t}Standard connection{/t}" /></a>
+	{if $cfg->net_port_ssl} <a href="irc://{$cfg->net_roundrobin}:+{$cfg->net_port_ssl}"><img src="theme/{$cfg->theme}/img/icons/ssl.png" alt="ssl" title="{t}Secure connection{/t}" /></a>{/if}
 	<br /><br />
 {/if}
 
