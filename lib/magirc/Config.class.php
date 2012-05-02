@@ -32,6 +32,11 @@ class Config {
 		return isset($this->config[$var]) ? $this->config[$var] : null;
 	}
 	
+	/**
+	 * Set the value to the given parameter
+	 * @param string $var Parameter
+	 * @param string $val Value
+	 */
 	public function __set($var, $val) {
 		$this->config[$var] = $val;
 	}

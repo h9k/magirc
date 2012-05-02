@@ -63,8 +63,12 @@ To use this feature **enable** the following parameters by removing the '#' in f
 Web Server configuration
 ------------------------
 ### Apache
+The `AcceptPathInfo` directive should be set to `Default` or `On` in the Apache configuration. It is by default on most servers.
+
 To enable URL rewriting make sure your apache has the `mod_rewrite` module enabled. Then rename `htaccess.txt` to `.htaccess` and enable rewriting in the MagIRC Admin Panel.
 This is optional, MagIRC also works without rewriting on Apache.
+
+It is also recommended, if you allow slashes `/` in your nicknames or channel names, to set `AllowEncodedSlashes On`
 
 ### Nginx
 Your Nginx configuration file should contain this code, if Magirc is in the document root :
