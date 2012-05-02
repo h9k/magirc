@@ -213,6 +213,9 @@ class Setup {
 			if ($version < 9) {
 				$this->db->insert('magirc_config', array('parameter' => 'denora_version', 'value' => '1.4'));
 			}
+			if ($version < 10) {
+				$this->db->query("ALTER TABLE magirc_config CHANGE value value VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''");
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}

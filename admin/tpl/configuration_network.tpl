@@ -50,11 +50,11 @@
 		</tr>
 		<tr>
 			<td align="right">Servers you don't want MagIRC to show.<br />Separate with commas, example: &quot;hub.mynet.tld,hub2.mynet.tld&quot;</td>
-			<td align="left"><input name="hide_servers" type="text" id="hide_servers" value="{$cfg->hide_servers}" size="32" maxlength="64" /></td>
+			<td align="left"><input name="hide_servers" type="text" id="hide_servers" value="{$cfg->hide_servers}" size="32" maxlength="255" /></td>
 		</tr>
 		<tr>
 			<td align="right">Channels you don't want MagIRC to show.<br />Separate with commas, example: &quot;#opers,#services&quot;</td>
-			<td align="left"><input name="hide_chans" type="text" id="hide_chans" value="{$cfg->hide_chans}" size="32" maxlength="64" /></td>
+			<td align="left"><input name="hide_chans" type="text" id="hide_chans" value="{$cfg->hide_chans}" size="32" maxlength="255" /></td>
 		</tr>
 	</table>
 	<button id="network-submit" type="button">Save</button>

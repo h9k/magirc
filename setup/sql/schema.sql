@@ -8,7 +8,7 @@
 
 CREATE TABLE IF NOT EXISTS `magirc_config` (
   `parameter` varchar(32) NOT NULL default '',
-  `value` varchar(64) NOT NULL default '',
+  `value` varchar(255) NOT NULL default '',
   PRIMARY KEY (`parameter`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
 -- Dumping data for table `magirc_config`
 --
 
-INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '9'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '10'),
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
 ('net_roundrobin', ''),
