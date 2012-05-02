@@ -110,15 +110,17 @@ class Magirc {
 	 */
 	private function detectLocale($available_locales) {
 		$hits = array();
-		preg_match_all("/([[:alpha:]]{1,8})(-([[:alpha:]|-]{1,8}))?(\s*;\s*q\s*=\s*(1\.0{0,3}|0\.\d{0,3}))?\s*(,|$)/i", $_SERVER['HTTP_ACCEPT_LANGUAGE'], $hits, PREG_SET_ORDER);
 		$bestlang = $this->cfg->getParam('locale');
-		$bestqval = 0;
-		foreach ($hits as $arr) {
-			$langprefix = strtolower ($arr[1]);
-			$qvalue = empty($arr[5]) ? 1.0 : floatval($arr[5]);
-			if (in_array($langprefix,$available_locales) && ($qvalue > $bestqval)) {
-				$bestlang = $langprefix;
-				$bestqval = $qvalue;
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+			preg_match_all("/([[:alpha:]]{1,8})(-([[:alpha:]|-]{1,8}))?(\s*;\s*q\s*=\s*(1\.0{0,3}|0\.\d{0,3}))?\s*(,|$)/i", $_SERVER['HTTP_ACCEPT_LANGUAGE'], $hits, PREG_SET_ORDER);
+			$bestqval = 0;
+			foreach ($hits as $arr) {
+				$langprefix = strtolower ($arr[1]);
+				$qvalue = empty($arr[5]) ? 1.0 : floatval($arr[5]);
+				if (in_array($langprefix,$available_locales) && ($qvalue > $bestqval)) {
+					$bestlang = $langprefix;
+					$bestqval = $qvalue;
+				}
 			}
 		}
 		return $bestlang;
