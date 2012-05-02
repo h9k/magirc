@@ -31,6 +31,10 @@ class Config {
 	public function __get($var) {
 		return isset($this->config[$var]) ? $this->config[$var] : null;
 	}
+	
+	public function __set($var, $val) {
+		$this->config[$var] = $val;
+	}
 
 }
 

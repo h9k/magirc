@@ -103,7 +103,7 @@ class Admin {
 	 * @return boolean true: updated, false: not updated
 	 */
 	function saveConfig($parameter, $value) {
-		$this->cfg->config[$parameter] = $value;
+		$this->cfg->$parameter = $value;
 		return $this->db->update('magirc_config', array('value' => $value), array('parameter' => $parameter));
 	}
 
