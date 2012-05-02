@@ -250,39 +250,46 @@ class Denora {
 		}
 
 		// Prepare data for output
+		$min_count = ceil($sum / 300);
 		$data = array('clients' => array(), 'versions' => array());
-		$unknown = array('count' => 0, 'versions' => array());
 		$other = array('count' => 0, 'versions' => array());
+		$other_various = 0;
 		foreach ($clients as $name => $client) {
 			$percent = round($client['count'] / $sum * 100, 2);
-			if ($percent < 2) { // Too small, so consider as "Other"
+			if ($percent < 2 || $name == 'Unknown') { // Too small or unknown
 				$other['count'] += $client['count'];
 				foreach ($client['versions'] as $version => $count) {
-					$other['versions'][] = array('name' => $name, 'version' => $version, 'cat' => 'Other', 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
-				}
-			} elseif ($name == 'Unknown') { // We want unknown to show up at the end, so we separate it
-				$unknown['count'] += $client['count'];
-				foreach ($client['versions'] as $version => $count) {
-					$unknown['versions'][] = array('name' => $name, 'version' => $version, 'cat' => $name, 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
+					if ($count < $min_count) {
+						$other_various += $count;
+					} else {
+						$other['versions'][] = array('name' => $name, 'version' => $version, 'cat' => 'Other', 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
+					}
 				}
 			} else {
+				$data_various = 0;
 				$data['clients'][] = array('name' => $name, 'count' => (int) $client['count'], 'y' => (double) $percent);
 				foreach ($client['versions'] as $version => $count) {
-					$data['versions'][] = array('name' => $name, 'version' => $version, 'cat' => $name, 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
+					if ($count < $min_count) {
+						$data_various += $count;
+					} else {
+						$data['versions'][] = array('name' => $name, 'version' => $version, 'cat' => $name, 'count' => (int) $count, 'y' => (double) round($count / $sum * 100, 2));
+					}
+				}
+				if ($data_various) {
+					$data['versions'][] = array('name' => $name, 'version' => '(various)', 'cat' => $name, 'count' => (int) $data_various, 'y' => (double) round($data_various / $sum * 100, 2));
 				}
 			}
 		}
-		// Append unknown and other slices
-		if ($unknown['count'] > 0) {
-			$unknown['percent'] = round($unknown['count'] / $sum * 100, 2);
-			$data['clients'][] = array('name' => "Unknown", 'count' => (int) $unknown['count'], 'y' => (double) $unknown['percent']);
-			$data['versions'] = array_merge($data['versions'], $unknown['versions']);
+		if ($other_various) {
+			$other['versions'][] = array('name' => 'Various', 'version' => '', 'cat' => 'Other', 'count' => (int) $other_various, 'y' => (double) round($other_various / $sum * 100, 2));;
 		}
+		// Append other slices
 		if ($other['count'] > 0) {
 			$other['percent'] = round($other['count'] / $sum * 100, 2);
 			$data['clients'][] = array('name' => "Other", 'count' => (int) $other['count'], 'y' => (double) $other['percent']);
 			$data['versions'] = array_merge($data['versions'], $other['versions']);
 		}
+		#echo "<pre>"; print_r($data); exit;
 		return $data;
 	}
 
