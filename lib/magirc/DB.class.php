@@ -120,15 +120,10 @@ class DB {
 	/**
 	 * Escape the given string
 	 * @param string $input
-	 * @param boolean $quotes true: include 'quotation marks', false: don't
 	 * @return string Escaped string
 	 */
-	function escape($input, $quotes = true) {
-		if ($quotes) {
-			return $this->pdo->quote($input);
-		} else {
-			return substr($this->pdo->quote($input), 1, -1);
-		}
+	function escape($input) {
+		return $this->pdo->quote($input);
 	}
 
 	/**
@@ -320,8 +315,7 @@ class DB {
 	function datatablesPaging() {
 		$sLimit = "";
 		if (isset($_GET['iDisplayStart']) && isset($_GET['iDisplayLength']) && $_GET['iDisplayLength'] != '-1') {
-			$sLimit = "LIMIT ".  $this->escape($_GET['iDisplayStart'], false).", ".
-			$this->escape($_GET['iDisplayLength'], false);
+			$sLimit = "LIMIT ". (int) $_GET['iDisplayStart'].", ". (int) $_GET['iDisplayLength'];
 		}
 		return $sLimit;
 	}
@@ -336,9 +330,12 @@ class DB {
 		if (isset($_GET['iSortCol_0'])) {
 			$sOrder = "ORDER BY ";
 			for ($i=0 ; $i<intval(@$_GET['iSortingCols']) ; $i++) {
-				if (@$_GET['bSortable_'.intval(@$_GET['iSortCol_'.$i])] == "true") {
-					$sOrder .= "`".$aColumns[intval(@$_GET['iSortCol_'.$i])]."`
-				 	".$this->escape(@$_GET['sSortDir_'.$i], false) .", ";
+				$j = intval(@$_GET['iSortCol_'.$i]);
+				if (@$_GET['bSortable_'.$j] == "true") {
+					$sOrder .= "`".$aColumns[$j]."` ";
+					if (isset($_GET['sSortDir_'.$i])) {
+						$sOrder .= ($_GET['sSortDir_'.$i] == 'desc' ? 'desc' : 'asc') .", ";
+					}
 				}
 			}
 			$sOrder = substr_replace($sOrder, "", -2);
@@ -359,7 +356,7 @@ class DB {
 		if (@$_GET['sSearch'] != "") {
 			$sWhere .= " (";
 			for ($i=0 ; $i<count($aColumns) ; $i++) {
-				$sWhere .= $aColumns[$i]." LIKE '%".$this->escape($_GET['sSearch'], false)."%' OR ";
+				$sWhere .= $aColumns[$i]." LIKE ".$this->escape('%'.$_GET['sSearch'].'%')." OR ";
 			}
 			$sWhere = substr_replace($sWhere, "", -3);
 			$sWhere .= ')';
