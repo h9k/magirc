@@ -24,7 +24,7 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('net_port_ssl', ''),
 ('welcome_mode', 'statuspage'),
 ('timezone', 'UTC'),
-('denora_version', '1.4');
+('denora_version', '1.4'),
 ('ircd_type', 'unreal32'),
 ('theme', 'default'),
 ('locale', 'en_US'),
