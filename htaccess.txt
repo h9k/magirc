@@ -8,7 +8,7 @@
 # errors. If this happens, just comment the offending line again.
 #
 
-# Enable zlib output compression for PHP 
+# Enable zlib output compression for PHP
 #php_flag zlib.output_compression On
 
 # Unset cache ETags. Requires the mod_header apache module.
@@ -37,7 +37,9 @@
 # Enable gzip output compression. Requires the mod_deflate apache module
 #<IfModule mod_deflate.c>
 #SetOutputFilter DEFLATE
+#<IfModule mod_filter.c>
 #AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/json
+#</IfModule>
 #<IfModule mod_header.c>
 #Header append Vary User-Agent env=!dont-vary
 #</IfModule>
