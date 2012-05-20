@@ -39,7 +39,7 @@ $(document).ready(function() {
 			$("#user_status").html(status);
 			$("#user_status_extra").html(status_extra);
 			$("#user_hostname").html(result.hostname);
-			$("#user_server").html('<a href="server/'+result.server+'/profile">'+result.server+'<\/a>');
+			$("#user_server").html('<a href="'+url_base+'server/'+result.server+'/profile">'+result.server+'<\/a>');
 			$("#user_country").html(getCountryFlag(result)+' '+result.country);
 			$("#user_client").html(result.client);
 		} else {
