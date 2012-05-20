@@ -51,7 +51,7 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 
 CREATE TABLE IF NOT EXISTS `magirc_content` (
   `name` varchar(16) NOT NULL default '',
-  `text` text NOT NULL default '',
+  `text` text NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
