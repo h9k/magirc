@@ -67,10 +67,10 @@ INSERT IGNORE INTO `magirc_content` (`name`, `text`) VALUES ('welcome', '<h1>Wel
 
 CREATE TABLE IF NOT EXISTS `magirc_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(16) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `realname` varchar(32) NOT NULL,
-  `email` varchar(32) NOT NULL,
+  `username` varchar(16) NOT NULL default '',
+  `password` varchar(255) NOT NULL default '',
+  `realname` varchar(32) NOT NULL default '',
+  `email` varchar(32) NOT NULL default '',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
