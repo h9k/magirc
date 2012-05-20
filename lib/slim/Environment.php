@@ -144,7 +144,7 @@ class Slim_Environment implements ArrayAccess, IteratorAggregate {
                 $env['PATH_INFO'] = substr_replace($env['PATH_INFO'], '', strpos($env['PATH_INFO'], '?')); //query string is not removed automatically
             }
             $env['SCRIPT_NAME'] = rtrim($env['SCRIPT_NAME'], '/');
-            $env['PATH_INFO'] = '/' . ltrim($env['PATH_INFO'], '/');
+            $env['PATH_INFO'] = '/' . ltrim(str_replace('#', '%23', $env['PATH_INFO']), '/');
 
             //The portion of the request URI following the '?'
             $env['QUERY_STRING'] = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
