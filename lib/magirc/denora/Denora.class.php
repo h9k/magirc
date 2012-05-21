@@ -1,23 +1,36 @@
 <?php
 
+// Database configuration
+class Denora_DB extends DB {
+	private static $instance = NULL;
+
+	public static function getInstance() {
+		if (is_null(self::$instance) === true) {
+			// Check the database configuration
+			$error = false;
+			$config_file = PATH_ROOT . 'conf/denora.cfg.php';
+			if (file_exists($config_file)) {
+				include($config_file);
+			} else {
+				$error = true;
+			}
+			if ($error || !isset($db)) {
+				die('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
+			}
+			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+			self::$instance = new DB($dsn, $db['username'], $db['password']);
+			if (self::$instance->error) die('Error opening the Denora database<br />' . self::$instance->error);
+		}
+		return self::$instance;
+	}
+}
+
 class Denora {
 
 	private $db;
 	private $cfg;
 
 	function __construct() {
-		// Check the database configuration
-		$error = false;
-		$config_file = PATH_ROOT . 'conf/denora.cfg.php';
-		if (file_exists($config_file)) {
-			include($config_file);
-		} else {
-			die($config_file);
-			$error = true;
-		}
-		if ($error || !isset($db)) {
-			die('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
-		}
 		// Get the ircd
 		$ircd_file = PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php";
 		if (file_exists($ircd_file)) {
@@ -26,8 +39,7 @@ class Denora {
 			die('<strong>MagIRC</strong> is not properly configured<br />Please configure the ircd in the <a href="admin/">Admin Panel</a>');
 		}
 		// Load the required classes
-		$this->db = new DB();
-		$this->db->connect("mysql:dbname={$db['database']};host={$db['hostname']}", $db['username'], $db['password']) || die('Error opening Denora database<br />' . $this->db->error);
+		$this->db = Denora_db::getInstance();
 		$this->cfg = new Config();
 		require_once(__DIR__ . '/Objects.class.php');
 	}

@@ -9,21 +9,23 @@ define('SQL_INIT', 3);
 define('SQL_ASSOC', PDO::FETCH_ASSOC);
 define('SQL_INDEX', PDO::FETCH_NUM);
 define('SQL_OBJ', PDO::FETCH_OBJ);
+define('SQL_NAME', PDO::FETCH_NAMED);
 
 // define the parameter formats
+define('SQL_NULL', PDO::PARAM_NULL);
+define('SQL_BOOL', PDO::PARAM_BOOL);
 define('SQL_INT', PDO::PARAM_INT);
 define('SQL_STR', PDO::PARAM_STR);
 
 class DB {
-
 	private $pdo;
 	private $result;
 	public $error;
 	public $record;
 
-	function __construct() {
-
-	}
+	function __construct($dsn, $username, $password) {
+		$this->connect($dsn, $username, $password);
+    }
 
 	function __destruct() {
 		$this->disconnect();

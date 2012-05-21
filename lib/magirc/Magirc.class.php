@@ -4,22 +4,27 @@ define('PATH_ROOT', __DIR__ . '/../../');
 
 // Database configuration
 class Magirc_DB extends DB {
-	function __construct() {
-		parent::__construct();
-		$error = false;
-		if (file_exists(PATH_ROOT.'conf/magirc.cfg.php')) {
-			include(PATH_ROOT.'conf/magirc.cfg.php');
-		} else {
-			$error = true;
+	private static $instance = NULL;
+
+	public static function getInstance() {
+		if (is_null(self::$instance) === true) {
+			$error = false;
+			if (file_exists(PATH_ROOT.'conf/magirc.cfg.php')) {
+				include(PATH_ROOT.'conf/magirc.cfg.php');
+			} else {
+				$error = true;
+			}
+			if (!isset($db)) {
+				$error = true;
+			}
+			if ($error) {
+				die ('<strong>MagIRC</strong> is not configured<br />Please run <a href="setup/">Setup</a>');
+			}
+			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+			self::$instance = new DB($dsn, $db['username'], $db['password']);
+			if (self::$instance->error) die('Error opening the MagIRC database<br />' . self::$instance->error);
 		}
-		if (!isset($db)) {
-			$error = true;
-		}
-		if ($error) {
-			die ('<strong>MagIRC</strong> is not configured<br />Please run <a href="setup/">Setup</a>');
-		}
-		$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-		$this->connect($dsn, $db['username'], $db['password']) || die('Error opening Magirc database<br />'.$this->error);
+		return self::$instance;
 	}
 }
 
@@ -49,7 +54,7 @@ class Magirc {
 		}
 
 		// Setup the database
-		$this->db = new Magirc_DB;
+		$this->db = Magirc_DB::getInstance();
 		$query = "SHOW TABLES LIKE 'magirc_config'";
 		$this->db->query($query, SQL_INIT);
 		if (!$this->db->record) {

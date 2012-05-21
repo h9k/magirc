@@ -12,7 +12,7 @@ class Config {
 	 * Load the configuration and return it
 	 */
 	function loadConfig() {
-		$db = new Magirc_DB;
+		$db = Magirc_DB::getInstance();
 		$config = array();
 		$data = $db->selectAll('magirc_config');
 		foreach ($data as $item) {
@@ -31,7 +31,7 @@ class Config {
 	public function __get($var) {
 		return isset($this->config[$var]) ? $this->config[$var] : null;
 	}
-	
+
 	/**
 	 * Set the value to the given parameter
 	 * @param string $var Parameter

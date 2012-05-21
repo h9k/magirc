@@ -1,5 +1,23 @@
 <?php
 
+// Database configuration
+class Magirc_DB extends DB {
+	private static $instance = NULL;
+
+	public static function getInstance() {
+		if (is_null(self::$instance) === true) {
+			if (file_exists('../conf/magirc.cfg.php')) {
+				include('../conf/magirc.cfg.php');
+			} else {
+				die ('magirc.cfg.php configuration file missing');
+			}
+			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
+			self::$instance = new DB($dsn, $db['username'], $db['password']);
+		}
+		return self::$instance;
+	}
+}
+
 class Setup {
 	public $db;
 	public $tpl;
@@ -11,16 +29,9 @@ class Setup {
 		$this->tpl->cache_dir = 'tmp';
 		$this->tpl->autoload_filters = array('pre' => array('jsmin'));
 		$this->tpl->addPluginsDir('../lib/smarty-plugins/');
-		$this->db = new DB;
 		// We skip db connection in the first steps for check purposes
 		if (@$_GET['step'] > 2) {
-			if (file_exists('../conf/magirc.cfg.php')) {
-				include('../conf/magirc.cfg.php');
-			} else {
-				die ('magirc.cfg.php configuration file missing');
-			}
-			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-			$this->db->connect($dsn, $db['username'], $db['password']) or die('Error opening MagIRC database<br />'.$this->db->error);
+			$this->db = Magirc_DB::getInstance();
 		}
 	}
 

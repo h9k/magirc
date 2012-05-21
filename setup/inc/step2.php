@@ -9,7 +9,7 @@ $setup->saveConfig();
 if (file_exists(MAGIRC_CFG_FILE)) {
 	include(MAGIRC_CFG_FILE);
 	if (isset($db) && is_array($db)) {
-		$setup->db->connect("mysql:dbname={$db['database']};host={$db['hostname']}", $db['username'], $db['password']);
+		$setup->db = Magirc_DB::getInstance();
 		$status['error'] = $setup->db->error;
 		$setup->tpl->assign('db_magirc', $db);
 	} else {

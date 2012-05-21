@@ -10,7 +10,7 @@
  * @version     0.8.3
  */
 
-ini_set('display_errors','on');
+ini_set('display_errors','off');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 date_default_timezone_set('UTC');
