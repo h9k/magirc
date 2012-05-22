@@ -39,15 +39,28 @@ class DB {
 	 * @return boolean true: successful, false: failed
 	 */
 	function connect($dsn, $username, $password) {
-		try {
-			$this->pdo = new PDO($dsn, $username, $password, array(PDO::ATTR_PERSISTENT => true));
-			$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$this->pdo->query("SET NAMES utf8");
-			return true;
-		} catch(PDOException $e) {
-			$this->error = $e->getMessage();
-			return false;
+		$limit = 5;
+		$counter = 0;
+		while (true) {
+			try {
+				$this->pdo = new PDO($dsn, $username, $password, array(PDO::ATTR_PERSISTENT => true));
+				$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+				$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$this->pdo->query("SET NAMES utf8");
+				return true;
+			} catch (Exception $e) {
+				if($e->getCode() == 2) {
+					$this->pdo = null;
+					$counter++;
+					if ($counter >= $limit) {
+						$this->error = $e->getMessage();
+						return false;
+					}
+				} else {
+					$this->error = $e->getMessage();
+					return false;
+				}
+			}
 		}
 	}
 
