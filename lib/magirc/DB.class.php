@@ -40,7 +40,7 @@ class DB {
 	 */
 	function connect($dsn, $username, $password) {
 		try {
-			$this->pdo = new PDO($dsn, $username, $password);
+			$this->pdo = new PDO($dsn, $username, $password, array(PDO::ATTR_PERSISTENT => true));
 			$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->pdo->query("SET NAMES utf8");
