@@ -7,6 +7,7 @@ class Denora_DB extends DB {
 	public static function getInstance() {
 		if (is_null(self::$instance) === true) {
 			// Check the database configuration
+			$db = null;
 			$error = false;
 			$config_file = PATH_ROOT . 'conf/denora.cfg.php';
 			if (file_exists($config_file)) {
@@ -14,7 +15,7 @@ class Denora_DB extends DB {
 			} else {
 				$error = true;
 			}
-			if ($error || !isset($db)) {
+			if ($error || !is_array($db)) {
 				die('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
 			}
 			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
@@ -231,6 +232,7 @@ class Denora {
 		$clients = array();
 		foreach ($result as $client) {
 			// Determine client name and version
+			$matches = array();
 			preg_match('/^(.*?)\s*(\S*\d\S*)/', str_replace(array('(',')','[',']','{','}'), '', $client['client']), $matches);
 			if (count($matches) == 3) {
 				$name = $matches[1];
@@ -259,6 +261,7 @@ class Denora {
 		});
 		foreach ($clients as $key => $val) {
 			arsort($clients[$key]['versions']);
+			unset($val);
 		}
 
 		// Prepare data for output
@@ -412,7 +415,6 @@ class Denora {
 	 * @return array of Channel
 	 */
 	function getChannelList($datatables = false) {
-		$aaData = array();
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 

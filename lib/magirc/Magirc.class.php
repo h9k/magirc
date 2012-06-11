@@ -8,13 +8,14 @@ class Magirc_DB extends DB {
 
 	public static function getInstance() {
 		if (is_null(self::$instance) === true) {
+			$db = null;
 			$error = false;
 			if (file_exists(PATH_ROOT.'conf/magirc.cfg.php')) {
 				include(PATH_ROOT.'conf/magirc.cfg.php');
 			} else {
 				$error = true;
 			}
-			if (!isset($db)) {
+			if (!is_array($db)) {
 				$error = true;
 			}
 			if ($error) {

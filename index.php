@@ -7,7 +7,7 @@
  * @copyright   2012 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     0.8.3
+ * @version     0.8.4
  */
 
 ini_set('display_errors','on');
@@ -30,7 +30,7 @@ $magirc = new Magirc;
 
 try {
 	define('DEBUG', $magirc->cfg->debug_mode);
-	define('BASE_URL', sprintf("%s://%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
+	define('BASE_URL', sprintf("%s://%s:%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
 	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->theme.'/tpl';
 	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->theme.'/cfg';
 	$magirc->tpl->assign('cfg', $magirc->cfg);
