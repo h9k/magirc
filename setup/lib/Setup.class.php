@@ -176,7 +176,7 @@ class Setup {
 		if ($version != DB_VERSION) {
 			if ($version < 2) {
 				$this->db->insert('magirc_config', array('parameter' => 'live_interval', 'value' => 15));
-				$this->db->insert('magirc_config', array('parameter' => 'cdn_enable', 'value' => 1));
+				$this->db->insert('magirc_config', array('parameter' => 'cdn_enable', 'value' => 0));
 			}
 			if ($version < 3) {
 				$this->db->insert('magirc_config', array('parameter' => 'rewrite_enable', 'value' => 0));
