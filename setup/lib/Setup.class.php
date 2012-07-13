@@ -12,7 +12,7 @@ class Magirc_DB extends DB {
 				die ('magirc.cfg.php configuration file missing');
 			}
 			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-			$args = $db['ssl'] ? array(
+			$args = (isset($db['ssl']) && $db['ssl']) ? array(
 				PDO::MYSQL_ATTR_SSL_KEY => $db['ssl_key'],
 				PDO::MYSQL_ATTR_SSL_CERT => $db['ssl_cert'],
 				PDO::MYSQL_ATTR_SSL_CA => $db['ssl_ca']
