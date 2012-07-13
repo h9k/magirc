@@ -12,7 +12,12 @@ class Magirc_DB extends DB {
 				die ('magirc.cfg.php configuration file missing');
 			}
 			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-			self::$instance = new DB($dsn, $db['username'], $db['password']);
+			$args = $db['ssl'] ? array(
+				PDO::MYSQL_ATTR_SSL_KEY => $db['ssl_key'],
+				PDO::MYSQL_ATTR_SSL_CERT => $db['ssl_cert'],
+				PDO::MYSQL_ATTR_SSL_CA => $db['ssl_ca']
+			) : array();
+			self::$instance = new DB($dsn, $db['username'], $db['password'], $args);
 		}
 		return self::$instance;
 	}
@@ -106,6 +111,7 @@ class Setup {
 	 */
 	function saveConfig() {
 		if (isset($_POST['savedb'])) {
+			$ssl = isset($_POST['ssl']) ? 'true' : 'false';
 			$db_buffer =
                     "<?php
 	\$db['username'] = '{$_POST['username']}';
@@ -113,6 +119,10 @@ class Setup {
 	\$db['database'] = '{$_POST['database']}';
 	\$db['hostname'] = '{$_POST['hostname']}';
 	\$db['port'] = '{$_POST['port']}';
+	\$db['ssl'] = $ssl;
+	\$db['ssl_key'] = '{$_POST['ssl_key']}';
+	\$db['ssl_cert'] = '{$_POST['ssl_cert']}';
+	\$db['ssl_ca'] = '{$_POST['ssl_ca']}';
 ?>";
 			$this->tpl->assign('db_buffer', $db_buffer);
 			if (is_writable(MAGIRC_CFG_FILE)) {

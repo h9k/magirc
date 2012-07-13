@@ -33,6 +33,22 @@
 			<th><label for="port">TCP Port</label></th>
 			<td><input type="text" name="port" id="port" tabindex="5" value="{$db_magirc.port}" size="32" maxlength="16" /></td>
 		</tr>
+		<tr>
+			<th><label for="ssl">Enable SSL</label></th>
+			<td align="left"><input type="checkbox" name="ssl" id="ssl" value="1" {if $db_magirc.ssl}checked="checked" {/if}/></td>
+		</tr>
+		<tr>
+			<th><label for="ssl_key">Path to SSL Key</label></th>
+			<td align="left"><input type="text" name="ssl_key" id="ssl_key" value="{$db_magirc.ssl_key}" size="32" maxlength="256" /></td>
+		</tr>
+		<tr>
+			<th><label for="ssl_key">Path to SSL Certificate</label></th>
+			<td align="left"><input type="text" name="ssl_cert" id="ssl_cert" value="{$db_magirc.ssl_cert}" size="32" maxlength="256" /></td>
+		</tr>
+		<tr>
+			<th><label for="ssl_key">Path to SSL CA</label></th>
+			<td align="left"><input type="text" name="ssl_ca" id="ssl_ca" value="{$db_magirc.ssl_ca}" size="32" maxlength="256" /></td>
+		</tr>
 	</table>
 	<button type="submit" name="savedb" id="button">Save</button>
 	</form>

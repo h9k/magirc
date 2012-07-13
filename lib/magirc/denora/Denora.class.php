@@ -19,7 +19,12 @@ class Denora_DB extends DB {
 				die('<strong>MagIRC</strong> is not properly configured<br />Please configure the Denora database in the <a href="admin/">Admin Panel</a>');
 			}
 			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-			self::$instance = new DB($dsn, $db['username'], $db['password']);
+			$args = $db['ssl'] ? array(
+				PDO::MYSQL_ATTR_SSL_KEY => $db['ssl_key'],
+				PDO::MYSQL_ATTR_SSL_CERT => $db['ssl_cert'],
+				PDO::MYSQL_ATTR_SSL_CA => $db['ssl_ca']
+			) : array();
+			self::$instance = new DB($dsn, $db['username'], $db['password'], $args);
 			if (self::$instance->error) die('Error opening the Denora database<br />' . self::$instance->error);
 		}
 		return self::$instance;

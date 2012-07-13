@@ -8,7 +8,11 @@ $db = array(
 	'password'	=> 'denora',
 	'database'	=> 'denora',
 	'hostname'	=> 'localhost',
-	'port'		=> 3306
+	'port'		=> 3306,
+	'ssl'		=> false,
+	'ssl_key'	=> null,
+	'ssl_cert'	=> null,
+	'ssl_ca'	=> null
 );
 
 ?>

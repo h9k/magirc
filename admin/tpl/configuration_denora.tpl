@@ -21,6 +21,23 @@
 		<td align="right">TCP Port</td>
 		<td align="left"><input type="text" name="port" id="port" value="{$db.port}" size="32" maxlength="64" /></td>
 	</tr>
+	<tr>
+		<td align="right">Enable SSL</td>
+		<td align="left"><input type="checkbox" name="ssl" id="ssl" value="1" {if $db.ssl}checked="checked" {/if}/></td>
+	</tr>
+	<tr>
+		<td align="right">Path to SSL Key</td>
+		<td align="left"><input type="text" name="ssl_key" id="ssl_key" value="{$db.ssl_key}" size="32" maxlength="256" /></td>
+	</tr>
+	<tr>
+		<td align="right">Path to SSL Certificate</td>
+		<td align="left"><input type="text" name="ssl_cert" id="ssl_cert" value="{$db.ssl_cert}" size="32" maxlength="256" /></td>
+	</tr>
+	<tr>
+		<td align="right">Path to SSL CA</td>
+		<td align="left"><input type="text" name="ssl_ca" id="ssl_ca" value="{$db.ssl_ca}" size="32" maxlength="256" /></td>
+	</tr>
+		
 </table>
 
 <pre>The configuration file <em>{$db_config_file}</em> is {if $writable}<span style="color:green;">writable</span>

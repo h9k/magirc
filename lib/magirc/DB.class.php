@@ -23,8 +23,8 @@ class DB {
 	public $error;
 	public $record;
 
-	function __construct($dsn, $username, $password) {
-		$this->connect($dsn, $username, $password);
+	function __construct($dsn, $username, $password, $args = null) {
+		$this->connect($dsn, $username, $password, $args);
     }
 
 	function __destruct() {
@@ -38,12 +38,13 @@ class DB {
 	 * @param string $password
 	 * @return boolean true: successful, false: failed
 	 */
-	function connect($dsn, $username, $password) {
+	function connect($dsn, $username, $password, $args) {
 		$limit = 5;
 		$counter = 0;
 		while (true) {
 			try {
-				$this->pdo = new PDO($dsn, $username, $password, array(PDO::ATTR_PERSISTENT => true));
+				$args[PDO::ATTR_PERSISTENT] = true;
+				$this->pdo = new PDO($dsn, $username, $password, $args);
 				$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 				$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				$this->pdo->query("SET NAMES utf8");

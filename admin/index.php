@@ -164,20 +164,29 @@ try {
 			@touch($db_config_file);
 		}
 		if (!$db) {
-			$db = array('username' => 'magirc', 'password' => 'magirc', 'database' => 'magirc', 'hostname' => 'localhost');
+			$db = array('username' => 'magirc', 'password' => 'magirc', 'database' => 'magirc', 'hostname' => 'localhost', 'port' => 3306, 'ssl' => false, 'ssl_key' => null, 'ssl_cert' => null, 'ssl_ca' => null);
 		}
 		if (isset($_POST['database'])) {
+			//TODO: do proper escaping to avoid breaking php code in the config files
 			$db['username'] = (isset($_POST['username'])) ? $_POST['username'] : $db['username'];
 			$db['password'] = (isset($_POST['password'])) ? $_POST['password'] : $db['password'];
 			$db['database'] = (isset($_POST['database'])) ? $_POST['database'] : $db['database'];
 			$db['hostname'] = (isset($_POST['hostname'])) ? $_POST['hostname'] : $db['hostname'];
 			$db['port'] = (isset($_POST['port'])) ? $_POST['port'] : $db['port'];
+			$db['ssl'] = isset($_POST['ssl']) ? 'true' : 'false';
+			$db['ssl_key'] = (isset($_POST['ssl_key'])) ? $_POST['ssl_key'] : $db['ssl_key'];
+			$db['ssl_cert'] = (isset($_POST['ssl_cert'])) ? $_POST['ssl_cert'] : $db['ssl_cert'];
+			$db['ssl_ca'] = (isset($_POST['ssl_ca'])) ? $_POST['ssl_ca'] : $db['ssl_ca'];
 			$db_buffer = "<?php\n".
 				"\$db['username'] = '{$db['username']}';\n".
 				"\$db['password'] = '{$db['password']}';\n".
 				"\$db['database'] = '{$db['database']}';\n".
 				"\$db['hostname'] = '{$db['hostname']}';\n".
 				"\$db['port'] = '{$db['port']}';\n".
+				"\$db['ssl'] = {$db['ssl']};\n".
+				"\$db['ssl_key'] = '{$db['ssl_key']}';\n".
+				"\$db['ssl_cert'] = '{$db['ssl_cert']}';\n".
+				"\$db['ssl_ca'] = '{$db['ssl_ca']}';\n".
 				"?>";
 			if (is_writable($db_config_file)) {
 				$writefile = fopen($db_config_file,"w");

@@ -8,7 +8,11 @@ $db = array(
 	'password'	=> 'magirc',
 	'database'	=> 'magirc',
 	'hostname'	=> 'localhost',
-	'port'		=> 3306
+	'port'		=> 3306,
+	'ssl'		=> false,
+	'ssl_key'	=> null,
+	'ssl_cert'	=> null,
+	'ssl_ca'	=> null
 );
 
 ?>
