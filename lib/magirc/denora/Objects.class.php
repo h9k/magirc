@@ -103,14 +103,17 @@ Class User {
 		$this->bot = $this->hasMode(Protocol::bot_mode);
 		if (!Protocol::oper_hidden_mode || !$this->hasMode(Protocol::oper_hidden_mode)) {
 			$this->helper = $this->hasMode(Protocol::helper_mode);
-			if (Protocol::ircd == "unreal32") {
-				if ($this->mode_un) $this->operator_level = "Network Admin";
-				elseif ($this->mode_ua) $this->operator_level = "Server Admin";
-				elseif ($this->mode_la) $this->operator_level = "Services Admin";
-				elseif ($this->mode_uc) $this->operator_level = "Co-Admin";
-				elseif ($this->mode_lo) $this->operator_level = "Global Operator";
-			} else {
-				if ($this->mode_lo) $this->operator_level = "Operator";
+			$levels = Protocol::$oper_levels;
+			if (!empty($levels)) {
+				foreach ($levels as $mode => $level) {
+					$mode = Denora::getSqlMode($mode);
+					if ($this->$mode) {
+						$this->operator_level = $level;
+						break;
+					}
+				}
+			} elseif ($this->mode_lo) {
+				$this->operator_level = "Operator";
 			}
 			if ($this->operator_level) $this->operator = true;
 		}

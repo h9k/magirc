@@ -393,8 +393,19 @@ class Denora {
 			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
 		}
 		$query .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE";
-		if (Protocol::ircd == "unreal32") {
-			$query .= " (u.mode_un = 'Y' OR u.mode_ua = 'Y' OR u.mode_la = 'Y' OR u.mode_uc = 'Y' OR u.mode_lo = 'Y')";
+		$levels = Protocol::$oper_levels;
+		if (!empty($levels)) {
+			$i = 1;
+			$query .= " (";
+			foreach ($levels as $mode => $level) {
+				$mode = Denora::getSqlMode($mode);
+				$query .= "u.$mode = 'Y'";
+				if ($i < count($levels)) {
+					$query .= " OR ";
+				}
+				$i++;
+			}
+			$query .= ")";
 		} else {
 			$query .= " u.mode_lo = 'Y'";
 		}

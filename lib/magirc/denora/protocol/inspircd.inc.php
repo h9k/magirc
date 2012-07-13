@@ -9,6 +9,7 @@ class Protocol {
 	const user_modes = 'cdghinorswxBGHIQRSW';
 	
 	const oper_hidden_mode = 'H';
+	public static $oper_levels = array();
 	const helper_mode = 'h';
 	const bot_mode = 'B';
 	const services_protection_mode = '';

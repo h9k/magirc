@@ -9,6 +9,13 @@ class Protocol {
 	const user_modes = 'adghiopqrstvwxzABCGHNORSTVW';
 
 	const oper_hidden_mode = 'H';
+	public static $oper_levels = array(
+		'N' => 'Network Admin',
+		'A' => 'Server Admin',
+		'a' => 'Services Admin',
+		'C' => 'Co-Admin',
+		'o' => 'Global Operator'
+	);
 	const helper_mode = 'h';
 	const bot_mode = 'B';
 	const services_protection_mode = 'S';
