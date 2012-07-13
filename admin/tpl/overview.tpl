@@ -52,9 +52,9 @@
 		</div>
 		{/if}
 		<div class="warning">
-			<p>You are using an alpha version of MagIRC.<br />
-			This version most certainly does contain bugs<br />
-			<strong>PRODUCTION USAGE IS DISCOURAGED</strong></p>
+			<p>You are using a beta version of MagIRC.<br />
+			This version should be usable but most certainly does contain bugs. 
+			<strong>Please report any problems you may encounter to our bug tracker. Thank you!</strong></p>
 		</div>
 	</div>
 
