@@ -215,6 +215,11 @@ try {
 		}
 		$admin->tpl->display('support_markdown.tpl');
 	});
+	$admin->slim->get('/admin/list', function() use ($admin) {
+		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
+		$admins = $admin->db->query("SELECT username, realname, email FROM magirc_admin", SQL_ALL, SQL_ASSOC);
+		echo json_encode(array('aaData' => $admin->db->record));
+	});
 	$admin->slim->get('/:section(/:action)', function($section, $action = 'main') use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->tpl->display('login.tpl'); exit; }
 		$tpl_file = basename($section) . '_' . basename($action) . '.tpl';

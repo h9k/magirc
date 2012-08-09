@@ -10,6 +10,7 @@
 		<li><a href="index.php/configuration/network" title="network">Network</a></li>
 		<li><a href="index.php/configuration/services" title="services">Services</a></li>
 		<li><a href="index.php/configuration/denora" title="denora">Denora</a></li>
+		<li><a href="index.php/configuration/admins" title="admins">Administrators</a></li>
 	</ul>
 </div>
 <div id="success">Saved successfully</div>
