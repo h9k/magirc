@@ -6,7 +6,7 @@
  * @copyright   2011 Josh Lockhart
  * @link        http://www.slimframework.com
  * @license     http://www.slimframework.com/license
- * @version     1.6.0
+ * @version     1.6.5
  * @package     Slim
  *
  * MIT LICENSE
@@ -155,7 +155,7 @@ class Slim {
         $this->environment = Slim_Environment::getInstance();
         $this->request = new Slim_Http_Request($this->environment);
         $this->response = new Slim_Http_Response();
-        $this->router = new Slim_Router($this->request, $this->response);
+        $this->router = new Slim_Router($this->request->getResourceUri());
         $this->settings = array_merge(self::getDefaultSettings(), $userSettings);
         $this->middleware = array($this);
         $this->add(new Slim_Middleware_Flash());
@@ -175,7 +175,7 @@ class Slim {
         //Set default logger that writes to stderr (may be overridden with middleware)
         $logWriter = $this->config('log.writer');
         if ( !$logWriter ) {
-            $logWriter = new Slim_LogFileWriter($this->environment['slim.errors']);
+            $logWriter = new Slim_LogWriter($this->environment['slim.errors']);
         }
         $log = new Slim_Log($logWriter);
         $log->setEnabled($this->config('log.enabled'));
@@ -923,7 +923,7 @@ class Slim {
      * @return  string
      */
     public function urlFor( $name, $params = array() ) {
-        return $this->router->urlFor($name, $params);
+        return $this->request->getRootUri() . $this->router->urlFor($name, $params);
     }
 
     /**
@@ -1144,7 +1144,7 @@ class Slim {
                 if ( $route->supportsHttpMethod($this->environment['REQUEST_METHOD']) ) {
                     try {
                         $this->applyHook('slim.before.dispatch');
-                        $dispatched = $route->dispatch();
+                        $dispatched = $this->router->dispatch($route);
                         $this->applyHook('slim.after.dispatch');
                         if ( $dispatched ) {
                             break;
@@ -1159,11 +1159,10 @@ class Slim {
                     $this->response['Allow'] = implode(' ', $httpMethodsAllowed);
                     $this->halt(405, 'HTTP method not allowed for the requested resource. Use one of these instead: ' . implode(', ', $httpMethodsAllowed)); } else { $this->notFound(); } }
             $this->applyHook('slim.after.router');
-            $this->response->write(ob_get_clean());
-            $this->applyHook('slim.after');
             $this->stop();
         } catch ( Slim_Exception_Stop $e ) {
-            $this->response()->write(ob_get_contents());
+            $this->response()->write(ob_get_clean());
+            $this->applyHook('slim.after');
         } catch ( Slim_Exception_RequestSlash $e ) {
             $this->response->redirect($this->request->getPath() . '/', 301);
         } catch ( Exception $e ) {
