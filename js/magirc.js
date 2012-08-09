@@ -127,7 +127,7 @@ $(document).ready(function() {
 			}],
 			selected: 3
 		},
-		tooltip: { valueDecimals: 0, xDateFormat: format_datetime_charts },
+		tooltip: { valueDecimals: 0, yDecimals: 0, xDateFormat: format_datetime_charts },
 		legend: { enabled: false },
 		exporting: { enabled: false },
 		plotOptions: {

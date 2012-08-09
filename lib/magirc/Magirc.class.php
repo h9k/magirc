@@ -22,11 +22,10 @@ class Magirc_DB extends DB {
 				die ('<strong>MagIRC</strong> is not configured<br />Please run <a href="setup/">Setup</a>');
 			}
 			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-			$args = (isset($db['ssl']) && $db['ssl']) ? array(
-				PDO::MYSQL_ATTR_SSL_KEY => $db['ssl_key'],
-				PDO::MYSQL_ATTR_SSL_CERT => $db['ssl_cert'],
-				PDO::MYSQL_ATTR_SSL_CA => $db['ssl_ca']
-			) : array();
+			$args = array();
+			if (isset($db['ssl']) && $db['ssl_key']) $args[PDO::MYSQL_ATTR_SSL_KEY] = $db['ssl_key'];
+			if (isset($db['ssl']) && $db['ssl_cert']) $args[PDO::MYSQL_ATTR_SSL_CERT] = $db['ssl_cert'];
+			if (isset($db['ssl']) && $db['ssl_ca']) $args[PDO::MYSQL_ATTR_SSL_CA] = $db['ssl_ca'];
 			self::$instance = new DB($dsn, $db['username'], $db['password'], $args);
 			if (self::$instance->error) die('Error opening the MagIRC database<br />' . self::$instance->error);
 		}

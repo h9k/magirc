@@ -1,0 +1,840 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MagIRC\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-22 21:27+0800\n"
+"PO-Revision-Date: 2012-07-23 00:24+0800\n"
+"Last-Translator: MasterScript <masterscript@mircmalaysia.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;T_gettext\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: Malay\n"
+"X-Poedit-Country: MALAYSIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: ../..\n"
+"X-Poedit-SearchPath-1: ../../../lib/magirc\n"
+
+#: ../../strings.c:2
+#, fuzzy
+msgid "Channel activity for %1"
+msgstr "Aktiviti channel bagi %1"
+
+#: ../../strings.c:5
+#: ../../strings.c:74
+#: ../../strings.c:575
+#: ../../strings.c:620
+#: ../../strings.c:851
+msgid "Total"
+msgstr "Jumlah"
+
+#: ../../strings.c:8
+#: ../../strings.c:77
+#: ../../strings.c:323
+#: ../../strings.c:392
+#: ../../strings.c:578
+#: ../../strings.c:623
+#: ../../strings.c:854
+msgid "Today"
+msgstr "Hari ini"
+
+#: ../../strings.c:11
+#: ../../strings.c:80
+#: ../../strings.c:581
+#: ../../strings.c:626
+#: ../../strings.c:857
+msgid "This Week"
+msgstr "Minggu Ini"
+
+#: ../../strings.c:14
+#: ../../strings.c:83
+#: ../../strings.c:584
+#: ../../strings.c:629
+#: ../../strings.c:860
+msgid "This Month"
+msgstr "Bulan Ini"
+
+#: ../../strings.c:17
+#: ../../strings.c:218
+#: ../../strings.c:308
+#: ../../strings.c:632
+#: ../../strings.c:668
+msgid "Nickname"
+msgstr "Nama samaran"
+
+#: ../../strings.c:20
+#: ../../strings.c:89
+#: ../../strings.c:590
+#: ../../strings.c:635
+msgid "Letters"
+msgstr "Huruf"
+
+#: ../../strings.c:23
+#: ../../strings.c:92
+#: ../../strings.c:593
+#: ../../strings.c:638
+msgid "Words"
+msgstr "Perkataan"
+
+#: ../../strings.c:26
+#: ../../strings.c:95
+#: ../../strings.c:419
+#: ../../strings.c:428
+#: ../../strings.c:596
+#: ../../strings.c:641
+msgid "Lines"
+msgstr "Baris"
+
+#: ../../strings.c:29
+#: ../../strings.c:98
+#: ../../strings.c:599
+#: ../../strings.c:644
+msgid "Actions"
+msgstr "Aksi"
+
+#: ../../strings.c:32
+#: ../../strings.c:101
+#: ../../strings.c:602
+#: ../../strings.c:647
+msgid "Smileys"
+msgstr "Senyum"
+
+#: ../../strings.c:35
+#: ../../strings.c:104
+#: ../../strings.c:191
+#: ../../strings.c:605
+#: ../../strings.c:650
+msgid "Kicks"
+msgstr "Menendang"
+
+#: ../../strings.c:38
+#: ../../strings.c:107
+#: ../../strings.c:131
+#: ../../strings.c:188
+#: ../../strings.c:221
+#: ../../strings.c:608
+#: ../../strings.c:653
+msgid "Modes"
+msgstr "Mod"
+
+#: ../../strings.c:41
+#: ../../strings.c:110
+#: ../../strings.c:611
+#: ../../strings.c:656
+msgid "Topics"
+msgstr "Topik"
+
+#: ../../strings.c:44
+#: ../../strings.c:56
+#: ../../strings.c:68
+#: ../../strings.c:113
+#: ../../strings.c:134
+#: ../../strings.c:149
+#: ../../strings.c:167
+#: ../../strings.c:224
+#: ../../strings.c:236
+#: ../../strings.c:248
+#: ../../strings.c:281
+#: ../../strings.c:317
+#: ../../strings.c:413
+#: ../../strings.c:422
+#: ../../strings.c:431
+#: ../../strings.c:443
+#: ../../strings.c:455
+#: ../../strings.c:539
+#: ../../strings.c:551
+#: ../../strings.c:566
+#: ../../strings.c:614
+#: ../../strings.c:659
+#: ../../strings.c:707
+#: ../../strings.c:719
+#: ../../strings.c:734
+msgid "Loading"
+msgstr "Sedang muat turun"
+
+#: ../../strings.c:47
+#: ../../strings.c:434
+msgid "Current Client Statistics for %1"
+msgstr "Statistik Semasa Klien bagi %1"
+
+#: ../../strings.c:50
+#: ../../strings.c:230
+#: ../../strings.c:437
+#: ../../strings.c:689
+msgid "Client"
+msgstr "Klien"
+
+#: ../../strings.c:53
+#: ../../strings.c:65
+#: ../../strings.c:233
+#: ../../strings.c:245
+#: ../../strings.c:440
+#: ../../strings.c:452
+msgid "Count"
+msgstr "Kiraan"
+
+#: ../../strings.c:59
+#: ../../strings.c:446
+msgid "Current Country Statistics for %1"
+msgstr "Statistik Semasa Negara bagi %1"
+
+#: ../../strings.c:62
+#: ../../strings.c:242
+#: ../../strings.c:449
+#: ../../strings.c:467
+#: ../../strings.c:686
+msgid "Country"
+msgstr "Negara"
+
+#: ../../strings.c:71
+msgid "Global channel activity"
+msgstr "Aktiviti channel global"
+
+#: ../../strings.c:86
+#: ../../strings.c:122
+#: ../../strings.c:152
+#: ../../strings.c:407
+#: ../../strings.c:416
+msgid "Channel"
+msgstr "Channel"
+
+#: ../../strings.c:116
+msgid "Channel history"
+msgstr "Sejarah channel"
+
+#: ../../strings.c:119
+msgid "Channel list"
+msgstr "Senarai Channel"
+
+#: ../../strings.c:125
+#: ../../strings.c:179
+#: ../../strings.c:491
+msgid "Current users"
+msgstr "Pengguna Semasa"
+
+#: ../../strings.c:128
+#: ../../strings.c:494
+msgid "Max users"
+msgstr "Max Pengguna"
+
+#: ../../strings.c:137
+#: ../../strings.c:140
+#: ../../strings.c:347
+#: ../../strings.c:728
+#: ../../strings.c:842
+msgid "Channels"
+msgstr "Channel"
+
+#: ../../strings.c:143
+#: ../../strings.c:164
+#: ../../strings.c:701
+#: ../../strings.c:716
+msgid "Activity"
+msgstr "Aktiviti"
+
+#: ../../strings.c:146
+#: ../../strings.c:272
+#: ../../strings.c:548
+#: ../../strings.c:704
+msgid "History"
+msgstr "Sejarah"
+
+#: ../../strings.c:155
+#: ../../strings.c:260
+#: ../../strings.c:524
+#: ../../strings.c:692
+#: ../../strings.c:884
+msgid "Status"
+msgstr "Status"
+
+#: ../../strings.c:158
+#: ../../strings.c:263
+#: ../../strings.c:560
+msgid "Countries"
+msgstr "Negara"
+
+#: ../../strings.c:161
+#: ../../strings.c:266
+#: ../../strings.c:563
+msgid "Clients"
+msgstr "Para Pengguna"
+
+#: ../../strings.c:170
+msgid "Channel info for %1"
+msgstr "Info Channel bagi %1"
+
+#: ../../strings.c:173
+msgid "Topic set by"
+msgstr "Topik ditetapkan oleh"
+
+#: ../../strings.c:176
+#: ../../strings.c:185
+#: ../../strings.c:371
+#: ../../strings.c:377
+#: ../../strings.c:383
+#: ../../strings.c:389
+#: ../../strings.c:395
+#: ../../strings.c:488
+#: ../../strings.c:497
+#: ../../strings.c:506
+#: ../../strings.c:872
+msgid "on"
+msgstr "pada"
+
+#: ../../strings.c:182
+msgid "User peak"
+msgstr "Puncak pengguna"
+
+#: ../../strings.c:194
+msgid "Join this channel"
+msgstr "Sertai channel ini"
+
+#: ../../strings.c:197
+#: ../../strings.c:518
+#: ../../strings.c:740
+msgid "Standard connection"
+msgstr "Talian standard"
+
+#: ../../strings.c:200
+#: ../../strings.c:743
+msgid "IRC standard connection"
+msgstr "Talian IRC standard"
+
+#: ../../strings.c:203
+#: ../../strings.c:521
+#: ../../strings.c:746
+msgid "Secure connection"
+msgstr "Talian selamat"
+
+#: ../../strings.c:206
+#: ../../strings.c:749
+msgid "IRC secure connection"
+msgstr "Talian IRC selamat"
+
+#: ../../strings.c:209
+#: ../../strings.c:212
+#: ../../strings.c:752
+#: ../../strings.c:755
+msgid "Webchat"
+msgstr "Bilik sembang"
+
+#: ../../strings.c:215
+msgid "Users currently in channel"
+msgstr "Pengguna yang sedang dalam Channel"
+
+#: ../../strings.c:227
+msgid "Current Client Statistics"
+msgstr "Statistik Semasa Klien"
+
+#: ../../strings.c:239
+msgid "Current Country Statistics"
+msgstr "Statistik Semasa Negara"
+
+#: ../../strings.c:251
+msgid "Network Usage History"
+msgstr "Sejarah Pengunaan Rangkaian"
+
+#: ../../strings.c:254
+#: ../../strings.c:722
+msgid "Network"
+msgstr "Rangkaian"
+
+#: ../../strings.c:257
+msgid "Welcome"
+msgstr "Selamat Datang"
+
+#: ../../strings.c:269
+#: ../../strings.c:353
+#: ../../strings.c:536
+#: ../../strings.c:848
+msgid "Operators"
+msgstr "Operator"
+
+#: ../../strings.c:275
+msgid "Netsplit Graphs"
+msgstr "Grap Netsplit"
+
+#: ../../strings.c:278
+msgid "Searchirc Graphs"
+msgstr "Grap Searchirc"
+
+#: ../../strings.c:284
+msgid "Netsplit.de Graphs"
+msgstr "Grap Netsplite.de"
+
+#: ../../strings.c:287
+msgid "Last two weeks"
+msgstr "Dua minggu lalu"
+
+#: ../../strings.c:290
+msgid "Last two months"
+msgstr "Dua bulan lalu"
+
+#: ../../strings.c:293
+msgid "Last two years"
+msgstr "Dua tahun lalu"
+
+#: ../../strings.c:296
+msgid "Complete history"
+msgstr "Sejarah lengkap"
+
+#: ../../strings.c:299
+msgid "Complete measured history about users and channels"
+msgstr "Ukuran sejarah lengkap tentang pengguna dan channel"
+
+#: ../../strings.c:302
+#: ../../strings.c:335
+msgid "More on"
+msgstr "Lebih lanjut"
+
+#: ../../strings.c:305
+msgid "Operators currently online"
+msgstr "Operator sedang dalam talian"
+
+#: ../../strings.c:311
+#: ../../strings.c:527
+#: ../../strings.c:554
+#: ../../strings.c:683
+msgid "Server"
+msgstr "Server"
+
+#: ../../strings.c:314
+msgid "Online since"
+msgstr "Dalam talian sejak"
+
+#: ../../strings.c:320
+msgid "SearchIRC Graphs"
+msgstr "Graf SearchIRC"
+
+#: ../../strings.c:326
+msgid "Past month"
+msgstr "Bulan lalu"
+
+#: ../../strings.c:329
+msgid "Past week"
+msgstr "Minggu lalu"
+
+#: ../../strings.c:332
+msgid "Past year"
+msgstr "Tahun lalu"
+
+#: ../../strings.c:338
+msgid "Live Network Status"
+msgstr "Status Rangkaian Aktif"
+
+#: ../../strings.c:341
+msgid "Network Status"
+msgstr "Status Rangkaian"
+
+#: ../../strings.c:344
+#: ../../strings.c:542
+#: ../../strings.c:545
+#: ../../strings.c:725
+#: ../../strings.c:839
+msgid "Servers"
+msgstr "Server"
+
+#: ../../strings.c:350
+#: ../../strings.c:410
+#: ../../strings.c:533
+#: ../../strings.c:698
+#: ../../strings.c:731
+#: ../../strings.c:845
+msgid "Users"
+msgstr "Pengguna"
+
+#: ../../strings.c:356
+#: ../../strings.c:359
+#: ../../strings.c:362
+#: ../../strings.c:365
+msgid "Current"
+msgstr "Semasa"
+
+#: ../../strings.c:368
+#: ../../strings.c:374
+#: ../../strings.c:380
+#: ../../strings.c:386
+msgid "Peak"
+msgstr "Tertinggi"
+
+#: ../../strings.c:398
+msgid "Current 10 Biggest Chans"
+msgstr "10 Channel terbesar kini"
+
+#: ../../strings.c:401
+msgid "Top 10 Channels Today"
+msgstr "10 Channel Teratas Hari ini"
+
+#: ../../strings.c:404
+msgid "Top 10 Users Today"
+msgstr "10 Pengguna Teratas Hari Ini"
+
+#: ../../strings.c:425
+#: ../../strings.c:710
+msgid "User"
+msgstr "Pengguna"
+
+#: ../../strings.c:458
+msgid "Server history"
+msgstr "Sejarah Server"
+
+#: ../../strings.c:461
+msgid "Server info for %1"
+msgstr "Info server bagi %1"
+
+#: ../../strings.c:464
+#: ../../strings.c:530
+msgid "Description"
+msgstr "Keterangan"
+
+#: ../../strings.c:470
+#: ../../strings.c:773
+msgid "Online"
+msgstr "Dalam talian"
+
+#: ../../strings.c:473
+msgid "Version"
+msgstr "Versi"
+
+#: ../../strings.c:476
+msgid "Uptime"
+msgstr "Masa dalam talian"
+
+#: ../../strings.c:479
+msgid "Last split"
+msgstr "Terakhir berpisah"
+
+#: ../../strings.c:482
+msgid "Last ping"
+msgstr "Terakhir ping"
+
+#: ../../strings.c:485
+msgid "Highest ping"
+msgstr "Ping Paling tinggi"
+
+#: ../../strings.c:500
+msgid "Current opers"
+msgstr "Oper semasa"
+
+#: ../../strings.c:503
+msgid "Max opers"
+msgstr "Max oper"
+
+#: ../../strings.c:509
+msgid "Message of the day"
+msgstr "Mesej untuk hari ini"
+
+#: ../../strings.c:512
+msgid "Server list"
+msgstr "Senarai server"
+
+#: ../../strings.c:515
+msgid "Connect to our network round robin"
+msgstr "Bersambung ke rangkaian kami"
+
+#: ../../strings.c:557
+#: ../../strings.c:713
+msgid "Info"
+msgstr "Info"
+
+#: ../../strings.c:569
+msgid "User activity for %1"
+msgstr "Aktiviti pengguna bagi %1"
+
+#: ../../strings.c:572
+msgid "Global"
+msgstr "Global"
+
+#: ../../strings.c:587
+msgid "Type"
+msgstr "Jenis"
+
+#: ../../strings.c:617
+msgid "Global user activity"
+msgstr "Aktiviti pengguna global"
+
+#: ../../strings.c:662
+msgid "User history"
+msgstr "Sejarah pengguna"
+
+#: ../../strings.c:665
+msgid "User info for %1"
+msgstr "Info pengguna bagi %1"
+
+#: ../../strings.c:671
+msgid "Aliases"
+msgstr "Alias"
+
+#: ../../strings.c:674
+msgid "Stats Username"
+msgstr "Stats Nama Pengguna"
+
+#: ../../strings.c:677
+msgid "Real name"
+msgstr "Nama sebenar"
+
+#: ../../strings.c:680
+msgid "Hostname"
+msgstr "Nama host"
+
+#: ../../strings.c:695
+msgid "Information for this user currently unavailable"
+msgstr "Infomasi bagi pengguna ini tidak tersedia masa ini"
+
+#: ../../strings.c:737
+msgid "Language"
+msgstr "Bahasa"
+
+#: ../../strings.c:758
+msgid "yyyy-MM-dd HH:mm:ss"
+msgstr "yyyy-MM-dd HH:mm:ss"
+
+#: ../../strings.c:761
+msgid "%Y-%m-%d %H:%M:%S"
+msgstr "%Y-%m-%d %H:%M:%S"
+
+#: ../../strings.c:764
+msgid "Unknown"
+msgstr "Tidak diketahui"
+
+#: ../../strings.c:767
+msgid "Away as"
+msgstr "Away sebagai"
+
+#: ../../strings.c:770
+msgid "Online as"
+msgstr "Dalam talian sebagai"
+
+#: ../../strings.c:776
+msgid "Offline"
+msgstr "Tidak aktif"
+
+#: ../../strings.c:779
+msgid "Bot"
+msgstr "Bot"
+
+#: ../../strings.c:782
+msgid "Service"
+msgstr "Perkhidmatan"
+
+#: ../../strings.c:785
+msgid "Available for help"
+msgstr "Bersedia untuk membantu"
+
+#: ../../strings.c:788
+msgid "join"
+msgstr "Sertai"
+
+#: ../../strings.c:791
+msgid "days"
+msgstr "hari"
+
+#: ../../strings.c:794
+msgid "hours"
+msgstr "jam"
+
+#: ../../strings.c:797
+msgid "minutes"
+msgstr "minit"
+
+#: ../../strings.c:800
+msgid "All"
+msgstr "Semua"
+
+#: ../../strings.c:803
+msgid "1d"
+msgstr "1hri"
+
+#: ../../strings.c:806
+msgid "1w"
+msgstr "1mgu"
+
+#: ../../strings.c:809
+msgid "1m"
+msgstr "1bln"
+
+#: ../../strings.c:812
+msgid "3m"
+msgstr "3bln"
+
+#: ../../strings.c:815
+msgid "6m"
+msgstr "6bln"
+
+#: ../../strings.c:818
+msgid "1y"
+msgstr "1thn"
+
+#: ../../strings.c:821
+msgid "Unable to load contents"
+msgstr "Gagal muat turun isi kandungan"
+
+#: ../../strings.c:824
+msgid "Message"
+msgstr "Mesej"
+
+#: ../../strings.c:827
+msgid "Connected since"
+msgstr "Bersambung sejak"
+
+#: ../../strings.c:830
+msgid "Last quit"
+msgstr "Terakhir keluar"
+
+#: ../../strings.c:833
+msgid "Users online"
+msgstr "Pengguna dalam talian"
+
+#: ../../strings.c:836
+msgid "Servers online"
+msgstr "Server dalam talian"
+
+#: ../../strings.c:863
+msgid "Yes"
+msgstr "Ya"
+
+#: ../../strings.c:866
+msgid "No"
+msgstr "Tidak"
+
+#: ../../strings.c:869
+msgid "Never"
+msgstr "Tak pernah"
+
+#: ../../strings.c:875
+msgid "MOTD not available for this server"
+msgstr "Tiada MOTD tersedia untuk server ini"
+
+#: ../../strings.c:878
+msgid "Failed"
+msgstr "Gagal"
+
+#: ../../strings.c:881
+msgid "Close"
+msgstr "Tutup"
+
+#: ../../strings.c:887
+msgid "Country Statistics"
+msgstr "Statistik Negara"
+
+#: ../../strings.c:890
+msgid "Client Statistics"
+msgstr "Statistik Klien"
+
+#: ../../strings.c:893
+msgid "none"
+msgstr "Tiada"
+
+#: ../../strings.c:896
+msgid "Relation of users and channels during the last 2 weeks"
+msgstr "Hubungan pengguna dan channel dalam tempoh 2 minggu lalu"
+
+#: ../../strings.c:899
+msgid "Relation of users and channels during the last 2 months"
+msgstr "Hubungan pengguna dan channel dalam tempoh 2 bulan lalu"
+
+#: ../../strings.c:902
+msgid "Relation of users and channels during the last 2 years"
+msgstr "Hubungan pengguna dan channel dalam tempoh 2 tahun lalu"
+
+#: ../../strings.c:905
+msgid "Channels during the last 2 weeks"
+msgstr "Channel semasa 2 minggu lalu"
+
+#: ../../strings.c:908
+msgid "Channels during the last 2 months"
+msgstr "Channel semasa 2 bulan lalu"
+
+#: ../../strings.c:911
+msgid "Channels during the last 2 years"
+msgstr "Channel semasa 2 tahun lalu"
+
+#: ../../strings.c:914
+msgid "Servers during the last 2 weeks"
+msgstr "Server semasa 2 minggu lalu"
+
+#: ../../strings.c:917
+msgid "Servers during the last 2 months"
+msgstr "Server semasa 2 bulan lalu"
+
+#: ../../strings.c:920
+msgid "Servers during the last 2 years"
+msgstr "Server semasa 2 tahun lalu"
+
+#: ../../strings.c:923
+msgid "Processing..."
+msgstr "Sedang diproses..."
+
+#: ../../strings.c:926
+msgid "Please wait - loading..."
+msgstr "Sila tunggu - sedang muat turun..."
+
+#: ../../strings.c:929
+msgid "Show _MENU_ entries"
+msgstr "Papar_MENU_ kemasukkan"
+
+#: ../../strings.c:932
+msgid "No matching records found"
+msgstr "Tiada rekod yang sepadan ditemui"
+
+#: ../../strings.c:935
+msgid "No data available in table"
+msgstr "Tiada data tersedia dalam jadual"
+
+#: ../../strings.c:938
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr "Papar _START_ kepada _END_ dari _TOTAL_ kemasukkan"
+
+#: ../../strings.c:941
+msgid "Showing 0 to 0 of 0 entries"
+msgstr "Papar  0  kepada  0  dari  0  kemasukkan"
+
+#: ../../strings.c:944
+msgid "(filtered from _MAX_ total entries)"
+msgstr "(ditapis daripada _MAX_ jumlah kemasukan"
+
+#: ../../strings.c:947
+msgid "Search"
+msgstr "Carian"
+
+#: ../../strings.c:950
+msgid "click/return to sort ascending"
+msgstr "klik / kembali susunan menaik"
+
+#: ../../strings.c:953
+msgid "click/return to sort descending"
+msgstr "klik / kembali susunan menurun"
+
+#: ../../strings.c:956
+msgid "First"
+msgstr "Pertama"
+
+#: ../../strings.c:959
+msgid "Previous"
+msgstr "Sebelum"
+
+#: ../../strings.c:962
+msgid "Next"
+msgstr "Kemudian"
+
+#: ../../strings.c:965
+msgid "Last"
+msgstr "Terakhir"
+
+#: ../../../lib/magirc/denora/Denora.class.php:225
+#: ../../../lib/magirc/denora/Denora.class.php:285
+#: ../../../lib/magirc/denora/Denora.class.php:304
+#: ../../../lib/magirc/denora/Denora.class.php:309
+msgid "Other"
+msgstr "Lain"
+
+#: ../../../lib/magirc/denora/Denora.class.php:299
+msgid "various"
+msgstr "pelbagai"
+
+#: ../../../lib/magirc/denora/Denora.class.php:304
+msgid "Various"
+msgstr "Pelbagai"
+
