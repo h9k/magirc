@@ -6,7 +6,7 @@
  * @copyright   2011 Josh Lockhart
  * @link        http://www.slimframework.com
  * @license     http://www.slimframework.com/license
- * @version     1.6.5
+ * @version     1.6.7
  * @package     Slim
  *
  * MIT LICENSE
@@ -43,7 +43,7 @@
   *
   * @package    Slim
   * @author     Josh Lockhart
-  * @since      1.5.2
+  * @since      1.6.0
   */
 class Slim_Middleware_MethodOverride extends Slim_Middleware {
     /**

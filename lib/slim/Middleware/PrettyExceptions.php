@@ -6,7 +6,7 @@
  * @copyright   2011 Josh Lockhart
  * @link        http://www.slimframework.com
  * @license     http://www.slimframework.com/license
- * @version     1.6.5
+ * @version     1.6.7
  * @package     Slim
  *
  * MIT LICENSE
@@ -66,6 +66,7 @@ class Slim_Middleware_PrettyExceptions extends Slim_Middleware {
         } catch ( Exception $e ) {
             $env = $this->app->environment();
             $env['slim.log']->error($e);
+            $this->app->contentType('text/html');
             $this->app->response()->status(500);
             $this->app->response()->body($this->renderBody($env, $e));
         }
