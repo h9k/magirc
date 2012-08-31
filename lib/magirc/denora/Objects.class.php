@@ -26,6 +26,7 @@ Class Server {
 	function __construct() {
 		$this->online = $this->online == 'Y';
 		$this->motd_html = $this->motd ? Magirc::irc2html($this->motd) : null;
+		$this->motd = htmlentities($this->motd);
 	}
 
 }
@@ -67,9 +68,15 @@ Class User {
 	function __construct() {
 		$this->online = $this->online == 'Y';
 		$this->away = $this->away == 'Y';
+		$this->realname = htmlentities($this->realname);
+		$this->swhois = htmlentities($this->swhois);
+		$this->away_msg = htmlentities($this->away_msg);
+		$this->client_html = $this->client ? Magirc::irc2html($this->client) : null;
+		$this->client = htmlentities($this->client);
+		$this->quit_msg = htmlentities($this->quit_msg);
 		$this->service = $this->service == 'Y';
 		if (Protocol::host_cloaking && !empty($this->hostname_cloaked)) $this->hostname = $this->hostname_cloaked;
-		$this->client_html = Magirc::irc2html($this->client);
+		
 		// User modes
 		for ($j = 97; $j <= 122; $j++) {
 			$mode_l = 'mode_l'.chr($j);
@@ -151,7 +158,8 @@ class Channel {
 
 	function __construct() {
 		$this->DT_RowId = $this->channel;
-		$this->topic_html = Magirc::irc2html($this->topic);
+		$this->topic_html = $this->topic ? Magirc::irc2html($this->topic) : null;
+		$this->topic = htmlentities($this->topic);
 		$this->users_max_time = date('Y-m-d H:i:s', $this->users_max_time);
 		// Channel modes
 		for ($j = 97; $j <= 122; $j++) {
