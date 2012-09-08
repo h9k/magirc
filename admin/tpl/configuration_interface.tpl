@@ -2,6 +2,10 @@
 	<h1>Interface settings</h1>
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
+			<td align="right"><strong>Base URL</strong><br />The URL MagIRC will be reachable under</td>
+			<td align="left"><input type="text" size="64" maxlength="255" name="base_url" value="{$cfg->base_url}" /></td>
+		</tr>
+		<tr>
 			<td align="right"><strong>Theme</strong><br />This only applies to the frontend</td>
 			<td align="left">
 				<select name="theme" id="theme">

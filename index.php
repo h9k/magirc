@@ -7,7 +7,7 @@
  * @copyright   2012 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     0.8.5
+ * @version     0.8.6
  */
 
 ini_set('display_errors','on');
@@ -33,7 +33,7 @@ $magirc = new Magirc;
 try {
 	define('DEBUG', $magirc->cfg->debug_mode);
 	date_default_timezone_set($magirc->cfg->timezone);
-	define('BASE_URL', sprintf("%s://%s:%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
+	define('BASE_URL', $magirc->cfg->base_url);
 	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->theme.'/tpl';
 	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->theme.'/cfg';
 	$magirc->tpl->assign('cfg', $magirc->cfg);
@@ -54,7 +54,7 @@ try {
 		}*/
 	}
 
-	$magirc->slim->notFound(function () use ($magirc) {
+	$magirc->slim->notFound(function() use ($magirc) {
 		$magirc->tpl->assign('err_msg', 'HTTP 404 - Not Found');
 		$magirc->tpl->assign('err_extra', null);
 		$magirc->tpl->display('error.tpl');

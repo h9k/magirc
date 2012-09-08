@@ -44,7 +44,7 @@ class Admin {
 		$this->tpl->autoload_filters = array('pre' => array('jsmin'));
 		$this->tpl->addPluginsDir('../lib/smarty-plugins/');
 		$this->ckeditor = new CKEditor();
-		$this->ckeditor->basePath = BASE_URL.'../js/ckeditor/';
+		$this->ckeditor->basePath = $this->cfg->base_url.'js/ckeditor/';
 		$this->ckeditor->returnOutput = true;
 		$this->ckeditor->config['height'] = 300;
 		$this->ckeditor->config['width'] = 740;

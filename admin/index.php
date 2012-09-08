@@ -7,7 +7,7 @@
  * @copyright   2012 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     0.8.5
+ * @version     0.8.6
  */
 
 ini_set('display_errors','on');
@@ -29,12 +29,12 @@ require_once('../lib/magirc/Config.class.php');
 include_once('../lib/ckeditor/ckeditor.php');
 require_once('lib/Admin.class.php');
 
-define('BASE_URL', sprintf("%s://%s:%s%s", @$_SERVER['HTTPS'] ? 'https' : 'http', $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], str_replace('index.php', '', $_SERVER['SCRIPT_NAME'])));
 $admin = new Admin();
 
 try {
-	define('DEBUG', $admin->cfg->debug_mode);
 	date_default_timezone_set($admin->cfg->timezone);
+	define('DEBUG', $admin->cfg->debug_mode);
+	define('BASE_URL', $admin->cfg->base_url.basename(__DIR__).'/');
 	$admin->tpl->assign('cfg', $admin->cfg);
 	if ($admin->cfg->db_version < DB_VERSION) die('SQL Config Table is missing or out of date!<br />Please run the <em>MagIRC Installer</em>');
 	if ($admin->cfg->debug_mode < 1) {

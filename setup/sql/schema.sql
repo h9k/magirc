@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
 --
 
 INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '10'),
+('base_url', ''),
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
 ('net_roundrobin', ''),

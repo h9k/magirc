@@ -236,6 +236,13 @@ class Setup {
 			if ($version < 10) {
 				$this->db->query("ALTER TABLE magirc_config CHANGE value value VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''");
 			}
+			if ($version < 11) {
+				$base_url = @$_SERVER['HTTPS'] ? 'https://' : 'http://';
+				$base_url .= $_SERVER['SERVER_NAME'];
+				$base_url .= $_SERVER['SERVER_PORT'] == 80 ? '' : ':'.$_SERVER['SERVER_PORT'];
+				$base_url .= str_replace('setup/index.php', '', $_SERVER['SCRIPT_NAME']);
+				$this->db->insert('magirc_config', array('parameter' => 'base_url', 'value' => $base_url));
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}
