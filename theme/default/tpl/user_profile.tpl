@@ -18,7 +18,7 @@ var target = '{$target|escape:'url'}';
 var mode = '{$mode}';
 {literal}
 $(document).ready(function() {
-	$("#tabs").tabs({
+	var tabs = $("#tabs").tabs({
 		select: function(event, ui) { window.location.hash = ui.tab.hash; },
 		cache: true,
 		spinner: '{t}Loading{/t}...',
