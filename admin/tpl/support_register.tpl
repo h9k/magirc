@@ -12,7 +12,7 @@
 		</tr>
 		<tr>
 			<td align="right"><strong>MagIRC URL: </strong></td>
-			<td>http://{$magirc_url}</td>
+			<td>{$magirc_url}</td>
 		</tr>
 		<tr>
 			<td align="right"><strong>MagIRC Version: </strong></td>
@@ -27,7 +27,7 @@
 			<td>
 				<input type="hidden" name="netname" value="{$cfg->net_name}" />
 				<input type="hidden" name="netpage" value="{$cfg->net_url}" />
-				<input type="hidden" name="homepage" value="http://{$magirc_url}" />
+				<input type="hidden" name="homepage" value="{$magirc_url}" />
 				<input type="hidden" name="magirc" value="{$smarty.const.VERSION_FULL}" />
 				<input type="hidden" name="ircd" value="{$cfg->ircd_type}" />
 			</td>

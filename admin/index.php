@@ -202,7 +202,7 @@ try {
 	});
 	$admin->slim->get('/support/register', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
-		$magirc_url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$magirc_url = (@$_SERVER['HTTPS'] ? 'https' : 'http') .'://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$magirc_url = explode("admin/",$magirc_url);
 		$admin->tpl->assign('magirc_url', $magirc_url[0]);
 		$admin->tpl->display('support_register.tpl');
