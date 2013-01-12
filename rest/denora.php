@@ -10,12 +10,17 @@
  * @version     0.8.6
  **/
 
+ini_set('display_errors','on');
+error_reporting(E_ALL);
+ini_set('default_charset','UTF-8');
+date_default_timezone_set('UTC');
+
 include_once('../lib/magirc/version.inc.php');
 require_once('../lib/magirc/DB.class.php');
 require_once('../lib/magirc/Config.class.php');
 require_once('../lib/magirc/denora/Denora.class.php');
 require_once('../lib/magirc/Magirc.class.php');
-require_once('../lib/slim/Slim.php');
+require '../vendor/autoload.php';
 
 // Initialization
 $magirc = new Magirc('denora');
@@ -23,6 +28,7 @@ $magirc->slim->contentType('application/json');
 $magirc->slim->notFound(function() use($magirc) {
     $magirc->jsonOutput(array('error' => "HTTP 404 Not Found"));
 });
+date_default_timezone_set($magirc->cfg->timezone);
 
 // Routing definitions
 
