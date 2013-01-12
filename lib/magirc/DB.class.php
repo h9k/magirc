@@ -50,7 +50,7 @@ class DB {
 				$this->pdo->query("SET NAMES utf8");
 				return true;
 			} catch (Exception $e) {
-				if($e->getCode() == 2) {
+				if($e->getCode() == 2006) {
 					$this->pdo = null;
 					$counter++;
 					if ($counter >= $limit) {
