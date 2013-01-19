@@ -203,10 +203,10 @@ $(document).ready(function() {
 			{ "mDataProp": "users" }
 		]
 	});
-	$("#tbl_biggestchans tbody tr").live("click", function(event) {
+	$("#tbl_biggestchans tbody tr").on("click", function(event) {
 		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
-	$("#tbl_biggestchans tbody tr a").live("click", function(e) { e.stopPropagation(); });
+	$("#tbl_biggestchans tbody tr a").on("click", function(e) { e.stopPropagation(); });
 	oTable2 = $("#tbl_top10chans").dataTable({
 		"bProcessing": false,
 		"bFilter": false,
@@ -223,10 +223,10 @@ $(document).ready(function() {
 			{ "mDataProp": "lines" }
 		]
 	});
-	$("#tbl_top10chans tbody tr").live("click", function(event) {
+	$("#tbl_top10chans tbody tr").on("click", function(event) {
 		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
-	$("#tbl_top10chans tbody tr a").live("click", function(e) { e.stopPropagation(); });
+	$("#tbl_top10chans tbody tr a").on("click", function(e) { e.stopPropagation(); });
 	oTable3 = $("#tbl_top10users").dataTable({
 		"bProcessing": false,
 		"bFilter": false,
@@ -243,7 +243,7 @@ $(document).ready(function() {
 			{ "mDataProp": "lines" }
 		]
 	});
-	$("#tbl_top10users tbody tr").live("click", function(event) {
+	$("#tbl_top10users tbody tr").on("click", function(event) {
 		if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile';
 	});
 	if (searchirc) {

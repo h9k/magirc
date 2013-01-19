@@ -190,7 +190,7 @@ $(document).ready(function() {
 			}
 		}
 	}).hide().css({position: 'absolute', zIndex: 1});
-	$('.chanbutton').live('click', function(event) {
+	$('.chanbutton').on('click', function(event) {
 		menu.data('channel', $(this).parent().parent().attr('id'));
 		if (menu.is(':visible') ){
 			menu.hide();
@@ -207,7 +207,7 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-	$('.chanbutton').live({
+	$('.chanbutton').on({
 		mouseenter: function() { $(this).removeClass('ui-state-default').addClass('ui-state-focus'); },
 		mouseleave: function() { $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
 	});

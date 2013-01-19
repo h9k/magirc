@@ -78,7 +78,7 @@ $(document).ready(function() {
 			{ "mDataProp": "cmodes" }
 		]
 	});
-	$("#tbl_users tbody tr").live("click", function(event) {
+	$("#tbl_users tbody tr").on("click", function(event) {
 		if (this.id) window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
 	});
 });

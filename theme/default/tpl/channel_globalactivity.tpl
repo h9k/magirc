@@ -42,10 +42,10 @@ $(document).ready(function() {
 			{ "mDataProp": "topics" }
 		]
 	});
-	$("#tbl_activity tbody tr").live("click", function(event) {
+	$("#tbl_activity tbody tr").on("click", function(event) {
 		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
-	$("#tbl_activity tbody tr a").live("click", function(e) { e.stopPropagation(); });
+	$("#tbl_activity tbody tr a").on("click", function(e) { e.stopPropagation(); });
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').index() / 2;

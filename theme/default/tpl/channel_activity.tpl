@@ -57,7 +57,7 @@ $(document).ready(function() {
 			{ "mDataProp": "topics" }
 		]
 	});
-	$("#tbl_activity tbody tr").live("click", function(event) {
+	$("#tbl_activity tbody tr").on("click", function(event) {
 		if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile#activity';
 	});
 	$("#radio").buttonset();

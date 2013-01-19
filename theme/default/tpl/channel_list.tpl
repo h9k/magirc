@@ -33,10 +33,10 @@ $(document).ready(function() {
 			} }
 		]
 	});
-	$("#tbl_channels tbody tr").live("click", function(event) {
+	$("#tbl_channels tbody tr").on("click", function(event) {
 		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
-	$("#tbl_channels tbody tr a").live("click", function(e) { e.stopPropagation(); });
+	$("#tbl_channels tbody tr a").on("click", function(e) { e.stopPropagation(); });
 });
 {/literal}
 </script>
