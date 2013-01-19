@@ -782,7 +782,7 @@ body .ui-tooltip {
 
 /* Component containers
 ----------------------------------*/
-.ui-widget {
+/*.ui-widget {
 	font-family: Verdana,Arial,sans-serif;
 	font-size: 1.1em;
 }
@@ -803,7 +803,7 @@ body .ui-tooltip {
 }
 .ui-widget-content a {
 	color: #222222;
-}
+}*/
 .ui-widget-header {
 	border: 1px solid #aaaaaa;
 	background: #cccccc url(../img/jqueryui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
