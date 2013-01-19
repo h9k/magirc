@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 3856 $ -->
+<!-- EN-Revision: 3827 Maintainer: takagi Status: ready -->
+<!-- CREDITS: mat-sh,daichi,joe -->
+  <sect1 id="template.resources">
+   <title>リソース</title>
+   <para>
+   テンプレートは様々なリソースから呼び出して使用できます。テンプレートを
+  <link linkend="api.display"><varname>display()</varname></link>、
+  <link linkend="api.fetch"><varname>fetch()</varname></link>
+   したり別のテンプレートからインクルードしたりする際には、
+   リソースの種類に続けて適切なパスとテンプレート名を指定します。
+   リソースを明示的に指定しない場合は <link
+   	linkend="variable.default.resource.type">
+    <parameter>$default_resource_type</parameter></link> の値であるとみなします。
+   </para>
+
+   <sect2 id="templates.from.template.dir">
+    <title>$template_dir からのテンプレート</title>
+    <para>
+     <link linkend="variable.template.dir">
+     <parameter>$template_dir</parameter></link> からのテンプレートを使用する場合は、
+     テンプレートリソースの指定は必要ありません。しかし、一貫性を保つために
+     <literal>file:</literal> リソースを使用してもかまいません。使用したいテンプレートへのパスを、
+     <link linkend="variable.template.dir">
+     <parameter>$template_dir</parameter></link>
+     のルートディレクトリからの相対パス (先頭のスラッシュはなし) で指定します。
+    </para>
+    <example>
+     <title>$template_dir のテンプレートを使用する</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$smarty->display('index.tpl');
+$smarty->display('file:index.tpl'); // 上と同じ
+?>
+]]>
+</programlisting>
+<para>Smarty のテンプレート</para>
+<programlisting>
+<![CDATA[
+{include file='index.tpl'}
+{include file='file:index.tpl'} {* 上と同じ *}
+]]>
+</programlisting>
+    </example>
+   </sect2>
+   <sect2 id="templates.from.any.dir">
+    <title>任意のディレクトリからのテンプレート</title>
+    <para>
+     <link linkend="variable.template.dir">
+     <parameter>$template_dir</parameter></link>
+     の外に置かれたテンプレートを使うには、リソースの種類
+     <literal>file:</literal> を指定しなければなりません。
+     その後にテンプレートへの絶対パス (先頭のスラッシュつき) を続けます。
+    </para>
+    <note><para>
+      セキュリティが有効な場合、template_dir 以外の場所にあるテンプレートにはアクセスできません。
+    </para></note>
+    <example>
+     <title>任意のディレクトリからのテンプレートを使用する</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$smarty->display('file:/export/templates/index.tpl');
+$smarty->display('file:/path/to/my/templates/menu.tpl');
+?>
+]]>
+     </programlisting>
+     <para>
+      Smarty のテンプレート
+     </para>
+     <programlisting>
+<![CDATA[
+{include file='file:/usr/local/share/templates/navigation.tpl'}
+]]>
+     </programlisting>
+    </example>
+
+    <sect3 id="templates.windows.filepath">
+     <title>Windows のファイルパス</title>
+     <para>
+      通常、Windows 環境の場合はファイルパスの先頭にドライブレター (C:)
+      が含まれます。ネームスペースの衝突を回避して期待通りの結果を得るために、
+      必ず <literal>file:</literal> を使用して下さい。
+     </para>
+     <example>
+      <title>Windows ファイルパスからテンプレートを使用する</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$smarty->display('file:C:/export/templates/index.tpl');
+$smarty->display('file:F:/path/to/my/templates/menu.tpl');
+?>
+]]>
+     </programlisting>
+     <para>
+      Smarty テンプレート
+     </para>
+     <programlisting>
+<![CDATA[
+{include file='file:D:/usr/local/share/templates/navigation.tpl'}
+]]>
+</programlisting>
+     </example>
+    </sect3>
+   </sect2>
+
+   <sect2 id="templates.from.string">
+    <title>文字列からのテンプレート</title>
+    <para>
+     Smarty は、<literal>string:</literal> あるいは <literal>eval:</literal>
+     リソースを使って文字列からテンプレートをレンダリングすることができます。
+    </para>
+    
+    <itemizedlist>
+     <listitem><para>
+      <literal>string:</literal> リソースは、テンプレートファイルと同じように振る舞います。
+      テンプレートのソースが文字列からコンパイルされ、コンパイル済みのテンプレートのコードを後で再利用します。
+      各テンプレート文字列に対して、それぞれ新しいコンパイル済みテンプレートファイルができます。
+      テンプレート文字列に頻繁にアクセスするのなら、この方法を選ぶといいでしょう。
+      もしテンプレート文字列を頻繁に変更する (あるいはあまり再利用性のない値を含む文字列である)
+      場合は、<literal>eval:</literal> リソースのほうがよいでしょう。
+     </para></listitem>
+     
+     <listitem><para>
+      <literal>eval:</literal> リソースは、ページをレンダリングするときに毎回テンプレートソースを評価します。
+      これは、再利用性の低い値を持つ文字列を扱うときによい方法です。
+      同じ文字列に頻繁にアクセスするのなら、<literal>string:</literal> リソースのほうがよいでしょう。
+     </para></listitem>
+    </itemizedlist>
+    
+    <note><para>
+      <literal>string:</literal> リソースでは、文字列ごとにコンパイル済みファイルができあがります。
+      Smarty は文字列が変更されたかどうかを検出できないので、
+      個々の文字列につい新たにコンパイルしてファイルを生成します。
+      コンパイルした文字列でディスクが埋まってしまわないよう、
+      適切なリソースを選択することが重要です。
+    </para></note>
+    
+    <example>
+     <title>文字列からのテンプレートを使用する</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$smarty->assign('foo','value');
+$template_string = 'display {$foo} here';
+$smarty->display('string:'.$template_string); // コンパイルしたものを再利用します
+$smarty->display('eval:'.$template_string); // 毎回コンパイルします
+?>
+]]>
+</programlisting>
+     <para>Smarty テンプレート</para>
+     <programlisting>
+<![CDATA[
+{include file="string:$template_string"} {* コンパイルしたものを再利用します *}
+{include file="eval:$template_string"} {* 毎回コンパイルします *}
+
+]]>
+</programlisting>
+    </example>
+   </sect2>
+   
+   <sect2 id="extends.resource">
+    <title>PHP スクリプトで定義したテンプレートの継承</title>
+    <para>
+     <literal>extends:</literal> リソースを使って、テンプレートの継承の親子関係を PHP スクリプトから定義することができます。
+     詳細は <link linkend="advanced.features.template.inheritance">テンプレートの継承</link> を参照ください。
+    </para>
+    
+    
+    <example>
+     <title>テンプレートの継承を PHP スクリプトから使用する</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$smarty->display('extends:parent.tpl|child.tpl|grandchild.tpl'); 
+?>
+]]>
+     </programlisting>
+    </example>
+    
+    <note><para>
+      これは、継承をプログラム的に定義しなければならないときに使います。
+      PHP から継承を定義するときは、子テンプレート側からはどのような継承関係になるかが明らかではありません。
+      この方式を使えば、通常はより柔軟かつ直感的にテンプレート側から継承関係を処理できるようになります。
+    </para></note>
+    
+   </sect2>
+   
+   <sect2 id="templates.from.elsewhere">
+    <title>その他のリソース内のテンプレート</title>
+    <para>
+     データベース・ソケット・LDAP 等の
+     PHPによってアクセス可能なリソースからテンプレートを取得する事ができます。
+     そのためにはリソースプラグイン関数を記述し、それを登録する必要があります。
+    </para>
+
+    <para>
+     リソースプラグイン関数についての詳細な情報は
+     <link linkend="plugins.resources">リソースプラグイン</link>
+     の項を参照してください。
+    </para>
+
+    <note>
+     <para>
+      元から存在する <literal>file:</literal> リソースは上書きできないことに注意しましょう。
+      しかし、ファイルシステム上のテンプレートを別の方法で取得するテンプレートを作成することはできます。
+      それを別のリソース名で登録すればよいのです。
+     </para>
+    </note>
+    <example>
+     <title>カスタムリソースを使用する</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// これらの関数をアプリケーションに追加します
+function db_get_template ($tpl_name, &$tpl_source, $smarty_obj)
+{
+    // ここでデータベースを呼び出し、取得した実際のテンプレートを
+    // $tpl_source に代入します
+    $tpl_source = "This is the template text";
+    // 成功した場合に true を返します。false を返すと失敗したことになります
+    return true;
+}
+
+function db_get_timestamp($tpl_name, &$tpl_timestamp, $smarty_obj)
+{
+    // テンプレートの最終更新時刻の Unix タイムスタンプを
+    // $tpl_timestampに代入するためにデータベースを呼び出します
+    // これで、再コンパイルが必要かどうかを判断します
+    $tpl_timestamp = time(); // この例だと常に再コンパイルとなります!
+    // 成功した場合に true を返します。false を返すと失敗したことになります
+    return true;
+}
+
+function db_get_secure($tpl_name, $smarty_obj)
+{
+    // 全てのテンプレートがセキュアであると仮定します
+    return true;
+}
+
+function db_get_trusted($tpl_name, $smarty_obj)
+{
+    // テンプレートから使用しません
+}
+
+// テンプレートリソース名"db"を登録します
+$smarty->registerResource("db", array("db_get_template",
+                                       "db_get_timestamp",
+                                       "db_get_secure",
+                                       "db_get_trusted"));
+
+// phpスクリプトからテンプレートリソースを使用します
+$smarty->display("db:index.tpl");
+?>
+]]>
+     </programlisting>
+     <para>
+      Smarty テンプレート
+     </para>
+     <programlisting>
+<![CDATA[
+{include file='db:/extras/navigation.tpl'}
+]]>
+     </programlisting>
+    </example>
+   </sect2>
+
+   <sect2 id="default.template.handler.function">
+    <title>デフォルトのテンプレートハンドラ関数</title>
+    <para>
+     テンプレートリソースからテンプレートの取得に失敗した際に、
+     テンプレートのコンテンツを取り戻すために呼び出されるユーザ定義関数を指定します。
+     この関数の使用方法の１つとして、その場限りのテンプレートを作成する処理を行います。
+    </para>
+
+    <para>
+     <link linkend="advanced.features.streams"><varname>ストリーム</varname></link>
+     も参照ください。
+    </para>     
+   </sect2>
+  </sect1>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

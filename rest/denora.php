@@ -4,7 +4,7 @@
  * RESTful API
  *
  * @author      Sebastian Vassiliou <hal9000@denorastats.org>
- * @copyright   2012 Sebastian Vassiliou
+ * @copyright   2012 - 2013 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
  * @version     0.8.6

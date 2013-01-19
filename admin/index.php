@@ -4,7 +4,7 @@
  * Admin panel
  *
  * @author      Sebastian Vassiliou <hal9000@denorastats.org>
- * @copyright   2012 Sebastian Vassiliou
+ * @copyright   2012 - 2013 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
  * @version     0.8.6
@@ -22,8 +22,7 @@ if (!is_writable('../tmp/')) die('ERROR: Unable to write temporary files. Please
 session_start();
 
 include_once('../lib/magirc/version.inc.php');
-require_once('../lib/slim/Slim.php');
-require_once('../lib/smarty/Smarty.class.php');
+require '../vendor/autoload.php';
 require_once('../lib/magirc/DB.class.php');
 require_once('../lib/magirc/Config.class.php');
 include_once('../lib/ckeditor/ckeditor.php');

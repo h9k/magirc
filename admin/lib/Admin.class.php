@@ -34,7 +34,7 @@ class Admin {
 	function __construct() {
 		$this->db = Magirc_DB::getInstance();
 		$this->cfg = new Config();
-		$this->slim = new Slim();
+		$this->slim = new \Slim\Slim();
 		$this->tpl = new Smarty();
 		$this->tpl->template_dir = 'tpl';
 		$this->tpl->compile_dir = '../tmp';

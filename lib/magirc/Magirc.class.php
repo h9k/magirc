@@ -46,7 +46,7 @@ class Magirc {
 	 */
 	function __construct($api_mode = "web") {
 		// Setup the Slim framework
-		$this->slim = new Slim();
+		$this->slim = new \Slim\Slim();
 		if ($api_mode == "web") {
 			// Setup the template engine
 			$this->tpl = new Smarty;
