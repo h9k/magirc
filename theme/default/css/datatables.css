@@ -242,3 +242,9 @@ table.dataTable th:active {
 	-webkit-overflow-scrolling: touch;
 }
 
+table.dataTable tbody tr { height:25px; }
+table.dataTable tbody tr img { vertical-align:middle; }
+table.clickable tbody tr.even:hover td, table.clickable tbody tr.odd:hover td {
+	cursor: pointer;
+	background-color: #FFE97F;
+}

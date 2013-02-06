@@ -28,7 +28,7 @@ $(document).ready(function() {
 			{ "mDataProp": "connect_time", "fnRender": function(oObj) { return $.format.date(oObj.aData['connect_time'], format_datetime); } }
 		]
 	});
-	$("#tbl_operators tbody tr").on("click", function() {
+	$("#tbl_operators tbody").on("click", "tr", function() {
 		if (this.id) window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
 	});
 });

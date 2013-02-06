@@ -38,7 +38,7 @@ $(document).ready(function() {
 			{ "mDataProp": "opers" }
 		]
 	});
-	$("#tbl_servers tbody tr").on("click", function() {
+	$("#tbl_servers tbody").on("click", "tr", function(event) {
 		if (this.id) window.location = url_base + 'server/' + encodeURIComponent(this.id) + '/profile';
 	});
 });
