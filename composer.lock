@@ -17,8 +17,8 @@
                 "shasum": ""
             },
             "require": {
-                "slim/slim": ">=2.0.0",
-                "php": ">=5.3.0"
+                "php": ">=5.3.0",
+                "slim/slim": ">=2.0.0"
             },
             "time": "2013-01-07 17:56:10",
             "type": "library",
@@ -46,9 +46,9 @@
             "description": "Extras package for the Slim Framework",
             "homepage": "http://github.com/codeguy/Slim-Extras",
             "keywords": [
-                "templating",
                 "extensions",
-                "middleware"
+                "middleware",
+                "templating"
             ]
         },
         {
@@ -95,22 +95,24 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.12",
+            "version": "v3.1.13",
             "source": {
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.12/@4664"
+                "reference": "/tags/v3.1.13/@4699"
             },
             "require": {
                 "php": ">=5.2"
             },
-            "time": "2012-09-25 22:13:16",
+            "time": "2013-01-26 12:03:52",
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "distribution/libs/Smarty.class.php"
+                    "distribution/libs/Smarty.class.php",
+                    "distribution/libs/SmartyBC.class.php"
                 ]
             },
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
