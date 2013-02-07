@@ -10,6 +10,7 @@ In the future it will interface with other IRC services like [Anope](http://www.
 
 Main features
 -------------
+* REST service
 * [Smarty](http://www.smarty.net/) templating engine
 * [jQuery](http://www.jquery.com/)-based UI with AJAX interactions
 * HTML5 and CSS3
@@ -24,12 +25,34 @@ Requirements
 * [Denora Stats](http://www.denorastats.org) server with MySQL enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
 
-Limitations
------------
-The current version is considered to be **beta** and has some known limitations:
 
-* **Templating is not officially supported**: This means you are free to create your own templates for MagIRC, but we will not support you and will not guarantee troublefree operation between different versions of MagIRC, as things change rather often during development. This is scheduled for the **release candidate**.
-* **No guarantees for API stability**: You are free to use the RESTful API MagIRC provides, however it is very likely that some things might change. The **release candidate** version will include an API definition that should not change for the whole MagIRC v1.0.x series.
+Installing from a release package
+---------------------------------
+1. Download the latest MagIRC release package from http://www.magirc.org/
+2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
+3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
+   Example: http://`yourpathtomagirc`/setup/
+
+Installing from git
+-------------------
+1. Clone the git repository from git://github.com/h9k/magirc.git
+2. Run the `composer install` command to get the required dependencies (you need to install composer first, see http://getcomposer.org/)
+3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
+   Example: http://`yourpathtomagirc`/setup/
+
+Upgrading from a release package
+--------------------------------
+1. Pull the latest MagIRC package from https://github.com/h9k/magirc
+2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
+3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
+   Example: http://`yourpathtomagirc`/setup/
+
+Upgrading from git
+------------------
+1. Execute the `git pull` command to get the latest repo version
+2. Execute the `composer update` command to upgrade the vendor libraries (you need to install composer first, see http://getcomposer.org/)
+3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
+   Example: http://`yourpathtomagirc`/setup/
 
 Required Denora settings
 ------------------------
@@ -110,19 +133,9 @@ Your lighttpd configuration file should contain this code (along with other sett
 
     url.rewrite-if-not-file = ("^" => "/index.php")
 
-Installation
-------------
-1. Pull the latest MagIRC package from https://github.com/h9k/magirc
-2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
-3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
-   Example: http://`yourpathtomagirc`/setup/
+Limitations
+-----------
+The current version is considered to be **beta** and has some known limitations:
 
-Note: If you are on Apache you can enable mod_rewrite by using "a2enmod rewrite; service apache2 restart"
-and rename htaccess.txt in the root  to .htaccess.
-
-Upgrading
----------
-1. Pull the latest MagIRC package from https://github.com/h9k/magirc
-2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
-3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
-   Example: http://`yourpathtomagirc`/setup/
+* **Templating is not officially supported**: This means you are free to create your own templates for MagIRC, but we will not support you and will not guarantee troublefree operation between different versions of MagIRC, as things change rather often during development. This is scheduled for the **release candidate**.
+* **No guarantees for API stability**: You are free to use the RESTful API MagIRC provides, however it is very likely that some things might change. The **release candidate** version will include an API definition that should not change for the whole MagIRC v1.0.x series.
