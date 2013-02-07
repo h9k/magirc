@@ -21,7 +21,11 @@ define('MAGIRC_CFG_FILE', '../conf/magirc.cfg.php');
 if (!is_writable('../tmp/')) die("ERROR: The 'tmp/' directory is not writable. Please chmod it to 0777.");
 
 include_once('../lib/magirc/version.inc.php');
-require '../vendor/autoload.php';
+if (file_exists('../vendor/autoload.php')) {
+	require '../vendor/autoload.php';
+} else {
+	die('Please run the `composer install` or `php composer.phar install` command. See README for more information');
+}
 require_once('../lib/magirc/DB.class.php');
 require_once('lib/Setup.class.php');
 
