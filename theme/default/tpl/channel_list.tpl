@@ -36,7 +36,10 @@ $(document).ready(function() {
 	$("#tbl_channels tbody").on("click", "tr", function(event) {
 		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
-	$("#tbl_channels tbody").on("click", "tr a", function(event) { event.stopPropagation(); });
+	$("#tbl_channels tbody").on("click", "tr button", function(event) {
+		event.stopPropagation();
+		openChanMenu(this);
+	});
 });
 {/literal}
 </script>

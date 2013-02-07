@@ -206,7 +206,10 @@ $(document).ready(function() {
 	$("#tbl_biggestchans tbody").on("click", "tr", function(event) {
 		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
-	$("#tbl_biggestchans tbody").on("click", "tr a", function(e) { e.stopPropagation(); });
+	$("#tbl_biggestchans tbody").on("click", "tr button", function(event) {
+		event.stopPropagation();
+		openChanMenu(this);
+	});
 	oTable2 = $("#tbl_top10chans").dataTable({
 		"bProcessing": false,
 		"bFilter": false,
@@ -226,7 +229,10 @@ $(document).ready(function() {
 	$("#tbl_top10chans tbody").on("click", "tr", function(event) {
 		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
 	});
-	$("#tbl_top10chans tbody").on("click", "tr a", function(e) { e.stopPropagation(); });
+	$("#tbl_top10chans tbody").on("click", "tr button", function(event) {
+		event.stopPropagation();
+		openChanMenu(this);
+	});
 	oTable3 = $("#tbl_top10users").dataTable({
 		"bProcessing": false,
 		"bFilter": false,

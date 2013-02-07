@@ -1,3 +1,4 @@
+var menu;
 $(document).ready(function() {
 	$("#loading").ajaxStart(function(){
 		$(this).show();
@@ -170,8 +171,8 @@ $(document).ready(function() {
 		rangeSelector: { selected: 4 },
 		credits: { enabled: false }
 	});
-	var menu = $('#chanmenu').menu({
-		selected: function(event, ui) {
+	menu = $('#chanmenu').menu({
+		select: function(event, ui) {
 			$(this).hide();
 			var chan = encodeURIComponent(menu.data('channel'));
 			switch (ui.item.data('action')) {
@@ -190,28 +191,31 @@ $(document).ready(function() {
 			}
 		}
 	}).hide().css({position: 'absolute', zIndex: 1});
-	$('.chanbutton').on('click', function(event) {
-		menu.data('channel', $(this).parent().parent().attr('id'));
-		if (menu.is(':visible') ){
-			menu.hide();
-			return false;
-		}
-		menu.menu('deactivate').show();
-		menu.position({
-			my: "right top",
-			at: "right bottom",
-			of: this
-		});
-		$(document).one("click", function() {
-			menu.hide();
-		});
-		return false;
+	$(document).on('mouseenter', '.chanbutton', function(event) {
+		$(this).removeClass('ui-state-default').addClass('ui-state-focus');
 	});
-	$('.chanbutton').on({
-		mouseenter: function() { $(this).removeClass('ui-state-default').addClass('ui-state-focus'); },
-		mouseleave: function() { $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
+	$(document).on('mouseleave', '.chanbutton', function(event) {
+		$(this).removeClass('ui-state-focus').addClass('ui-state-default');
 	});
 });
+
+function openChanMenu(element) {;
+	menu.data('channel', $(element).parent().parent().attr('id'));
+	if (menu.is(':visible') ){
+		menu.hide();
+		return false;
+	}
+	menu.show();
+	menu.position({
+		my: "right top",
+		at: "right bottom",
+		of: element
+	});
+	$(document).one("click", function() {
+		menu.hide();
+	});
+	return false;
+}
 
 function getUserStatus(user) {
 	if (user['away']) return '<img src="theme/'+theme+'/img/status/user-away.png" alt="away" title="'+mLang.AwayAs+' '+user['nickname']+'" \/>';
@@ -237,7 +241,7 @@ function getChannelLinks(chan) {
 	if (net_roundrobin || service_webchat) {
 		return '<button type="button" title="'+mLang.Join+'..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:18px; width:30px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>';
 	} else {
-		return ''
+		return '';
 	}
 }
 function getTimeElapsed(seconds) {

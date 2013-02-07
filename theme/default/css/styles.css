@@ -53,7 +53,14 @@ div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:underli
 div#footer table { width: 100%; }
 div#footer table tr td { width:33%; }
 div#loading { display:none; float:right; margin-top:25px; }
-
+ul#chanmenu {
+	border: 1px solid #aaaaaa;
+	background: #ffffff url(../img/jqueryui/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+	color: #222222;
+}
+ul#chanmenu a {
+	color: #222222;
+}
 div.halfleft { width:49%; float:left; }
 div.halfright { width:49%; float:right; }
 div.choser { text-align:right; margin-bottom:10px; }
