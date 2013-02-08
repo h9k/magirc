@@ -83,7 +83,7 @@ $(document).ready(function() {
 			{ "mDataProp": "topics" }
 		]
 	});
-	$("#radio,#type").buttonset();
+	$("#type").buttonset();
 	$("#radio").change(function(event) {
 		chan = $('input[name=radio]:checked').val();
 		oTable.fnSettings().sAjaxSource = "rest/denora.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables';
@@ -100,7 +100,7 @@ $(document).ready(function() {
 			$("#radio").append('<input type="radio" id="radio'+i+'" name="radio" value="'+value+'"\/><label for="radio'+i+'">'+value+'<\/label>');
 			i++;
 		});
-		$("#radio").buttonset('refresh');
+		$('#radio').buttonset();
 	});
 	updateChart();
 });
