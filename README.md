@@ -127,6 +127,7 @@ or this for a directory in document root (`document_root/magirc_directory`) :
 This will work with or without Magirc rewrite.
 Comment out `fastcgi_intercept_errors on;` to override Magirc 404 blue pages.
 Don't forget to replace `fastcgi_pass  backend;` by your actual backend.
+If you do not have `/etc/nginx/fastcgi.conf`, include `/etc/nginx/fastcgi_params`.
 
 ### lighttpd
 Your lighttpd configuration file should contain this code (along with other settings you may need). This code requires lighttpd >= 1.4.24.
