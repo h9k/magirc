@@ -89,7 +89,7 @@ try {
 		if (!$admin->sessionStatus()) { $admin->tpl->display('login.tpl'); exit; }
 		$admin->tpl->assign('section', 'overview');
 		$admin->tpl->assign('setup', file_exists('../setup/'));
-		$admin->tpl->assign('version', array('php' => phpversion(), 'slim' => '1.6.5'));
+		$admin->tpl->assign('version', array('php' => phpversion(), 'slim' => '2.2.0'));
 		$admin->tpl->display('overview.tpl');
 	});
 	$admin->slim->get('/configuration/welcome', function() use ($admin) {
