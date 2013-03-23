@@ -39,7 +39,8 @@ $("#dialog-login").dialog({
 		"Login": function() {
 			login();
 		}
-	}
+	},
+	open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); }
 });
 $(document).keyup(function(e){
     if(e.keyCode === 13) login();
