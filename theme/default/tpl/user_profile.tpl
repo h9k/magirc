@@ -5,8 +5,8 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/user/{$mode}:{$target|escape:'url'}/info" title="info">{t}Info{/t}</a></li>
-		<li><a href="index.php/user/{$mode}:{$target|escape:'url'}/activity" title="activity">{t}Activity{/t}</a></li>
+		<li title="info"><a href="index.php/user/{$mode}:{$target|escape:'url'}/info">{t}Info{/t}</a></li>
+		<li title="activity"><a href="index.php/user/{$mode}:{$target|escape:'url'}/activity">{t}Activity{/t}</a></li>
 	</ul>
 </div>
 {/block}
@@ -19,13 +19,24 @@ var mode = '{$mode}';
 {literal}
 $(document).ready(function() {
 	var tabs = $("#tabs").tabs({
-		select: function(event, ui) { window.location.hash = ui.tab.hash; },
-		cache: true,
-		spinner: '{t}Loading{/t}...',
-		ajaxOptions: {
-			error: function( xhr, status, index, anchor ) {
-				$( anchor.hash ).html(mLang.LoadError);
+		beforeActivate: function(event, ui) {
+			window.location.hash = ui.newTab.attr('title');
+		},
+		beforeLoad: function(event, ui) {
+			if (window.location.hash) {
+				var title = window.location.hash.substring(1, window.location.hash.length);
+				$("li[title='"+title+"'] a").trigger("click");
+			}			
+			if (ui.tab.data("loaded")) {
+				event.preventDefault();
+				return;
 			}
+			ui.jqXHR.success(function() {
+				ui.tab.data("loaded", true);
+			});
+			ui.jqXHR.error(function() {
+				ui.panel.html(mLang.LoadError);
+			});
 		}
 	});
 	$.getJSON('rest/denora.php/users/'+mode+'/'+target+'/checkstats', function(data) {

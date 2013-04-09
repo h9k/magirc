@@ -5,9 +5,9 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/channel/list" title="channels">{t}Channels{/t}</a></li>
-		<li><a href="index.php/channel/globalactivity" title="activity">{t}Activity{/t}</a></li>
-		<li><a href="index.php/channel/history" title="history">{t}History{/t}</a></li>
+		<li title="channels"><a href="index.php/channel/list">{t}Channels{/t}</a></li>
+		<li title="activity"><a href="index.php/channel/globalactivity">{t}Activity{/t}</a></li>
+		<li title="history"><a href="index.php/channel/history">{t}History{/t}</a></li>
 	</ul>
 </div>
 {/block}
@@ -18,13 +18,24 @@
 {literal}
 $(document).ready(function() {
 	$("#tabs").tabs({
-		select: function(event, ui) { window.location.hash = ui.tab.hash; },
-		cache: true,
-		spinner: '{t}Loading{/t}...',
-		ajaxOptions: {
-			error: function( xhr, status, index, anchor ) {
-				$( anchor.hash ).html(mLang.LoadError);
+		beforeActivate: function(event, ui) {
+			window.location.hash = ui.newTab.attr('title');
+		},
+		beforeLoad: function(event, ui) {
+			if (window.location.hash) {
+				var title = window.location.hash.substring(1, window.location.hash.length);
+				$("li[title='"+title+"'] a").trigger("click");
+			}			
+			if (ui.tab.data("loaded")) {
+				event.preventDefault();
+				return;
 			}
+			ui.jqXHR.success(function() {
+				ui.tab.data("loaded", true);
+			});
+			ui.jqXHR.error(function() {
+				ui.panel.html(mLang.LoadError);
+			});
 		}
 	});
 });

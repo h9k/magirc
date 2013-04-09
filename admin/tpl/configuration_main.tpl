@@ -5,12 +5,12 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/configuration/welcome" title="welcome">Welcome</a></li>
-		<li><a href="index.php/configuration/interface" title="interface">Interface</a></li>
-		<li><a href="index.php/configuration/network" title="network">Network</a></li>
-		<li><a href="index.php/configuration/services" title="services">Services</a></li>
-		<li><a href="index.php/configuration/denora" title="denora">Denora</a></li>
-		{*<li><a href="index.php/configuration/admins" title="admins">Administrators</a></li>*}
+		<li title="welcome"><a href="index.php/configuration/welcome">Welcome</a></li>
+		<li title="interface"><a href="index.php/configuration/interface">Interface</a></li>
+		<li title="network"><a href="index.php/configuration/network">Network</a></li>
+		<li title="services"><a href="index.php/configuration/services">Services</a></li>
+		<li title="denora"><a href="index.php/configuration/denora">Denora</a></li>
+		{*<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>*}
 	</ul>
 </div>
 <div id="success">Saved successfully</div>
@@ -22,13 +22,24 @@
 <script type="text/javascript">{literal}
 $(document).ready(function() {
 	$( "#tabs" ).tabs({
-		select: function(event, ui) { window.location.hash = ui.tab.hash; },
-		cache: true,
-		spinner: 'Loading...',
-		ajaxOptions: {
-			error: function( xhr, status, index, anchor ) {
-				$( anchor.hash ).html("Unable to load contents");
+		beforeActivate: function(event, ui) {
+			window.location.hash = ui.newTab.attr('title');
+		},
+		beforeLoad: function(event, ui) {
+			if (window.location.hash) {
+				var title = window.location.hash.substring(1, window.location.hash.length);
+				$("li[title='"+title+"'] a").trigger("click");
+			}			
+			if (ui.tab.data("loaded")) {
+				event.preventDefault();
+				return;
 			}
+			ui.jqXHR.success(function() {
+				ui.tab.data("loaded", true);
+			});
+			ui.jqXHR.error(function() {
+				ui.panel.html(mLang.LoadError);
+			});
 		}
 	});
 });

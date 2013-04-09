@@ -5,11 +5,11 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/support/doc/readme" title="readme">README</a></li>
-		<li><a href="index.php/support/doc/support" title="resources">Resources</a></li>
-		<li><a href="index.php/support/register" title="registration">Registration</a></li>
-		<li><a href="index.php/support/doc/credits" title="credits">Credits</a></li>
-		<li><a href="index.php/support/doc/license" title="license">License</a></li>
+		<li title="readme"><a href="index.php/support/doc/readme">README</a></li>
+		<li title="resources"><a href="index.php/support/doc/support">Resources</a></li>
+		<li title="registration"><a href="index.php/support/register">Registration</a></li>
+		<li title="credits"><a href="index.php/support/doc/credits">Credits</a></li>
+		<li title="license"><a href="index.php/support/doc/license">License</a></li>
 	</ul>
 </div>
 {/block}
@@ -19,13 +19,24 @@
 <script type="text/javascript">{literal}
 $(document).ready(function() {
 	$( "#tabs" ).tabs({
-		select: function(event, ui) { window.location.hash = ui.tab.hash; },
-		cache: true,
-		spinner: 'Loading...',
-		ajaxOptions: {
-			error: function( xhr, status, index, anchor ) {
-				$( anchor.hash ).html("Unable to load contents");
+		beforeActivate: function(event, ui) {
+			window.location.hash = ui.newTab.attr('title');
+		},
+		beforeLoad: function(event, ui) {
+			if (window.location.hash) {
+				var title = window.location.hash.substring(1, window.location.hash.length);
+				$("li[title='"+title+"'] a").trigger("click");
+			}			
+			if (ui.tab.data("loaded")) {
+				event.preventDefault();
+				return;
 			}
+			ui.jqXHR.success(function() {
+				ui.tab.data("loaded", true);
+			});
+			ui.jqXHR.error(function() {
+				ui.panel.html(mLang.LoadError);
+			});
 		}
 	});
 });

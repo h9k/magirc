@@ -5,9 +5,9 @@
 {block name="content"}
 <div id="tabs">
 	<ul>
-		<li><a href="index.php/server/{$target|escape:'url'}/info" title="info">{t}Info{/t}</a></li>
-		<li><a href="index.php/server/{$target|escape:'url'}/countries" title="countries">{t}Countries{/t}</a></li>
-		<li><a href="index.php/server/{$target|escape:'url'}/clients" title="clients">{t}Clients{/t}</a></li>
+		<li title="info"><a href="index.php/server/{$target|escape:'url'}/info">{t}Info{/t}</a></li>
+		<li title="countries"><a href="index.php/server/{$target|escape:'url'}/countries">{t}Countries{/t}</a></li>
+		<li title="clients"><a href="index.php/server/{$target|escape:'url'}/clients">{t}Clients{/t}</a></li>
 	</ul>
 </div>
 {/block}
@@ -19,13 +19,24 @@ var target = '{$target|escape:'url'}';
 {literal}
 $(document).ready(function() {
 	var tabs = $("#tabs").tabs({
-		select: function(event, ui) { window.location.hash = ui.tab.hash; },
-		cache: true,
-		spinner: '{t}Loading{/t}...',
-		ajaxOptions: {
-			error: function( xhr, status, index, anchor ) {
-				$( anchor.hash ).html(mLang.LoadError);
+		beforeActivate: function(event, ui) {
+			window.location.hash = ui.newTab.attr('title');
+		},
+		beforeLoad: function(event, ui) {
+			if (window.location.hash) {
+				var title = window.location.hash.substring(1, window.location.hash.length);
+				$("li[title='"+title+"'] a").trigger("click");
+			}			
+			if (ui.tab.data("loaded")) {
+				event.preventDefault();
+				return;
 			}
+			ui.jqXHR.success(function() {
+				ui.tab.data("loaded", true);
+			});
+			ui.jqXHR.error(function() {
+				ui.panel.html(mLang.LoadError);
+			});
 		}
 	});
 });
