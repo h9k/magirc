@@ -63,7 +63,7 @@ class Magirc {
 		$query = "SHOW TABLES LIKE 'magirc_config'";
 		$this->db->query($query, SQL_INIT);
 		if (!$this->db->record) {
-			$this->displayError('Database table missing. Please run setup.', $api_mode);
+			die('Database table missing. Please run setup.');
 		}
 
 		// Get the configuration
