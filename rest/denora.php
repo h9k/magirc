@@ -7,10 +7,10 @@
  * @copyright   2012 - 2013 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     0.8.6
+ * @version     0.8.7
  **/
 
-ini_set('display_errors','on');
+ini_set('display_errors','off');
 error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 date_default_timezone_set('UTC');
