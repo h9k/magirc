@@ -27,10 +27,7 @@ if (!$status['error']) {
 	$setup->tpl->assign('check', $check);
 	if (!$check) { // Dump sql file to db
 		$dump = $setup->configDump();
-		$base_url = "//";
-		$base_url .= $_SERVER['SERVER_NAME'];
-		$base_url .= $_SERVER['SERVER_PORT'] == 80 ? '' : ':'.$_SERVER['SERVER_PORT'];
-		$base_url .= str_replace('setup/index.php', '', $_SERVER['SCRIPT_NAME']);
+		$base_url = $setup->generateBaseUrl();
 		$setup->db->update('magirc_config', array('value' => $base_url), array('parameter' => 'base_url'));
 	} else { // Upgrade db
 		$updated = $setup->configUpgrade();
