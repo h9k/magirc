@@ -131,6 +131,7 @@ $(document).ready(function() {
 		tooltip: { valueDecimals: 0, yDecimals: 0, xDateFormat: format_datetime_charts },
 		legend: { enabled: false },
 		exporting: { enabled: false },
+		navigation: { buttonOptions: {} },
 		plotOptions: {
 			spline: {
 				lineWidth: 2,
