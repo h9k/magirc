@@ -24,6 +24,8 @@ require '../vendor/autoload.php';
 
 // Initialization
 $magirc = new Magirc('denora');
+//NOTE: we need to use HTTP 1.0 because nginx might chunk otherwise
+$magirc->slim->config('http.version', '1.0');
 $magirc->slim->contentType('application/json');
 $magirc->slim->notFound(function() use($magirc) {
     $magirc->jsonOutput(array('error' => "HTTP 404 Not Found"));
