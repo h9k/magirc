@@ -278,6 +278,9 @@ gettext("Netsplit Graphs");
 gettext("Searchirc Graphs");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_main.tpl */
+gettext("Mibbit Graphs");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_main.tpl */
 gettext("Loading");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_netsplit.tpl */
@@ -299,6 +302,24 @@ gettext("Complete history");
 gettext("Complete measured history about users and channels");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_netsplit.tpl */
+gettext("More on");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Mibbit Graphs");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Day");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Week");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Month");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Year");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
 gettext("More on");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_operators.tpl */

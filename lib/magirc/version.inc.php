@@ -7,6 +7,6 @@ define('VERSION_EXTRA', '-beta');
 
 define('VERSION_FULL', sprintf('%s.%s.%s%s', VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, VERSION_EXTRA));
 
-define('DB_VERSION', 12);
+define('DB_VERSION', 13);
 
 ?>
