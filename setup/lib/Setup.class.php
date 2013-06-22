@@ -174,7 +174,7 @@ class Setup {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Generates the base url
 	 * @return string
@@ -255,6 +255,9 @@ class Setup {
 			if ($version == 11) {
 				$base_url = $this->generateBaseUrl();
 				$this->db->update('magirc_config', array('value' => $base_url), array('parameter' => 'base_url'));
+			}
+			if ($version < 13) {
+				$this->db->insert('magirc_config', array('parameter' => 'service_mibbitid', 'value' => ''));
 			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
