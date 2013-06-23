@@ -174,6 +174,10 @@ var mLang = {
 	"NetsplitSrvWeeks": "{t}Servers during the last 2 weeks{/t}",
 	"NetsplitSrvMonths": "{t}Servers during the last 2 months{/t}",
 	"NetsplitSrvYears": "{t}Servers during the last 2 years{/t}",
+	"MibbitRelDay": "{t}Day{/t}",
+	"MibbitRelWeek": "{t}Week{/t}",
+	"MibbitRelMonth": "{t}Month{/t}",
+	"MibbitRelYear": "{t}Year{/t}",
 	"DataTables": {
 		"sProcessing": "{t}Processing...{/t}",
 		"sLoadingRecords": "{t}Please wait - loading...{/t}",

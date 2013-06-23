@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
 -- Dumping data for table `magirc_config`
 --
 
-INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '12'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '13'),
 ('base_url', ''),
 ('net_name', 'MyNetwork'),
 ('net_url', 'http://www.mynet.tld/'),
@@ -43,6 +43,7 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('service_netsplit', ''),
 ('service_webchat', ''),
 ('service_mibbit', ''),
+('service_mibbitid', ''),
 ('service_addthis', '0'),
 ('version_show', '1');
 

@@ -34,6 +34,16 @@
 			<td align="left"><input name="service_netsplit" type="text" id="service_netsplit" value="{$cfg->service_netsplit}" size="32" maxlength="64" /></td>
 		</tr>
 		<tr>
+			<td align="right">
+				<strong>Mibbit ID (for stats)</strong>
+				<br />Set your network ID of Mibbit features.
+				<br />For more information about being indexed by Mibbit visit <a href="http://mibbit.com/">http://mibbit.com/</a>
+				<br />To find out your ID go to your network information page<br />(usually http://search.mibbit.com/networks/YourNetwork)
+				<br />then right click on the graph on the left to get its path<br />and get the number from the png's name : 1234_week.png
+			</td>
+			<td align="left"><input name="service_mibbitid" type="text" id="service_mibbitid" value="{$cfg->service_mibbitid}" size="32" maxlength="64" /></td>
+		</tr>
+		<tr>
 			<td align="right"><strong>Enable AddThis sharing buttons</strong></td>
 			<td align="left">yes <input type="radio" name="service_addthis" value="1"{if $cfg->service_addthis} checked="checked"{/if} /> <input type="radio" name="service_addthis" value="0"{if !$cfg->service_addthis} checked="checked"{/if} /> no</td>
 		</tr>

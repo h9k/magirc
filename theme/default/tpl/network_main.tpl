@@ -13,6 +13,7 @@
 		<li title="history"><a href="index.php/network/history">{t}History{/t}</a></li>
 		{if $cfg->service_netsplit}<li title="netsplit"><a href="index.php/network/netsplit">{t}Netsplit Graphs{/t}</a></li>{/if}
 		{if $cfg->service_searchirc}<li title="searchirc"><a href="index.php/network/searchirc">{t}Searchirc Graphs{/t}</a></li>{/if}
+		{if $cfg->service_mibbitid}<li title="mibbit"><a href="index.php/network/mibbit">{t}Mibbit Graphs{/t}</a></li>{/if}
 	</ul>
 </div>
 {if $cfg->service_searchirc}<div id="searchirc_html" style="display:none;"><script type="text/javascript" src="http://searchirc.com/official_rank.php?ID={$cfg->service_searchirc}&amp;outof=1"></script></div>{/if}
@@ -22,6 +23,7 @@
 {jsmin}
 <script type="text/javascript">
 var netsplit = '{$cfg->service_netsplit}';
+var mibbitid = '{$cfg->service_mibbitid}';
 {literal}
 $(document).ready(function() {
 	$("#tabs").tabs({
@@ -32,7 +34,7 @@ $(document).ready(function() {
 			if (window.location.hash) {
 				var title = window.location.hash.substring(1, window.location.hash.length);
 				$("li[title='"+title+"'] a").trigger("click");
-			}			
+			}
 			if (ui.tab.data("loaded")) {
 				event.preventDefault();
 				return;
