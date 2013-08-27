@@ -2,10 +2,10 @@
 
 <form>
 	<div id="netsplit_type" class="choser">
-		<input type="radio" id="type0" name="type" checked="checked" /><label for="type0">{t}Last two weeks{/t}</label>
-		<input type="radio" id="type1" name="type" /><label for="type1">{t}Last two months{/t}</label>
-		<input type="radio" id="type2" name="type" /><label for="type2">{t}Last two years{/t}</label>
-		<input type="radio" id="type3" name="type" /><label for="type3">{t}Complete history{/t}</label>
+		<input type="radio" id="nstype0" name="nstype" checked="checked" /><label for="nstype0">{t}Last two weeks{/t}</label>
+		<input type="radio" id="nstype1" name="nstype" /><label for="nstype1">{t}Last two months{/t}</label>
+		<input type="radio" id="nstype2" name="nstype" /><label for="nstype2">{t}Last two years{/t}</label>
+		<input type="radio" id="nstype3" name="nstype" /><label for="nstype3">{t}Complete history{/t}</label>
 	</div>
 </form>
 
@@ -36,7 +36,7 @@ $(document).ready(function() {
 	var type = types[0];
 	$("#netsplit_type").buttonset();
     $("#netsplit_type").change(function() {
-		type = types[$('input[name=type]:checked').index() / 2];
+		type = types[$('input[name=nstype]:checked').index() / 2];
 		updateNetsplit(type);
 	});
 	function updateNetsplit(type) {
