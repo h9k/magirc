@@ -2,10 +2,10 @@
 
 <form>
 	<div id="mibbit_type" class="choser">
-		<input type="radio" id="type0" name="type" checked="checked" /><label for="type0">{t}Day{/t}</label>
-		<input type="radio" id="type1" name="type" /><label for="type1">{t}Week{/t}</label>
-		<input type="radio" id="type2" name="type" /><label for="type2">{t}Month{/t}</label>
-		<input type="radio" id="type3" name="type" /><label for="type3">{t}Year{/t}</label>
+		<input type="radio" id="mibtype0" name="mibtype" checked="checked" /><label for="mibtype0">{t}Day{/t}</label>
+		<input type="radio" id="mibtype1" name="mibtype" /><label for="mibtype1">{t}Week{/t}</label>
+		<input type="radio" id="mibtype2" name="mibtype" /><label for="mibtype2">{t}Month{/t}</label>
+		<input type="radio" id="mibtype3" name="mibtype" /><label for="mibtype3">{t}Year{/t}</label>
 	</div>
 </form>
 
@@ -25,7 +25,7 @@ $(document).ready(function() {
 	var type = types[0];
 	$("#mibbit_type").buttonset();
     $("#mibbit_type").change(function() {
-		type = types[$('input[name=type]:checked').index() / 2];
+		type = types[$('input[name=mibtype]:checked').index() / 2];
 		updateMibbit(type);
 	});
 	function updateMibbit(type) {
