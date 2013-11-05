@@ -46,6 +46,9 @@
 #</IfModule>
 
 # Enable URL rewriting. Requires the mod_rewrite apache module
+# If you are self hosting ensure the vhost has "AllowOverride All"
+# instead of "AllowOverride None" enable mod_rewrite via "a2enmod rewrite"
+# in your terminal.
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
