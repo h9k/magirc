@@ -89,7 +89,7 @@ try {
 		if (!$admin->sessionStatus()) { $admin->tpl->display('login.tpl'); exit; }
 		$admin->tpl->assign('section', 'overview');
 		$admin->tpl->assign('setup', file_exists('../setup/'));
-		$admin->tpl->assign('version', array('php' => phpversion(), 'slim' => '2.2.0'));
+		$admin->tpl->assign('version', array('php' => phpversion(), 'slim' => '2.4.0'));
 		$admin->tpl->display('overview.tpl');
 	});
 	$admin->slim->get('/configuration/welcome', function() use ($admin) {
@@ -125,9 +125,8 @@ try {
 		$admin->tpl->assign('ircds', $ircds);
 		$admin->tpl->display('configuration_network.tpl');
 	});
-	$admin->slim->get('/configuration/denora', function() use ($admin) {
+	$admin->slim->get('/configuration/service/:service', function($service) use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
-		$service = isset($_GET['service']) ? basename($_GET['service']) : 'denora';
 		$db_config_file = "../conf/{$service}.cfg.php";
 		$db = array();
 		if (file_exists($db_config_file)) {
@@ -136,12 +135,13 @@ try {
 			@touch($db_config_file);
 		}
 		if (!$db) {
-			$db = array('username' => 'denora', 'password' => 'denora', 'database' => 'denora', 'hostname' => 'localhost');
+			$db = array('username' => $service, 'password' => $service, 'database' => $service, 'hostname' => 'localhost');
 		}
 		$admin->tpl->assign('db_config_file', $db_config_file);
 		$admin->tpl->assign('writable', is_writable($db_config_file));
 		$admin->tpl->assign('db', $db);
-		$admin->tpl->display('configuration_denora.tpl');
+		$admin->tpl->assign('service', $service);
+		$admin->tpl->display('configuration_service.tpl');
 	});
 	$admin->slim->post('/content', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
@@ -170,7 +170,7 @@ try {
 			@touch($db_config_file);
 		}
 		if (!$db) {
-			$db = array('username' => 'magirc', 'password' => 'magirc', 'database' => 'magirc', 'hostname' => 'localhost', 'port' => 3306, 'ssl' => false, 'ssl_key' => null, 'ssl_cert' => null, 'ssl_ca' => null);
+			$db = array('username' => $service, 'password' => $service, 'database' => $service, 'hostname' => 'localhost', 'port' => 3306, 'ssl' => false, 'ssl_key' => null, 'ssl_cert' => null, 'ssl_ca' => null);
 		}
 		if (isset($_POST['database'])) {
 			//TODO: do proper escaping to avoid breaking php code in the config files
@@ -198,7 +198,9 @@ try {
 				$writefile = fopen($db_config_file,"w");
 				fwrite($writefile,$db_buffer);
 				fclose($writefile);
-				echo json_encode(true); exit;
+				die($db_config_file);
+				echo json_encode(true);
+				exit;
 			}
 		}
 		echo json_encode(false);

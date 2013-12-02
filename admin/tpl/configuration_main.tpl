@@ -9,8 +9,9 @@
 		<li title="interface"><a href="index.php/configuration/interface">Interface</a></li>
 		<li title="network"><a href="index.php/configuration/network">Network</a></li>
 		<li title="services"><a href="index.php/configuration/services">Services</a></li>
-		<li title="denora"><a href="index.php/configuration/denora">Denora</a></li>
-		{*<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>*}
+		<li title="denora"><a href="index.php/configuration/service/denora">Denora</a></li>
+		<li title="anope"><a href="index.php/configuration/service/anope">Anope</a></li>
+		<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>
 	</ul>
 </div>
 <div id="success">Saved successfully</div>

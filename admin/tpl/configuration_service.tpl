@@ -1,5 +1,5 @@
 <h1>Database settings</h1>
-<form id="denora-form">
+<form id="{$service}-form">
 <table width="100%" border="0" cellspacing="0" cellpadding="5">
 	<tr>
 		<td align="right">Username</td>
@@ -49,7 +49,7 @@
 {/if}
 </pre>
 
-<button id="denora-submit" type="button">Save</button>
+<button id="{$service}-submit" type="button">Save</button>
 </form>
 
 <div id="manual" style="display:none;">
@@ -58,10 +58,12 @@
 </div>
 
 {jsmin}
-<script type="text/javascript">{literal}
+<script type="text/javascript">
+var service = '{$service}';
+{literal}
 $(document).ready(function() {
-	$("#denora-submit").button().click(function() {
-		$("#denora-form").ajaxSubmit({ url: 'index.php/configuration/denora/database', type: 'post', success: function(data) {
+	$("#"+service+"-submit").button().click(function() {
+		$("#"+service+"-form").ajaxSubmit({ url: 'index.php/configuration/'+service+'/database', type: 'post', success: function(data) {
 			if (data) $("#success").show().delay(1500).fadeOut(500);
 			else {
 				$("#failure").show().delay(1500).fadeOut(500);

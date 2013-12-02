@@ -58,20 +58,23 @@
         },
         {
             "name": "slim/slim",
-            "version": "2.2.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/codeguy/Slim",
-                "reference": "2.2.0"
+                "url": "https://github.com/codeguy/Slim.git",
+                "reference": "ff7d7148848fa4f45712984d7b91ac3cbced586b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/codeguy/Slim/archive/2.2.0.zip",
-                "reference": "2.2.0",
+                "url": "https://api.github.com/repos/codeguy/Slim/zipball/ff7d7148848fa4f45712984d7b91ac3cbced586b",
+                "reference": "ff7d7148848fa4f45712984d7b91ac3cbced586b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
+            },
+            "suggest": {
+                "ext-mcrypt": "Required for HTTP cookie encryption"
             },
             "type": "library",
             "autoload": {
@@ -79,7 +82,7 @@
                     "Slim": "."
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -97,15 +100,15 @@
                 "rest",
                 "router"
             ],
-            "time": "2012-12-13 02:15:50"
+            "time": "2013-11-29 20:33:36"
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.13",
+            "version": "v3.1.15",
             "source": {
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.13/@4699"
+                "reference": "/tags/v3.1.15/@4782"
             },
             "require": {
                 "php": ">=5.2"
@@ -114,10 +117,11 @@
             "autoload": {
                 "classmap": [
                     "distribution/libs/Smarty.class.php",
-                    "distribution/libs/SmartyBC.class.php"
+                    "distribution/libs/SmartyBC.class.php",
+                    "distribution/libs/sysplugins/smarty_security.php"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
@@ -140,7 +144,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-01-26 12:03:52"
+            "time": "2013-10-01 21:08:54"
         }
     ],
     "packages-dev": [
