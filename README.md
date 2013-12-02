@@ -22,7 +22,7 @@ Requirements
 ------------
 * Web Server with PHP 5.3+ and the *pdo_mysql*, *mcrypt* and *gettext* modules installed
 * Web Browser supporting HTML5, CSS3 and JavaScript
-* [Denora Stats](http://www.denorastats.org) server with MySQL enabled
+* [Denora Stats](http://www.denorastats.org) v1.5 server with MySQL enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
 
 

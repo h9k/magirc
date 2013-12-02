@@ -38,11 +38,11 @@ class Magirc {
 	public $cfg;
 	public $tpl;
 	public $slim;
-	public $denora;
+	public $service;
 
 	/**
 	 * Magirc Class Constructor
-	 * @param type $api_mode ('web': frontend, 'denora': Denora API)
+	 * @param type $api_mode ('web': frontend, 'service': Anope/Denora API)
 	 */
 	function __construct($api_mode = "web") {
 		// Setup the Slim framework
@@ -71,8 +71,12 @@ class Magirc {
 
 		// Initialize modules
 		define('IRCD', $this->cfg->ircd_type);
-		if ($api_mode == "web" || $api_mode == "denora") {
-			$this->denora = new Denora();
+		if ($api_mode == "web" || $api_mode == "service") {
+			if ($this->cfg->service == 'anope') {
+				$this->service = new Anope();
+			} else {
+				$this->service = new Denora();	
+			}
 		}
 
 		// Set the locale
@@ -157,7 +161,7 @@ class Magirc {
 		$result = 200;
 		switch($type) {
 			case 'channel':
-				$result = $this->denora->checkChannel($target);
+				$result = $this->service->checkChannel($target);
 				break;
 		}
 		// In case of error the application will terminate, otherwise it will continue normally

@@ -29,6 +29,8 @@ if (file_exists('vendor/autoload.php')) {
 require_once('lib/magirc/DB.class.php');
 require_once('lib/magirc/Config.class.php');
 require_once('lib/magirc/Magirc.class.php');
+require_once('lib/magirc/Service.interface.php');
+require_once('lib/magirc/anope/Anope.class.php');
 require_once('lib/magirc/denora/Denora.class.php');
 
 $magirc = new Magirc;
@@ -76,7 +78,7 @@ try {
 		if (file_exists($tpl_path)) {
 			$mode = null;
 			if ($section == 'channel') {
-				switch ($magirc->denora->checkChannel($target)) {
+				switch ($magirc->service->checkChannel($target)) {
 					case 404: $magirc->slim->notFound();
 					case 403: $magirc->slim->halt(403, 'Access denied');
 				}
@@ -85,7 +87,7 @@ try {
 				if (count($array) == 2) {
 					$mode = $array[0];
 					$target = $array[1];
-					if (!$magirc->denora->checkUser($target, $mode)) {
+					if (!$magirc->service->checkUser($target, $mode)) {
 						$magirc->slim->notFound();
 					}
 				} else {

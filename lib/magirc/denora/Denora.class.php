@@ -30,7 +30,7 @@ class Denora_DB extends DB {
 	}
 }
 
-class Denora {
+class Denora implements Service {
 
 	private $db;
 	private $cfg;
@@ -102,7 +102,7 @@ class Denora {
 	 * @return string SQL Mode data
 	 */
 	public static function getSqlModeData($mode) {
-		$sql_mode = Denora::getSqlMode($mode);
+		$sql_mode = self::getSqlMode($mode);
 		return $sql_mode ? $sql_mode . "_data" : null;
 	}
 
@@ -127,7 +127,7 @@ class Denora {
 		}
 		if ($this->cfg->hide_ulined) $query .= " AND server.uline = 0";
 		if (Protocol::services_protection_mode) {
-			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode(Protocol::services_protection_mode));
+			$query .= sprintf(" AND user.%s='N'", self::getSqlMode(Protocol::services_protection_mode));
 		}
 		$stmt = $this->db->prepare($query);
 		if ($mode == 'channel' && $target) $stmt->bindParam(':chan', $target, PDO::PARAM_STR);
@@ -167,7 +167,7 @@ class Denora {
 		}
 		if ($this->cfg->hide_ulined) $query .= " AND server.uline = 0";
 		if (Protocol::services_protection_mode) {
-			$query .= sprintf(" AND user.%s='N'", Denora::getSqlMode(Protocol::services_protection_mode));
+			$query .= sprintf(" AND user.%s='N'", self::getSqlMode(Protocol::services_protection_mode));
 		}
 		$query .= " GROUP by user.$type ORDER BY count DESC";
 		$stmt = $this->db->prepare($query);
@@ -393,7 +393,7 @@ class Denora {
 			$i = 1;
 			$query .= " (";
 			foreach ($levels as $mode => $level) {
-				$mode = Denora::getSqlMode($mode);
+				$mode = self::getSqlMode($mode);
 				$query .= "u.$mode = 'Y'";
 				if ($i < count($levels)) {
 					$query .= " OR ";
@@ -405,8 +405,8 @@ class Denora {
 			$query .= " u.mode_lo = 'Y'";
 		}
 		$query .= " AND u.online = 'Y'";
-		if (Protocol::oper_hidden_mode) $query .= " AND u." . Denora::getSqlMode(Protocol::oper_hidden_mode) . " = 'N'";
-		if (Protocol::services_protection_mode) $query .= " AND u." . Denora::getSqlMode(Protocol::services_protection_mode) . " = 'N'";
+		if (Protocol::oper_hidden_mode) $query .= " AND u." . self::getSqlMode(Protocol::oper_hidden_mode) . " = 'N'";
+		if (Protocol::services_protection_mode) $query .= " AND u." . self::getSqlMode(Protocol::services_protection_mode) . " = 'N'";
 		$query .= " AND u.server = s.server";
 		if ($this->cfg->hide_ulined) $query .= " AND s.uline = '0'";
 		$query .= " ORDER BY u.nick ASC";
@@ -426,10 +426,10 @@ class Denora {
 
 		$sWhere = "currentusers > 0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND %s='N'", Denora::getSqlMode($secret_mode));
+			$sWhere .= sprintf(" AND %s='N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND %s='N'", Denora::getSqlMode($private_mode));
+			$sWhere .= sprintf(" AND %s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -473,10 +473,10 @@ class Denora {
 		$private_mode = Protocol::chan_private_mode;
 		$query = "SELECT channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time FROM chan WHERE currentusers > 0";
 		if ($secret_mode) {
-			$query .= sprintf(" AND %s='N'", Denora::getSqlMode($secret_mode));
+			$query .= sprintf(" AND %s='N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$query .= sprintf(" AND %s='N'", Denora::getSqlMode($private_mode));
+			$query .= sprintf(" AND %s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
@@ -499,10 +499,10 @@ class Denora {
 		$private_mode = Protocol::chan_private_mode;
 		$query = "SELECT chan AS channel, line AS 'lines' FROM cstats, chan WHERE BINARY LOWER(cstats.chan)=LOWER(chan.channel) AND cstats.type=1 AND cstats.line >= 1";
 		if ($secret_mode) {
-			$query .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($secret_mode));
+			$query .= sprintf(" AND chan.%s='N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$query .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
+			$query .= sprintf(" AND chan.%s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
@@ -578,8 +578,8 @@ class Denora {
 			return 404;
 		} else {
 			if ($this->cfg->block_spchans) {
-				if (Protocol::chan_secret_mode && @$data[Denora::getSqlMode(Protocol::chan_secret_mode)] == 'Y' ) return 403;
-				if (Protocol::chan_private_mode && @$data[Denora::getSqlMode(Protocol::chan_private_mode)] == 'Y' ) return 403;
+				if (Protocol::chan_secret_mode && @$data[self::getSqlMode(Protocol::chan_secret_mode)] == 'Y' ) return 403;
+				if (Protocol::chan_private_mode && @$data[self::getSqlMode(Protocol::chan_private_mode)] == 'Y' ) return 403;
 			}
 			if (@$data['mode_li'] == "Y" || @$data['mode_lk'] == "Y" || @$data['mode_uo'] == "Y") {
 				return 403;
@@ -642,10 +642,10 @@ class Denora {
 
 		$sWhere = "cstats.letters>0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($secret_mode));
+			$sWhere .= sprintf(" AND chan.%s='N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
+			$sWhere .= sprintf(" AND chan.%s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -924,10 +924,10 @@ class Denora {
 
 		$sWhere = "";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($secret_mode));
+			$sWhere .= sprintf(" AND chan.%s='N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND chan.%s='N'", Denora::getSqlMode($private_mode));
+			$sWhere .= sprintf(" AND chan.%s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
