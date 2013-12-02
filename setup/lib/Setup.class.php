@@ -259,6 +259,10 @@ class Setup {
 			if ($version < 13) {
 				$this->db->insert('magirc_config', array('parameter' => 'service_mibbitid', 'value' => ''));
 			}
+			if ($version < 14) {
+				$this->db->delete('magirc_config', array('parameter' => 'denora_version'));
+				$this->db->insert('magirc_config', array('parameter' => 'service', 'value' => 'denora'));
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}

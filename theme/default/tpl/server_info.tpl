@@ -3,7 +3,7 @@
 <div class="halfleft">
 	<table class="details">
 		<tr><th>{t}Description{/t}:</th><td><span id="srv_description" class="val"></span></td></tr>
-		{if $cfg->denora_version > '1.4'}<tr><th>{t}Country{/t}:</th><td><span id="srv_country" class="val"></span></td></tr>{/if}
+		<tr><th>{t}Country{/t}:</th><td><span id="srv_country" class="val"></span></td></tr>
 		<tr><th>{t}Online{/t}:</th><td><span id="srv_online" class="val"></span></td></tr>
 		<tr><th>{t}Version{/t}:</th><td><span id="srv_version" class="val"></span></td></tr>
 		<tr><th>{t}Uptime{/t}:</th><td><span id="srv_uptime" class="val"></span></td></tr>
@@ -34,7 +34,7 @@ $(document).ready(function() {
 		if (data) {
 			$("#dialog-server").dialog("option", "title", data.server);
 			$("#srv_description").html(data.description);
-			if (denora_version > '1.4') $("#srv_country").html(getCountryFlag(data)+' '+data.country);
+			$("#srv_country").html(getCountryFlag(data)+' '+data.country);
 			$("#srv_online").html(data.online ? mLang.Yes : mLang.No);
 			$("#srv_version").html(data.version);
 			$("#srv_uptime").html(getTimeElapsed(data.uptime));

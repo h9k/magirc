@@ -355,11 +355,7 @@ class Denora {
 		if ($this->cfg->hide_ulined) {
 			$sWhere .= $sWhere ? " AND uline = 0" : "WHERE uline = 0";
 		}
-		$query = "SELECT server, online, comment AS description, currentusers AS users, opers";
-		if ($this->cfg->denora_version > '1.4') {
-			$query .= ", country, countrycode AS country_code";
-		}
-		$query .= " FROM server $sWhere";
+		$query = "SELECT server, online, comment AS description, currentusers AS users, opers, country, countrycode AS country_code FROM server $sWhere";
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_CLASS, 'Server');
@@ -373,11 +369,8 @@ class Denora {
 	function getServer($server) {
 		$query = "SELECT server, online, comment AS description, connecttime AS connect_time, lastsplit AS split_time, version,
 			uptime, motd, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time, ping, highestping AS ping_max,
-			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time";
-		if ($this->cfg->denora_version > '1.4') {
-			$query .= ", country, countrycode AS country_code";
-		}
-		$query .= " FROM server WHERE server = :server";
+			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time, country, countrycode AS country_code
+			FROM server WHERE server = :server";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindParam(':server', $server, PDO::PARAM_STR);
 		$stmt->execute();
@@ -391,11 +384,9 @@ class Denora {
 	function getOperatorList() {
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
-			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s",
+			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s,
+			s.country AS server_country, s.countrycode AS server_country_code",
 			implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
-		if ($this->cfg->denora_version > '1.4') {
-			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
-		}
 		$query .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE";
 		$levels = Protocol::$oper_levels;
 		if (!empty($levels)) {
@@ -624,16 +615,13 @@ class Denora {
 		$query = "SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service,
-			i.mode_lq AS cmode_lq, i.mode_la AS cmode_la, i.mode_lo AS cmode_lo, i.mode_lh AS cmode_lh, i.mode_lv AS cmode_lv";
-		if ($this->cfg->denora_version > '1.4') {
-			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
-		}
-		$query .= " FROM ison i, chan c, user u, server s
-		WHERE LOWER(c.channel) = LOWER(:channel)
-			AND i.chanid = c.chanid
-			AND i.nickid = u.nickid
-			AND u.server = s.server
-		ORDER BY u.nick ASC";
+			i.mode_lq AS cmode_lq, i.mode_la AS cmode_la, i.mode_lo AS cmode_lo, i.mode_lh AS cmode_lh, i.mode_lv AS cmode_lv,
+			s.country AS server_country, s.countrycode AS server_country_code FROM ison i, chan c, user u, server s
+			WHERE LOWER(c.channel) = LOWER(:channel)
+				AND i.chanid = c.chanid
+				AND i.nickid = u.nickid
+				AND u.server = s.server
+			ORDER BY u.nick ASC";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindParam(':channel', $chan, SQL_STR);
 		$stmt->execute();
@@ -906,12 +894,10 @@ class Denora {
 		$info = $this->getUserData($mode, $user);
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
-			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s",
+			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s,
+			s.country AS server_country, s.countrycode AS server_country_code
+			FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE u.nick = :nickname",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
-		if ($this->cfg->denora_version > '1.4') {
-			$query .= ", s.country AS server_country, s.countrycode AS server_country_code";
-		}
-		$query .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE u.nick = :nickname";
 		$ps = $this->db->prepare($query);
 		$ps->bindParam(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();

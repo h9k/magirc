@@ -22,15 +22,6 @@
 			<td align="left"><input name="net_port_ssl" type="text" id="net_port_ssl" value="{$cfg->net_port_ssl}" size="11" maxlength="11" /></td>
 		</tr>
 		<tr>
-			<td align="right"><strong>Denora version</strong></td>
-			<td align="left">
-				<select name="denora_version" id="denora_version">
-					<option value="1.4"{if $cfg->denora_version eq "1.4"} selected="selected"{/if}>1.4.x</option>
-					<option value="1.5"{if $cfg->denora_version eq "1.5"} selected="selected"{/if}>1.5.x</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
 			<td align="right"><strong>IRCd Server Type</strong></td>
 			<td align="left">
 				<select name="ircd_type" id="ircd_type">

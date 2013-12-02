@@ -1,9 +1,18 @@
 <form id="interface-form">
-	<h1>Interface settings</h1>
+	<h1>System settings</h1>
 	<table border="0" cellspacing="0" cellpadding="5">
 		<tr>
 			<td align="right"><strong>Base URL</strong><br />The URL MagIRC will be reachable under.<br />Please type in a full URL with http:// and a trailing /</td>
 			<td align="left"><input type="text" size="64" maxlength="255" name="base_url" value="{$cfg->base_url}" /></td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Operation mode</strong></td>
+			<td align="left">
+				<select name="service" id="service">
+					<option value="anope"{if $cfg->service eq 'anope'} selected="selected"{/if}>Anope 2.0</option>
+					<option value="denora"{if $cfg->service eq 'denora'} selected="selected"{/if}>Denora 1.5</option>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td align="right"><strong>Theme</strong><br />This only applies to the frontend</td>

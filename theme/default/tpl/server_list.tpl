@@ -32,7 +32,7 @@ $(document).ready(function() {
 		"sAjaxSource": 'rest/denora.php/servers?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
-			{ "mDataProp": "server", "fnRender": function (oObj) { return denora_version > '1.4' ? getCountryFlag(oObj.aData) + ' ' + oObj.aData['server'] : oObj.aData['server']; } },
+			{ "mDataProp": "server", "fnRender": function (oObj) { getCountryFlag(oObj.aData) + ' ' + oObj.aData['server'] } },
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }
