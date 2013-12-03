@@ -129,8 +129,8 @@ class Denora implements Service {
 			$query .= sprintf(" AND user.%s='N'", self::getSqlMode(Protocol::services_protection_mode));
 		}
 		$stmt = $this->db->prepare($query);
-		if ($mode == 'channel' && $target) $stmt->bindParam(':chan', $target, PDO::PARAM_STR);
-		if ($mode == 'server' && $target) $stmt->bindParam(':server', $target, PDO::PARAM_STR);
+		if ($mode == 'channel' && $target) $stmt->bindValue(':chan', $target, PDO::PARAM_STR);
+		if ($mode == 'server' && $target) $stmt->bindValue(':server', $target, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetch(PDO::FETCH_COLUMN);
 	}
@@ -170,8 +170,8 @@ class Denora implements Service {
 		}
 		$query .= " GROUP by user.$type ORDER BY count DESC";
 		$stmt = $this->db->prepare($query);
-		if ($mode == 'channel' && $target) $stmt->bindParam(':chan', $target, PDO::PARAM_STR);
-		if ($mode == 'server' && $target) $stmt->bindParam(':server', $target, PDO::PARAM_STR);
+		if ($mode == 'channel' && $target) $stmt->bindValue(':chan', $target, PDO::PARAM_STR);
+		if ($mode == 'server' && $target) $stmt->bindValue(':server', $target, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -371,7 +371,7 @@ class Denora implements Service {
 			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time, country, countrycode AS country_code
 			FROM server WHERE server = :server";
 		$stmt = $this->db->prepare($query);
-		$stmt->bindParam(':server', $server, PDO::PARAM_STR);
+		$stmt->bindValue(':server', $server, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetchObject('Server');
 	}
@@ -483,7 +483,7 @@ class Denora implements Service {
 		}
 		$query .= " ORDER BY currentusers DESC LIMIT :limit";
 		$ps = $this->db->prepare($query);
-		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');
 	}
@@ -509,7 +509,7 @@ class Denora implements Service {
 		}
 		$query .= " ORDER BY cstats.line DESC LIMIT :limit";
 		$ps = $this->db->prepare($query);
-		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -522,7 +522,7 @@ class Denora implements Service {
 	public function getUsersTop($limit = 10) {
 		$aaData = array();
 		$ps = $this->db->prepare("SELECT uname, line AS 'lines' FROM ustats WHERE type = 1 AND chan='global' AND line >= 1 ORDER BY line DESC LIMIT :limit");
-		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if (is_array($data)) {
@@ -549,7 +549,7 @@ class Denora implements Service {
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::chan_modes))),
 				implode(',', array_map(array('Denora', 'getSqlModeData'), str_split(Protocol::chan_modes_data))));
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':chan', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':chan', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetchObject('Channel');
 	}
@@ -569,7 +569,7 @@ class Denora implements Service {
 			return 403;
 
 		$stmt = $this->db->prepare("SELECT * FROM `chan` WHERE BINARY LOWER(`channel`) = LOWER(:channel)");
-		$stmt->bindParam(':channel', $chan, SQL_STR);
+		$stmt->bindValue(':channel', $chan, SQL_STR);
 		$stmt->execute();
 		$data = $stmt->fetch();
 
@@ -596,7 +596,7 @@ class Denora implements Service {
 	public function checkChannelStats($chan) {
 		$sQuery = "SELECT COUNT(*) FROM cstats WHERE chan=:channel";
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
@@ -622,7 +622,7 @@ class Denora implements Service {
 				AND u.server = s.server
 			ORDER BY u.nick ASC";
 		$stmt = $this->db->prepare($query);
-		$stmt->bindParam(':channel', $chan, SQL_STR);
+		$stmt->bindValue(':channel', $chan, SQL_STR);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
 	}
@@ -665,7 +665,7 @@ class Denora implements Service {
 			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
 		}
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':type', $type, PDO::PARAM_INT);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
 		$ps->execute();
 		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			if ($datatables) {
@@ -699,8 +699,8 @@ class Denora implements Service {
 			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
 		}
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':type', $type, PDO::PARAM_INT);
-		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if ($datatables) {
@@ -734,8 +734,8 @@ class Denora implements Service {
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM cstats WHERE chan=:channel AND type=:type";
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':type', $type, PDO::PARAM_INT);
-		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		$result = $ps->fetch(PDO::FETCH_NUM);
 		if (is_array($result)) {
@@ -769,7 +769,7 @@ class Denora implements Service {
 			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
 		}
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':type', $type, PDO::PARAM_INT);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if ($datatables) {
@@ -816,9 +816,9 @@ class Denora implements Service {
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM ustats WHERE uname=:uname AND chan=:channel AND type=:type";
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':type', $type, PDO::PARAM_INT);
-		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
-		$ps->bindParam(':uname', $info['uname'], PDO::PARAM_STR);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
 		$ps->execute();
 		$result = $ps->fetch(PDO::FETCH_NUM);
 		if (is_array($result)) {
@@ -844,7 +844,7 @@ class Denora implements Service {
 			$query = "SELECT nick FROM user WHERE LOWER(nick) = LOWER(:user)";
 		}
 		$stmt = $this->db->prepare($query);
-		$stmt->bindParam(':user', $user, SQL_STR);
+		$stmt->bindValue(':user', $user, SQL_STR);
 		$stmt->execute();
 		return $stmt->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
@@ -861,7 +861,7 @@ class Denora implements Service {
 		}
 		$sQuery = "SELECT COUNT(*) FROM ustats WHERE uname=:user";
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':user', $user, PDO::PARAM_STR);
+		$ps->bindValue(':user', $user, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
@@ -898,7 +898,7 @@ class Denora implements Service {
 			FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE u.nick = :nickname",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
 		$ps = $this->db->prepare($query);
-		$ps->bindParam(':nickname', $info['nick'], PDO::PARAM_INT);
+		$ps->bindValue(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();
 		$user = $ps->fetchObject('User');
 		if ($user) {
@@ -941,8 +941,8 @@ class Denora implements Service {
 			AND ustats.type=0 AND BINARY LOWER(ustats.chan)=LOWER(chan.channel)
 			AND user.nick=:nick %s", $sWhere);
 		$ps = $this->db->prepare($query);
-		$ps->bindParam(':uname', $info['uname'], PDO::PARAM_STR);
-		$ps->bindParam(':nick', $info['nick'], PDO::PARAM_STR);
+		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
+		$ps->bindValue(':nick', $info['nick'], PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
 	}
@@ -975,8 +975,8 @@ class Denora implements Service {
 				AND BINARY LOWER(ustats.chan)=LOWER(chan.channel) %s ORDER BY ustats.letters DESC", $sWhere);
 		}
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':uname', $info['uname'], PDO::PARAM_STR);
-		$ps->bindParam(':chan', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
+		$ps->bindValue(':chan', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if (is_array($data)) {
@@ -998,7 +998,7 @@ class Denora implements Service {
 	 */
 	private function getUnameFromNick($nick) {
 		$ps = $this->db->prepare("SELECT uname FROM aliases WHERE nick = :nickname");
-		$ps->bindParam(':nickname', $nick, PDO::PARAM_STR);
+		$ps->bindValue(':nickname', $nick, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
@@ -1012,7 +1012,7 @@ class Denora implements Service {
 		$ps = $this->db->prepare("SELECT a.nick FROM aliases a LEFT JOIN user u ON a.nick = u.nick
 			WHERE a.uname = :uname ORDER BY CASE WHEN u.online IS NULL THEN 1 ELSE 0 END,
 			u.online DESC, u.lastquit DESC, u.connecttime ASC");
-		$ps->bindParam(':uname', $uname, PDO::PARAM_STR);
+		$ps->bindValue(':uname', $uname, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
 	}

@@ -86,7 +86,7 @@ class Anope implements Service {
 			JOIN anope_server AS server ON server.id = user.servid";
 		if ($mode == 'channel' && $target) {
 			$query .= " JOIN anope_ison AS ison ON ison.nickid = user.nickid
-				JOIN chan ON chan.chanid = ison.chanid
+				JOIN anope_chan AS chan ON chan.chanid = ison.chanid
 				WHERE LOWER(chan.channel)=LOWER(:chan)"; // AND user.online='Y'
 		} elseif ($mode == 'server' && $target) {
 			$query .= " WHERE LOWER(user.server)=LOWER(:server)"; // AND user.online='Y'
@@ -102,8 +102,8 @@ class Anope implements Service {
 		}
 		$query .= " GROUP by user.version ORDER BY count DESC";
 		$stmt = $this->db->prepare($query);
-		if ($mode == 'channel' && $target) $stmt->bindParam(':chan', $target, PDO::PARAM_STR);
-		if ($mode == 'server' && $target) $stmt->bindParam(':server', $target, PDO::PARAM_STR);
+		if ($mode == 'channel' && $target) $stmt->bindValue(':chan', $target, PDO::PARAM_STR);
+		if ($mode == 'server' && $target) $stmt->bindValue(':server', $target, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -120,7 +120,7 @@ class Anope implements Service {
 			JOIN anope_server AS server ON server.id = user.servid";
 		if ($mode == 'channel' && $target) {
 			$query .= " JOIN anope_ison AS ison ON ison.nickid = user.nickid
-				JOIN chan ON ison.chanid = chan.chanid
+				JOIN anope_chan AS chan ON ison.chanid = chan.chanid
 				WHERE LOWER(chan.channel)=LOWER(:chan)"; // AND user.online='Y'
 		} elseif ($mode == 'server' && $target) {
 			$query .= " WHERE LOWER(user.server)=LOWER(:server)"; // AND user.online='Y'
@@ -136,8 +136,8 @@ class Anope implements Service {
 		}
 		$query .= " GROUP by user.geocountry ORDER BY count DESC";
 		$stmt = $this->db->prepare($query);
-		if ($mode == 'channel' && $target) $stmt->bindParam(':chan', $target, PDO::PARAM_STR);
-		if ($mode == 'server' && $target) $stmt->bindParam(':server', $target, PDO::PARAM_STR);
+		if ($mode == 'channel' && $target) $stmt->bindValue(':chan', $target, PDO::PARAM_STR);
+		if ($mode == 'server' && $target) $stmt->bindValue(':server', $target, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -277,12 +277,26 @@ class Anope implements Service {
 			$sWhere .= $sWhere ? " AND ulined = 'N'" : "WHERE ulined = 'N'";
 		}
 		$query = "SELECT name AS server, online, comment AS description, currentusers AS users FROM anope_server $sWhere";
-		//opers, country, countrycode AS country_code are missing
+		//TODO: MISSING! opers, country, countrycode AS country_code
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_CLASS, 'Server');
 	}
-	public function getServer($server) { }
+	
+	/**
+	 * Gets a server
+	 * @param string $server Server name
+	 * @return Server
+	 */
+	public function getServer($server) {
+		$query = "SELECT name AS server, online, comment AS description, link_time AS connect_time, split_time, version, currentusers AS users
+			FROM anope_server AS server WHERE name = :server";
+		//TODO: MISSING! uptime, motd, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time, ping, highestping AS ping_max, FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time, country, countrycode AS country_code
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':server', $server, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetchObject('Server');
+	}
 	
 	/**
 	 * Get the list of Operators currently online
@@ -294,7 +308,7 @@ class Anope implements Service {
 			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes
 			FROM anope_user AS u
 			LEFT JOIN anope_server AS s ON s.id = u.servid WHERE";
-		//u.online, u.swhois, u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, s.country AS server_country, s.countrycode AS server_country_code missing
+		//TODO: MISSING! u.online, u.swhois, u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, s.country AS server_country, s.countrycode AS server_country_code
 		$levels = Protocol::$oper_levels;
 		if (!empty($levels)) {
 			$i = 1;
@@ -353,7 +367,7 @@ class Anope implements Service {
 		}
 
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, topic, topicauthor AS topic_author, topictime AS topic_time, modes FROM anope_chan WHERE %s", $sWhere);
-		// maxusers AS users_max, maxusertime AS users_max_time, kickcount AS kicks, are missing
+		//TODO: MISSING! maxusers AS users_max, maxusertime AS users_max_time, kickcount AS kicks
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery);
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
@@ -381,7 +395,8 @@ class Anope implements Service {
 	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
-		$query = "SELECT channel, currentusers AS users FROM anope_chan WHERE currentusers > 0"; //maxusers AS users_max, maxusertime AS users_max_time missing
+		$query = "SELECT channel, currentusers AS users FROM anope_chan WHERE currentusers > 0";
+		//TODO: MISSING! maxusers AS users_max, maxusertime AS users_max_time
 		if ($secret_mode) {
 			$query .= sprintf(" AND modes NOT LIKE '%%%s%%'", $secret_mode);
 		}
@@ -394,7 +409,7 @@ class Anope implements Service {
 		}
 		$query .= " ORDER BY currentusers DESC LIMIT :limit";
 		$ps = $this->db->prepare($query);
-		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');
 	}
@@ -420,13 +435,52 @@ class Anope implements Service {
 		}
 		$query .= " ORDER BY anope_chanstats.line DESC LIMIT :limit";
 		$ps = $this->db->prepare($query);
-		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
-	public function getChannel($chan) { }
-	public function getChannelUsers($chan) { }
+	/**
+	 * Get the specified channel
+	 * @param string $chan Channel
+	 * @return Channel
+	 */
+	public function getChannel($chan) {
+		$sQuery = "SELECT channel, currentusers AS users,
+			topic, topicauthor AS topic_author, topictime AS topic_time, modes
+			FROM anope_chan AS chan WHERE BINARY LOWER(channel) = LOWER(:chan)";
+		//TODO: MISSING! maxusers AS users_max, maxusertime AS users_max_time, kickcount AS kicks
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':chan', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetchObject('Channel');
+	}
+	
+	/**
+	 * Get the users currently in the specified channel
+	 * @todo implement server-side datatables support
+	 * @param string $chan Channel
+	 * @return array of User
+	 */
+	public function getChannelUsers($chan) {
+		if ($this->checkChannel($chan) != 200) {
+			return null;
+		}
+		$query = "SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
+			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
+			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, i.modes
+			FROM anope_ison AS i, anope_chan AS c, anope_user AS u, anope_server AS s
+			WHERE LOWER(c.channel) = LOWER(:channel)
+				AND i.chanid = c.chanid
+				AND i.nickid = u.nickid
+				AND u.server = s.name
+			ORDER BY u.nick ASC";
+		//TODO: MISSING! u.swhois, u.online, u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, s.country AS server_country, s.countrycode AS server_country_code
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':channel', $chan, SQL_STR);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
+	}
 	
 	/**
 	 * Gets the global channel activity
@@ -458,20 +512,7 @@ class Anope implements Service {
 
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS chan AS name,letters,words,line AS 'lines',actions,(smileys_happy + smileys_sad + smileys_other) AS smileys,kicks,anope_chanstats.modes,topics FROM anope_chanstats
 			 JOIN anope_chan ON BINARY LOWER(anope_chanstats.chan)=LOWER(anope_chan.channel) WHERE anope_chanstats.type=:type AND %s", $sWhere);
-		switch ($type) {
-			case 1:
-				$type = 'daily';
-				break;
-			case 2:
-				$type = 'weekly';
-				break;
-			case 3:
-				$type = 'monthly';
-				break;
-			case 0:
-			default:
-				$type = 'total';
-		}
+		$type = self::getChanstatsType($type);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('anope_chanstats.chan', 'anope_chan.topic'));
@@ -480,7 +521,7 @@ class Anope implements Service {
 			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
 		}
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindParam(':type', $type, PDO::PARAM_INT);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
 		$ps->execute();
 		foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			if ($datatables) {
@@ -494,10 +535,124 @@ class Anope implements Service {
 		}
 		return $aaData;
 	}
-	public function getChannelActivity($chan, $type, $datatables = false) { }
-	public function getChannelHourlyActivity($chan, $type) { }
-	public function checkChannel($chan) { }	
-	public function checkChannelStats($chan) { }
+	
+	/**
+	 * Gets the channel activity for the given channel
+	 * @param string $chan Channel
+	 * @param int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @param boolean $datatables true: datatables format, false: standard format
+	 * @return User
+	 * @todo refactor
+	 */
+	public function getChannelActivity($chan, $type, $datatables = false) {
+		$aaData = array();
+		$sQuery = "SELECT SQL_CALC_FOUND_ROWS nick AS uname, letters, words, line AS 'lines', actions,"
+				. " (smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, modes, topics"
+				. " FROM anope_chanstats WHERE chan = :channel AND nick != '' AND type=:type AND letters > 0 ";
+		$type = self::getChanstatsType($type);
+		if ($datatables) {
+			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type, ':channel' => $chan));
+			$sFiltering = $this->db->datatablesFiltering(array('uname'));
+			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
+			$sPaging = $this->db->datatablesPaging();
+			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+		}
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
+		if ($datatables) {
+			$iFilteredTotal = $this->db->foundRows();
+		}
+		foreach ($data as $row) {
+			if ($datatables) {
+				$row["DT_RowId"] = $row['uname'];
+			}
+			// Get country code and online status
+			$user = $this->getUser('stats', $row['uname']);
+			if (!$user) $user = new User();
+			foreach ($row as $key => $val) {
+				$user->$key = $val;
+			}
+			$aaData[] = $user;
+		}
+		if ($datatables) {
+			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+		}
+		return $aaData;
+	}
+	
+	/**
+	 * Get the hourly average activity for the given channel
+	 * @param string $chan Channel
+	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @return mixed
+	 */
+	public function getChannelHourlyActivity($chan, $type) {
+		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
+			FROM anope_chanstats WHERE chan=:channel AND type=:type";
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':type', self::getChanstatsType($type), PDO::PARAM_INT);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		$result = $ps->fetch(PDO::FETCH_NUM);
+		if (is_array($result)) {
+			foreach ($result as $key => $val) {
+				$result[$key] = (int) $val;
+			}
+			return $result;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * Checks if given channel can be displayed
+	 * @param string $chan
+	 * @return int code (200: OK, 404: not existing, 403: denied)
+	 */
+	public function checkChannel($chan) {
+		$noshow = array();
+		$no = explode(",", $this->cfg->hide_chans);
+		for ($i = 0; $i < count($no); $i++) {
+			$noshow[$i] = strtolower($no[$i]);
+		}
+		if (in_array(strtolower($chan), $noshow))
+			return 403;
+
+		$stmt = $this->db->prepare("SELECT * FROM `anope_chan` WHERE BINARY LOWER(`channel`) = LOWER(:channel)");
+		$stmt->bindValue(':channel', $chan, SQL_STR);
+		$stmt->execute();
+		$data = $stmt->fetch();
+
+		if (!$data) {
+			return 404;
+		} else {
+			if ($this->cfg->block_spchans) {
+				if (Protocol::chan_secret_mode && strpos($data['modes'], Protocol::chan_secret_mode) !== false) return 403;
+				if (Protocol::chan_private_mode && strpos($data['modes'], Protocol::chan_private_mode) !== false) return 403;
+			}
+			if (strpos($data['modes'], 'i') !== false || strpos($data['modes'], 'k') !== false || strpos($data['modes'], 'O') !== false) {
+				return 403;
+			} else {
+				return 200;
+			}
+		}
+	}
+
+	/**
+	 * Checks if the given channel is being monitored by chanstats
+	 * @param string $chan Channel
+	 * @return boolean true: yes, false: no
+	 */
+	public function checkChannelStats($chan) {
+		$sQuery = "SELECT COUNT(*) FROM anope_chanstats WHERE chan=:channel";
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
+	}
 	
 	/**
 	 * Get the most active current users
@@ -507,7 +662,7 @@ class Anope implements Service {
 	public function getUsersTop($limit = 10) {
 		$aaData = array();
 		$ps = $this->db->prepare("SELECT nick AS uname, line AS 'lines' FROM anope_chanstats WHERE type = 'daily' AND chan='' AND line > 0 ORDER BY line DESC LIMIT :limit");
-		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if (is_array($data)) {
@@ -522,15 +677,281 @@ class Anope implements Service {
 		return $aaData;
 	}
 	
-	public function getUser($mode, $user) { }
-	public function getUserChannels($mode, $user) { }
-	public function getUserGlobalActivity($type, $datatables = false) { }
-	public function getUserActivity($mode, $user, $chan) { }
-	public function getUserHourlyActivity($mode, $user, $chan, $type) { }
-	public function checkUser($user, $mode) { }
-	public function checkUserStats($user, $mode) { }
+	/**
+	 * Get a user based on its nickname or stats user
+	 * @param string $mode 'nick': nickname, 'stats': chanstats user
+	 * @param string $user
+	 * @return User
+	 */
+	public function getUser($mode, $user) {
+		$info = $this->getUserData($mode, $user);
+		$query = "SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
+			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
+			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes
+			FROM anope_user AS u
+			LEFT JOIN anope_server AS s ON s.id = u.servid
+			WHERE u.nick = :nickname";
+		//TODO: MISSING! u.swhois, u.online, u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, s.country AS server_country, s.countrycode AS server_country_code
+		$ps = $this->db->prepare($query);
+		$ps->bindValue(':nickname', $info['nick'], PDO::PARAM_INT);
+		$ps->execute();
+		$user = $ps->fetchObject('User');
+		if ($user) {
+			$user->uname = $info['uname'];
+			$user->aliases = $info['aliases'];
+			return $user;
+		} else {
+			return null;
+		}
+	}
 	
-	public static function getSqlMode($mode) { }
-	public static function getSqlModeData($mode) { }
+	/**
+	 * Get a list of channels monitored for a specific user
+	 * @param string $mode 'nick': nickname, 'stats': chanstats user
+	 * @param string $user
+	 * @return array of channel names
+	 */
+	public function getUserChannels($mode, $user) {
+		$info = $this->getUserData($mode, $user);
+		$secret_mode = Protocol::chan_secret_mode;
+		$private_mode = Protocol::chan_private_mode;
+
+		$sWhere = "";
+		if ($secret_mode) {
+			$sWhere .= sprintf(" AND chan.modes NOT LIKE '%%%s%%'", $secret_mode);
+		}
+		if ($private_mode) {
+			$sWhere .= sprintf(" AND chan.modes NOT LIKE '%%%s%%'", $private_mode);
+		}
+		$hide_channels = $this->cfg->hide_chans;
+		if ($hide_channels) {
+			$hide_channels = explode(",", $hide_channels);
+			foreach ($hide_channels as $key => $channel) {
+				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
+			}
+			$sWhere .= sprintf(" AND LOWER(chan.channel) NOT IN(%s)", implode(',', $hide_channels));
+		}
+
+		$query = sprintf("SELECT DISTINCT chanstats.chan
+			FROM anope_chanstats AS chanstats, anope_chan AS chan, anope_user AS user
+			WHERE chanstats.nick = :uname
+			AND chanstats.type = 'total' AND BINARY LOWER(chanstats.chan) = LOWER(chan.channel)
+			AND user.nick = :nick %s", $sWhere);
+		$ps = $this->db->prepare($query);
+		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
+		$ps->bindValue(':nick', $info['nick'], PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_COLUMN);
+	}
+	
+	/**
+	 * Get the global user activity
+	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @param boolean $datatables true: datatables format, false: standard format
+	 * @return array
+	 * @todo refactor
+	 */
+	public function getUserGlobalActivity($type, $datatables = false) {
+		$aaData = array();
+
+		$sQuery = "SELECT SQL_CALC_FOUND_ROWS nick AS 'uname', letters, words, line AS 'lines',
+			actions, (smileys_happy + smileys_sad + smileys_other) AS 'smileys', kicks, modes, topics FROM anope_chanstats
+			WHERE type=:type AND letters > 0 and chan=''";
+		$type = self::getChanstatsType($type);
+		if ($datatables) {
+			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
+			$sFiltering = $this->db->datatablesFiltering(array('uname'));
+			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
+			$sPaging = $this->db->datatablesPaging();
+			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+		}
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
+		$ps->execute();
+		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
+		if ($datatables) {
+			$iFilteredTotal = $this->db->foundRows();
+		}
+		if (is_array($data)) {
+			foreach ($data as $row) {
+				if ($datatables) {
+					$row["DT_RowId"] = $row['uname'];
+				}
+				$user = $this->getUser('stats', $row['uname']);
+				if (!$user) {
+					$user = new User();
+					$user->nickname = $row['uname'];
+					$user->country = 'Unknown';
+					$user->country_code = '';
+					$user->online = false;
+					$user->away = false;
+					$user->bot = false;
+					$user->service = false;
+					$user->operator = false;
+					$user->helper = false;
+				}
+				foreach ($row as $key => $val) {
+					$user->$key = $val;
+				}
+				$aaData[] = $user;
+			}
+		}
+		return $datatables ? $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData) : $aaData;
+	}
+	
+	/**
+	 * Get the user activity of the given user
+	 * @param string $mode stats: user is treated as stats user, nick: user is treated as nickname
+	 * @param string $user User
+	 * @param string $chan Channel
+	 * @return mixed
+	 * @todo refactor
+	 */
+	public function getUserActivity($mode, $user, $chan) {
+		$info = $this->getUserData($mode, $user);
+		if ($chan == 'global') {
+			$chan = ''; //TODO: this is dirty
+			$sQuery = "SELECT type, letters, words, line AS 'lines', actions, (smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, chanstats.modes, topics
+				FROM anope_chanstats AS chanstats
+				WHERE nick = :nick AND chan = :chan
+				ORDER BY chanstats.letters DESC";
+		} else {
+			$sWhere = "";
+			$hide_channels = $this->cfg->hide_chans;
+			if ($hide_channels) {
+				$hide_channels = explode(",", $hide_channels);
+				foreach ($hide_channels as $key => $channel) {
+					$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
+				}
+				$sWhere .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
+			}
+			$sQuery = sprintf("SELECT type, letters, words, line AS 'lines', actions, (smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, chanstats.modes, topics
+				FROM anope_chanstats AS chanstats, anope_chan AS chan
+				WHERE chanstats.nick = :nick AND chanstats.chan = :chan AND BINARY LOWER(chanstats.chan) = LOWER(chan.channel) %s
+				ORDER BY chanstats.letters DESC", $sWhere);
+		}
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':nick', $info['uname'], PDO::PARAM_STR);
+		$ps->bindValue(':chan', $chan, PDO::PARAM_STR);
+		$ps->execute();
+		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
+		if (is_array($data)) {
+			foreach ($data as $key => $type) {
+				foreach ($type as $field => $val) {
+					$data[$key][$field] = (int) $val;
+				}
+			}
+			return $data;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * Get the average hourly activity for the given user
+	 * @param string $mode stats: user is treated as stats user, nick: user is treated as nickname
+	 * @param string $user User
+	 * @param string $chan Channel
+	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
+	 * @return mixed
+	 * @todo refactor
+	 */
+	public function getUserHourlyActivity($mode, $user, $chan, $type) {
+		$info = $this->getUserData($mode, $user);
+		//TODO: this is dirty
+		if ($chan == 'global'){
+			$chan = '';
+		}
+		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
+			FROM anope_chanstats WHERE nick = :nick AND chan = :channel AND type = :type";
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':type', self::getChanstatsType($type), PDO::PARAM_INT);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':nick', $info['uname'], PDO::PARAM_STR);
+		$ps->execute();
+		$result = $ps->fetch(PDO::FETCH_NUM);
+		if (is_array($result)) {
+			foreach ($result as $key => $val) {
+				$result[$key] = (int) $val;
+			}
+			return $result;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * Checks if the given user exists
+	 * @param string $user User
+	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
+	 * @return boolean true: yes, false: no
+	 */
+	public function checkUser($user, $mode) {
+		if ($mode == "stats") {
+			$query = "SELECT nick FROM anope_chanstats WHERE LOWER(nick) = LOWER(:user)";
+		} else {
+			$query = "SELECT nick FROM anope_user WHERE LOWER(nick) = LOWER(:user)";
+		}
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':user', $user, SQL_STR);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_COLUMN) ? true : false;
+	}
+
+	/**
+	 * Checks if the given user is being monitored by chanstats
+	 * @param string $user User
+	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
+	 * @return boolean true: yes, false: no
+	 */
+	public function checkUserStats($user, $mode) {
+		if ($mode != 'stats') {
+			$user = $this->getUnameFromNick($user);
+		}
+		$sQuery = "SELECT COUNT(*) FROM anope_chanstats WHERE nick = :user";
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':user', $user, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
+	}
+	
+	public static function getSqlMode($mode) { return $mode; }
+	public static function getSqlModeData($mode) { return $mode; }
+	
+	/**
+	 * Returns the stats username and all aliases of a user
+	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
+	 * @param string $user Nickname or Stats username
+	 * @return array ('nick' => nickname, 'uname' => stats username, 'aliases' => array of aliases)
+	 */
+	private function getUserData($mode, $user) {
+		return array('nick' => $user, 'uname' => $user, 'aliases' => array($user));
+	}
+	
+	/**
+	 * Get the chanstats username assigned to a nick, if available
+	 * @param string $nick nickname
+	 * @return string chanstats username
+	 */
+	private function getUnameFromNick($nick) {
+		return $nick;
+	}
+	
+	/**
+	 * Maps the denora style chanstats type to the anope names
+	 * @param type $type
+	 * @return string
+	 */
+	private static function getChanstatsType($type) {
+		switch ($type) {
+			case 1:
+				return 'daily';
+			case 2:
+				return 'weekly';
+			case 3:
+				return 'monthly';
+		}
+		return 'total';
+	}
 
 }
