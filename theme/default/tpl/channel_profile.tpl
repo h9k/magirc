@@ -41,7 +41,7 @@ $(document).ready(function() {
 		}
 	});
 	$.getJSON('rest/service.php/channels/'+target+'/checkstats', function(data) {
-		if (!data) tabs.tabs("remove", 3);
+		if (!data) tabs.tabs("disable", 3);
 	});
 });
 {/literal}

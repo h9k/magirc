@@ -40,7 +40,7 @@ $(document).ready(function() {
 		}
 	});
 	$.getJSON('rest/service.php/users/'+mode+'/'+target+'/checkstats', function(data) {
-		if (!data) tabs.tabs("remove", 1);
+		if (!data) tabs.tabs("disable", 1);
 	});
 });
 {/literal}
