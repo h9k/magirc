@@ -21,9 +21,9 @@ require_once('../lib/magirc/Config.class.php');
 require_once('../lib/magirc/services/Service.interface.php');
 require_once('../lib/magirc/services/Anope.class.php');
 require_once('../lib/magirc/services/Denora.class.php');
-require_once('../lib/magirc/objects/Server.class.php');
-require_once('../lib/magirc/objects/Channel.class.php');
-require_once('../lib/magirc/objects/User.class.php');
+require_once('../lib/magirc/objects/ServerBase.class.php');
+require_once('../lib/magirc/objects/ChannelBase.class.php');
+require_once('../lib/magirc/objects/UserBase.class.php');
 require_once('../lib/magirc/Magirc.class.php');
 require '../vendor/autoload.php';
 

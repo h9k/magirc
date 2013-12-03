@@ -1,7 +1,6 @@
 <?php
 
-Class Server {
-
+abstract class ServerBase {
 	public $server;
 	public $online;
 	public $description;
@@ -24,9 +23,8 @@ Class Server {
 	public $country_code;
 
 	function __construct() {
-		$this->online = $this->online == 'Y';
+		$this->online = ($this->online == 'Y');
 		$this->motd_html = $this->motd ? Magirc::irc2html($this->motd) : null;
 		$this->motd = htmlentities($this->motd, ENT_COMPAT, "UTF-8");
 	}
-
 }

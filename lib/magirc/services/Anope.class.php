@@ -44,6 +44,9 @@ class Anope implements Service {
 		}
 		$this->db = Anope_DB::getInstance();
 		$this->cfg = new Config();
+		require_once(__DIR__.'/../objects/anope/Server.class.php');
+		require_once(__DIR__.'/../objects/anope/Channel.class.php');
+		require_once(__DIR__.'/../objects/anope/User.class.php');
 	}
 
 	public function getCurrentStatus() {
@@ -474,7 +477,7 @@ class Anope implements Service {
 		}
 		$query = "SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
-			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, i.modes
+			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, i.modes AS cmodes
 			FROM anope_ison AS i, anope_chan AS c, anope_user AS u, anope_server AS s
 			WHERE LOWER(c.channel) = LOWER(:channel)
 				AND i.chanid = c.chanid
@@ -920,9 +923,6 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
-	
-	public static function getSqlMode($mode) { return $mode; }
-	public static function getSqlModeData($mode) { return $mode; }
 	
 	/**
 	 * Returns the stats username and all aliases of a user

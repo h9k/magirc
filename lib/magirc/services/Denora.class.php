@@ -46,6 +46,9 @@ class Denora implements Service {
 		// Load the required classes
 		$this->db = Denora_db::getInstance();
 		$this->cfg = new Config();
+		require_once(__DIR__.'/../objects/denora/Server.class.php');
+		require_once(__DIR__.'/../objects/denora/Channel.class.php');
+		require_once(__DIR__.'/../objects/denora/User.class.php');
 	}
 
 	/**
@@ -443,6 +446,7 @@ class Denora implements Service {
 			topic, topicauthor AS topic_author, topictime AS topic_time, kickcount AS kicks, %s, %s FROM chan WHERE %s",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::chan_modes))),
 				implode(',', array_map(array('Denora', 'getSqlModeData'), str_split(Protocol::chan_modes_data))), $sWhere);
+		
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery);
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
@@ -452,6 +456,7 @@ class Denora implements Service {
 		} else {
 			$sQuery .= " ORDER BY `channel` ASC";
 		}
+		
 		$ps = $this->db->prepare($sQuery);
 		$ps->execute();
 		$aaData = $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');

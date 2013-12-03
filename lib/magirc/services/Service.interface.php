@@ -33,7 +33,4 @@ interface Service {
 	public function getUserHourlyActivity($mode, $user, $chan, $type);
 	public function checkUser($user, $mode);
 	public function checkUserStats($user, $mode);
-	
-	public static function getSqlMode($mode);
-	public static function getSqlModeData($mode);
 }

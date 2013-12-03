@@ -75,7 +75,9 @@ $(document).ready(function() {
 			{ "mDataProp": "nickname", "fnRender": function(oObj) {
 				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['nickname'] + getUserExtra(oObj.aData);
 			} },
-			{ "mDataProp": "cmodes" }
+			{ "mDataProp": "cmodes", "fnRender": function(oObj) {
+				return '+' + oObj.aData['cmodes'];
+			} }
 		]
 	});
 	$("#tbl_users tbody").on("click", "tr", function(event) {
