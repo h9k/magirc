@@ -52,7 +52,7 @@ $(document).ready(function() {
 		series: [{ name: 'Lines', data: [] }]
 	});
 	function updateChart() {
-		$.getJSON('rest/denora.php/users/'+mode+'/'+target+'/hourly/'+encodeURIComponent(chan)+'/'+type, function(result) {
+		$.getJSON('rest/service.php/users/'+mode+'/'+target+'/hourly/'+encodeURIComponent(chan)+'/'+type, function(result) {
 			chart_activity.series[0].setData(result);
 		});
 	}
@@ -63,7 +63,7 @@ $(document).ready(function() {
 		"bPaginate": false,
 		"bSort": false,
 		"bEscapeRegex": false,
-		"sAjaxSource": "rest/denora.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables',
+		"sAjaxSource": "rest/service.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "type", "fnRender": function (oObj) {
 				switch (oObj.aData['type']) {
@@ -86,7 +86,7 @@ $(document).ready(function() {
 	$("#type").buttonset();
 	$("#radio").change(function(event) {
 		chan = $('input[name=radio]:checked').val();
-		oTable.fnSettings().sAjaxSource = "rest/denora.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables';
+		oTable.fnSettings().sAjaxSource = "rest/service.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables';
 		oTable.fnReloadAjax();
 		updateChart();
 	});
@@ -94,7 +94,7 @@ $(document).ready(function() {
 		type = $('input[name=type]:checked').index() / 2;
 		updateChart();
 	});
-	$.getJSON("rest/denora.php/users/"+mode+"/"+target+"/channels", function(result) {
+	$.getJSON("rest/service.php/users/"+mode+"/"+target+"/channels", function(result) {
 		var i = 1;
 		$.each(result, function(key, value) {
 			$("#radio").append('<input type="radio" id="radio'+i+'" name="radio" value="'+value+'"\/><label for="radio'+i+'">'+value+'<\/label>');

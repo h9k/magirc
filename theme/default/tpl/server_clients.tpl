@@ -14,7 +14,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/servers/'+target+'/clients/percent', function(data) {
+    $.getJSON('rest/service.php/servers/'+target+'/clients/percent', function(data) {
 		var colors = Highcharts.getOptions().colors;
 		var clientData = data.clients;
 		var versionData = data.versions;
@@ -68,7 +68,7 @@ $(document).ready(function() {
 	$('#tbl_clients').dataTable({
 		"iDisplayLength": 10,
 		"aaSorting": [[ 1, "desc" ]],
-		"sAjaxSource": "rest/denora.php/servers/"+target+"/clients?format=datatables",
+		"sAjaxSource": "rest/service.php/servers/"+target+"/clients?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "client", "fnRender": function (oObj) {
 				return oObj.aData['client'] ? oObj.aData['client'] : mLang.Unknown;

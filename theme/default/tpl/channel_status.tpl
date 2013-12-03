@@ -52,7 +52,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$.getJSON('rest/denora.php/channels/'+target, function(result) {
+	$.getJSON('rest/service.php/channels/'+target, function(result) {
 		if (result.topic_html) {
 			$("#chan_topic").html(result.topic_html);
 			$("#chan_topic_author").html(result.topic_author);
@@ -70,7 +70,7 @@ $(document).ready(function() {
 		"iDisplayLength": 10,
 		"sPaginationType": "two_button",
 		"aaSorting": [[ 0, "asc" ]],
-		"sAjaxSource": 'rest/denora.php/channels/'+target+'/users?format=datatables',
+		"sAjaxSource": 'rest/service.php/channels/'+target+'/users?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "nickname", "fnRender": function(oObj) {
 				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['nickname'] + getUserExtra(oObj.aData);

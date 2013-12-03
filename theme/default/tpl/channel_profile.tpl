@@ -40,7 +40,7 @@ $(document).ready(function() {
 			});
 		}
 	});
-	$.getJSON('rest/denora.php/channels/'+target+'/checkstats', function(data) {
+	$.getJSON('rest/service.php/channels/'+target+'/checkstats', function(data) {
 		if (!data) tabs.tabs("remove", 3);
 	});
 });

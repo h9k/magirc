@@ -29,9 +29,12 @@ if (file_exists('vendor/autoload.php')) {
 require_once('lib/magirc/DB.class.php');
 require_once('lib/magirc/Config.class.php');
 require_once('lib/magirc/Magirc.class.php');
-require_once('lib/magirc/Service.interface.php');
-require_once('lib/magirc/anope/Anope.class.php');
-require_once('lib/magirc/denora/Denora.class.php');
+require_once('lib/magirc/services/Service.interface.php');
+require_once('lib/magirc/services/Anope.class.php');
+require_once('lib/magirc/services/Denora.class.php');
+require_once('lib/magirc/objects/Server.class.php');
+require_once('lib/magirc/objects/Channel.class.php');
+require_once('lib/magirc/objects/User.class.php');
 
 $magirc = new Magirc;
 

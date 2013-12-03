@@ -18,9 +18,12 @@ date_default_timezone_set('UTC');
 include_once('../lib/magirc/version.inc.php');
 require_once('../lib/magirc/DB.class.php');
 require_once('../lib/magirc/Config.class.php');
-require_once('../lib/magirc/Service.interface.php');
-require_once('../lib/magirc/anope/Anope.class.php');
-require_once('../lib/magirc/denora/Denora.class.php');
+require_once('../lib/magirc/services/Service.interface.php');
+require_once('../lib/magirc/services/Anope.class.php');
+require_once('../lib/magirc/services/Denora.class.php');
+require_once('../lib/magirc/objects/Server.class.php');
+require_once('../lib/magirc/objects/Channel.class.php');
+require_once('../lib/magirc/objects/User.class.php');
 require_once('../lib/magirc/Magirc.class.php');
 require '../vendor/autoload.php';
 
@@ -41,7 +44,7 @@ date_default_timezone_set($magirc->cfg->timezone);
  *
  * This will give you current network stats such as opers, channels, users, etc...
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/network/status
+ * Example: http://www.denorastats.org/magirc/rest/service.php/network/status
  *
  **/
 $magirc->slim->get('/network/status', function() use($magirc) {
@@ -53,7 +56,7 @@ $magirc->slim->get('/network/status', function() use($magirc) {
  *
  * This will give you max network stats such as opers, channels, users, etc...
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/network/max
+ * Example: http://www.denorastats.org/magirc/rest/service.php/network/max
  *
  **/
 $magirc->slim->get('/network/max', function() use($magirc) {
@@ -63,7 +66,7 @@ $magirc->slim->get('/network/max', function() use($magirc) {
 /**
  * Get the global client stats
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/network/clients
+ * Example: http://www.denorastats.org/magirc/rest/service.php/network/clients
  *
  **/
 $magirc->slim->get('/network/clients/percent', function() use($magirc) {
@@ -77,7 +80,7 @@ $magirc->slim->get('/network/clients', function($chan = null) use($magirc) {
 /**
  * Get the global country stats
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/network/countries
+ * Example: http://www.denorastats.org/magirc/rest/service.php/network/countries
  *
  **/
 $magirc->slim->get('/network/countries/percent', function() use($magirc) {
@@ -93,7 +96,7 @@ $magirc->slim->get('/network/countries', function() use($magirc) {
  *
  * This will give you a list of servers.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/servers
+ * Example: http://www.denorastats.org/magirc/rest/service.php/servers
  *
  **/
 $magirc->slim->get('/servers', function() use($magirc) {
@@ -105,7 +108,7 @@ $magirc->slim->get('/servers', function() use($magirc) {
  *
  * This will give hourly stats whose time is in the form of a unix timestamp.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/servers/
+ * Example: http://www.denorastats.org/magirc/rest/service.php/servers/
  *
  **/
 $magirc->slim->get('/servers/hourlystats', function() use($magirc) {
@@ -117,7 +120,7 @@ $magirc->slim->get('/servers/hourlystats', function() use($magirc) {
  *
  * This will show a servers MOTD
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/servers/s1.<domain>.<tld>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/servers/s1.<domain>.<tld>
  *
  **/
 $magirc->slim->get('/servers/:server', function($server) use($magirc) {
@@ -127,7 +130,7 @@ $magirc->slim->get('/servers/:server', function($server) use($magirc) {
 /**
  * Get the per server client stats
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/servers/<server>/clients
+ * Example: http://www.denorastats.org/magirc/rest/service.php/servers/<server>/clients
  *
  **/
 $magirc->slim->get('/servers/:server/clients/percent', function($server) use($magirc) {
@@ -141,7 +144,7 @@ $magirc->slim->get('/servers/:server/clients', function($server) use($magirc) {
 /**
  * Get the per server country stats
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/servers/<server>/countries
+ * Example: http://www.denorastats.org/magirc/rest/service.php/servers/<server>/countries
  *
  **/
 $magirc->slim->get('/servers/:server/countries/percent', function($server) use($magirc) {
@@ -158,7 +161,7 @@ $magirc->slim->get('/servers/:server/countries', function($server) use($magirc) 
  * This will get a list of channels with the current topic, topic author, users,
  * max users, etc...
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels
  *
  **/
 $magirc->slim->get('/channels', function() use($magirc) {
@@ -171,7 +174,7 @@ $magirc->slim->get('/channels', function() use($magirc) {
  * This will get hourly stats for the number of channels on the network. The time
  * is unix timestamp in milliseconds.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/hourlystats
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/hourlystats
  *
  **/
 $magirc->slim->get('/channels/hourlystats', function() use($magirc) {
@@ -184,7 +187,7 @@ $magirc->slim->get('/channels/hourlystats', function() use($magirc) {
  * This will get a list of the biggest channels on the network. A limit can be
  * defined (eg. 10, 5, 2).
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/biggest/<limit>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/biggest/<limit>
  *
  **/
 $magirc->slim->get('/channels/biggest(/:limit)', function($limit = 10) use($magirc) {
@@ -197,7 +200,7 @@ $magirc->slim->get('/channels/biggest(/:limit)', function($limit = 10) use($magi
  * This will get a list of the top channels on the network. A limit can be
  * defined (eg. 10, 5, 2).
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/top/<limit>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/top/<limit>
  **/
 $magirc->slim->get('/channels/top(/:limit)', function($limit = 10) use($magirc) {
 	$magirc->jsonOutput($magirc->service->getChannelTop((int) $limit), true, 'channel');
@@ -209,7 +212,7 @@ $magirc->slim->get('/channels/top(/:limit)', function($limit = 10) use($magirc) 
  * This will get a list of channels and their activity stats. The activity types
  * are topics, smileys, kicks, actions, modes, words, and letters.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/activity/<type>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/activity/<type>
  **/
 $magirc->slim->get('/channels/activity/:type', function($type) use($magirc) {
 	$magirc->jsonOutput($magirc->service->getChannelGlobalActivity($type, @$_GET['format'] == 'datatables'));
@@ -221,7 +224,7 @@ $magirc->slim->get('/channels/activity/:type', function($type) use($magirc) {
  * This will show the stats for a specific channel. Stats include name,
  * max users, topic, topic author and more.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>
  *
  **/
 $magirc->slim->get('/channels/:chan', function($chan) use($magirc) {
@@ -235,7 +238,7 @@ $magirc->slim->get('/channels/:chan', function($chan) use($magirc) {
  * This will show the stats for a specific channel. Stats include name,
  * max users, topic, topic author and more.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>/users
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>/users
  *
  **/
 $magirc->slim->get('/channels/:chan/users', function($chan) use($magirc) {
@@ -249,7 +252,7 @@ $magirc->slim->get('/channels/:chan/users', function($chan) use($magirc) {
  * This will show the activity stats for a specific channel. The activity types
  * are topics, smileys, kicks, actions, modes, words, and letters.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>/activity/<type>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>/activity/<type>
  *
  **/
 $magirc->slim->get('/channels/:chan/activity/:type', function($chan, $type) use($magirc) {
@@ -263,7 +266,7 @@ $magirc->slim->get('/channels/:chan/activity/:type', function($chan, $type) use(
  * This will show the hourly activity stats for a specific channel. The activity types
  * are topics, smileys, kicks, actions, modes, words, and letters.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>/hourly/activity/<type>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>/hourly/activity/<type>
  *
  **/
 $magirc->slim->get('/channels/:chan/hourly/:type', function($chan, $type) use($magirc) {
@@ -272,9 +275,9 @@ $magirc->slim->get('/channels/:chan/hourly/:type', function($chan, $type) use($m
 });
 
 /**
- * Check if channel is being monitored by Denora chanstats
+ * Check if channel is being monitored by Chanstats
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>/checkstats
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>/checkstats
  *
  **/
 $magirc->slim->get('/channels/:chan/checkstats', function($chan) use($magirc) {
@@ -285,7 +288,7 @@ $magirc->slim->get('/channels/:chan/checkstats', function($chan) use($magirc) {
 /**
  * Get the per channel client stats
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>/clients
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>/clients
  *
  **/
 $magirc->slim->get('/channels/:chan/clients/percent', function($chan) use($magirc) {
@@ -301,7 +304,7 @@ $magirc->slim->get('/channels/:chan/clients', function($chan) use($magirc) {
 /**
  * Get the per channel country stats
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/%23<channel>/countries
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>/countries
  *
  **/
 $magirc->slim->get('/channels/:chan/countries/percent', function($chan) use($magirc) {
@@ -321,7 +324,7 @@ $magirc->slim->get('/channels/:chan/countries', function($chan) use($magirc) {
  * This will show hourly stats for users on the network with unix timestamps in
  * milliseconds.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/users/hourlystats
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/users/hourlystats
  *
  **/
 $magirc->slim->get('/users/hourlystats', function() use($magirc) {
@@ -334,7 +337,7 @@ $magirc->slim->get('/users/hourlystats', function() use($magirc) {
  * This will show hourly stats for users on the network with unix timestamps in
  * milliseconds.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/channels/users/top/<limit>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/channels/users/top/<limit>
  *
  **/
 $magirc->slim->get('/users/top(/:limit)', function($limit = 10) use($magirc) {
@@ -347,7 +350,7 @@ $magirc->slim->get('/users/top(/:limit)', function($limit = 10) use($magirc) {
  * This will show the activity stats for a specific user. The activity types
  * are topics, smileys, kicks, actions, modes, words, and letters.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/activity/<type>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/activity/<type>
  *
  **/
 $magirc->slim->get('/users/activity/:type', function($type) use($magirc) {
@@ -367,8 +370,8 @@ $magirc->slim->get('/users/activity/:type', function($type) use($magirc) {
  *
  * This will show user specific stats such as real name, alias, username, nick, etc...
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/nick/<nick>
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/stats/<nick>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/nick/<nick>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/stats/<nick>
  *
  **/
 $magirc->slim->get('/users/:mode/:user', function($mode, $user) use($magirc) {
@@ -380,8 +383,8 @@ $magirc->slim->get('/users/:mode/:user', function($mode, $user) use($magirc) {
  *
  * This will show a list of channels in which a given users resides.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/nick/<nick>/channels
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/stats/<nick>/channels
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/nick/<nick>/channels
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/stats/<nick>/channels
  *
  **/
 $magirc->slim->get('/users/:mode/:user/channels', function($mode, $user) use($magirc) {
@@ -393,8 +396,8 @@ $magirc->slim->get('/users/:mode/:user/channels', function($mode, $user) use($ma
  *
  * This will show activity stats for a specific user in a given channel.
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/nick/<nick>/channels
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/stats/<nick>/channels
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/nick/<nick>/channels
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/stats/<nick>/channels
  *
  **/
 $magirc->slim->get('/users/:mode/:user/activity(/:chan)', function($mode, $user, $chan = 'global') use($magirc) {
@@ -406,8 +409,8 @@ $magirc->slim->get('/users/:mode/:user/activity(/:chan)', function($mode, $user,
  *
  * This will show hourly activity stats for a specific user in a given channel
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/nick/<nick>/hourly/<channel>/<type>
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/stats/<nick>/hourly/<channel>/<type>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/nick/<nick>/hourly/<channel>/<type>
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/stats/<nick>/hourly/<channel>/<type>
  *
  **/
 $magirc->slim->get('/users/:mode/:user/hourly/:chan/:type', function($mode, $user, $chan, $type) use($magirc) {
@@ -417,8 +420,8 @@ $magirc->slim->get('/users/:mode/:user/hourly/:chan/:type', function($mode, $use
 /**
  * Check if user is being monitored by Chanstats
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/nick/<nick>/checkstats
- * Example: http://www.denorastats.org/magirc/rest/denora.php/users/stats/<nick>/checkstats
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/nick/<nick>/checkstats
+ * Example: http://www.denorastats.org/magirc/rest/service.php/users/stats/<nick>/checkstats
  *
  **/
 $magirc->slim->get('/users/:mode/:user/checkstats', function($mode, $user) use($magirc) {
@@ -431,7 +434,7 @@ $magirc->slim->get('/users/:mode/:user/checkstats', function($mode, $user) use($
  * This will show a list of IRC Operators along with the server that they reside
  * on as well as nick, country, level, away, etc...
  *
- * Example: http://www.denorastats.org/magirc/rest/denora.php/operators
+ * Example: http://www.denorastats.org/magirc/rest/service.php/operators
  *
  **/
 $magirc->slim->get('/operators', function() use($magirc) {

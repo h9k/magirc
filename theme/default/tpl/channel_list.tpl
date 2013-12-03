@@ -21,7 +21,7 @@ $(document).ready(function() {
 		"bServerSide": true,
 		"iDisplayLength": 25,
 		"aaSorting": [[ 1, "desc" ]],
-		"sAjaxSource": "rest/denora.php/channels?format=datatables",
+		"sAjaxSource": "rest/service.php/channels?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel", "fnRender": function (oObj) {
 				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];

@@ -30,7 +30,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$.getJSON("rest/denora.php/servers/"+target, function(data){
+	$.getJSON("rest/service.php/servers/"+target, function(data){
 		if (data) {
 			$("#dialog-server").dialog("option", "title", data.server);
 			$("#srv_description").html(data.description);

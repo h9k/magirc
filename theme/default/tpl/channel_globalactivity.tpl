@@ -27,7 +27,7 @@ $(document).ready(function() {
 		"bServerSide": true,
 		"iDisplayLength": 25,
 		"aaSorting": [[ 3, "desc" ]],
-		"sAjaxSource": "rest/denora.php/channels/activity/"+type+"?format=datatables",
+		"sAjaxSource": "rest/service.php/channels/activity/"+type+"?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "name", "fnRender": function (oObj) {
 				return getChannelLinks(oObj.aData['name']) + ' ' + oObj.aData['name'];
@@ -52,7 +52,7 @@ $(document).ready(function() {
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').index() / 2;
-		oTable.fnSettings().sAjaxSource = "rest/denora.php/channels/activity/"+type+"?format=datatables";
+		oTable.fnSettings().sAjaxSource = "rest/service.php/channels/activity/"+type+"?format=datatables";
 		oTable.fnDraw();
 	});
 });

@@ -132,7 +132,7 @@ $(document).ready(function() {
 		}
 	}
 	function updateStatus() {
-		$.getJSON('rest/denora.php/network/status', function(result) {
+		$.getJSON('rest/service.php/network/status', function(result) {
 			var x = (new Date()).getTime();
 			chart_line.series[0].addPoint([x, result.servers.val], true, true);
 			chart_line.series[1].addPoint([x, result.chans.val], true, true);
@@ -164,7 +164,7 @@ $(document).ready(function() {
 		});
 	}
 	function updateMax() {
-		$.getJSON('rest/denora.php/network/max', function(result) {
+		$.getJSON('rest/service.php/network/max', function(result) {
 			$("#net_users_max").html(result.users.val);
 			$("#net_chans_max").html(result.channels.val);
 			$("#net_servers_max").html(result.servers.val);
@@ -195,7 +195,7 @@ $(document).ready(function() {
 		"bPaginate": false,
 		"bSort": false,
 		"bEscapeRegex": false,
-		"sAjaxSource": "rest/denora.php/channels/biggest/10?format=datatables",
+		"sAjaxSource": "rest/service.php/channels/biggest/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel", "fnRender": function (oObj) {
 				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
@@ -218,7 +218,7 @@ $(document).ready(function() {
 		"bPaginate": false,
 		"bSort": false,
 		"bEscapeRegex": false,
-		"sAjaxSource": "rest/denora.php/channels/top/10?format=datatables",
+		"sAjaxSource": "rest/service.php/channels/top/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "channel", "fnRender": function (oObj) {
 				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
@@ -241,7 +241,7 @@ $(document).ready(function() {
 		"bPaginate": false,
 		"bSort": false,
 		"bEscapeRegex": false,
-		"sAjaxSource": "rest/denora.php/users/top/10?format=datatables",
+		"sAjaxSource": "rest/service.php/users/top/10?format=datatables",
 		"aoColumns": [
 			{ "mDataProp": "uname", "fnRender": function(oObj) {
 				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['uname'] + getUserExtra(oObj.aData);

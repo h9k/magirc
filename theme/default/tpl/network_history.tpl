@@ -11,7 +11,7 @@ $(document).ready(function() {
 		namesLang = { 'servers': mLang.Servers, 'channels': mLang.Channels, 'users': mLang.Users };
 
     $.each(names, function(i, name) {
-        $.getJSON('rest/denora.php/'+ name.toLowerCase() +'/hourlystats', function(data) {
+        $.getJSON('rest/service.php/'+ name.toLowerCase() +'/hourlystats', function(data) {
             seriesOptions[i] = { name: namesLang[name], data: data };
             seriesCounter++;
             if (seriesCounter == names.length) {

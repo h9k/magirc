@@ -17,7 +17,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/denora.php/users/'+mode+'/'+target, function(result) {
+    $.getJSON('rest/service.php/users/'+mode+'/'+target, function(result) {
 		if (result) {
 			var aliases = '', status = '', status_extra = '';
 			$("#user_nick").html(result.nickname);

@@ -35,9 +35,9 @@ class Denora implements Service {
 	private $db;
 	private $cfg;
 
-	function __construct() {
+	public function __construct() {
 		// Get the ircd
-		$ircd_file = PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php";
+		$ircd_file = PATH_ROOT . "lib/magirc/ircds/" . IRCD . ".inc.php";
 		if (file_exists($ircd_file)) {
 			require_once($ircd_file);
 		} else {
@@ -46,14 +46,13 @@ class Denora implements Service {
 		// Load the required classes
 		$this->db = Denora_db::getInstance();
 		$this->cfg = new Config();
-		require_once(__DIR__ . '/Objects.class.php');
 	}
 
 	/**
 	 * Returns the current status
 	 * @return array of arrays (int val, int time)
 	 */
-	function getCurrentStatus() {
+	public function getCurrentStatus() {
 		$query = "SELECT type, val, FROM_UNIXTIME(time) AS time FROM current";
 		$this->db->query($query, SQL_ALL, SQL_ASSOC);
 		$result = $this->db->record;
@@ -68,7 +67,7 @@ class Denora implements Service {
 	 * Returns the ma values
 	 * @return array of arrays (int val, int time)
 	 */
-	function getMaxValues() {
+	public function getMaxValues() {
 		$query = "SELECT type, val, time FROM maxvalues";
 		$this->db->query($query, SQL_ALL, SQL_ASSOC);
 		$result = $this->db->record;
@@ -112,7 +111,7 @@ class Denora implements Service {
 	 * @param string $target Target (channel or server name, depends on $mode)
 	 * @return int User count
 	 */
-	function getUserCount($mode = null, $target = null) {
+	public function getUserCount($mode = null, $target = null) {
 		$query = "SELECT COUNT(*) FROM user
 			JOIN server ON server.servid = user.servid";
 		if ($mode == 'channel' && $target) {
@@ -183,7 +182,7 @@ class Denora implements Service {
 	 * @param string $target Target
 	 * @return array Data
 	 */
-	function getClientStats($mode = null, $target = null) {
+	public function getClientStats($mode = null, $target = null) {
 		return $this->getPieStats('clients', $mode, $target);
 	}
 
@@ -193,7 +192,7 @@ class Denora implements Service {
 	 * @param string $target Target
 	 * @return array Data
 	 */
-	function getCountryStats($mode = null, $target = null) {
+	public function getCountryStats($mode = null, $target = null) {
 		return $this->getPieStats('countries', $mode, $target);
 	}
 
@@ -203,7 +202,7 @@ class Denora implements Service {
 	 * @param type $sum user count
 	 * @return array of arrays (string 'name', int 'count', double 'y')
 	 */
-	function makeCountryPieData($result, $sum) {
+	public function makeCountryPieData($result, $sum) {
 		$data = array();
 		$unknown = 0;
 		$other = 0;
@@ -232,7 +231,7 @@ class Denora implements Service {
 	 * @param type $sum user count
 	 * @return array (clients => (name, count, y), versions (name, version, cat, count, y))
 	 */
-	function makeClientPieData($result, $sum) {
+	public function makeClientPieData($result, $sum) {
 		$clients = array();
 		foreach ($result as $client) {
 			// Determine client name and version
@@ -317,7 +316,7 @@ class Denora implements Service {
 	 * @param string $table 'users', 'channels', 'servers'
 	 * @return array of arrays (int milliseconds, int value)
 	 */
-	function getHourlyStats($table) {
+	public function getHourlyStats($table) {
 		switch ($table) {
 			case 'users': $table = 'stats'; break;
 			case 'channels': $table = 'channelstats'; break;
@@ -342,7 +341,7 @@ class Denora implements Service {
 	 * Gets a list of servers
 	 * @return array of Server
 	 */
-	function getServerList() {
+	public function getServerList() {
 		$sWhere = "";
 		$hide_servers = $this->cfg->hide_servers;
 		if ($hide_servers) {
@@ -366,7 +365,7 @@ class Denora implements Service {
 	 * @param string $server Server name
 	 * @return Server
 	 */
-	function getServer($server) {
+	public function getServer($server) {
 		$query = "SELECT server, online, comment AS description, connecttime AS connect_time, lastsplit AS split_time, version,
 			uptime, motd, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time, ping, highestping AS ping_max,
 			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time, country, countrycode AS country_code
@@ -381,7 +380,7 @@ class Denora implements Service {
 	 * Get the list of Operators currently online
 	 * @return array of User
 	 */
-	function getOperatorList() {
+	public function getOperatorList() {
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s,
@@ -420,7 +419,7 @@ class Denora implements Service {
 	 * @param boolean $datatables Set true to enable server-side datatables functionality
 	 * @return array of Channel
 	 */
-	function getChannelList($datatables = false) {
+	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 
@@ -468,7 +467,7 @@ class Denora implements Service {
 	 * @param int $limit
 	 * @return array of Channel
 	 */
-	function getChannelBiggest($limit = 10) {
+	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 		$query = "SELECT channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time FROM chan WHERE currentusers > 0";
@@ -494,7 +493,7 @@ class Denora implements Service {
 	 * @param int $limit
 	 * @return array of channel stats
 	 */
-	function getChannelTop($limit = 10) {
+	public function getChannelTop($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 		$query = "SELECT chan AS channel, line AS 'lines' FROM cstats, chan WHERE BINARY LOWER(cstats.chan)=LOWER(chan.channel) AND cstats.type=1 AND cstats.line >= 1";
@@ -520,7 +519,7 @@ class Denora implements Service {
 	 * @param int $limit
 	 * @return array of user stats
 	 */
-	function getUsersTop($limit = 10) {
+	public function getUsersTop($limit = 10) {
 		$aaData = array();
 		$ps = $this->db->prepare("SELECT uname, line AS 'lines' FROM ustats WHERE type = 1 AND chan='global' AND line >= 1 ORDER BY line DESC LIMIT :limit");
 		$ps->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -543,7 +542,7 @@ class Denora implements Service {
 	 * @param string $chan Channel
 	 * @return Channel
 	 */
-	function getChannel($chan) {
+	public function getChannel($chan) {
 		$sQuery = sprintf("SELECT channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time,
 			topic, topicauthor AS topic_author, topictime AS topic_time, kickcount AS kicks, %s, %s
 			FROM chan WHERE BINARY LOWER(channel) = LOWER(:chan)",
@@ -560,7 +559,7 @@ class Denora implements Service {
 	 * @param string $chan
 	 * @return int code (200: OK, 404: not existing, 403: denied)
 	 */
-	function checkChannel($chan) {
+	public function checkChannel($chan) {
 		$noshow = array();
 		$no = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($no); $i++) {
@@ -594,7 +593,7 @@ class Denora implements Service {
 	 * @param string $chan Channel
 	 * @return boolean true: yes, false: no
 	 */
-	function checkChannelStats($chan) {
+	public function checkChannelStats($chan) {
 		$sQuery = "SELECT COUNT(*) FROM cstats WHERE chan=:channel";
 		$ps = $this->db->prepare($sQuery);
 		$ps->bindParam(':channel', $chan, PDO::PARAM_STR);
@@ -608,7 +607,7 @@ class Denora implements Service {
 	 * @param string $chan Channel
 	 * @return array of User
 	 */
-	function getChannelUsers($chan) {
+	public function getChannelUsers($chan) {
 		if ($this->checkChannel($chan) != 200) {
 			return null;
 		}
@@ -635,7 +634,7 @@ class Denora implements Service {
 	 * @return array Data
 	 * @todo refactor
 	 */
-	function getChannelGlobalActivity($type, $datatables = false) {
+	public function getChannelGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
@@ -689,7 +688,7 @@ class Denora implements Service {
 	 * @return User
 	 * @todo refactor
 	 */
-	function getChannelActivity($chan, $type, $datatables = false) {
+	public function getChannelActivity($chan, $type, $datatables = false) {
 		$aaData = array();
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats WHERE chan=:channel AND type=:type AND letters > 0 ";
 		if ($datatables) {
@@ -731,7 +730,7 @@ class Denora implements Service {
 	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
 	 * @return mixed
 	 */
-	function getChannelHourlyActivity($chan, $type) {
+	public function getChannelHourlyActivity($chan, $type) {
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM cstats WHERE chan=:channel AND type=:type";
 		$ps = $this->db->prepare($sQuery);
@@ -756,7 +755,7 @@ class Denora implements Service {
 	 * @return array
 	 * @todo refactor
 	 */
-	function getUserGlobalActivity($type, $datatables = false) {
+	public function getUserGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname,letters,words,line AS 'lines',
@@ -812,7 +811,7 @@ class Denora implements Service {
 	 * @return mixed
 	 * @todo refactor
 	 */
-	function getUserHourlyActivity($mode, $user, $chan, $type) {
+	public function getUserHourlyActivity($mode, $user, $chan, $type) {
 		$info = $this->getUserData($mode, $user);
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM ustats WHERE uname=:uname AND chan=:channel AND type=:type";
@@ -838,7 +837,7 @@ class Denora implements Service {
 	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
 	 * @return boolean true: yes, false: no
 	 */
-	function checkUser($user, $mode) {
+	public function checkUser($user, $mode) {
 		if ($mode == "stats") {
 			$query = "SELECT uname FROM ustats WHERE LOWER(uname) = LOWER(:user)";
 		} else {
@@ -856,7 +855,7 @@ class Denora implements Service {
 	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
 	 * @return boolean true: yes, false: no
 	 */
-	function checkUserStats($user, $mode) {
+	public function checkUserStats($user, $mode) {
 		if ($mode != 'stats') {
 			$user = $this->getUnameFromNick($user);
 		}
@@ -890,7 +889,7 @@ class Denora implements Service {
 	 * @param string $user
 	 * @return User
 	 */
-	function getUser($mode, $user) {
+	public function getUser($mode, $user) {
 		$info = $this->getUserData($mode, $user);
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
@@ -917,7 +916,7 @@ class Denora implements Service {
 	 * @param string $user
 	 * @return array of channel names
 	 */
-	function getUserChannels($mode, $user) {
+	public function getUserChannels($mode, $user) {
 		$info = $this->getUserData($mode, $user);
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
@@ -956,7 +955,7 @@ class Denora implements Service {
 	 * @return mixed
 	 * @todo refactor
 	 */
-	function getUserActivity($mode, $user, $chan) {
+	public function getUserActivity($mode, $user, $chan) {
 		$info = $this->getUserData($mode, $user);
 		if ($chan == 'global') {
 			$sQuery = "SELECT type,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics

@@ -19,7 +19,7 @@ $(document).ready(function() {
 	$('#tbl_operators').dataTable({
 		"iDisplayLength": 25,
 		"aaSorting": [[ 0, "asc" ]],
-		"sAjaxSource": 'rest/denora.php/operators?format=datatables',
+		"sAjaxSource": 'rest/service.php/operators?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "nickname", "fnRender": function(oObj) {
 				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['nickname'] + getUserExtra(oObj.aData);

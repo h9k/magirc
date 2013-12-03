@@ -34,9 +34,9 @@ class Anope implements Service {
 	private $db;
 	private $cfg;
 	
-	function __construct() {
+	public function __construct() {
 		// Get the ircd
-		$ircd_file = PATH_ROOT . "lib/magirc/denora/protocol/" . IRCD . ".inc.php";
+		$ircd_file = PATH_ROOT . "lib/magirc/ircds/" . IRCD . ".inc.php";
 		if (file_exists($ircd_file)) {
 			require_once($ircd_file);
 		} else {
@@ -44,14 +44,22 @@ class Anope implements Service {
 		}
 		$this->db = Anope_DB::getInstance();
 		$this->cfg = new Config();
-		require_once(__DIR__ . '/../denora/Objects.class.php');
 	}
+
+	public function getCurrentStatus() { }
+	public function getMaxValues() { }
+	public function getUserCount($mode = null, $target = null) { }
+	public function getClientStats($mode = null, $target = null) { }
+	public function getCountryStats($mode = null, $target = null) { }
+	public function makeCountryPieData($result, $sum) { }
+	public function makeClientPieData($result, $sum) { }
+	public function getHourlyStats($table) { }
 	
 	/**
 	 * Gets a list of servers
 	 * @return array of Server
 	 */
-	function getServerList() {
+	public function getServerList() {
 		$sWhere = "";
 		$hide_servers = $this->cfg->hide_servers;
 		if ($hide_servers) {
@@ -70,13 +78,15 @@ class Anope implements Service {
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_CLASS, 'Server');
 	}
+	public function getServer($server) { }
+	public function getOperatorList() { }	
 	
 	/**
 	 * Gets the list of current channels
 	 * @param boolean $datatables Set true to enable server-side datatables functionality
 	 * @return array of Channel
 	 */
-	function getChannelList($datatables = false) {
+	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 
@@ -116,7 +126,10 @@ class Anope implements Service {
 		}
 		return $aaData;
 	}
-	
+	public function getChannelBiggest($limit = 10) { }
+	public function getChannelTop($limit = 10) { }	
+	public function getChannel($chan) { }
+	public function getChannelUsers($chan) { }
 	/**
 	 * Gets the global channel activity
 	 * @param int $type 0: total, 1: day, 2: week, 3: month, 4: year
@@ -124,7 +137,7 @@ class Anope implements Service {
 	 * @return array Data
 	 * @todo refactor
 	 */
-	function getChannelGlobalActivity($type, $datatables = false) {
+	public function getChannelGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
@@ -183,4 +196,21 @@ class Anope implements Service {
 		}
 		return $aaData;
 	}
+	public function getChannelActivity($chan, $type, $datatables = false) { }
+	public function getChannelHourlyActivity($chan, $type) { }
+	public function checkChannel($chan) { }	
+	public function checkChannelStats($chan) { }
+	
+	public function getUsersTop($limit = 10) { }
+	public function getUser($mode, $user) { }
+	public function getUserChannels($mode, $user) { }
+	public function getUserGlobalActivity($type, $datatables = false) { }
+	public function getUserActivity($mode, $user, $chan) { }
+	public function getUserHourlyActivity($mode, $user, $chan, $type) { }
+	public function checkUser($user, $mode) { }
+	public function checkUserStats($user, $mode) { }
+	
+	public static function getSqlMode($mode) { }
+	public static function getSqlModeData($mode) { }
+
 }
