@@ -1,5 +1,5 @@
 <?php
-// Ratbox protocol file for Denora support on Magirc
+// Ratbox protocol file for Magirc
 
 class Protocol {
 	const ircd = 'ratbox';

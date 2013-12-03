@@ -1,5 +1,5 @@
 <?php
-// Scarynet protocol file for Denora support on Magirc
+// Scarynet protocol file for Magirc
 
 class Protocol {
 	const ircd = 'scarynet';

@@ -1,5 +1,5 @@
 <?php
-// Unreal 3.2 protocol file for Denora support on Magirc
+// Unreal 3.2 protocol file for Magirc
 
 class Protocol {
 	const ircd = 'unreal32';

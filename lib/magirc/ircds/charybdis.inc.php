@@ -1,5 +1,5 @@
 <?php
-// Charybdis protocol file for Denora support on Magirc
+// Charybdis protocol file for Magirc
 
 class Protocol {
 	const ircd = 'charybdis';

@@ -1,5 +1,5 @@
 <?php
-// IRCu protocol file for Denora support on Magirc
+// IRCu protocol file for Magirc
 
 class Protocol {
 	const ircd = 'ircu';

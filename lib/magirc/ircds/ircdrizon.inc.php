@@ -1,5 +1,5 @@
 <?php
-// ircd-rizon protocol file for Denora support on Magirc
+// ircd-rizon protocol file for Magirc
 
 class Protocol {
 	const ircd = 'ircdrizon';

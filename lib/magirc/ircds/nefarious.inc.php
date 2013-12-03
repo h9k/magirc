@@ -1,5 +1,5 @@
 <?php
-// Nefarious 13 protocol file for Denora support on Magirc
+// Nefarious 13 protocol file for Magirc
 
 class Protocol {
 	const ircd = 'nefarious';

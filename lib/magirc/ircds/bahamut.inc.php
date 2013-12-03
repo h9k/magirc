@@ -1,5 +1,5 @@
 <?php
-// Bahamut protocol file for Denora support on Magirc
+// Bahamut protocol file for Magirc
 
 class Protocol {
 	const ircd = 'bahamut';
