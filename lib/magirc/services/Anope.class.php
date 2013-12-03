@@ -888,7 +888,7 @@ class Anope implements Service {
 	 */
 	public function checkUser($user, $mode) {
 		if ($mode == "stats") {
-			$query = "SELECT nick FROM anope_chanstats WHERE LOWER(nick) = LOWER(:user)";
+			$query = "SELECT nick FROM anope_user WHERE LOWER(account) = LOWER(:user)";
 		} else {
 			$query = "SELECT nick FROM anope_user WHERE LOWER(nick) = LOWER(:user)";
 		}
@@ -925,7 +925,14 @@ class Anope implements Service {
 	 * @return array ('nick' => nickname, 'uname' => stats username, 'aliases' => array of aliases)
 	 */
 	private function getUserData($mode, $user) {
-		return array('nick' => $user, 'uname' => $user, 'aliases' => array($user));
+		$uname = ($mode == "stats") ? $user : $this->getUnameFromNick($user);
+		$aliases = $this->getUnameAliases($uname);
+		if (!$aliases) {
+			$aliases = array($uname ? $uname : $user);
+		}
+		$nick = ($mode == "stats") ? $aliases[0] : $user;
+		array_shift($aliases);
+		return array('nick' => $nick, 'uname' => $uname, 'aliases' => $aliases);
 	}
 	
 	/**
@@ -934,7 +941,25 @@ class Anope implements Service {
 	 * @return string chanstats username
 	 */
 	private function getUnameFromNick($nick) {
-		return $nick;
+		$ps = $this->db->prepare("SELECT account FROM anope_user WHERE nick = :nickname");
+		$ps->bindValue(':nickname', $nick, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN);
+	}
+
+	/**
+	 * Get all nicknames linked to a chanstats user
+	 * @param string $uname chanstats username
+	 * @return array of nicknames
+	 */
+	private function getUnameAliases($uname) {
+		$ps = $this->db->prepare("SELECT u.nick
+			FROM anope_user AS u
+			WHERE u.account = :uname
+			ORDER BY u.signon ASC");
+		$ps->bindValue(':uname', $uname, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_COLUMN);
 	}
 	
 	/**
