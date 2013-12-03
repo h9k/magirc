@@ -289,9 +289,12 @@ class Anope implements Service {
 	 * @return Server
 	 */
 	public function getServer($server) {
-		$query = "SELECT name AS server, online, comment AS description, link_time AS connect_time, split_time, version, currentusers AS users
-			FROM anope_server AS server WHERE name = :server";
-		//TODO: MISSING! uptime, motd, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time, ping, highestping AS ping_max, FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time, country, countrycode AS country_code
+		$query = "SELECT s.name AS server, online, comment AS description, link_time AS connect_time, split_time, version, currentusers AS users, maxusers AS users_max, maxtime AS users_max_time
+			FROM anope_server AS s
+			LEFT JOIN anope_maxusers AS m ON m.name = s.name
+			WHERE s.name = :server
+";
+		//TODO: MISSING! uptime, motd, ping, highestping AS ping_max, FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time, country, countrycode AS country_code
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':server', $server, PDO::PARAM_STR);
 		$stmt->execute();
@@ -305,7 +308,7 @@ class Anope implements Service {
 	public function getOperatorList() {
 		$query = "SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
-			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes
+			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes AS umodes
 			FROM anope_user AS u
 			LEFT JOIN anope_server AS s ON s.id = u.servid WHERE";
 		//TODO: MISSING! u.online, u.swhois, u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, s.country AS server_country, s.countrycode AS server_country_code
@@ -366,8 +369,8 @@ class Anope implements Service {
 			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(",", $hide_channels));
 		}
 
-		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, topic, topicauthor AS topic_author, topictime AS topic_time, modes FROM anope_chan WHERE %s", $sWhere);
-		//TODO: MISSING! maxusers AS users_max, maxusertime AS users_max_time, kickcount AS kicks
+		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, topic, topicauthor AS topic_author, topictime AS topic_time, modes, maxusers AS users_max, maxtime AS users_max_time FROM anope_chan AS c LEFT JOIN anope_maxusers AS m ON m.name = c.channel WHERE %s", $sWhere);
+		//TODO: MISSING! kickcount AS kicks
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery);
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
@@ -395,8 +398,10 @@ class Anope implements Service {
 	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
-		$query = "SELECT channel, currentusers AS users FROM anope_chan WHERE currentusers > 0";
-		//TODO: MISSING! maxusers AS users_max, maxusertime AS users_max_time
+		$query = "SELECT channel, currentusers AS users, maxusers AS users_max, maxtime AS users_max_time"
+				. " FROM anope_chan AS c"
+				. " LEFT JOIN anope_maxusers AS m ON m.name = c.channel"
+				. " WHERE currentusers > 0";
 		if ($secret_mode) {
 			$query .= sprintf(" AND modes NOT LIKE '%%%s%%'", $secret_mode);
 		}
@@ -446,10 +451,11 @@ class Anope implements Service {
 	 * @return Channel
 	 */
 	public function getChannel($chan) {
-		$sQuery = "SELECT channel, currentusers AS users,
-			topic, topicauthor AS topic_author, topictime AS topic_time, modes
-			FROM anope_chan AS chan WHERE BINARY LOWER(channel) = LOWER(:chan)";
-		//TODO: MISSING! maxusers AS users_max, maxusertime AS users_max_time, kickcount AS kicks
+		$sQuery = "SELECT channel, currentusers AS users, topic, topicauthor AS topic_author, topictime AS topic_time, modes, maxusers AS users_max, maxtime AS users_max_time
+			FROM anope_chan AS c
+			LEFT JOIN anope_maxusers AS m ON m.name = c.channel
+			WHERE BINARY LOWER(channel) = LOWER(:chan)";
+		//TODO: MISSING! kickcount AS kicks
 		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':chan', $chan, PDO::PARAM_STR);
 		$ps->execute();
@@ -687,7 +693,7 @@ class Anope implements Service {
 		$info = $this->getUserData($mode, $user);
 		$query = "SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
-			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes
+			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes AS umodes
 			FROM anope_user AS u
 			LEFT JOIN anope_server AS s ON s.id = u.servid
 			WHERE u.nick = :nickname";

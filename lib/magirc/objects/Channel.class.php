@@ -24,7 +24,10 @@ class Channel {
 		$this->DT_RowId = $this->channel;
 		$this->topic_html = $this->topic ? Magirc::irc2html($this->topic) : null;
 		$this->topic = htmlentities($this->topic, ENT_COMPAT, "UTF-8");
-		$this->users_max_time = date('Y-m-d H:i:s', $this->users_max_time);
+		
+		if ($this->modes)
+			return;
+		
 		// Channel modes
 		for ($j = 97; $j <= 122; $j++) {
 			$mode_l = 'mode_l'.chr($j);

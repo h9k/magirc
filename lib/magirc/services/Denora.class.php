@@ -439,7 +439,7 @@ class Denora implements Service {
 			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(",", $hide_channels));
 		}
 
-		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time,
+		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time,
 			topic, topicauthor AS topic_author, topictime AS topic_time, kickcount AS kicks, %s, %s FROM chan WHERE %s",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::chan_modes))),
 				implode(',', array_map(array('Denora', 'getSqlModeData'), str_split(Protocol::chan_modes_data))), $sWhere);
@@ -470,7 +470,7 @@ class Denora implements Service {
 	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
-		$query = "SELECT channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time FROM chan WHERE currentusers > 0";
+		$query = "SELECT channel, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time FROM chan WHERE currentusers > 0";
 		if ($secret_mode) {
 			$query .= sprintf(" AND %s='N'", self::getSqlMode($secret_mode));
 		}
@@ -543,7 +543,7 @@ class Denora implements Service {
 	 * @return Channel
 	 */
 	public function getChannel($chan) {
-		$sQuery = sprintf("SELECT channel, currentusers AS users, maxusers AS users_max, maxusertime AS users_max_time,
+		$sQuery = sprintf("SELECT channel, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time,
 			topic, topicauthor AS topic_author, topictime AS topic_time, kickcount AS kicks, %s, %s
 			FROM chan WHERE BINARY LOWER(channel) = LOWER(:chan)",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::chan_modes))),

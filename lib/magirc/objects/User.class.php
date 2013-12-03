@@ -46,6 +46,8 @@ Class User {
 		$this->service = $this->service == 'Y';
 		if (Protocol::host_cloaking && !empty($this->hostname_cloaked)) $this->hostname = $this->hostname_cloaked;
 		
+		if ($this->umodes)
+			return;
 		// User modes
 		for ($j = 97; $j <= 122; $j++) {
 			$mode_l = 'mode_l'.chr($j);
