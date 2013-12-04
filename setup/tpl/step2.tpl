@@ -25,6 +25,10 @@
 			<th><label for="database">Database Name</label></th>
 			<td><input type="text" name="database" id="database" value="{$db_magirc.database}" size="32" maxlength="128" /></td>
 		</tr>
+		{*<tr>
+			<th><label for="prefix">Database Name</label></th>
+			<td><input type="text" name="prefix" id="prefix" value="{$db_magirc.prefix}" size="32" maxlength="128" /></td>
+		</tr>*}
 		<tr>
 			<th><label for="hostname">Hostname</label></th>
 			<td><input type="text" name="hostname" id="hostname" value="{$db_magirc.hostname}" size="32" maxlength="128" /></td>

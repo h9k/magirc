@@ -12,6 +12,10 @@
 	<tr>
 		<td align="right">Database Name</td>
 		<td align="left"><input type="text" name="database" id="database" value="{$db.database}" size="32" maxlength="64" /></td>
+	</tr>	
+	<tr>
+		<td align="right">Database Prefix</td>
+		<td align="left"><input type="text" name="prefix" id="prefix" value="{$db.prefix}" size="16" maxlength="64" /></td>
 	</tr>
 	<tr>
 		<td align="right">Hostname</td>
@@ -72,6 +76,7 @@ $(document).ready(function() {
 				"$db['username'] = \""+$("#username").val()+"\";\n"+
 				"$db['password'] = \""+$("#password").val()+"\";\n"+
 				"$db['database'] = \""+$("#database").val()+"\";\n"+
+				"$db['prefix'] = \""+$("#prefix").val()+"\";\n"+
 				"$db['hostname'] = \""+$("#hostname").val()+"\";\n"+
 				"$db['port'] = \""+$("#port").val()+"\";\n"+
 				"?&gt;<\/pre>");

@@ -56,8 +56,8 @@ class Denora implements Service {
 	 * @return array of arrays (int val, int time)
 	 */
 	public function getCurrentStatus() {
-		$query = "SELECT type, val, FROM_UNIXTIME(time) AS time FROM current";
-		$this->db->query($query, SQL_ALL, SQL_ASSOC);
+		$sQuery = "SELECT type, val, FROM_UNIXTIME(time) AS time FROM current";
+		$this->db->query($sQuery, SQL_ALL, SQL_ASSOC);
 		$result = $this->db->record;
 		$data = array();
 		foreach ($result as $row) {
@@ -71,8 +71,8 @@ class Denora implements Service {
 	 * @return array of arrays (int val, int time)
 	 */
 	public function getMaxValues() {
-		$query = "SELECT type, val, time FROM maxvalues";
-		$this->db->query($query, SQL_ALL, SQL_ASSOC);
+		$sQuery = "SELECT type, val, time FROM maxvalues";
+		$this->db->query($sQuery, SQL_ALL, SQL_ASSOC);
 		$result = $this->db->record;
 		$data = array();
 		foreach ($result as $row) {
@@ -115,27 +115,27 @@ class Denora implements Service {
 	 * @return int User count
 	 */
 	public function getUserCount($mode = null, $target = null) {
-		$query = "SELECT COUNT(*) FROM user
+		$sQuery = "SELECT COUNT(*) FROM user
 			JOIN server ON server.servid = user.servid";
 		if ($mode == 'channel' && $target) {
-			$query .= " JOIN ison ON ison.nickid = user.nickid
+			$sQuery .= " JOIN ison ON ison.nickid = user.nickid
 			JOIN chan ON chan.chanid = ison.chanid
 			WHERE LOWER(chan.channel)=LOWER(:chan) AND user.online = 'Y'";
 		} elseif ($mode == 'server' && $target) {
-			$query .= " WHERE LOWER(user.server)=LOWER(:server)
+			$sQuery .= " WHERE LOWER(user.server)=LOWER(:server)
 				AND user.online='Y'";
 		} else {
-			$query .= " WHERE user.online = 'Y'";
+			$sQuery .= " WHERE user.online = 'Y'";
 		}
-		if ($this->cfg->hide_ulined) $query .= " AND server.uline = 0";
+		if ($this->cfg->hide_ulined) $sQuery .= " AND server.uline = 0";
 		if (Protocol::services_protection_mode) {
-			$query .= sprintf(" AND user.%s='N'", self::getSqlMode(Protocol::services_protection_mode));
+			$sQuery .= sprintf(" AND user.%s='N'", self::getSqlMode(Protocol::services_protection_mode));
 		}
-		$stmt = $this->db->prepare($query);
-		if ($mode == 'channel' && $target) $stmt->bindValue(':chan', $target, PDO::PARAM_STR);
-		if ($mode == 'server' && $target) $stmt->bindValue(':server', $target, PDO::PARAM_STR);
-		$stmt->execute();
-		return $stmt->fetch(PDO::FETCH_COLUMN);
+		$ps = $this->db->prepare($sQuery);
+		if ($mode == 'channel' && $target) $ps->bindValue(':chan', $target, PDO::PARAM_STR);
+		if ($mode == 'server' && $target) $ps->bindValue(':server', $target, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
 
 	/**
@@ -146,37 +146,37 @@ class Denora implements Service {
 	 * @return array Data
 	 */
 	private function getPieStats($type, $mode = null, $target = null) {
-		$query = "SELECT ";
+		$sQuery = "SELECT ";
 		if ($type == 'clients') {
 			$type = 'ctcpversion';
-			$query .= " user.ctcpversion AS client, ";
+			$sQuery .= " user.ctcpversion AS client, ";
 		} else {
 			$type = 'country';
-			$query .= " user.country, user.countrycode AS country_code, ";
+			$sQuery .= " user.country, user.countrycode AS country_code, ";
 		}
-		$query .= "COUNT(*) AS count FROM user
+		$sQuery .= "COUNT(*) AS count FROM user
 			JOIN server ON server.servid = user.servid";
 		if ($mode == 'channel' && $target) {
-			$query .= " JOIN ison ON ison.nickid = user.nickid
+			$sQuery .= " JOIN ison ON ison.nickid = user.nickid
 				JOIN chan ON chan.chanid = ison.chanid
 				WHERE LOWER(chan.channel)=LOWER(:chan)
 				AND user.online='Y'";
 		} elseif ($mode == 'server' && $target) {
-			$query .= " WHERE LOWER(user.server)=LOWER(:server)
+			$sQuery .= " WHERE LOWER(user.server)=LOWER(:server)
 				AND user.online='Y'";
 		} else {
-			$query .= " WHERE user.online='Y'";
+			$sQuery .= " WHERE user.online='Y'";
 		}
-		if ($this->cfg->hide_ulined) $query .= " AND server.uline = 0";
+		if ($this->cfg->hide_ulined) $sQuery .= " AND server.uline = 0";
 		if (Protocol::services_protection_mode) {
-			$query .= sprintf(" AND user.%s='N'", self::getSqlMode(Protocol::services_protection_mode));
+			$sQuery .= sprintf(" AND user.%s='N'", self::getSqlMode(Protocol::services_protection_mode));
 		}
-		$query .= " GROUP by user.$type ORDER BY count DESC";
-		$stmt = $this->db->prepare($query);
-		if ($mode == 'channel' && $target) $stmt->bindValue(':chan', $target, PDO::PARAM_STR);
-		if ($mode == 'server' && $target) $stmt->bindValue(':server', $target, PDO::PARAM_STR);
-		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$sQuery .= " GROUP by user.$type ORDER BY count DESC";
+		$ps = $this->db->prepare($sQuery);
+		if ($mode == 'channel' && $target) $ps->bindValue(':chan', $target, PDO::PARAM_STR);
+		if ($mode == 'server' && $target) $ps->bindValue(':server', $target, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -326,10 +326,10 @@ class Denora implements Service {
 			case 'servers': $table = 'serverstats'; break;
 			default: return null;
 		}
-		$query = "SELECT * FROM {$table} ORDER BY year ASC, month ASC, day ASC";
-		$stmt = $this->db->prepare($query);
-		$stmt->execute();
-		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$sQuery = "SELECT * FROM {$table} ORDER BY year ASC, month ASC, day ASC";
+		$ps = $this->db->prepare($sQuery);
+		$ps->execute();
+		$result = $ps->fetchAll(PDO::FETCH_ASSOC);
 		$data = array();
 		foreach ($result as $val) {
 			$date = "{$val['year']}-{$val['month']}-{$val['day']}";
@@ -357,10 +357,10 @@ class Denora implements Service {
 		if ($this->cfg->hide_ulined) {
 			$sWhere .= $sWhere ? " AND uline = 0" : "WHERE uline = 0";
 		}
-		$query = "SELECT server, online, comment AS description, currentusers AS users, opers, country, countrycode AS country_code FROM server $sWhere";
-		$stmt = $this->db->prepare($query);
-		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_CLASS, 'Server');
+		$sQuery = "SELECT server, online, comment AS description, currentusers AS users, opers, country, countrycode AS country_code FROM server $sWhere";
+		$ps = $this->db->prepare($sQuery);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_CLASS, 'Server');
 	}
 
 	/**
@@ -369,14 +369,14 @@ class Denora implements Service {
 	 * @return Server
 	 */
 	public function getServer($server) {
-		$query = "SELECT server, online, comment AS description, connecttime AS connect_time, lastsplit AS split_time, version,
+		$sQuery = "SELECT server, online, comment AS description, connecttime AS connect_time, lastsplit AS split_time, version,
 			uptime, motd, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time, ping, highestping AS ping_max,
 			FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time, country, countrycode AS country_code
 			FROM server WHERE server = :server";
-		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':server', $server, PDO::PARAM_STR);
-		$stmt->execute();
-		return $stmt->fetchObject('Server');
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':server', $server, PDO::PARAM_STR);
+		$ps->execute();
+		return $ps->fetchObject('Server');
 	}
 
 	/**
@@ -384,37 +384,37 @@ class Denora implements Service {
 	 * @return array of User
 	 */
 	public function getOperatorList() {
-		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
+		$sQuery = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s,
 			s.country AS server_country, s.countrycode AS server_country_code",
 			implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
-		$query .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE";
+		$sQuery .= " FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE";
 		$levels = Protocol::$oper_levels;
 		if (!empty($levels)) {
 			$i = 1;
-			$query .= " (";
+			$sQuery .= " (";
 			foreach ($levels as $mode => $level) {
 				$mode = self::getSqlMode($mode);
-				$query .= "u.$mode = 'Y'";
+				$sQuery .= "u.$mode = 'Y'";
 				if ($i < count($levels)) {
-					$query .= " OR ";
+					$sQuery .= " OR ";
 				}
 				$i++;
 			}
-			$query .= ")";
+			$sQuery .= ")";
 		} else {
-			$query .= " u.mode_lo = 'Y'";
+			$sQuery .= " u.mode_lo = 'Y'";
 		}
-		$query .= " AND u.online = 'Y'";
-		if (Protocol::oper_hidden_mode) $query .= " AND u." . self::getSqlMode(Protocol::oper_hidden_mode) . " = 'N'";
-		if (Protocol::services_protection_mode) $query .= " AND u." . self::getSqlMode(Protocol::services_protection_mode) . " = 'N'";
-		$query .= " AND u.server = s.server";
-		if ($this->cfg->hide_ulined) $query .= " AND s.uline = '0'";
-		$query .= " ORDER BY u.nick ASC";
-		$stmt = $this->db->prepare($query);
-		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
+		$sQuery .= " AND u.online = 'Y'";
+		if (Protocol::oper_hidden_mode) $sQuery .= " AND u." . self::getSqlMode(Protocol::oper_hidden_mode) . " = 'N'";
+		if (Protocol::services_protection_mode) $sQuery .= " AND u." . self::getSqlMode(Protocol::services_protection_mode) . " = 'N'";
+		$sQuery .= " AND u.server = s.server";
+		if ($this->cfg->hide_ulined) $sQuery .= " AND s.uline = '0'";
+		$sQuery .= " ORDER BY u.nick ASC";
+		$ps = $this->db->prepare($sQuery);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_CLASS, 'User');
 	}
 
 	/**
@@ -475,19 +475,19 @@ class Denora implements Service {
 	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
-		$query = "SELECT channel, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time FROM chan WHERE currentusers > 0";
+		$sQuery = "SELECT channel, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time FROM chan WHERE currentusers > 0";
 		if ($secret_mode) {
-			$query .= sprintf(" AND %s='N'", self::getSqlMode($secret_mode));
+			$sQuery .= sprintf(" AND %s='N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$query .= sprintf(" AND %s='N'", self::getSqlMode($private_mode));
+			$sQuery .= sprintf(" AND %s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
-			$query .= " AND LOWER(channel) NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
+			$sQuery .= " AND LOWER(channel) NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
 		}
-		$query .= " ORDER BY currentusers DESC LIMIT :limit";
-		$ps = $this->db->prepare($query);
+		$sQuery .= " ORDER BY currentusers DESC LIMIT :limit";
+		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');
@@ -501,19 +501,19 @@ class Denora implements Service {
 	public function getChannelTop($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
-		$query = "SELECT chan AS channel, line AS 'lines' FROM cstats, chan WHERE BINARY LOWER(cstats.chan)=LOWER(chan.channel) AND cstats.type=1 AND cstats.line >= 1";
+		$sQuery = "SELECT chan AS channel, line AS 'lines' FROM cstats, chan WHERE BINARY LOWER(cstats.chan)=LOWER(chan.channel) AND cstats.type=1 AND cstats.line >= 1";
 		if ($secret_mode) {
-			$query .= sprintf(" AND chan.%s='N'", self::getSqlMode($secret_mode));
+			$sQuery .= sprintf(" AND chan.%s='N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$query .= sprintf(" AND chan.%s='N'", self::getSqlMode($private_mode));
+			$sQuery .= sprintf(" AND chan.%s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
-			$query .= " AND cstats.chan NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
+			$sQuery .= " AND cstats.chan NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
 		}
-		$query .= " ORDER BY cstats.line DESC LIMIT :limit";
-		$ps = $this->db->prepare($query);
+		$sQuery .= " ORDER BY cstats.line DESC LIMIT :limit";
+		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_ASSOC);
@@ -573,10 +573,10 @@ class Denora implements Service {
 		if (in_array(strtolower($chan), $noshow))
 			return 403;
 
-		$stmt = $this->db->prepare("SELECT * FROM `chan` WHERE BINARY LOWER(`channel`) = LOWER(:channel)");
-		$stmt->bindValue(':channel', $chan, SQL_STR);
-		$stmt->execute();
-		$data = $stmt->fetch();
+		$ps = $this->db->prepare("SELECT * FROM `chan` WHERE BINARY LOWER(`channel`) = LOWER(:channel)");
+		$ps->bindValue(':channel', $chan, SQL_STR);
+		$ps->execute();
+		$data = $ps->fetch();
 
 		if (!$data) {
 			return 404;
@@ -616,7 +616,7 @@ class Denora implements Service {
 		if ($this->checkChannel($chan) != 200) {
 			return null;
 		}
-		$query = "SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
+		$sQuery = "SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service,
 			i.mode_lq AS cmode_lq, i.mode_la AS cmode_la, i.mode_lo AS cmode_lo, i.mode_lh AS cmode_lh, i.mode_lv AS cmode_lv,
@@ -626,10 +626,10 @@ class Denora implements Service {
 				AND i.nickid = u.nickid
 				AND u.server = s.server
 			ORDER BY u.nick ASC";
-		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':channel', $chan, SQL_STR);
-		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_CLASS, 'User');
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':channel', $chan, SQL_STR);
+		$ps->execute();
+		return $ps->fetchAll(PDO::FETCH_CLASS, 'User');
 	}
 
 	/**
@@ -844,14 +844,14 @@ class Denora implements Service {
 	 */
 	public function checkUser($user, $mode) {
 		if ($mode == "stats") {
-			$query = "SELECT uname FROM ustats WHERE LOWER(uname) = LOWER(:user)";
+			$sQuery = "SELECT uname FROM ustats WHERE LOWER(uname) = LOWER(:user)";
 		} else {
-			$query = "SELECT nick FROM user WHERE LOWER(nick) = LOWER(:user)";
+			$sQuery = "SELECT nick FROM user WHERE LOWER(nick) = LOWER(:user)";
 		}
-		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':user', $user, SQL_STR);
-		$stmt->execute();
-		return $stmt->fetch(PDO::FETCH_COLUMN) ? true : false;
+		$ps = $this->db->prepare($sQuery);
+		$ps->bindValue(':user', $user, SQL_STR);
+		$ps->execute();
+		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
 
 	/**
@@ -896,13 +896,13 @@ class Denora implements Service {
 	 */
 	public function getUser($mode, $user) {
 		$info = $this->getUserData($mode, $user);
-		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
+		$sQuery = sprintf("SELECT u.nick AS nickname, u.realname, u.hostname, u.hiddenhostname AS hostname_cloaked, u.swhois,
 			u.username, u.connecttime AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.ctcpversion AS client, u.online,
 			u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, u.countrycode AS country_code, u.country, s.uline AS service, %s,
 			s.country AS server_country, s.countrycode AS server_country_code
 			FROM user u LEFT JOIN server s ON s.servid = u.servid WHERE u.nick = :nickname",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))));
-		$ps = $this->db->prepare($query);
+		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();
 		$user = $ps->fetchObject('User');
@@ -942,10 +942,10 @@ class Denora implements Service {
 			$sWhere .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
 		}
 
-		$query = sprintf("SELECT DISTINCT chan FROM ustats, chan, user WHERE ustats.uname=:uname
+		$sQuery = sprintf("SELECT DISTINCT chan FROM ustats, chan, user WHERE ustats.uname=:uname
 			AND ustats.type=0 AND BINARY LOWER(ustats.chan)=LOWER(chan.channel)
 			AND user.nick=:nick %s", $sWhere);
-		$ps = $this->db->prepare($query);
+		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
 		$ps->bindValue(':nick', $info['nick'], PDO::PARAM_STR);
 		$ps->execute();

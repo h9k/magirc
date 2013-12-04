@@ -135,7 +135,7 @@ try {
 			@touch($db_config_file);
 		}
 		if (!$db) {
-			$db = array('username' => $service, 'password' => $service, 'database' => $service, 'hostname' => 'localhost');
+			$db = array('username' => $service, 'password' => $service, 'database' => $service, 'prefix' => null, 'hostname' => 'localhost');
 		}
 		$admin->tpl->assign('db_config_file', $db_config_file);
 		$admin->tpl->assign('writable', is_writable($db_config_file));
@@ -170,13 +170,17 @@ try {
 			@touch($db_config_file);
 		}
 		if (!$db) {
-			$db = array('username' => $service, 'password' => $service, 'database' => $service, 'hostname' => 'localhost', 'port' => 3306, 'ssl' => false, 'ssl_key' => null, 'ssl_cert' => null, 'ssl_ca' => null);
+			$db = array('username' => $service, 'password' => $service, 'database' => $service, 'prefix' => null, 'hostname' => 'localhost', 'port' => 3306, 'ssl' => false, 'ssl_key' => null, 'ssl_cert' => null, 'ssl_ca' => null);
+			if ($service == "anope") {
+				$db['prefix'] = "anope_";
+			}
 		}
 		if (isset($_POST['database'])) {
 			//TODO: do proper escaping to avoid breaking php code in the config files
 			$db['username'] = (isset($_POST['username'])) ? $_POST['username'] : $db['username'];
 			$db['password'] = (isset($_POST['password'])) ? $_POST['password'] : $db['password'];
 			$db['database'] = (isset($_POST['database'])) ? $_POST['database'] : $db['database'];
+			$db['prefix'] = (isset($_POST['prefix'])) ? $_POST['prefix'] : $db['prefix'];
 			$db['hostname'] = (isset($_POST['hostname'])) ? $_POST['hostname'] : $db['hostname'];
 			$db['port'] = (isset($_POST['port'])) ? $_POST['port'] : $db['port'];
 			$db['ssl'] = isset($_POST['ssl']) ? 'true' : 'false';
@@ -187,6 +191,7 @@ try {
 				"\$db['username'] = '{$db['username']}';\n".
 				"\$db['password'] = '{$db['password']}';\n".
 				"\$db['database'] = '{$db['database']}';\n".
+				"\$db['prefix'] = '{$db['prefix']}';\n".
 				"\$db['hostname'] = '{$db['hostname']}';\n".
 				"\$db['port'] = '{$db['port']}';\n".
 				"\$db['ssl'] = {$db['ssl']};\n".
