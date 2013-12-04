@@ -122,7 +122,7 @@ class Anope implements Service {
 			$sQuery .= " AND s.ulined = 'N'";
 		}
 		if (Protocol::services_protection_mode) {
-			$sQuery .= sprintf(" AND u.modes NOT LIKE '%%%s%%", Protocol::services_protection_mode);
+			$sQuery .= sprintf(" AND u.modes NOT LIKE '%%%s%%'", Protocol::services_protection_mode);
 		}
 		$sQuery .= " GROUP by u.version ORDER BY count DESC";
 		$ps = $this->db->prepare($sQuery);
@@ -158,7 +158,7 @@ class Anope implements Service {
 			$sQuery .= " AND s.ulined = 'N'";
 		}
 		if (Protocol::services_protection_mode) {
-			$sQuery .= sprintf(" AND u.modes NOT LIKE '%%%s%%", Protocol::services_protection_mode);
+			$sQuery .= sprintf(" AND u.modes NOT LIKE '%%%s%%'", Protocol::services_protection_mode);
 		}
 		$sQuery .= " GROUP by u.geocountry ORDER BY count DESC";
 		$ps = $this->db->prepare($sQuery);
