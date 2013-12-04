@@ -1045,6 +1045,9 @@ class Anope implements Service {
 	 * @return array of nicknames
 	 */
 	private function getUnameAliases($uname) {
+		if (!$uname) {
+			return null;
+		}
 		$sQuery = sprintf("SELECT u.nick"
 				. " FROM `%s` AS u"
 				. " WHERE u.account = :uname"
