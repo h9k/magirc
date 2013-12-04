@@ -346,7 +346,7 @@ class Anope implements Service {
 			$i = 1;
 			$sQuery .= " (";
 			foreach ($levels as $mode => $level) {
-				$sQuery .= sprintf(" u.modes LIKE '%%%s%'%", $mode);
+				$sQuery .= sprintf(" u.modes LIKE '%%%s%%'", $mode);
 				if ($i < count($levels)) {
 					$sQuery .= " OR ";
 				}
