@@ -1014,6 +1014,9 @@ class Denora implements Service {
 	 * @return array of nicknames
 	 */
 	private function getUnameAliases($uname) {
+		if (!$uname) {
+			return null;
+		}
 		$ps = $this->db->prepare("SELECT a.nick FROM aliases a LEFT JOIN user u ON a.nick = u.nick
 			WHERE a.uname = :uname ORDER BY CASE WHEN u.online IS NULL THEN 1 ELSE 0 END,
 			u.online DESC, u.lastquit DESC, u.connecttime ASC");

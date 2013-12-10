@@ -122,7 +122,7 @@ class Anope implements Service {
 			$sQuery .= " AND s.ulined = 'N'";
 		}
 		if (Protocol::services_protection_mode) {
-			$sQuery .= sprintf(" AND u.modes NOT LIKE '%%%s%%'", Protocol::services_protection_mode);
+			$sQuery .= sprintf(" AND u.modes NOT LIKE BINARY '%%%s%%'", Protocol::services_protection_mode);
 		}
 		$sQuery .= " GROUP by u.version ORDER BY count DESC";
 		$ps = $this->db->prepare($sQuery);
@@ -158,7 +158,7 @@ class Anope implements Service {
 			$sQuery .= " AND s.ulined = 'N'";
 		}
 		if (Protocol::services_protection_mode) {
-			$sQuery .= sprintf(" AND u.modes NOT LIKE '%%%s%%'", Protocol::services_protection_mode);
+			$sQuery .= sprintf(" AND u.modes NOT LIKE BINARY '%%%s%%'", Protocol::services_protection_mode);
 		}
 		$sQuery .= " GROUP by u.geocountry ORDER BY count DESC";
 		$ps = $this->db->prepare($sQuery);
@@ -346,7 +346,7 @@ class Anope implements Service {
 			$i = 1;
 			$sQuery .= " (";
 			foreach ($levels as $mode => $level) {
-				$sQuery .= sprintf(" u.modes LIKE '%%%s%%'", $mode);
+				$sQuery .= sprintf(" u.modes LIKE BINARY '%%%s%%'", $mode);
 				if ($i < count($levels)) {
 					$sQuery .= " OR ";
 				}
@@ -354,14 +354,14 @@ class Anope implements Service {
 			}
 			$sQuery .= ")";
 		} else {
-			$sQuery .= " u.modes LIKE '%o%'";
+			$sQuery .= " u.modes LIKE BINARY '%o%'";
 		}
 		//$sQuery .= " AND u.online = 'Y'";
 		if (Protocol::oper_hidden_mode) {
-			$sQuery .= sprintf(" AND u.modes NOT LIKE '%%%s%%'", Protocol::oper_hidden_mode);
+			$sQuery .= sprintf(" AND u.modes NOT LIKE BINARY '%%%s%%'", Protocol::oper_hidden_mode);
 		}
 		if (Protocol::services_protection_mode) {
-			$sQuery .= sprintf(" AND u.modes NOT LIKE '%%%s%%'", Protocol::services_protection_mode);
+			$sQuery .= sprintf(" AND u.modes NOT LIKE BINARY '%%%s%%'", Protocol::services_protection_mode);
 		}
 		$sQuery .= " AND u.server = s.name";
 		if ($this->cfg->hide_ulined) {
@@ -384,10 +384,10 @@ class Anope implements Service {
 
 		$sWhere = "currentusers > 0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND modes NOT LIKE '%%%s%%'", $secret_mode);
+			$sWhere .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND modes NOT LIKE '%%%s%%'", $private_mode);
+			$sWhere .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $private_mode);
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -438,10 +438,10 @@ class Anope implements Service {
 				. " WHERE currentusers > 0",
 				TBL_CHAN, TBL_MAXUSERS);
 		if ($secret_mode) {
-			$sQuery .= sprintf(" AND modes NOT LIKE '%%%s%%'", $secret_mode);
+			$sQuery .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
 		}
 		if ($private_mode) {
-			$sQuery .= sprintf(" AND modes NOT LIKE '%%%s%%'", $private_mode);
+			$sQuery .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $private_mode);
 		}
 		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
@@ -468,10 +468,10 @@ class Anope implements Service {
 				. " WHERE cs.type = 'daily' AND cs.line >= 1",
 				TBL_CHANSTATS, TBL_CHAN);
 		if ($secret_mode) {
-			$sQuery .= sprintf(" AND c.modes NOT LIKE '%%%s%%'", $secret_mode);
+			$sQuery .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
 		}
 		if ($private_mode) {
-			$sQuery .= sprintf(" AND c.modes NOT LIKE '%%%s%%'", $private_mode);
+			$sQuery .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $private_mode);
 		}
 		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
@@ -544,10 +544,10 @@ class Anope implements Service {
 
 		$sWhere = "cs.letters > 0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND c.modes NOT LIKE '%%%s%%'",$secret_mode);
+			$sWhere .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'",$secret_mode);
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND c.modes NOT LIKE '%%%s%%'",$private_mode);
+			$sWhere .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'",$private_mode);
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -791,10 +791,10 @@ class Anope implements Service {
 
 		$sWhere = "";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND c.modes NOT LIKE '%%%s%%'", $secret_mode);
+			$sWhere .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND c.modes NOT LIKE '%%%s%%'", $private_mode);
+			$sWhere .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $private_mode);
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
