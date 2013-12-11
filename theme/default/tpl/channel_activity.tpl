@@ -2,10 +2,10 @@
 
 <form>
 	<div id="radio" class="choser">
-		<input type="radio" id="radio0" name="radio" /><label for="radio0">{t}Total{/t}</label>
-		<input type="radio" id="radio1" name="radio" /><label for="radio1">{t}Today{/t}</label>
-		<input type="radio" id="radio2" name="radio" /><label for="radio2">{t}This Week{/t}</label>
-		<input type="radio" id="radio3" name="radio" checked="checked" /><label for="radio3">{t}This Month{/t}</label>
+		<input type="radio" id="radio0" name="radio" value="total" /><label for="radio0">{t}Total{/t}</label>
+		<input type="radio" id="radio1" name="radio" value="daily" /><label for="radio1">{t}Today{/t}</label>
+		<input type="radio" id="radio2" name="radio" value="weekly" /><label for="radio2">{t}This Week{/t}</label>
+		<input type="radio" id="radio3" name="radio" value="monthly" checked="checked" /><label for="radio3">{t}This Month{/t}</label>
 	</div>
 </form>
 
@@ -25,7 +25,7 @@
 var target = '{$target|escape:'url'}';
 {literal}
 $(document).ready(function() {
-	var type = 3;
+	var type = 'monthly';
 	var chart_activity = new Highcharts.Chart({
 		chart: { renderTo: 'chart_activity', type: 'column' },
 		xAxis: { type: 'linear', categories: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ], title: { text: 'Hour' } },
@@ -62,7 +62,7 @@ $(document).ready(function() {
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
-		type = $('input[name=radio]:checked').index() / 2;
+		type = $('input[name=radio]:checked').val();
 		oTable.fnSettings().sAjaxSource = "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
 		oTable.fnDraw();
 		updateChart();

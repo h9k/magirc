@@ -11,7 +11,6 @@
 	<tr><th>{t}Current users{/t}:</th><td><span id="chan_users" class="val"></span></td></tr>
 	<tr><th>{t}User peak{/t}:</th><td><span id="chan_users_max" class="val"></span> {t}on{/t} <span id="chan_users_max_time"></span></td></tr>
 	<tr><th>{t}Modes{/t}:</th><td><span id="chan_modes" class="val"></span></td></tr>
-	<tr><th>{t}Kicks{/t}:</th><td><span id="chan_kicks" class="val"></span></td></tr>
 </table>
 {if $cfg->net_roundrobin || $cfg->service_webchat}
 <h2>{t}Join this channel{/t}</h2>
@@ -64,7 +63,6 @@ $(document).ready(function() {
 		$("#chan_users_max").html(result.users_max);
 		$("#chan_users_max_time").html($.format.date(result.users_max_time, format_datetime));
 		$("#chan_modes").html(result.modes ? "+"+result.modes : mLang.None);
-		$("#chan_kicks").html(result.kicks);
 	});
 	$('#tbl_users').dataTable({
 		"iDisplayLength": 10,
@@ -76,7 +74,7 @@ $(document).ready(function() {
 				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['nickname'] + getUserExtra(oObj.aData);
 			} },
 			{ "mDataProp": "cmodes", "fnRender": function(oObj) {
-				return '+' + oObj.aData['cmodes'];
+				return oObj.aData['cmodes'] ? '+' + oObj.aData['cmodes'] : null;
 			} }
 		]
 	});

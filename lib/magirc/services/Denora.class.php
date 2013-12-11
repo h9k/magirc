@@ -662,6 +662,7 @@ class Denora implements Service {
 
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS chan AS name,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM cstats
 			 JOIN chan ON BINARY LOWER(cstats.chan)=LOWER(chan.channel) WHERE cstats.type=:type AND %s", $sWhere);
+		$type = self::getDenoraChanstatsType($type);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => (int) $type));
 			$sFiltering = $this->db->datatablesFiltering(array('cstats.chan', 'chan.topic'));
@@ -696,6 +697,7 @@ class Denora implements Service {
 	public function getChannelActivity($chan, $type, $datatables = false) {
 		$aaData = array();
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics FROM ustats WHERE chan=:channel AND type=:type AND letters > 0 ";
+		$type = self::getDenoraChanstatsType($type);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => (int) $type, ':channel' => $chan));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
@@ -739,13 +741,13 @@ class Denora implements Service {
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM cstats WHERE chan=:channel AND type=:type";
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindValue(':type', $type, PDO::PARAM_INT);
-		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':type', self::getDenoraChanstatsType($type), PDO::PARAM_INT);
+		$ps->bindValue(':channel', $chan == null ? 'global' : $chan, PDO::PARAM_STR);
 		$ps->execute();
 		$result = $ps->fetch(PDO::FETCH_NUM);
 		if (is_array($result)) {
 			foreach ($result as $key => $val) {
-				$result[$key] = (int) $val;
+				$result[$key] = self::getAnopeChanstatsType($val);
 			}
 			return $result;
 		} else {
@@ -766,6 +768,7 @@ class Denora implements Service {
 		$sQuery = "SELECT SQL_CALC_FOUND_ROWS uname,letters,words,line AS 'lines',
 			actions,smileys,kicks,modes,topics FROM ustats
 			WHERE type=:type AND letters>0 and chan='global'";
+		$type = self::getDenoraChanstatsType($type);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
@@ -821,14 +824,14 @@ class Denora implements Service {
 		$sQuery = "SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
 			FROM ustats WHERE uname=:uname AND chan=:channel AND type=:type";
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindValue(':type', $type, PDO::PARAM_INT);
-		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':type', self::getDenoraChanstatsType($type), PDO::PARAM_INT);
+		$ps->bindValue(':channel', $chan == null ? 'global' : $chan, PDO::PARAM_STR);
 		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
 		$ps->execute();
 		$result = $ps->fetch(PDO::FETCH_NUM);
 		if (is_array($result)) {
 			foreach ($result as $key => $val) {
-				$result[$key] = (int) $val;
+				$result[$key] = self::getAnopeChanstatsType($val);
 			}
 			return $result;
 		} else {
@@ -962,7 +965,8 @@ class Denora implements Service {
 	 */
 	public function getUserActivity($mode, $user, $chan) {
 		$info = $this->getUserData($mode, $user);
-		if ($chan == 'global') {
+		if ($chan == null) {
+			$chan = 'global';
 			$sQuery = "SELECT type,letters,words,line AS 'lines',actions,smileys,kicks,modes,topics
 				FROM ustats WHERE uname=:uname AND chan=:chan ORDER BY ustats.letters DESC";
 		} else {
@@ -987,7 +991,7 @@ class Denora implements Service {
 		if (is_array($data)) {
 			foreach ($data as $key => $type) {
 				foreach ($type as $field => $val) {
-					$data[$key][$field] = (int) $val;
+					$data[$key][$field] = $field == 'type' ? self::getAnopeChanstatsType ($field) : (int) $val;
 				}
 			}
 			return $data;
@@ -1023,6 +1027,40 @@ class Denora implements Service {
 		$ps->bindValue(':uname', $uname, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
+	}
+	
+	/**
+	 * Maps the anope style chanstats type to the denora numbers
+	 * @param string $type
+	 * @return int
+	 */
+	private static function getDenoraChanstatsType($type) {
+		switch ($type) {
+			case 'daily':
+				return 1;
+			case 'weekly':
+				return 2;
+			case 'monthly':
+				return 3;
+		}
+		return 0;
+	}
+	
+	/**
+	 * Maps the denora style chanstats type to the anope values
+	 * @param int $type
+	 * @return string
+	 */
+	private static function getAnopeChanstatsType($type) {
+		switch ($type) {
+			case 1:
+				return 'daily';
+			case 2:
+				return 'weekly';
+			case 3:
+				return 'monthly';
+		}
+		return 'total';
 	}
 
 }

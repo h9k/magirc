@@ -2,7 +2,7 @@
 
 <form>
 	<div id="radio" class="choser">
-		<input type="radio" id="radio0" name="radio" checked="checked" value="global" /><label for="radio0">{t}Global{/t}</label>
+		<input type="radio" id="radio0" name="radio" checked="checked" value="" /><label for="radio0">{t}Global{/t}</label>
 	</div>
 </form>
 
@@ -10,10 +10,10 @@
 
 <form>
 	<div id="type" class="choser">
-		<input type="radio" id="type0" name="type" /><label for="type0">{t}Total{/t}</label>
-		<input type="radio" id="type1" name="type" /><label for="type1">{t}Today{/t}</label>
-		<input type="radio" id="type2" name="type" /><label for="type2">{t}This Week{/t}</label>
-		<input type="radio" id="type3" name="type" checked="checked" /><label for="type3">{t}This Month{/t}</label>
+		<input type="radio" id="type0" name="type" value="total" /><label for="type0">{t}Total{/t}</label>
+		<input type="radio" id="type1" name="type" value="daily" /><label for="type1">{t}Today{/t}</label>
+		<input type="radio" id="type2" name="type" value="weekly" /><label for="type2">{t}This Week{/t}</label>
+		<input type="radio" id="type3" name="type" value="monthly" checked="checked" /><label for="type3">{t}This Month{/t}</label>
 	</div>
 </form>
 
@@ -42,8 +42,8 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	var chan = 'global';
-	var type = 3;
+	var chan = null;
+	var type = 'monthly';
 	var chart_activity = new Highcharts.Chart({
 		chart: { renderTo: 'chart_activity', type: 'column' },
 		xAxis: { type: 'linear', categories: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ], title: { text: 'Hour' } },
@@ -51,8 +51,15 @@ $(document).ready(function() {
 		tooltip: { enabled: false },
 		series: [{ name: 'Lines', data: [] }]
 	});
-	function updateChart() {
-		$.getJSON('rest/service.php/users/'+mode+'/'+target+'/hourly/'+encodeURIComponent(chan)+'/'+type, function(result) {
+	function getUrl(action) {
+		if (chan === null) {
+			return 'rest/service.php/users/'+mode+'/'+target+'/'+action;
+		} else {
+			return 'rest/service.php/users/'+mode+'/'+target+'/'+action+'/'+encodeURIComponent(chan);
+		}		
+	}
+	function updateChart() {		
+		$.getJSON(getUrl('hourly') +'/'+type, function(result) {
 			chart_activity.series[0].setData(result);
 		});
 	}
@@ -63,14 +70,14 @@ $(document).ready(function() {
 		"bPaginate": false,
 		"bSort": false,
 		"bEscapeRegex": false,
-		"sAjaxSource": "rest/service.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables',
+		"sAjaxSource": getUrl('activity')+'?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "type", "fnRender": function (oObj) {
 				switch (oObj.aData['type']) {
-					case 0: return mLang.Total;
-					case 1: return mLang.Today;
-					case 2: return mLang.ThisWeek;
-					case 3: return mLang.ThisMonth;
+					case 'total': return mLang.Total;
+					case 'daily': return mLang.Today;
+					case 'weekly': return mLang.ThisWeek;
+					case 'monthly': return mLang.ThisMonth;
 				}
 			} },
 			{ "mDataProp": "letters" },
@@ -86,12 +93,12 @@ $(document).ready(function() {
 	$("#type").buttonset();
 	$("#radio").change(function(event) {
 		chan = $('input[name=radio]:checked').val();
-		oTable.fnSettings().sAjaxSource = "rest/service.php/users/"+mode+"/"+target+"/activity/"+encodeURIComponent(chan)+'?format=datatables';
+		oTable.fnSettings().sAjaxSource = getUrl('activity')+'?format=datatables';
 		oTable.fnReloadAjax();
 		updateChart();
 	});
 	$("#type").change(function(event) {
-		type = $('input[name=type]:checked').index() / 2;
+		type = $('input[name=type]:checked').val();
 		updateChart();
 	});
 	$.getJSON("rest/service.php/users/"+mode+"/"+target+"/channels", function(result) {

@@ -563,7 +563,6 @@ class Anope implements Service {
 			FROM `%s`AS cs
 			JOIN `%s`AS c ON LOWER(cs.chan) = LOWER(c.channel)
 			WHERE cs.type=:type AND %s", TBL_CHANSTATS, TBL_CHAN, $sWhere);
-		$type = self::getChanstatsType($type);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('cs.chan', 'c.topic'));
@@ -602,7 +601,6 @@ class Anope implements Service {
 				. " FROM `%s` AS cs"
 				. " WHERE chan = :channel AND nick != '' AND type=:type AND letters > 0 ",
 				TBL_CHANSTATS);
-		$type = self::getChanstatsType($type);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type, ':channel' => $chan));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
@@ -649,7 +647,7 @@ class Anope implements Service {
 			WHERE chan=:channel AND type=:type",
 				TBL_CHANSTATS);
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindValue(':type', self::getChanstatsType($type), PDO::PARAM_INT);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
 		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		$result = $ps->fetch(PDO::FETCH_NUM);
@@ -833,7 +831,6 @@ class Anope implements Service {
 			FROM `%s`AS cs
 			WHERE type=:type AND letters > 0 and chan=''",
 				TBL_CHANSTATS);
-		$type = self::getChanstatsType($type);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
@@ -885,8 +882,8 @@ class Anope implements Service {
 	 */
 	public function getUserActivity($mode, $user, $chan) {
 		$info = $this->getUserData($mode, $user);
-		if ($chan == 'global') {
-			$chan = ''; //TODO: this is dirty
+		if ($chan == null) {
+			$chan = ''; //TODO: this is dirty but should be fixed on the anope side
 			$sQuery = sprintf("SELECT type, letters, words, line AS 'lines', actions,
 				(smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, cs.modes, topics
 				FROM `%s` AS cs
@@ -921,7 +918,7 @@ class Anope implements Service {
 		}
 		foreach ($data as $key => $type) {
 			foreach ($type as $field => $val) {
-				$data[$key][$field] = (int) $val;
+				$data[$key][$field] = is_numeric($val) ? (int) $val : $val; //TODO: make int if digit
 			}
 		}
 		return $data;
@@ -938,8 +935,8 @@ class Anope implements Service {
 	 */
 	public function getUserHourlyActivity($mode, $user, $chan, $type) {
 		$info = $this->getUserData($mode, $user);
-		//TODO: this is dirty
-		if ($chan == 'global'){
+		//TODO: this is dirty but should be fixed on the anope side
+		if ($chan == null){
 			$chan = '';
 		}
 		$sQuery = sprintf("SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,
@@ -948,7 +945,7 @@ class Anope implements Service {
 			WHERE nick = :nick AND chan = :channel AND type = :type",
 				TBL_CHANSTATS);
 		$ps = $this->db->prepare($sQuery);
-		$ps->bindValue(':type', self::getChanstatsType($type), PDO::PARAM_INT);
+		$ps->bindValue(':type', $type, PDO::PARAM_INT);
 		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
 		$ps->bindValue(':nick', $info['uname'], PDO::PARAM_STR);
 		$ps->execute();
@@ -1057,23 +1054,6 @@ class Anope implements Service {
 		$ps->bindValue(':uname', $uname, PDO::PARAM_STR);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
-	}
-	
-	/**
-	 * Maps the denora style chanstats type to the anope names
-	 * @param type $type
-	 * @return string
-	 */
-	private static function getChanstatsType($type) {
-		switch ($type) {
-			case 1:
-				return 'daily';
-			case 2:
-				return 'weekly';
-			case 3:
-				return 'monthly';
-		}
-		return 'total';
 	}
 
 }

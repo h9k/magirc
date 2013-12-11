@@ -209,8 +209,8 @@ $magirc->slim->get('/channels/top(/:limit)', function($limit = 10) use($magirc) 
 /**
  * Get Channels Acticity Stats
  *
- * This will get a list of channels and their activity stats. The activity types
- * are topics, smileys, kicks, actions, modes, words, and letters.
+ * This will get a list of channels and their activity stats.
+ * Type can be total, monthly, weekly, daily.
  *
  * Example: http://www.denorastats.org/magirc/rest/service.php/channels/activity/<type>
  **/
@@ -249,8 +249,8 @@ $magirc->slim->get('/channels/:chan/users', function($chan) use($magirc) {
 /**
  * Get Activity Stats in a Specific Channel
  *
- * This will show the activity stats for a specific channel. The activity types
- * are topics, smileys, kicks, actions, modes, words, and letters.
+ * This will show the activity stats for a specific channel.
+ * Type can be total, monthly, weekly, daily.
  *
  * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>/activity/<type>
  *
@@ -263,8 +263,8 @@ $magirc->slim->get('/channels/:chan/activity/:type', function($chan, $type) use(
 /**
  * Get Hourly Activity Stats in a Specific Channel
  *
- * This will show the hourly activity stats for a specific channel. The activity types
- * are topics, smileys, kicks, actions, modes, words, and letters.
+ * This will show the hourly activity stats for a specific channel.
+ * Type can be total, monthly, weekly, daily.
  *
  * Example: http://www.denorastats.org/magirc/rest/service.php/channels/%23<channel>/hourly/activity/<type>
  *
@@ -347,8 +347,8 @@ $magirc->slim->get('/users/top(/:limit)', function($limit = 10) use($magirc) {
 /**
  * Get User Activity Stats
  *
- * This will show the activity stats for a specific user. The activity types
- * are topics, smileys, kicks, actions, modes, words, and letters.
+ * This will show the activity stats for a specific user.
+ * Type can be total, monthly, weekly, daily.
  *
  * Example: http://www.denorastats.org/magirc/rest/service.php/users/activity/<type>
  *
@@ -400,7 +400,7 @@ $magirc->slim->get('/users/:mode/:user/channels', function($mode, $user) use($ma
  * Example: http://www.denorastats.org/magirc/rest/service.php/users/stats/<nick>/channels
  *
  **/
-$magirc->slim->get('/users/:mode/:user/activity(/:chan)', function($mode, $user, $chan = 'global') use($magirc) {
+$magirc->slim->get('/users/:mode/:user/activity(/:chan)', function($mode, $user, $chan = null) use($magirc) {
 	$magirc->jsonOutput($magirc->service->getUserActivity($mode, $user, $chan), true);
 });
 
@@ -413,7 +413,7 @@ $magirc->slim->get('/users/:mode/:user/activity(/:chan)', function($mode, $user,
  * Example: http://www.denorastats.org/magirc/rest/service.php/users/stats/<nick>/hourly/<channel>/<type>
  *
  **/
-$magirc->slim->get('/users/:mode/:user/hourly/:chan/:type', function($mode, $user, $chan, $type) use($magirc) {
+$magirc->slim->get('/users/:mode/:user/hourly/(:chan/):type', function($mode, $user, $chan = null, $type) use($magirc) {
 	$magirc->jsonOutput($magirc->service->getUserHourlyActivity($mode, $user, $chan, $type));
 });
 

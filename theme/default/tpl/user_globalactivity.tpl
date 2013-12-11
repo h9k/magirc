@@ -2,10 +2,10 @@
 
 <form>
 	<div id="radio" class="choser">
-		<input type="radio" id="radio0" name="radio" /><label for="radio0">{t}Total{/t}</label>
-		<input type="radio" id="radio1" name="radio" /><label for="radio1">{t}Today{/t}</label>
-		<input type="radio" id="radio2" name="radio" /><label for="radio2">{t}This Week{/t}</label>
-		<input type="radio" id="radio3" name="radio" checked="checked" /><label for="radio3">{t}This Month{/t}</label>
+		<input type="radio" id="radio0" name="radio" value="total" /><label for="radio0">{t}Total{/t}</label>
+		<input type="radio" id="radio1" name="radio" value="daily" /><label for="radio1">{t}Today{/t}</label>
+		<input type="radio" id="radio2" name="radio" value="weekly" /><label for="radio2">{t}This Week{/t}</label>
+		<input type="radio" id="radio3" name="radio" value="monthly" checked="checked" /><label for="radio3">{t}This Month{/t}</label>
 	</div>
 </form>
 
@@ -22,7 +22,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	var type = 3;
+	var type = 'monthly';
 	var oTable = $('#tbl_activity').dataTable({
 		"bServerSide": true,
 		"iDisplayLength": 25,
@@ -47,7 +47,7 @@ $(document).ready(function() {
 	});
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
-		type = $('input[name=radio]:checked').index() / 2;
+		type = $('input[name=radio]:checked').val();
 		oTable.fnSettings().sAjaxSource = "rest/service.php/users/activity/"+type+"?format=datatables";
 		oTable.fnDraw();
 	});
