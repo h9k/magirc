@@ -561,8 +561,8 @@ class Anope implements Service {
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS chan AS name, letters, words, line AS 'lines', actions,
 			(smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, cs.modes, topics
 			FROM `%s`AS cs
-			JOIN `%s`AS c ON LOWER(cs.chan) = LOWER(c.channel)
-			WHERE cs.type=:type AND %s", TBL_CHANSTATS, TBL_CHAN, $sWhere);
+			LEFT JOIN `%s` AS c ON LOWER(cs.chan) = LOWER(c.channel)
+			WHERE cs.type = :type AND cs.nick = '' AND %s", TBL_CHANSTATS, TBL_CHAN, $sWhere); //TODO: change cs.nick to IS NULL when anope gets fixed
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('cs.chan', 'c.topic'));
