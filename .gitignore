@@ -1,4 +1,6 @@
 /.htaccess
 .DS_Store
 /vendor/
+/conf/*.cfg.php
 /theme/default/slim/customRoutes.inc.php
+/.idea
