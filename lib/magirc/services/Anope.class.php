@@ -562,7 +562,7 @@ class Anope implements Service {
 			(smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, cs.modes, topics
 			FROM `%s`AS cs
 			LEFT JOIN `%s` AS c ON LOWER(cs.chan) = LOWER(c.channel)
-			WHERE cs.type = :type AND cs.nick IS NULL AND %s", TBL_CHANSTATS, TBL_CHAN, $sWhere);
+			WHERE cs.type = :type AND cs.nick = '' AND %s", TBL_CHANSTATS, TBL_CHAN, $sWhere); //TODO: change cs.nick to IS NULL when anope gets fixed
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('cs.chan', 'c.topic'));
@@ -599,7 +599,7 @@ class Anope implements Service {
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS nick AS uname, letters, words, line AS 'lines', actions,"
 				. " (smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, modes, topics"
 				. " FROM `%s` AS cs"
-				. " WHERE chan = :channel AND nick IS NOT NULL AND type=:type AND letters > 0 ",
+				. " WHERE chan = :channel AND nick != '' AND type=:type AND letters > 0 ",
 				TBL_CHANSTATS);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type, ':channel' => $chan));
@@ -726,7 +726,7 @@ class Anope implements Service {
 		$aaData = array();
 		$sQuery = sprintf("SELECT nick AS uname, line AS 'lines'"
 				. " FROM `%s` AS cs"
-				. " WHERE type = 'daily' AND chan IS NULL AND line > 0"
+				. " WHERE type = 'daily' AND chan='' AND line > 0"
 				. " ORDER BY line DESC LIMIT :limit",
 				TBL_CHANSTATS);
 		$ps = $this->db->prepare($sQuery);
@@ -828,8 +828,8 @@ class Anope implements Service {
 
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS nick AS 'uname', letters, words, line AS 'lines',
 			actions, (smileys_happy + smileys_sad + smileys_other) AS 'smileys', kicks, modes, topics
-			FROM `%s` AS cs
-			WHERE type = :type AND letters > 0 and chan IS NULL",
+			FROM `%s`AS cs
+			WHERE type=:type AND letters > 0 and chan=''",
 				TBL_CHANSTATS);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
@@ -883,10 +883,11 @@ class Anope implements Service {
 	public function getUserActivity($mode, $user, $chan) {
 		$info = $this->getUserData($mode, $user);
 		if ($chan == null) {
+			$chan = ''; //TODO: this is dirty but should be fixed on the anope side
 			$sQuery = sprintf("SELECT type, letters, words, line AS 'lines', actions,
 				(smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, cs.modes, topics
 				FROM `%s` AS cs
-				WHERE nick = :nick AND chan IS NULL
+				WHERE nick = :nick AND chan = :chan
 				ORDER BY cs.letters DESC",
 				TBL_CHANSTATS);
 		} else {
@@ -909,7 +910,7 @@ class Anope implements Service {
 		}
 		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':nick', $info['uname'], PDO::PARAM_STR);
-        if ($chan != null) $ps->bindValue(':chan', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':chan', $chan, PDO::PARAM_STR);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if (!is_array($data)) {
@@ -928,25 +929,27 @@ class Anope implements Service {
 	 * @param string $mode stats: user is treated as stats user, nick: user is treated as nickname
 	 * @param string $user User
 	 * @param string $chan Channel
-	 * @param string $type Type
+	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
 	 * @return mixed
 	 * @todo refactor
 	 */
 	public function getUserHourlyActivity($mode, $user, $chan, $type) {
 		$info = $this->getUserData($mode, $user);
+		//TODO: this is dirty but should be fixed on the anope side
+		if ($chan == null){
+			$chan = '';
+		}
 		$sQuery = sprintf("SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,
 			time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
-			FROM `%s` AS cs
-			WHERE nick = :nick AND type = :type",
+			FROM `%s`AS cs
+			WHERE nick = :nick AND chan = :channel AND type = :type",
 				TBL_CHANSTATS);
-        $sQuery .= ($chan == null) ? " AND chan IS NULL" : " AND chan = :channel";
 		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':type', $type, PDO::PARAM_INT);
-		if ($chan != null) $ps->bindValue(':channel', $chan, PDO::PARAM_STR);
+		$ps->bindValue(':channel', $chan, PDO::PARAM_STR);
 		$ps->bindValue(':nick', $info['uname'], PDO::PARAM_STR);
 		$ps->execute();
 		$result = $ps->fetch(PDO::FETCH_NUM);
-
 		if (!is_array($result)) {
 			return null;
 		}
