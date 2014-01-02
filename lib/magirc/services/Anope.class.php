@@ -465,7 +465,7 @@ class Anope implements Service {
 		$sQuery = sprintf("SELECT chan AS channel, line AS 'lines'"
 				. " FROM `%s` AS cs"
 				. " JOIN `%s` AS c ON LOWER(cs.chan) = LOWER(c.channel)"
-				. " WHERE cs.type = 'daily' AND cs.line >= 1",
+				. " WHERE cs.type = 'daily' AND cs.line >= 1 AND cs.nick = ''",
 				TBL_CHANSTATS, TBL_CHAN);
 		if ($secret_mode) {
 			$sQuery .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
@@ -726,7 +726,7 @@ class Anope implements Service {
 		$aaData = array();
 		$sQuery = sprintf("SELECT nick AS uname, line AS 'lines'"
 				. " FROM `%s` AS cs"
-				. " WHERE type = 'daily' AND chan='' AND line > 0"
+				. " WHERE type = 'daily' AND chan = '' AND line > 0"
 				. " ORDER BY line DESC LIMIT :limit",
 				TBL_CHANSTATS);
 		$ps = $this->db->prepare($sQuery);
@@ -829,7 +829,7 @@ class Anope implements Service {
 		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS nick AS 'uname', letters, words, line AS 'lines',
 			actions, (smileys_happy + smileys_sad + smileys_other) AS 'smileys', kicks, modes, topics
 			FROM `%s`AS cs
-			WHERE type=:type AND letters > 0 and chan=''",
+			WHERE type = :type AND letters > 0 and chan = ''",
 				TBL_CHANSTATS);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
