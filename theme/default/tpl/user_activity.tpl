@@ -52,7 +52,7 @@ $(document).ready(function() {
 		series: [{ name: 'Lines', data: [] }]
 	});
 	function getUrl(action) {
-		if (chan === null) {
+		if (!chan) {
 			return 'rest/service.php/users/'+mode+'/'+target+'/'+action;
 		} else {
 			return 'rest/service.php/users/'+mode+'/'+target+'/'+action+'/'+encodeURIComponent(chan);
