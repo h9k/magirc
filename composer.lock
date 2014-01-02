@@ -104,11 +104,11 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.15",
+            "version": "v3.1.16",
             "source": {
                 "type": "svn",
                 "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.15/@4782"
+                "reference": "/tags/v3.1.16/@4802"
             },
             "require": {
                 "php": ">=5.2"
@@ -144,7 +144,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-10-01 21:08:54"
+            "time": "2013-12-17 16:56:58"
         }
     ],
     "packages-dev": [

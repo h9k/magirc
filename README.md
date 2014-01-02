@@ -1,15 +1,13 @@
-MagIRC
-======
+# MagIRC #
+----------
 
 Thank you for your interest in MagIRC, a PHP-based Web Frontend for IRC Services released under the GPLv3 license.
 
-About MagIRC
-------------
 This software is a complete rewrite of phpDenora, a PHP-based Web Frontend for the [Denora Stats](http://www.denorastats.org) project.
-In the future it will interface with other IRC services like [Anope](http://www.anope.org/) but the priority for now is to replace phpDenora since it is aged and ugly.
 
-Main features
--------------
+Alternatively, MagIRC now also works with [Anope](http://www.anope.org/) 2.0, however it still is work in progress and not 100% production ready.
+
+### Main features ###
 * REST service
 * [Smarty](http://www.smarty.net/) templating engine
 * [jQuery](http://www.jquery.com/)-based UI with AJAX interactions
@@ -18,44 +16,46 @@ Main features
 * Administration panel
 * Slick design
 
-Requirements
-------------
+### Requirements ###
 * Web Server with PHP 5.3+ and the *pdo_mysql*, *mcrypt* and *gettext* modules installed
 * Web Browser supporting HTML5, CSS3 and JavaScript
-* [Denora Stats](http://www.denorastats.org) v1.5 server with MySQL enabled
+* Any of the following:
+	* [Denora Stats](http://www.denorastats.org) v1.5 server with MySQL enabled
+	* [Anope](http://www.anope.org/) 2.0 with the `m_mysql`, `m_chanstats` and `ircsql` modules enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
 
 
-Installing from a release package
----------------------------------
+## Magirc installation / upgrade ##
+
+### Installing from a release package ###
 1. Download the latest MagIRC release package from http://www.magirc.org/
 2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 
-Installing from git
--------------------
+### Installing from git ###
 1. Clone the git repository from git://github.com/h9k/magirc.git
 2. Run the `composer install` command to get the required dependencies (you need to install composer first, see http://getcomposer.org/)
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 
-Upgrading from a release package
---------------------------------
+### Upgrading from a release package ###
 1. Pull the latest MagIRC package from https://github.com/h9k/magirc
 2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 
-Upgrading from git
-------------------
+### Upgrading from git ###
 1. Execute the `git pull` command to get the latest repo version
 2. Execute the `composer update` command to upgrade the vendor libraries (you need to install composer first, see http://getcomposer.org/)
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 
-Required Denora settings
-------------------------
+
+## Denora setup ##
+
+### Required Denora settings ###
+
 **Change** this to a higher value, such as 15 days (15d) to keep information for a longer time.
 Important: the servercache value must NOT be smaller than the usercache value!
 
@@ -76,16 +76,22 @@ Important: the servercache value must NOT be smaller than the usercache value!
 
     #largenet;
 
-Optional Denora settings
-------------------------
+### Optional Denora settings ###
 Limiting chanstats to +r users improves nick tracking.
 To use this feature **enable** the following parameters by removing the '#' in front:
 
     ustatsregistered;
 
-Web Server configuration
-------------------------
-### Apache
+
+## Anope setup ###
+Please note that Anope support is not yet fully implemented, but most of the stuff should work.
+You need at least Anope 2.0.0-RC1 and the `m_mysql`, `m_chanstats` and `ircsql` modules enabled and setup. These modules are included in the Anope codebase.
+Please refer to the Anope documentation on how to set those up.
+
+
+## Web Server configuration ##
+
+### Apache ###
 The `AcceptPathInfo` directive should be set to `Default` or `On` in the Apache configuration. It is by default on most servers.
 
 To enable URL rewriting make sure your apache has the `mod_rewrite` module enabled. Then rename `htaccess.txt` to `.htaccess` and enable rewriting in the MagIRC Admin Panel.
@@ -93,7 +99,7 @@ This is optional, MagIRC also works without rewriting on Apache.
 
 It is also recommended, if you allow slashes `/` in your nicknames or channel names, to set `AllowEncodedSlashes On`
 
-### Nginx
+### Nginx ###
 Your Nginx configuration file should contain this code, if Magirc is in the document root :
 
     index index.php index.html;
@@ -129,13 +135,13 @@ Comment out `fastcgi_intercept_errors on;` to override Magirc 404 blue pages.
 Don't forget to replace `fastcgi_pass  backend;` by your actual backend.
 If you do not have `/etc/nginx/fastcgi.conf`, include `/etc/nginx/fastcgi_params`.
 
-### lighttpd
+### lighttpd ###
 Your lighttpd configuration file should contain this code (along with other settings you may need). This code requires lighttpd >= 1.4.24.
 
     url.rewrite-if-not-file = ("^" => "/index.php")
 
-Limitations
------------
+
+## Limitations ##
 The current version is considered to be **beta** and has some known limitations:
 
 * **Templating is not officially supported**: This means you are free to create your own templates for MagIRC, but we will not support you and will not guarantee troublefree operation between different versions of MagIRC, as things change rather often during development. This is scheduled for the **release candidate**.
