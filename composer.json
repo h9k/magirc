@@ -1,5 +1,5 @@
 {
-    "name": "h9k/magirc",
+    "name": "magirc/magirc",
     "description": "MagIRC - Let the magirc begin!",
     "type": "project",
     "keywords": [ "irc", "denora", "anope", "stats", "statistics", "frontend" ],
