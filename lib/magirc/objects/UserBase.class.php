@@ -4,7 +4,7 @@ abstract Class UserBase {
 	public $nickname;
 	public $realname;
 	public $hostname;
-	private $hostname_cloaked;
+	public $hostname_cloaked;
 	public $username;
 	public $swhois;
 	public $connect_time;
