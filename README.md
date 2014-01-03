@@ -27,28 +27,28 @@ Alternatively, MagIRC now also works with [Anope](http://www.anope.org/) 2.0, ho
 
 ## Magirc installation / upgrade ##
 
-### Installing from a release package ###
-1. Download the latest MagIRC release package from http://www.magirc.org/
+### Using [composer](http://getcomposer.org) (recommended) ###
+You need [composer](http://getcomposer.org)
+
+1. Execute the following command:
+	- To install: `composer create-project magirc/magirc`
+	- To update: `composer update`
+2. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
+   Example: http://`yourpathtomagirc`/setup/
+
+### Using a release package ###
+1. Download the latest MagIRC release package from [magirc.org](http://www.magirc.org/)
 2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 
-### Installing from git ###
-1. Clone the git repository from git://github.com/h9k/magirc.git
-2. Run the `composer install` command to get the required dependencies (you need to install composer first, see http://getcomposer.org/)
-3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
-   Example: http://`yourpathtomagirc`/setup/
+### Using git ###
+You a git client and [composer](http://getcomposer.org)
 
-### Upgrading from a release package ###
-1. Pull the latest MagIRC package from https://github.com/h9k/magirc
-2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
-3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
-   Example: http://`yourpathtomagirc`/setup/
-
-### Upgrading from git ###
-1. Execute the `git pull` command to get the latest repo version
-2. Execute the `composer update` command to upgrade the vendor libraries (you need to install composer first, see http://getcomposer.org/)
-3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
+1. Execute the following commands:
+	- To install: `git clone git://github.com/h9k/magirc.git` and `composer install`
+	- To update: `git pull` and `composer update`
+2. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 
 
