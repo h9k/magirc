@@ -969,8 +969,9 @@ class Anope implements Service {
 		if ($mode == "stats") {
 			$sQuery = sprintf("SELECT nick"
 					. " FROM `%s` AS u"
-					. " WHERE LOWER(account) = LOWER(:user)",
-					TBL_USER);
+					. " WHERE LOWER(nick) = LOWER(:user)"
+                    . " LIMIT 1",
+					TBL_CHANSTATS);
 		} else {
 			$sQuery = sprintf("SELECT nick"
 					. " FROM `%s` AS u"
