@@ -47,6 +47,10 @@
 			<td align="right">Channels you don't want MagIRC to show.<br />Separate with commas, example: &quot;#opers,#services&quot;</td>
 			<td align="left"><input name="hide_chans" type="text" id="hide_chans" value="{$cfg->hide_chans}" size="32" maxlength="255" /></td>
 		</tr>
+		<tr>
+			<td align="right"><strong>Hide nick aliases</strong></td>
+			<td align="left">yes <input type="radio" name="hide_nickaliases" value="1"{if $cfg->hide_nickaliases} checked="checked"{/if} /> <input type="radio" name="hide_nickaliases" value="0"{if !$cfg->hide_nickaliases} checked="checked"{/if} /> no</td>
+		</tr>
 	</table>
 	<button id="network-submit" type="button">Save</button>
 </form>

@@ -446,7 +446,7 @@ class Denora implements Service {
 			topic, topicauthor AS topic_author, topictime AS topic_time, kickcount AS kicks, %s, %s FROM chan WHERE %s",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::chan_modes))),
 				implode(',', array_map(array('Denora', 'getSqlModeData'), str_split(Protocol::chan_modes_data))), $sWhere);
-		
+
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery);
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
@@ -456,7 +456,7 @@ class Denora implements Service {
 		} else {
 			$sQuery .= " ORDER BY `channel` ASC";
 		}
-		
+
 		$ps = $this->db->prepare($sQuery);
 		$ps->execute();
 		$aaData = $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');
@@ -1018,7 +1018,7 @@ class Denora implements Service {
 	 * @return array of nicknames
 	 */
 	private function getUnameAliases($uname) {
-		if (!$uname) {
+		if (!$uname || $this->cfg->hide_nickaliases) {
 			return null;
 		}
 		$ps = $this->db->prepare("SELECT a.nick FROM aliases a LEFT JOIN user u ON a.nick = u.nick
@@ -1028,7 +1028,7 @@ class Denora implements Service {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
 	}
-	
+
 	/**
 	 * Maps the anope style chanstats type to the denora numbers
 	 * @param string $type
@@ -1045,7 +1045,7 @@ class Denora implements Service {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Maps the denora style chanstats type to the anope values
 	 * @param int $type
