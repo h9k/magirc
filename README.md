@@ -1,5 +1,4 @@
 # MagIRC #
-----------
 
 Thank you for your interest in MagIRC, a PHP-based Web Frontend for IRC Services released under the GPLv3 license.
 
@@ -17,11 +16,11 @@ Alternatively, MagIRC now also works with [Anope](http://www.anope.org/) 2.0, ho
 * Slick design
 
 ### Requirements ###
-* Web Server with PHP 5.3+ and the *pdo_mysql*, *mcrypt* and *gettext* modules installed
+* Web Server with PHP 5.3+ and the `pdo_mysql`, `mcrypt` and `gettext` modules installed
 * Web Browser supporting HTML5, CSS3 and JavaScript
 * Any of the following:
 	* [Denora Stats](http://www.denorastats.org) v1.5 server with MySQL enabled
-	* [Anope](http://www.anope.org/) 2.0 with the `m_mysql`, `m_chanstats` and `ircsql` modules enabled
+	* [Anope](http://www.anope.org/) v2.0 with the `m_mysql`, `m_chanstats` and `ircsql` modules enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
 
 
@@ -52,7 +51,7 @@ You a git client and [composer](http://getcomposer.org)
    Example: http://`yourpathtomagirc`/setup/
 
 
-## Denora setup ##
+## Denora configuration ##
 
 ### Required Denora settings ###
 
@@ -83,7 +82,7 @@ To use this feature **enable** the following parameters by removing the '#' in f
     ustatsregistered;
 
 
-## Anope setup ###
+## Anope configuration ###
 Please note that Anope support is not yet fully implemented, but most of the stuff should work.
 You need at least Anope 2.0.0-RC1 and the `m_mysql`, `m_chanstats` and `ircsql` modules enabled and setup. These modules are included in the Anope codebase.
 Please refer to the Anope documentation on how to set those up.

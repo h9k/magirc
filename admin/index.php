@@ -115,10 +115,10 @@ try {
 	$admin->slim->get('/configuration/network', function() use ($admin) {
 		if (!$admin->sessionStatus()) { $admin->slim->halt(403, "HTTP 403 Access Denied"); }
 		$ircds = array();
-		foreach (glob("../lib/magirc/denora/protocol/*") as $filename) {
-			if ($filename != "../lib/magirc/denora/protocol/index.php") {
+		foreach (glob("../lib/magirc/ircds/*") as $filename) {
+			if ($filename != "../lib/magirc/ircds/index.php") {
 				$ircdlist = explode("/", $filename);
-				$ircdlist = explode(".", $ircdlist[5]);
+				$ircdlist = explode(".", $ircdlist[4]);
 				$ircds[] = $ircdlist[0];
 			}
 		}
