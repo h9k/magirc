@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-02 16:03+0100\n"
-"PO-Revision-Date: 2012-05-02 16:03+0100\n"
-"Last-Translator: Sebastian Vassiliou <admin@hosting9000.com>\n"
+"POT-Creation-Date: 2014-01-03 02:56+0100\n"
+"PO-Revision-Date: 2014-01-03 02:57+0100\n"
+"Last-Translator: Hal9000 <hal9000@denorastats.org>\n"
 "Language-Team: \n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;T_gettext\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: ../..\n"
 "X-Poedit-SearchPath-1: ../../../lib/magirc\n"
 
@@ -21,169 +21,105 @@ msgstr ""
 msgid "Channel activity for %1"
 msgstr "Raum-Aktivität für %1"
 
-#: ../../strings.c:5
-#: ../../strings.c:74
-#: ../../strings.c:575
-#: ../../strings.c:620
-#: ../../strings.c:851
+#: ../../strings.c:5 ../../strings.c:74 ../../strings.c:596
+#: ../../strings.c:641 ../../strings.c:872
 msgid "Total"
 msgstr "Gesamt"
 
-#: ../../strings.c:8
-#: ../../strings.c:77
-#: ../../strings.c:323
-#: ../../strings.c:392
-#: ../../strings.c:578
-#: ../../strings.c:623
-#: ../../strings.c:854
+#: ../../strings.c:8 ../../strings.c:77 ../../strings.c:344
+#: ../../strings.c:413 ../../strings.c:599 ../../strings.c:644
+#: ../../strings.c:875
 msgid "Today"
 msgstr "Heute"
 
-#: ../../strings.c:11
-#: ../../strings.c:80
-#: ../../strings.c:581
-#: ../../strings.c:626
-#: ../../strings.c:857
+#: ../../strings.c:11 ../../strings.c:80 ../../strings.c:602
+#: ../../strings.c:647 ../../strings.c:878
 msgid "This Week"
 msgstr "Diese Woche"
 
-#: ../../strings.c:14
-#: ../../strings.c:83
-#: ../../strings.c:584
-#: ../../strings.c:629
-#: ../../strings.c:860
+#: ../../strings.c:14 ../../strings.c:83 ../../strings.c:605
+#: ../../strings.c:650 ../../strings.c:881
 msgid "This Month"
 msgstr "Diesen Monat"
 
-#: ../../strings.c:17
-#: ../../strings.c:218
-#: ../../strings.c:308
-#: ../../strings.c:632
-#: ../../strings.c:668
+#: ../../strings.c:17 ../../strings.c:218 ../../strings.c:329
+#: ../../strings.c:653 ../../strings.c:689
 msgid "Nickname"
 msgstr "Nickname"
 
-#: ../../strings.c:20
-#: ../../strings.c:89
-#: ../../strings.c:590
-#: ../../strings.c:635
+#: ../../strings.c:20 ../../strings.c:89 ../../strings.c:611
+#: ../../strings.c:656
 msgid "Letters"
 msgstr "Buchstaben"
 
-#: ../../strings.c:23
-#: ../../strings.c:92
-#: ../../strings.c:593
-#: ../../strings.c:638
+#: ../../strings.c:23 ../../strings.c:92 ../../strings.c:614
+#: ../../strings.c:659
 msgid "Words"
 msgstr "Wörter"
 
-#: ../../strings.c:26
-#: ../../strings.c:95
-#: ../../strings.c:419
-#: ../../strings.c:428
-#: ../../strings.c:596
-#: ../../strings.c:641
+#: ../../strings.c:26 ../../strings.c:95 ../../strings.c:440
+#: ../../strings.c:449 ../../strings.c:617 ../../strings.c:662
 msgid "Lines"
 msgstr "Zeilen"
 
-#: ../../strings.c:29
-#: ../../strings.c:98
-#: ../../strings.c:599
-#: ../../strings.c:644
+#: ../../strings.c:29 ../../strings.c:98 ../../strings.c:620
+#: ../../strings.c:665
 msgid "Actions"
 msgstr "Aktionen"
 
-#: ../../strings.c:32
-#: ../../strings.c:101
-#: ../../strings.c:602
-#: ../../strings.c:647
+#: ../../strings.c:32 ../../strings.c:101 ../../strings.c:623
+#: ../../strings.c:668
 msgid "Smileys"
 msgstr "Smileys"
 
-#: ../../strings.c:35
-#: ../../strings.c:104
-#: ../../strings.c:191
-#: ../../strings.c:605
-#: ../../strings.c:650
+#: ../../strings.c:35 ../../strings.c:104 ../../strings.c:191
+#: ../../strings.c:626 ../../strings.c:671
 msgid "Kicks"
 msgstr "Kicks"
 
-#: ../../strings.c:38
-#: ../../strings.c:107
-#: ../../strings.c:131
-#: ../../strings.c:188
-#: ../../strings.c:221
-#: ../../strings.c:608
-#: ../../strings.c:653
+#: ../../strings.c:38 ../../strings.c:107 ../../strings.c:131
+#: ../../strings.c:188 ../../strings.c:221 ../../strings.c:629
+#: ../../strings.c:674
 msgid "Modes"
 msgstr "Modes"
 
-#: ../../strings.c:41
-#: ../../strings.c:110
-#: ../../strings.c:611
-#: ../../strings.c:656
+#: ../../strings.c:41 ../../strings.c:110 ../../strings.c:632
+#: ../../strings.c:677
 msgid "Topics"
 msgstr "Topics"
 
-#: ../../strings.c:44
-#: ../../strings.c:56
-#: ../../strings.c:68
-#: ../../strings.c:113
-#: ../../strings.c:134
-#: ../../strings.c:149
-#: ../../strings.c:167
-#: ../../strings.c:224
-#: ../../strings.c:236
-#: ../../strings.c:248
-#: ../../strings.c:281
-#: ../../strings.c:317
-#: ../../strings.c:413
-#: ../../strings.c:422
-#: ../../strings.c:431
-#: ../../strings.c:443
-#: ../../strings.c:455
-#: ../../strings.c:539
-#: ../../strings.c:551
-#: ../../strings.c:566
-#: ../../strings.c:614
-#: ../../strings.c:659
-#: ../../strings.c:707
-#: ../../strings.c:719
-#: ../../strings.c:734
+#: ../../strings.c:44 ../../strings.c:56 ../../strings.c:68
+#: ../../strings.c:113 ../../strings.c:134 ../../strings.c:149
+#: ../../strings.c:167 ../../strings.c:224 ../../strings.c:236
+#: ../../strings.c:248 ../../strings.c:284 ../../strings.c:338
+#: ../../strings.c:434 ../../strings.c:443 ../../strings.c:452
+#: ../../strings.c:464 ../../strings.c:476 ../../strings.c:560
+#: ../../strings.c:572 ../../strings.c:587 ../../strings.c:635
+#: ../../strings.c:680 ../../strings.c:728 ../../strings.c:740
+#: ../../strings.c:755
 msgid "Loading"
 msgstr "Laden"
 
-#: ../../strings.c:47
-#: ../../strings.c:434
+#: ../../strings.c:47 ../../strings.c:455
 msgid "Current Client Statistics for %1"
 msgstr "Momentane Client-Statistiken für %1"
 
-#: ../../strings.c:50
-#: ../../strings.c:230
-#: ../../strings.c:437
-#: ../../strings.c:689
+#: ../../strings.c:50 ../../strings.c:230 ../../strings.c:458
+#: ../../strings.c:710
 msgid "Client"
 msgstr "Client"
 
-#: ../../strings.c:53
-#: ../../strings.c:65
-#: ../../strings.c:233
-#: ../../strings.c:245
-#: ../../strings.c:440
-#: ../../strings.c:452
+#: ../../strings.c:53 ../../strings.c:65 ../../strings.c:233
+#: ../../strings.c:245 ../../strings.c:461 ../../strings.c:473
 msgid "Count"
 msgstr "Gesamt"
 
-#: ../../strings.c:59
-#: ../../strings.c:446
+#: ../../strings.c:59 ../../strings.c:467
 msgid "Current Country Statistics for %1"
 msgstr "Momentane Land-Statistiken für %1"
 
-#: ../../strings.c:62
-#: ../../strings.c:242
-#: ../../strings.c:449
-#: ../../strings.c:467
-#: ../../strings.c:686
+#: ../../strings.c:62 ../../strings.c:242 ../../strings.c:470
+#: ../../strings.c:488 ../../strings.c:707
 msgid "Country"
 msgstr "Land"
 
@@ -191,11 +127,8 @@ msgstr "Land"
 msgid "Global channel activity"
 msgstr "Globale Raum-Aktivität"
 
-#: ../../strings.c:86
-#: ../../strings.c:122
-#: ../../strings.c:152
-#: ../../strings.c:407
-#: ../../strings.c:416
+#: ../../strings.c:86 ../../strings.c:122 ../../strings.c:152
+#: ../../strings.c:428 ../../strings.c:437
 msgid "Channel"
 msgstr "Raum"
 
@@ -207,56 +140,39 @@ msgstr "Raum-Verlauf"
 msgid "Channel list"
 msgstr "Raumliste"
 
-#: ../../strings.c:125
-#: ../../strings.c:179
-#: ../../strings.c:491
+#: ../../strings.c:125 ../../strings.c:179 ../../strings.c:512
 msgid "Current users"
 msgstr "Derzeitige Benutzer"
 
-#: ../../strings.c:128
-#: ../../strings.c:494
+#: ../../strings.c:128 ../../strings.c:515
 msgid "Max users"
 msgstr "Benutzerspitze"
 
-#: ../../strings.c:137
-#: ../../strings.c:140
-#: ../../strings.c:347
-#: ../../strings.c:728
-#: ../../strings.c:842
+#: ../../strings.c:137 ../../strings.c:140 ../../strings.c:368
+#: ../../strings.c:749 ../../strings.c:863
 msgid "Channels"
 msgstr "Räume"
 
-#: ../../strings.c:143
-#: ../../strings.c:164
-#: ../../strings.c:701
-#: ../../strings.c:716
+#: ../../strings.c:143 ../../strings.c:164 ../../strings.c:722
+#: ../../strings.c:737
 msgid "Activity"
 msgstr "Aktivität"
 
-#: ../../strings.c:146
-#: ../../strings.c:272
-#: ../../strings.c:548
-#: ../../strings.c:704
+#: ../../strings.c:146 ../../strings.c:272 ../../strings.c:569
+#: ../../strings.c:725
 msgid "History"
 msgstr "Verlauf"
 
-#: ../../strings.c:155
-#: ../../strings.c:260
-#: ../../strings.c:524
-#: ../../strings.c:692
-#: ../../strings.c:884
+#: ../../strings.c:155 ../../strings.c:260 ../../strings.c:545
+#: ../../strings.c:713 ../../strings.c:905
 msgid "Status"
 msgstr "Status"
 
-#: ../../strings.c:158
-#: ../../strings.c:263
-#: ../../strings.c:560
+#: ../../strings.c:158 ../../strings.c:263 ../../strings.c:581
 msgid "Countries"
 msgstr "Länder"
 
-#: ../../strings.c:161
-#: ../../strings.c:266
-#: ../../strings.c:563
+#: ../../strings.c:161 ../../strings.c:266 ../../strings.c:584
 msgid "Clients"
 msgstr "Clients"
 
@@ -268,17 +184,10 @@ msgstr "Raum-Info für %1"
 msgid "Topic set by"
 msgstr "Topic geschrieben von"
 
-#: ../../strings.c:176
-#: ../../strings.c:185
-#: ../../strings.c:371
-#: ../../strings.c:377
-#: ../../strings.c:383
-#: ../../strings.c:389
-#: ../../strings.c:395
-#: ../../strings.c:488
-#: ../../strings.c:497
-#: ../../strings.c:506
-#: ../../strings.c:872
+#: ../../strings.c:176 ../../strings.c:185 ../../strings.c:392
+#: ../../strings.c:398 ../../strings.c:404 ../../strings.c:410
+#: ../../strings.c:416 ../../strings.c:509 ../../strings.c:518
+#: ../../strings.c:527 ../../strings.c:893
 msgid "on"
 msgstr "am"
 
@@ -290,32 +199,24 @@ msgstr "Maximale Benutzer"
 msgid "Join this channel"
 msgstr "Diesem Raum beitreten"
 
-#: ../../strings.c:197
-#: ../../strings.c:518
-#: ../../strings.c:740
+#: ../../strings.c:197 ../../strings.c:539 ../../strings.c:761
 msgid "Standard connection"
 msgstr "Standard-Verbindung"
 
-#: ../../strings.c:200
-#: ../../strings.c:743
+#: ../../strings.c:200 ../../strings.c:764
 msgid "IRC standard connection"
 msgstr "IRC Standard-Verbindung"
 
-#: ../../strings.c:203
-#: ../../strings.c:521
-#: ../../strings.c:746
+#: ../../strings.c:203 ../../strings.c:542 ../../strings.c:767
 msgid "Secure connection"
 msgstr "Sichere Verbindung"
 
-#: ../../strings.c:206
-#: ../../strings.c:749
+#: ../../strings.c:206 ../../strings.c:770
 msgid "IRC secure connection"
 msgstr "IRC Sichere Verbindung"
 
-#: ../../strings.c:209
-#: ../../strings.c:212
-#: ../../strings.c:752
-#: ../../strings.c:755
+#: ../../strings.c:209 ../../strings.c:212 ../../strings.c:773
+#: ../../strings.c:776
 msgid "Webchat"
 msgstr "Web-Chat"
 
@@ -335,8 +236,7 @@ msgstr "Momentane Land-Statistiken"
 msgid "Network Usage History"
 msgstr "Netzwerk-Verlauf"
 
-#: ../../strings.c:254
-#: ../../strings.c:722
+#: ../../strings.c:254 ../../strings.c:743
 msgid "Network"
 msgstr "Netzwerk"
 
@@ -344,10 +244,8 @@ msgstr "Netzwerk"
 msgid "Welcome"
 msgstr "Willkommen"
 
-#: ../../strings.c:269
-#: ../../strings.c:353
-#: ../../strings.c:536
-#: ../../strings.c:848
+#: ../../strings.c:269 ../../strings.c:374 ../../strings.c:557
+#: ../../strings.c:869
 msgid "Operators"
 msgstr "Operatoren"
 
@@ -359,481 +257,494 @@ msgstr "Netsplit-Diagramme"
 msgid "Searchirc Graphs"
 msgstr "Searchirc-Diagramme"
 
-#: ../../strings.c:284
+#: ../../strings.c:281 ../../strings.c:308
+msgid "Mibbit Graphs"
+msgstr "Mibbit-Diagramme"
+
+#: ../../strings.c:287
 msgid "Netsplit.de Graphs"
 msgstr "Netsplit.de-Diagramme"
 
-#: ../../strings.c:287
+#: ../../strings.c:290
 msgid "Last two weeks"
 msgstr "Letzte zwei Wochen"
 
-#: ../../strings.c:290
+#: ../../strings.c:293
 msgid "Last two months"
 msgstr "Letzte zwei Monate"
 
-#: ../../strings.c:293
+#: ../../strings.c:296
 msgid "Last two years"
 msgstr "Letzte zwei Jahre"
 
-#: ../../strings.c:296
+#: ../../strings.c:299
 msgid "Complete history"
 msgstr "Kompletter Verlauf"
 
-#: ../../strings.c:299
+#: ../../strings.c:302
 msgid "Complete measured history about users and channels"
 msgstr "Komplett gemessener Verlauf von Benutzer und Räume"
 
-#: ../../strings.c:302
-#: ../../strings.c:335
+#: ../../strings.c:305 ../../strings.c:323 ../../strings.c:356
 msgid "More on"
 msgstr "Mehr auf"
 
-#: ../../strings.c:305
+#: ../../strings.c:311
+msgid "Day"
+msgstr "Tag"
+
+#: ../../strings.c:314
+msgid "Week"
+msgstr "Woche"
+
+#: ../../strings.c:317
+msgid "Month"
+msgstr "Monat"
+
+#: ../../strings.c:320
+msgid "Year"
+msgstr "Jahr"
+
+#: ../../strings.c:326
 msgid "Operators currently online"
 msgstr "Operatoren derzeit online"
 
-#: ../../strings.c:311
-#: ../../strings.c:527
-#: ../../strings.c:554
-#: ../../strings.c:683
+#: ../../strings.c:332 ../../strings.c:548 ../../strings.c:575
+#: ../../strings.c:704
 msgid "Server"
 msgstr "Server"
 
-#: ../../strings.c:314
+#: ../../strings.c:335
 msgid "Online since"
 msgstr "Online seit"
 
-#: ../../strings.c:320
+#: ../../strings.c:341
 msgid "SearchIRC Graphs"
 msgstr "SearchIRC-Diagramme"
 
-#: ../../strings.c:326
+#: ../../strings.c:347
 msgid "Past month"
 msgstr "Letzter Monat"
 
-#: ../../strings.c:329
+#: ../../strings.c:350
 msgid "Past week"
 msgstr "Letzte Woche"
 
-#: ../../strings.c:332
+#: ../../strings.c:353
 msgid "Past year"
 msgstr "Letztes Jahr"
 
-#: ../../strings.c:338
+#: ../../strings.c:359
 msgid "Live Network Status"
 msgstr "Live Netzwerk-Status"
 
-#: ../../strings.c:341
+#: ../../strings.c:362
 msgid "Network Status"
 msgstr "Netzwerkstatus"
 
-#: ../../strings.c:344
-#: ../../strings.c:542
-#: ../../strings.c:545
-#: ../../strings.c:725
-#: ../../strings.c:839
+#: ../../strings.c:365 ../../strings.c:563 ../../strings.c:566
+#: ../../strings.c:746 ../../strings.c:860
 msgid "Servers"
 msgstr "Server"
 
-#: ../../strings.c:350
-#: ../../strings.c:410
-#: ../../strings.c:533
-#: ../../strings.c:698
-#: ../../strings.c:731
-#: ../../strings.c:845
+#: ../../strings.c:371 ../../strings.c:431 ../../strings.c:554
+#: ../../strings.c:719 ../../strings.c:752 ../../strings.c:866
 msgid "Users"
 msgstr "Benutzer"
 
-#: ../../strings.c:356
-#: ../../strings.c:359
-#: ../../strings.c:362
-#: ../../strings.c:365
+#: ../../strings.c:377 ../../strings.c:380 ../../strings.c:383
+#: ../../strings.c:386
 msgid "Current"
 msgstr "Derzeit"
 
-#: ../../strings.c:368
-#: ../../strings.c:374
-#: ../../strings.c:380
-#: ../../strings.c:386
+#: ../../strings.c:389 ../../strings.c:395 ../../strings.c:401
+#: ../../strings.c:407
 msgid "Peak"
 msgstr "Spitze"
 
-#: ../../strings.c:398
+#: ../../strings.c:419
 msgid "Current 10 Biggest Chans"
 msgstr "Jetzige 10 größte Räume"
 
-#: ../../strings.c:401
+#: ../../strings.c:422
 msgid "Top 10 Channels Today"
 msgstr "Top 10 Räume heute"
 
-#: ../../strings.c:404
+#: ../../strings.c:425
 msgid "Top 10 Users Today"
 msgstr "Top 10 Benutzer heute"
 
-#: ../../strings.c:425
-#: ../../strings.c:710
+#: ../../strings.c:446 ../../strings.c:731
 msgid "User"
 msgstr "Benutzer"
 
-#: ../../strings.c:458
+#: ../../strings.c:479
 msgid "Server history"
 msgstr "Server-Verlauf"
 
-#: ../../strings.c:461
+#: ../../strings.c:482
 msgid "Server info for %1"
 msgstr "Server-Informationen für %1"
 
-#: ../../strings.c:464
-#: ../../strings.c:530
+#: ../../strings.c:485 ../../strings.c:551
 msgid "Description"
 msgstr "Beschreibung"
 
-#: ../../strings.c:470
-#: ../../strings.c:773
+#: ../../strings.c:491 ../../strings.c:794
 msgid "Online"
 msgstr "Online"
 
-#: ../../strings.c:473
+#: ../../strings.c:494
 msgid "Version"
 msgstr "Version"
 
-#: ../../strings.c:476
+#: ../../strings.c:497
 msgid "Uptime"
 msgstr "Uptime"
 
-#: ../../strings.c:479
+#: ../../strings.c:500
 msgid "Last split"
 msgstr "Letztes Split"
 
-#: ../../strings.c:482
+#: ../../strings.c:503
 msgid "Last ping"
 msgstr "Letztes Ping"
 
-#: ../../strings.c:485
+#: ../../strings.c:506
 msgid "Highest ping"
 msgstr "Höchstes Ping"
 
-#: ../../strings.c:500
+#: ../../strings.c:521
 msgid "Current opers"
 msgstr "Derzeitige Operatoren"
 
-#: ../../strings.c:503
+#: ../../strings.c:524
 msgid "Max opers"
 msgstr "Maximale Operatoren"
 
-#: ../../strings.c:509
+#: ../../strings.c:530
 msgid "Message of the day"
 msgstr "Nachricht des Tages"
 
-#: ../../strings.c:512
+#: ../../strings.c:533
 msgid "Server list"
 msgstr "Serverliste"
 
-#: ../../strings.c:515
+#: ../../strings.c:536
 msgid "Connect to our network round robin"
 msgstr "Verbinde dich mit unserem Round-Robin"
 
-#: ../../strings.c:557
-#: ../../strings.c:713
+#: ../../strings.c:578 ../../strings.c:734
 msgid "Info"
 msgstr "Info"
 
-#: ../../strings.c:569
+#: ../../strings.c:590
 msgid "User activity for %1"
 msgstr "Benutzer-Aktivität für %1"
 
-#: ../../strings.c:572
+#: ../../strings.c:593
 msgid "Global"
 msgstr "Global"
 
-#: ../../strings.c:587
+#: ../../strings.c:608
 msgid "Type"
 msgstr "Typ"
 
-#: ../../strings.c:617
+#: ../../strings.c:638
 msgid "Global user activity"
 msgstr "Globale Benutzer-Aktivität"
 
-#: ../../strings.c:662
+#: ../../strings.c:683
 msgid "User history"
 msgstr "Benutzer-Verlauf"
 
-#: ../../strings.c:665
+#: ../../strings.c:686
 msgid "User info for %1"
 msgstr "Benutzer-Informationen für %1"
 
-#: ../../strings.c:671
+#: ../../strings.c:692
 msgid "Aliases"
 msgstr "Aliase"
 
-#: ../../strings.c:674
+#: ../../strings.c:695
 msgid "Stats Username"
 msgstr "Stats-Benutzername"
 
-#: ../../strings.c:677
+#: ../../strings.c:698
 msgid "Real name"
 msgstr "Echter Name"
 
-#: ../../strings.c:680
+#: ../../strings.c:701
 msgid "Hostname"
 msgstr "Hostname"
 
-#: ../../strings.c:695
+#: ../../strings.c:716
 msgid "Information for this user currently unavailable"
 msgstr "Informationen für diesen Benutzer derzeit nicht verfügbar"
 
-#: ../../strings.c:737
+#: ../../strings.c:758
 msgid "Language"
 msgstr "Sprache"
 
-#: ../../strings.c:758
+#: ../../strings.c:779
 msgid "yyyy-MM-dd HH:mm:ss"
 msgstr "dd.MM.yyyy HH:mm:ss"
 
-#: ../../strings.c:761
+#: ../../strings.c:782
 msgid "%Y-%m-%d %H:%M:%S"
 msgstr "%d.%m.%Y %H:%M:%S"
 
-#: ../../strings.c:764
+#: ../../strings.c:785 ../../../lib/magirc/services/Anope.class.php:192
+#: ../../../lib/magirc/services/Anope.class.php:216
+#: ../../../lib/magirc/services/Anope.class.php:249
+#: ../../../lib/magirc/services/Denora.class.php:223
+#: ../../../lib/magirc/services/Denora.class.php:247
+#: ../../../lib/magirc/services/Denora.class.php:280
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: ../../strings.c:767
+#: ../../strings.c:788
 msgid "Away as"
 msgstr "Abwesend als"
 
-#: ../../strings.c:770
+#: ../../strings.c:791
 msgid "Online as"
 msgstr "Online als"
 
-#: ../../strings.c:776
+#: ../../strings.c:797
 msgid "Offline"
 msgstr "Offline"
 
-#: ../../strings.c:779
+#: ../../strings.c:800
 msgid "Bot"
 msgstr "Bot"
 
-#: ../../strings.c:782
+#: ../../strings.c:803
 msgid "Service"
 msgstr "Dienst"
 
-#: ../../strings.c:785
+#: ../../strings.c:806
 msgid "Available for help"
 msgstr "Für Hilfe verfügbar"
 
-#: ../../strings.c:788
+#: ../../strings.c:809
 msgid "join"
 msgstr "beitreten"
 
-#: ../../strings.c:791
+#: ../../strings.c:812
 msgid "days"
 msgstr "Tage"
 
-#: ../../strings.c:794
+#: ../../strings.c:815
 msgid "hours"
 msgstr "Stunden"
 
-#: ../../strings.c:797
+#: ../../strings.c:818
 msgid "minutes"
 msgstr "Minuten"
 
-#: ../../strings.c:800
+#: ../../strings.c:821
 msgid "All"
 msgstr "Alles"
 
-#: ../../strings.c:803
+#: ../../strings.c:824
 msgid "1d"
 msgstr "1T"
 
-#: ../../strings.c:806
+#: ../../strings.c:827
 msgid "1w"
 msgstr "1W"
 
-#: ../../strings.c:809
+#: ../../strings.c:830
 msgid "1m"
 msgstr "1M"
 
-#: ../../strings.c:812
+#: ../../strings.c:833
 msgid "3m"
 msgstr "3M"
 
-#: ../../strings.c:815
+#: ../../strings.c:836
 msgid "6m"
 msgstr "6M"
 
-#: ../../strings.c:818
+#: ../../strings.c:839
 msgid "1y"
 msgstr "1J"
 
-#: ../../strings.c:821
+#: ../../strings.c:842
 msgid "Unable to load contents"
 msgstr "Inhalt nicht aufrufbar"
 
-#: ../../strings.c:824
+#: ../../strings.c:845
 msgid "Message"
 msgstr "Nachricht"
 
-#: ../../strings.c:827
+#: ../../strings.c:848
 msgid "Connected since"
 msgstr "Verbunden seit"
 
-#: ../../strings.c:830
+#: ../../strings.c:851
 msgid "Last quit"
 msgstr "Letztes Quit"
 
-#: ../../strings.c:833
+#: ../../strings.c:854
 msgid "Users online"
 msgstr "Benutzer online"
 
-#: ../../strings.c:836
+#: ../../strings.c:857
 msgid "Servers online"
 msgstr "Server online"
 
-#: ../../strings.c:863
+#: ../../strings.c:884
 msgid "Yes"
 msgstr "Ja"
 
-#: ../../strings.c:866
+#: ../../strings.c:887
 msgid "No"
 msgstr "Nein"
 
-#: ../../strings.c:869
+#: ../../strings.c:890
 msgid "Never"
 msgstr "Nie"
 
-#: ../../strings.c:875
+#: ../../strings.c:896
 msgid "MOTD not available for this server"
 msgstr "MOTD für diesen Server nicht verfügbar"
 
-#: ../../strings.c:878
+#: ../../strings.c:899
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
-#: ../../strings.c:881
+#: ../../strings.c:902
 msgid "Close"
 msgstr "Schließen"
 
-#: ../../strings.c:887
+#: ../../strings.c:908
 msgid "Country Statistics"
 msgstr "Länderstatistiken"
 
-#: ../../strings.c:890
+#: ../../strings.c:911
 msgid "Client Statistics"
 msgstr "Clientstatistiken"
 
-#: ../../strings.c:893
+#: ../../strings.c:914
 msgid "none"
 msgstr "keine"
 
-#: ../../strings.c:896
+#: ../../strings.c:917
 msgid "Relation of users and channels during the last 2 weeks"
 msgstr "Benutzer und Channels während der letzten zwei Wochen"
 
-#: ../../strings.c:899
+#: ../../strings.c:920
 msgid "Relation of users and channels during the last 2 months"
 msgstr "Benutzer und Channels während der letzten zwei Monate"
 
-#: ../../strings.c:902
+#: ../../strings.c:923
 msgid "Relation of users and channels during the last 2 years"
 msgstr "Benutzer und Channels während der letzten zwei Jahre"
 
-#: ../../strings.c:905
+#: ../../strings.c:926
 msgid "Channels during the last 2 weeks"
 msgstr "Räume während der letzten zwei Wochen"
 
-#: ../../strings.c:908
+#: ../../strings.c:929
 msgid "Channels during the last 2 months"
 msgstr "Räume während der letzten zwei Monate"
 
-#: ../../strings.c:911
+#: ../../strings.c:932
 msgid "Channels during the last 2 years"
 msgstr "Räume während der letzten zwei Jahre"
 
-#: ../../strings.c:914
+#: ../../strings.c:935
 msgid "Servers during the last 2 weeks"
 msgstr "Server während der letzten zwei Wochen"
 
-#: ../../strings.c:917
+#: ../../strings.c:938
 msgid "Servers during the last 2 months"
 msgstr "Server während der letzten zwei Monate"
 
-#: ../../strings.c:920
+#: ../../strings.c:941
 msgid "Servers during the last 2 years"
 msgstr "Server während der letzten zwei Jahre"
 
-#: ../../strings.c:923
+#: ../../strings.c:944
 msgid "Processing..."
 msgstr "Verarbeitung..."
 
-#: ../../strings.c:926
+#: ../../strings.c:947
 msgid "Please wait - loading..."
 msgstr "Bitte warten - Ladevorgang..."
 
-#: ../../strings.c:929
+#: ../../strings.c:950
 msgid "Show _MENU_ entries"
 msgstr "_MENU_ Einträge anzeigen"
 
-#: ../../strings.c:932
+#: ../../strings.c:953
 msgid "No matching records found"
 msgstr "Keine Einträge vorhanden"
 
-#: ../../strings.c:935
+#: ../../strings.c:956
 msgid "No data available in table"
 msgstr "Keine Daten in der Tabelle vorhanden"
 
-#: ../../strings.c:938
+#: ../../strings.c:959
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "_START_ bis _END_ von _TOTAL_ Einträgen"
 
-#: ../../strings.c:941
+#: ../../strings.c:962
 msgid "Showing 0 to 0 of 0 entries"
 msgstr "0 bis 0 von 0 Einträgen"
 
-#: ../../strings.c:944
+#: ../../strings.c:965
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(gefiltert von _MAX_ Einträgen)"
 
-#: ../../strings.c:947
+#: ../../strings.c:968
 msgid "Search"
 msgstr "Suchen"
 
-#: ../../strings.c:950
+#: ../../strings.c:971
 msgid "click/return to sort ascending"
 msgstr "Klick/Eingabe um aufsteigend zu sortieren"
 
-#: ../../strings.c:953
+#: ../../strings.c:974
 msgid "click/return to sort descending"
 msgstr "Klick/Eingabe um absteigend zu sortieren"
 
-#: ../../strings.c:956
+#: ../../strings.c:977
 msgid "First"
 msgstr "Erster"
 
-#: ../../strings.c:959
+#: ../../strings.c:980
 msgid "Previous"
 msgstr "Zurück"
 
-#: ../../strings.c:962
+#: ../../strings.c:983
 msgid "Next"
 msgstr "Nächster"
 
-#: ../../strings.c:965
+#: ../../strings.c:986
 msgid "Last"
 msgstr "Letzter"
 
-#: ../../../lib/magirc/denora/Denora.class.php:207
-#: ../../../lib/magirc/denora/Denora.class.php:265
-#: ../../../lib/magirc/denora/Denora.class.php:284
-#: ../../../lib/magirc/denora/Denora.class.php:289
+#: ../../../lib/magirc/services/Anope.class.php:195
+#: ../../../lib/magirc/services/Anope.class.php:255
+#: ../../../lib/magirc/services/Anope.class.php:274
+#: ../../../lib/magirc/services/Anope.class.php:279
+#: ../../../lib/magirc/services/Denora.class.php:226
+#: ../../../lib/magirc/services/Denora.class.php:286
+#: ../../../lib/magirc/services/Denora.class.php:305
+#: ../../../lib/magirc/services/Denora.class.php:310
 msgid "Other"
 msgstr "Andere"
 
-#: ../../../lib/magirc/denora/Denora.class.php:279
+#: ../../../lib/magirc/services/Anope.class.php:269
+#: ../../../lib/magirc/services/Denora.class.php:300
 msgid "various"
 msgstr "verschiedene"
 
-#: ../../../lib/magirc/denora/Denora.class.php:284
+#: ../../../lib/magirc/services/Anope.class.php:274
+#: ../../../lib/magirc/services/Denora.class.php:305
 msgid "Various"
 msgstr "Verschiedene"
 
