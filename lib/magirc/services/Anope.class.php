@@ -38,7 +38,7 @@ class AnopeDB extends DB {
 		}
 		return self::$instance;
 	}
-	
+
 	private static function setTableNames($prefix) {
 		define('TBL_CHAN', $prefix.'chan');
 		define('TBL_CHANSTATS', $prefix.'chanstats');
@@ -52,7 +52,7 @@ class AnopeDB extends DB {
 class Anope implements Service {
 	private $db;
 	private $cfg;
-	
+
 	public function __construct() {
 		// Get the ircd
 		$ircd_file = PATH_ROOT . "lib/magirc/ircds/" . IRCD . ".inc.php";
@@ -78,7 +78,7 @@ class Anope implements Service {
 		);
 		return $data;
 	}
-	
+
 	public function getMaxValues() {
 		$data = array(
 			'users' => array('val' => 0, 'time' => 0),
@@ -88,14 +88,14 @@ class Anope implements Service {
 		);
 		return $data;
 	}
-	
+
 	public function getUserCount($mode = null, $target = null) {
 		$sQuery = sprintf("SELECT COUNT(*) FROM `%s`", TBL_USER); //TODO: MISSING! WHERE online = 'Y'
 		$ps = $this->db->prepare($sQuery);
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
-	
+
 	/**
 	 * Get CTCP client statistics
 	 * @param string $mode Mode ('server', 'channel', null: global)
@@ -138,7 +138,7 @@ class Anope implements Service {
 	 * @param string $target Target
 	 * @return array Data
 	 */
-	public function getCountryStats($mode = null, $target = null) {		
+	public function getCountryStats($mode = null, $target = null) {
 		$sQuery = sprintf("SELECT u.geocountry AS country, u.geocode AS country_code, COUNT(*) AS count
 			FROM `%s` AS u
 			JOIN `%s` AS s ON s.id = u.servid",
@@ -167,7 +167,7 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
+
 	/**
 	 * Prepare data for use by country pie charts
 	 * @param array $result Array of data
@@ -282,9 +282,9 @@ class Anope implements Service {
 		#echo "<pre>"; print_r($data); exit;
 		return $data;
 	}
-	
+
 	public function getHourlyStats($table) { }
-	
+
 	/**
 	 * Gets a list of servers
 	 * @return array of Server
@@ -310,7 +310,7 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'Server');
 	}
-	
+
 	/**
 	 * Gets a server
 	 * @param string $server Server name
@@ -328,11 +328,11 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetchObject('Server');
 	}
-	
+
 	/**
 	 * Get the list of Operators currently online
 	 * @return array of User
-	 */	
+	 */
 	public function getOperatorList() {
 		$sQuery = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
@@ -372,7 +372,7 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'User');
 	}
-	
+
 	/**
 	 * Gets the list of current channels
 	 * @param boolean $datatables Set true to enable server-side datatables functionality
@@ -423,7 +423,7 @@ class Anope implements Service {
 		}
 		return $aaData;
 	}
-	
+
 	/**
 	 * Get the biggest current channels
 	 * @param int $limit
@@ -483,14 +483,14 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
+
 	/**
 	 * Get the specified channel
 	 * @param string $chan Channel
 	 * @return Channel
 	 */
 	public function getChannel($chan) {
-		$sQuery = sprintf("SELECT channel, currentusers AS users, topic, topicauthor AS topic_author, 
+		$sQuery = sprintf("SELECT channel, currentusers AS users, topic, topicauthor AS topic_author,
 			topictime AS topic_time, modes, maxusers AS users_max, maxtime AS users_max_time
 			FROM `%s` AS c
 			LEFT JOIN `%s` AS m ON m.name = c.channel
@@ -502,7 +502,7 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetchObject('Channel');
 	}
-	
+
 	/**
 	 * Get the users currently in the specified channel
 	 * @todo implement server-side datatables support
@@ -529,7 +529,7 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'User');
 	}
-	
+
 	/**
 	 * Gets the global channel activity
 	 * @param int $type 0: total, 1: day, 2: week, 3: month, 4: year
@@ -585,7 +585,7 @@ class Anope implements Service {
 		}
 		return $aaData;
 	}
-	
+
 	/**
 	 * Gets the channel activity for the given channel
 	 * @param string $chan Channel
@@ -633,7 +633,7 @@ class Anope implements Service {
 		}
 		return $aaData;
 	}
-	
+
 	/**
 	 * Get the hourly average activity for the given channel
 	 * @param string $chan Channel
@@ -660,7 +660,7 @@ class Anope implements Service {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Checks if given channel can be displayed
 	 * @param string $chan
@@ -716,7 +716,7 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
-	
+
 	/**
 	 * Get the most active current users
 	 * @param int $limit
@@ -746,7 +746,7 @@ class Anope implements Service {
 		}
 		return $aaData;
 	}
-	
+
 	/**
 	 * Get a user based on its nickname or stats user
 	 * @param string $mode 'nick': nickname, 'stats': chanstats user
@@ -775,7 +775,7 @@ class Anope implements Service {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Get a list of channels monitored for a specific user
 	 * @param string $mode 'nick': nickname, 'stats': chanstats user
@@ -815,7 +815,7 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_COLUMN);
 	}
-	
+
 	/**
 	 * Get the global user activity
 	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
@@ -871,7 +871,7 @@ class Anope implements Service {
 		}
 		return $datatables ? $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData) : $aaData;
 	}
-	
+
 	/**
 	 * Get the user activity of the given user
 	 * @param string $mode stats: user is treated as stats user, nick: user is treated as nickname
@@ -923,7 +923,7 @@ class Anope implements Service {
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * Get the average hourly activity for the given user
 	 * @param string $mode stats: user is treated as stats user, nick: user is treated as nickname
@@ -958,7 +958,7 @@ class Anope implements Service {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Checks if the given user exists
 	 * @param string $user User
@@ -1003,7 +1003,7 @@ class Anope implements Service {
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN) ? true : false;
 	}
-	
+
 	/**
 	 * Returns the stats username and all aliases of a user
 	 * @param string $mode ('stats': $user is a stats user, 'nick': $user is a nickname)
@@ -1020,7 +1020,7 @@ class Anope implements Service {
 		array_shift($aliases);
 		return array('nick' => $nick, 'uname' => $uname, 'aliases' => $aliases);
 	}
-	
+
 	/**
 	 * Get the chanstats username assigned to a nick, if available
 	 * @param string $nick nickname
@@ -1043,7 +1043,7 @@ class Anope implements Service {
 	 * @return array of nicknames
 	 */
 	private function getUnameAliases($uname) {
-		if (!$uname) {
+		if (!$uname || $this->cfg->hide_nickaliases) {
 			return null;
 		}
 		$sQuery = sprintf("SELECT u.nick"

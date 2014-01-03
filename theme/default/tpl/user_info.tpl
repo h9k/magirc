@@ -2,7 +2,7 @@
 
 <table id="tbl_details" class="details">
 	<tr><th>{t}Nickname{/t}:</th><td><span id="user_nick" class="val"></span></td></tr>
-	<tr><th>{t}Aliases{/t}:</th><td><span id="user_aliases" class="val"></span></td></tr>
+	{if !$cfg->hide_nickaliases}<tr><th>{t}Aliases{/t}:</th><td><span id="user_aliases" class="val"></span></td></tr>{/if}
 	<tr><th>{t}Stats Username{/t}:</th><td><span id="user_uname" class="val"></span></td></tr>
 	<tr><th>{t}Real name{/t}:</th><td><span id="user_realname" class="val"></span></td></tr>
 	<tr><th>{t}Hostname{/t}:</th><td><span id="user_hostname" class="val"></span></td></tr>

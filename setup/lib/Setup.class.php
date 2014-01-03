@@ -263,6 +263,9 @@ class Setup {
 				$this->db->delete('magirc_config', array('parameter' => 'denora_version'));
 				$this->db->insert('magirc_config', array('parameter' => 'service', 'value' => 'denora'));
 			}
+			if ($version < 15) {
+				$this->db->insert('magirc_config', array('parameter' => 'hide_nickaliases', 'value' => 0));
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}
