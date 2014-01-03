@@ -747,7 +747,7 @@ class Denora implements Service {
 		$result = $ps->fetch(PDO::FETCH_NUM);
 		if (is_array($result)) {
 			foreach ($result as $key => $val) {
-				$result[$key] = self::getAnopeChanstatsType($val);
+                $result[$key] = (int) $val;
 			}
 			return $result;
 		} else {
@@ -831,7 +831,7 @@ class Denora implements Service {
 		$result = $ps->fetch(PDO::FETCH_NUM);
 		if (is_array($result)) {
 			foreach ($result as $key => $val) {
-				$result[$key] = self::getAnopeChanstatsType($val);
+				$result[$key] = (int) $val;
 			}
 			return $result;
 		} else {
@@ -991,7 +991,7 @@ class Denora implements Service {
 		if (is_array($data)) {
 			foreach ($data as $key => $type) {
 				foreach ($type as $field => $val) {
-					$data[$key][$field] = $field == 'type' ? self::getAnopeChanstatsType ($field) : (int) $val;
+					$data[$key][$field] = ($field == 'type') ? self::getAnopeChanstatsType($val) : (int) $val;
 				}
 			}
 			return $data;
