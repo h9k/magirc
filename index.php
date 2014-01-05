@@ -30,50 +30,12 @@ require_once('lib/magirc/DB.class.php');
 require_once('lib/magirc/Config.class.php');
 require_once('lib/magirc/Magirc.class.php');
 require_once('lib/magirc/services/Service.interface.php');
-require_once('lib/magirc/services/Anope.class.php');
-require_once('lib/magirc/services/Denora.class.php');
 require_once('lib/magirc/objects/ServerBase.class.php');
 require_once('lib/magirc/objects/ChannelBase.class.php');
 require_once('lib/magirc/objects/UserBase.class.php');
 
-$magirc = new Magirc;
+$magirc = new Magirc(true);
 
-try {
-	define('DEBUG', $magirc->cfg->debug_mode);
-	date_default_timezone_set($magirc->cfg->timezone);
-	define('BASE_URL', $magirc->cfg->base_url);
-	$magirc->tpl->template_dir = 'theme/'.$magirc->cfg->theme.'/tpl';
-	$magirc->tpl->config_dir = 'theme/'.$magirc->cfg->theme.'/cfg';
-	$magirc->tpl->assign('cfg', $magirc->cfg);
-	$locales = array();
-	foreach (glob("locale/*") as $filename) {
-		if (is_dir($filename)) $locales[] = basename($filename);
-	}
-	$magirc->tpl->assign('locales', $locales);
-	if ($magirc->cfg->db_version < DB_VERSION) die('Upgrade in progress. Please wait a few minutes, thank you.');
+include_once('theme/' . $magirc->cfg->theme . '/slim/routes.inc.php');
 
-	if ($magirc->cfg->debug_mode < 1) {
-		ini_set('display_errors','off');
-		error_reporting(E_ERROR);
-	} else {
-		$magirc->tpl->force_compile = true;
-		/*if ($magirc->cfg->debug_mode') > 1) {
-			$magirc->tpl->debugging = true;
-		}*/
-	}
-
-	$magirc->slim->notFound(function() use ($magirc) {
-		$magirc->tpl->assign('err_msg', 'HTTP 404 - Not Found');
-		$magirc->tpl->assign('err_extra', null);
-		$magirc->tpl->display('error.tpl');
-	});
-	
-	include_once('theme/' . $magirc->cfg->theme . '/slim/routes.inc.php');	
-
-	$magirc->slim->run();
-} catch (Exception $e) {
-	$magirc->tpl->assign('err_msg', $e->getMessage());
-	$magirc->tpl->assign('err_extra', $e->getTraceAsString());
-	$magirc->tpl->display('error.tpl');
-}
-?>
+$magirc->slim->run();

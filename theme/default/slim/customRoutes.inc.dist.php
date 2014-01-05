@@ -11,15 +11,17 @@
  */
 
 $magirc->slim->get('/custom/', function() use($magirc) {
-	$magirc->tpl->assign('section', 'custom');
-	$magirc->tpl->assign('example', 'Hello World');
-	$magirc->tpl->assign('channels', $magirc->service->getChannelList());
-	$magirc->tpl->display('custom.tpl');
+	$magirc->slim->render('custom.tpl', array(
+		'section' => 'custom',
+		'example' => 'Hello World',
+		'channels' => $magirc->service->getChannelList()
+	));
 });
 
 $magirc->slim->get('/custom/:example', function($example) use($magirc) {
-	$magirc->tpl->assign('section', 'custom');
-	$magirc->tpl->assign('example', $example);
-	$magirc->tpl->assign('channels', $magirc->service->getChannelList());
-	$magirc->tpl->display('custom.tpl');
+	$magirc->slim->render('custom.tpl', array(
+		'section' => 'custom',
+		'example' => $example,
+		'channels' => $magirc->service->getChannelList()
+	));
 });

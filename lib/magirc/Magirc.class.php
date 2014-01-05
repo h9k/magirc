@@ -2,94 +2,93 @@
 // Root path
 define('PATH_ROOT', __DIR__ . '/../../');
 
-// Database configuration
-class Magirc_DB extends DB {
-	private static $instance = NULL;
-
-	public static function getInstance() {
-		if (is_null(self::$instance) === true) {
-			$db = null;
-			$error = false;
-			if (file_exists(PATH_ROOT.'conf/magirc.cfg.php')) {
-				include(PATH_ROOT.'conf/magirc.cfg.php');
-			} else {
-				$error = true;
-			}
-			if (!is_array($db)) {
-				$error = true;
-			}
-			if ($error) {
-				die ('<strong>MagIRC</strong> is not configured<br />Please run <a href="setup/">Setup</a>');
-			}
-			$dsn = "mysql:dbname={$db['database']};host={$db['hostname']}";
-			$args = array();
-			if (isset($db['ssl']) && $db['ssl_key']) $args[PDO::MYSQL_ATTR_SSL_KEY] = $db['ssl_key'];
-			if (isset($db['ssl']) && $db['ssl_cert']) $args[PDO::MYSQL_ATTR_SSL_CERT] = $db['ssl_cert'];
-			if (isset($db['ssl']) && $db['ssl_ca']) $args[PDO::MYSQL_ATTR_SSL_CA] = $db['ssl_ca'];
-			self::$instance = new DB($dsn, $db['username'], $db['password'], $args);
-			if (self::$instance->error) die('Error opening the MagIRC database<br />' . self::$instance->error);
-		}
-		return self::$instance;
-	}
-}
-
 class Magirc {
 	public $db;
 	public $cfg;
-	public $tpl;
 	public $slim;
 	public $service;
 
-	/**
-	 * Magirc Class Constructor
-	 * @param type $api_mode ('web': frontend, 'service': Anope/Denora API)
-	 */
-	function __construct($api_mode = "web") {
-		// Setup the Slim framework
-		$this->slim = new \Slim\Slim();
-		if ($api_mode == "web") {
-			// Setup the template engine
-			$this->tpl = new Smarty;
-			$this->tpl->template_dir = 'theme/default/tpl';
-			$this->tpl->config_dir = 'theme/default/cfg';
-			$this->tpl->compile_dir = 'tmp';
-			$this->tpl->cache_dir = 'tmp';
-			$this->tpl->autoload_filters = array('pre' => array('jsmin'));
-			$this->tpl->addPluginsDir('lib/smarty-plugins/');
+	function __construct($useTemplateEngine = false) {
+		$this->slim = self::initializeFramework();
+		$this->db = self::initializeDatabase();
+		$this->cfg = self::initializeConfiguration();
+		if ($useTemplateEngine) {
+			self::initializeTemplateEngine();
 		}
+		$this->service = self::initializeService();
+		self::initializeLocalization();
+	}
 
-		// Setup the database
-		$this->db = Magirc_DB::getInstance();
-		$query = "SHOW TABLES LIKE 'magirc_config'";
-		$this->db->query($query, SQL_INIT);
-		if (!$this->db->record) {
+	private function initializeFramework() {
+		return new \Slim\Slim(array(
+			'view' => new \Slim\Views\Smarty()
+		));
+	}
+
+	private function initializeDatabase() {
+		require_once(dirname(__FILE__).'/MagircDB.php');
+		$db = MagircDB::getInstance();
+		$db->query("SHOW TABLES LIKE 'magirc_config'", SQL_INIT);
+		if (!$db->record) {
 			die('Database table missing. Please run setup.');
 		}
+		return $db;
+	}
 
-		// Get the configuration
-		$this->cfg = new Config();
-
-		// Initialize modules
-		define('IRCD', $this->cfg->ircd_type);
-		if ($api_mode == "web" || $api_mode == "service") {
-			if ($this->cfg->service == 'anope') {
-				$this->service = new Anope();
-			} else {
-				$this->service = new Denora();	
-			}
-		}
-
-		// Set the locale
-		$locales = $this->getLocales();
-		if (isset($_GET['locale']) && in_array($_GET['locale'], $locales)) {
-			setcookie('magirc_locale', $_GET['locale'], time()+60*60*24*30, '/');
-			$locale = $_GET['locale'];
-		} elseif (isset($_COOKIE['magirc_locale']) && in_array($_COOKIE['magirc_locale'], $locales)) {
-			$locale = $_COOKIE['magirc_locale'];
+	private function initializeConfiguration() {
+		$cfg = new Config($this->slim->db);
+		if ($cfg->db_version < DB_VERSION) die('Upgrade in progress. Please wait a few minutes, thank you.');
+		date_default_timezone_set($cfg->timezone);
+		define('DEBUG', $cfg->debug_mode);
+		define('BASE_URL', $cfg->base_url);
+		if ($cfg->debug_mode < 1) {
+			ini_set('display_errors','off');
+			error_reporting(E_ERROR);
 		} else {
-			$locale = $this->detectLocale($locales);
+			$this->slim->view->getInstance()->force_compile = true;
 		}
-		// Configure gettext
+		return $cfg;
+	}
+
+	private function initializeTemplateEngine() {
+		$slim = $this->slim;
+		$view = $slim->view();
+
+		$view->setTemplatesDirectory(dirname(__FILE__) . '/../../theme/'.$this->cfg->theme.'/tpl');
+		$view->parserCompileDirectory = dirname(__FILE__) . '/../..//tmp';
+		$view->parserCacheDirectory = dirname(__FILE__) . '/../../tmp';
+		$view->parserExtensions = array(
+			dirname(__FILE__) . '/../../lib/smarty-plugins/',
+			dirname(__FILE__) . '/../../vendor/slim/views/Slim/Views/SmartyPlugins',
+		);
+		$view->getInstance()->autoload_filters = array('pre' => array('jsmin'));
+
+		$slim->notFound(function() use ($slim) {
+			$slim->render('error.tpl', array('err_msg' => 'HTTP 404 - Not Found', 'err_extra' => null));
+		});
+		$this->slim->error(function (\Exception $e) use ($slim) {
+			$slim->render('error.tpl', array('err_msg' => $e->getMessage(), 'err_extra' => $e->getTraceAsString()));
+		});
+	}
+
+	private function initializeService() {
+		define('IRCD', $this->cfg->ircd_type);
+		switch($this->cfg->service) {
+			case 'anope':
+				require_once(dirname(__FILE__).'/../../lib/magirc/services/Anope.class.php');
+				return new Anope();
+				break;
+			case 'denora':
+				require_once(dirname(__FILE__).'/../../lib/magirc/services/Denora.class.php');
+				return new Denora();
+				break;
+			default:
+				return null;
+		}
+	}
+
+	private function initializeLocalization() {
+		$locale = self::getLocale();
 		require_once(PATH_ROOT.'lib/gettext/gettext.inc');
 		$domain = "messages";
 		T_setlocale(LC_ALL, $locale.'.UTF-8', $locale);
@@ -101,6 +100,18 @@ class Magirc {
 		}
 		define('LOCALE', $locale);
 		define('LANG', substr($locale, 0, 2));
+	}
+
+	private function getLocale() {
+		$locales = self::getLocales();
+		if (isset($_GET['locale']) && in_array($_GET['locale'], $locales)) {
+			setcookie('magirc_locale', $_GET['locale'], time()+60*60*24*30, '/');
+			return $_GET['locale'];
+		}
+		if (isset($_COOKIE['magirc_locale']) && in_array($_COOKIE['magirc_locale'], $locales)) {
+			return $_COOKIE['magirc_locale'];
+		}
+		$locale = $this->detectLocale($locales);
 	}
 
 	/**

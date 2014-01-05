@@ -12,7 +12,8 @@ class Config {
 	 * Load the configuration and return it
 	 */
 	function loadConfig() {
-		$db = Magirc_DB::getInstance();
+		require_once(dirname(__FILE__).'/MagircDB.php');
+		$db = MagircDB::getInstance();
 		$config = array();
 		$data = $db->selectAll('magirc_config');
 		foreach ($data as $item) {
