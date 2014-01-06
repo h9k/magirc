@@ -26,7 +26,7 @@ class Magirc {
 	}
 
 	private function initializeDatabase() {
-		require_once(dirname(__FILE__).'/MagircDB.php');
+		require_once(__DIR__.'/MagircDB.php');
 		$db = MagircDB::getInstance();
 		$db->query("SHOW TABLES LIKE 'magirc_config'", SQL_INIT);
 		if (!$db->record) {
@@ -51,22 +51,31 @@ class Magirc {
 	}
 
 	private function initializeTemplateEngine() {
-		$slim = $this->slim;
-		$view = $slim->view();
+        /*$view = $this->slim->view();
+        //$view->parserDirectory = __DIR__ . '/../../tmp';
+        $view->parserCompileDirectory = __DIR__ . '/../../tmp';
+        $view->parserCacheDirectory = __DIR__ . '/../../tmp';
+        $view->parserExtensions = array(
+            __DIR__ . '/../../lib/smarty-plugins/',
+            __DIR__ . '/../../vendor/slim/views/Slim/Views/SmartyPlugins'
+        );
+        $view->getInstance()->autoload_filters = array('pre' => array('jsmin'));*/
 
-		$view->setTemplatesDirectory(dirname(__FILE__) . '/../../theme/'.$this->cfg->theme.'/tpl');
-		$view->parserCompileDirectory = dirname(__FILE__) . '/../..//tmp';
-		$view->parserCacheDirectory = dirname(__FILE__) . '/../../tmp';
-		$view->parserExtensions = array(
-			dirname(__FILE__) . '/../../lib/smarty-plugins/',
-			dirname(__FILE__) . '/../../vendor/slim/views/Slim/Views/SmartyPlugins',
-		);
-		$view->getInstance()->autoload_filters = array('pre' => array('jsmin'));
+        $view = $this->slim->view()->getInstance();
+        $view->template_dir = __DIR__ . '/../../theme/'.$this->cfg->theme.'/tpl';
+        $view->compile_dir = __DIR__ . '/../../tmp';
+        $view->cache_dir = __DIR__ . '/../../tmp';
+        $view->addPluginsDir(array(
+            __DIR__ . '/../../lib/smarty-plugins/',
+            __DIR__ . '/../../vendor/slim/views/Slim/Views/SmartyPlugins',
+        ));
+        $view->autoload_filters = array('pre' => array('jsmin'));
 
+        $slim = $this->slim;
 		$slim->notFound(function() use ($slim) {
 			$slim->render('error.tpl', array('err_msg' => 'HTTP 404 - Not Found', 'err_extra' => null));
 		});
-		$this->slim->error(function (\Exception $e) use ($slim) {
+		$slim->error(function (\Exception $e) use ($slim) {
 			$slim->render('error.tpl', array('err_msg' => $e->getMessage(), 'err_extra' => $e->getTraceAsString()));
 		});
 	}
@@ -75,11 +84,11 @@ class Magirc {
 		define('IRCD', $this->cfg->ircd_type);
 		switch($this->cfg->service) {
 			case 'anope':
-				require_once(dirname(__FILE__).'/../../lib/magirc/services/Anope.class.php');
+				require_once(__DIR__.'/../../lib/magirc/services/Anope.class.php');
 				return new Anope();
 				break;
 			case 'denora':
-				require_once(dirname(__FILE__).'/../../lib/magirc/services/Denora.class.php');
+				require_once(__DIR__.'/../../lib/magirc/services/Denora.class.php');
 				return new Denora();
 				break;
 			default:
@@ -270,5 +279,3 @@ class Magirc {
 	}
 
 }
-
-?>

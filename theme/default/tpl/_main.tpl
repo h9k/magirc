@@ -61,9 +61,9 @@
 				<div id="selectlocale">
 					<form method="get" action="./">
 					{t}Language{/t}: <select name="locale" id="locale">
-					{foreach from=$locales item=item}
+					{*{foreach from=$locales item=item}
 						<option value="{$item}"{if $smarty.const.LOCALE eq $item} selected="selected"{/if}>{$item}</option>
-					{/foreach}
+					{/foreach}*}
 					</select>
 					</form>
 				</div>

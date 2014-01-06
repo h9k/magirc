@@ -4,7 +4,7 @@ $locales = array();
 foreach (glob(__DIR__."/../../../locale/*") as $filename) {
 	if (is_dir($filename)) $locales[] = basename($filename);
 }
-$magirc->slim->view->appendData(array(
+$magirc->slim->view()->appendData(array(
 	'cfg' => $magirc->cfg,
 	'locales', $locales
 ));
