@@ -6,7 +6,7 @@ foreach (glob(__DIR__."/../../../locale/*") as $filename) {
 }
 $magirc->slim->view()->appendData(array(
 	'cfg' => $magirc->cfg,
-	'locales', $locales
+	'locales' => $locales
 ));
 
 $custom_routes = __DIR__ . '/customRoutes.inc.php';
