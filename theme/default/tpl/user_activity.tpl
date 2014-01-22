@@ -1,21 +1,23 @@
 <h1>{t 1=$target}User activity for %1{/t}</h1>
 
 <form>
-	<div id="radio" class="choser">
-		<input type="radio" id="radio0" name="radio" checked="checked" value="" /><label for="radio0">{t}Global{/t}</label>
-	</div>
+    <div id="type" class="choser">
+        <input type="radio" id="type0" name="type" value="total" /><label for="type0">{t}Total{/t}</label>
+        <input type="radio" id="type1" name="type" value="daily" /><label for="type1">{t}Today{/t}</label>
+        <input type="radio" id="type2" name="type" value="weekly" /><label for="type2">{t}This Week{/t}</label>
+        <input type="radio" id="type3" name="type" value="monthly" checked="checked" /><label for="type3">{t}This Month{/t}</label>
+    </div>
 </form>
 
 <div id="chart_activity" style="height: 225px;"></div>
 
 <form>
-	<div id="type" class="choser">
-		<input type="radio" id="type0" name="type" value="total" /><label for="type0">{t}Total{/t}</label>
-		<input type="radio" id="type1" name="type" value="daily" /><label for="type1">{t}Today{/t}</label>
-		<input type="radio" id="type2" name="type" value="weekly" /><label for="type2">{t}This Week{/t}</label>
-		<input type="radio" id="type3" name="type" value="monthly" checked="checked" /><label for="type3">{t}This Month{/t}</label>
-	</div>
+    <div id="radio" class="choser">
+        <input type="radio" id="radio0" name="radio" checked="checked" value="" /><label for="radio0">{t}Global{/t}</label>
+    </div>
 </form>
+
+<h2>{t}Overview{/t}</h2>
 
 <table id="tbl_activity" class="display">
 	<thead>
