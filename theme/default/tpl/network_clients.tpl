@@ -59,7 +59,7 @@ $(document).ready(function() {
 				innerSize: '60%',
 				dataLabels: {
 					formatter: function() {
-						return this.y > 1 ? '<b>'+ this.point.name + (this.point.version ? ' ' + this.point.version : '') + ':</b> '+ this.y +'%'+' ('+this.point.count+')' : null;
+						return this.y > 1 ? '<b>'+ this.point.name.substring(0, 12) + (this.point.version ? ' ' + this.point.version : '') + ':</b> '+ this.y +'%'+' ('+this.point.count+')' : null;
 					}
 				}
 			}]
