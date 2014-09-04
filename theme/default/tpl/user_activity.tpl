@@ -74,8 +74,8 @@ $(document).ready(function() {
 		"bEscapeRegex": false,
 		"sAjaxSource": getUrl('activity')+'?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "type", "fnRender": function (oObj) {
-				switch (oObj.aData['type']) {
+			{ "mDataProp": "type", "render": function (data) {
+				switch (data) {
 					case 'total': return mLang.Total;
 					case 'daily': return mLang.Today;
 					case 'weekly': return mLang.ThisWeek;

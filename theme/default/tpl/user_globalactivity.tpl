@@ -29,8 +29,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/service.php/users/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "uname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['uname'] + getUserExtra(oObj.aData);
+			{ "mDataProp": "uname", "render": function(data, type, row, meta) {
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },

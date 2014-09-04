@@ -31,8 +31,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "asc" ]],
 		"sAjaxSource": 'rest/service.php/servers?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "online", "fnRender": function (oObj) { return oObj.aData['online'] ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
-			{ "mDataProp": "server", "fnRender": function (oObj) { return getCountryFlag(oObj.aData) + ' ' + oObj.aData['server'] } },
+			{ "mDataProp": "online", "render": function (data, type, row, meta) { return data ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
+			{ "mDataProp": "server", "render": function (data, type, row, meta) { return getCountryFlag(row) + ' ' + data } },
 			{ "mDataProp": "description" },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "opers" }

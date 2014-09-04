@@ -39,8 +39,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/service.php/network/countries?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "country", "fnRender": function(oObj) {
-				return getCountryFlag(oObj.aData) + ' ' + oObj.aData['country'];
+			{ "mDataProp": "country", "render": function(data, type, row) {
+				return getCountryFlag(row) + ' ' + data;
 			} },
 			{ "mDataProp": "count" }
 		]

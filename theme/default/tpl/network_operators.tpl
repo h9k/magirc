@@ -21,11 +21,11 @@ $(document).ready(function() {
 		"aaSorting": [[ 0, "asc" ]],
 		"sAjaxSource": 'rest/service.php/operators?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "nickname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['nickname'] + getUserExtra(oObj.aData);
+			{ "mDataProp": "nickname", "render": function(data, type, row) {
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
 			{ "mDataProp": "server" },
-			{ "mDataProp": "connect_time", "fnRender": function(oObj) { return $.format.date(oObj.aData['connect_time'], format_datetime); } }
+			{ "mDataProp": "connect_time", "render": function(data) { return $.format.date(data, format_datetime); } }
 		]
 	});
 	$("#tbl_operators tbody").on("click", "tr", function() {

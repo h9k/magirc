@@ -23,13 +23,13 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/service.php/channels?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel", "fnRender": function (oObj) {
-				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
+			{ "mDataProp": "channel", "render": function (data) {
+				return getChannelLinks(data) + ' ' + data;
 			} },
 			{ "mDataProp": "users" },
 			{ "mDataProp": "users_max" },
-			{ "mDataProp": "modes", "bSortable": false, "fnRender": function (oObj) {
-				return (oObj.aData['modes']) ? '+'+oObj.aData['modes'] : '';
+			{ "mDataProp": "modes", "bSortable": false, "render": function (data) {
+				return data ? '+'+data : '';
 			} }
 		]
 	});

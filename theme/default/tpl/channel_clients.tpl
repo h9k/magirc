@@ -70,8 +70,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 1, "desc" ]],
 		"sAjaxSource": "rest/service.php/channels/"+target+"/clients?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "client", "fnRender": function (oObj) {
-				return oObj.aData['client'] ? oObj.aData['client'] : mLang.Unknown;
+			{ "mDataProp": "client", "render": function (data) {
+				return data ? data : mLang.Unknown;
 			} },
 			{ "mDataProp": "count" }
 		]

@@ -66,15 +66,15 @@ $(document).ready(function() {
 	});
 	$('#tbl_users').dataTable({
 		"iDisplayLength": 10,
-		"sPaginationType": "two_button",
+		"sPaginationType": "simple",
 		"aaSorting": [[ 0, "asc" ]],
 		"sAjaxSource": 'rest/service.php/channels/'+target+'/users?format=datatables',
 		"aoColumns": [
-			{ "mDataProp": "nickname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['nickname'] + getUserExtra(oObj.aData);
+			{ "mDataProp": "nickname", "render": function(data, type, row) {
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
-			{ "mDataProp": "cmodes", "fnRender": function(oObj) {
-				return oObj.aData['cmodes'] ? '+' + oObj.aData['cmodes'] : null;
+			{ "mDataProp": "cmodes", "render": function(data) {
+				return data ? '+' + data : null;
 			} }
 		]
 	});

@@ -44,8 +44,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "uname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['uname'] + getUserExtra(oObj.aData);
+			{ "mDataProp": "uname", "render": function(data, type, row) {
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },

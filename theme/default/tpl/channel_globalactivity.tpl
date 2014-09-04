@@ -29,8 +29,8 @@ $(document).ready(function() {
 		"aaSorting": [[ 3, "desc" ]],
 		"sAjaxSource": "rest/service.php/channels/activity/"+type+"?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "name", "fnRender": function (oObj) {
-				return getChannelLinks(oObj.aData['name']) + ' ' + oObj.aData['name'];
+			{ "mDataProp": "name", "render": function (data) {
+				return getChannelLinks(data) + ' ' + data;
 			} },
 			{ "mDataProp": "letters" },
 			{ "mDataProp": "words" },

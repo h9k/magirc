@@ -197,8 +197,8 @@ $(document).ready(function() {
 		"bEscapeRegex": false,
 		"sAjaxSource": "rest/service.php/channels/biggest/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel", "fnRender": function (oObj) {
-				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
+			{ "mDataProp": "channel", "render": function (data) {
+				return getChannelLinks(data) + ' ' + data;
 			} },
 			{ "mDataProp": "users" }
 		]
@@ -220,8 +220,8 @@ $(document).ready(function() {
 		"bEscapeRegex": false,
 		"sAjaxSource": "rest/service.php/channels/top/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "channel", "fnRender": function (oObj) {
-				return getChannelLinks(oObj.aData['channel']) + ' ' + oObj.aData['channel'];
+			{ "mDataProp": "channel", "render": function (data) {
+				return getChannelLinks(data) + ' ' + data;
 			} },
 			{ "mDataProp": "lines" }
 		]
@@ -243,8 +243,8 @@ $(document).ready(function() {
 		"bEscapeRegex": false,
 		"sAjaxSource": "rest/service.php/users/top/10?format=datatables",
 		"aoColumns": [
-			{ "mDataProp": "uname", "fnRender": function(oObj) {
-				return getUserStatus(oObj.aData) + ' ' + getCountryFlag(oObj.aData) + ' ' + oObj.aData['uname'] + getUserExtra(oObj.aData);
+			{ "mDataProp": "uname", "render": function(data, type, row) {
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
 			{ "mDataProp": "lines" }
 		]
