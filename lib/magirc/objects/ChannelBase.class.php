@@ -11,7 +11,7 @@ abstract class ChannelBase {
 	public $topic_time;
 	public $kicks;
 	public $modes;
-	private $modes_data;
+	public $modes_data;
 	public $DT_RowId;
 
 	function __construct() {
