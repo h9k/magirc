@@ -5,19 +5,17 @@
 
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here.
-	// For the complete reference:
+	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
 	// The toolbar groups arrangement, optimized for a single toolbar row.
 	config.toolbarGroups = [
 		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
-		// On the basic preset, clipboard and undo is handled by keyboard.
-		// Uncomment the following line to enable them on the toolbar as well.
-		// { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
 		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
 		{ name: 'forms' },
 		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
+		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
 		{ name: 'links' },
 		{ name: 'insert' },
 		{ name: 'styles' },
@@ -28,13 +26,9 @@ CKEDITOR.editorConfig = function( config ) {
 	];
 
 	// The default plugins included in the basic setup define some buttons that
-	// we don't want too have in a basic editor. We remove them here.
+	// are not needed in a basic editor. They are removed here.
 	config.removeButtons = 'Anchor,Underline,Strike,Subscript,Superscript';
 
-	// Considering that the basic setup doesn't provide pasting cleanup features,
-	// it's recommended to force everything to be plain text.
-	config.forcePasteAsPlainText = true;
-
-	// Let's have it basic on dialogs as well.
+	// Dialog windows are also simplified.
 	config.removeDialogTabs = 'link:advanced';
 };
