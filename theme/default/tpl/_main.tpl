@@ -102,7 +102,6 @@
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/jquery.datatables.min.js"></script>
 {/if}
-<script type="text/javascript" src="js/datatables.fnReloadAjax.js"></script>
 <script type="text/javascript" src="js/highstock.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jquery.dateformat.js"></script>

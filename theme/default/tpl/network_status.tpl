@@ -176,9 +176,9 @@ $(document).ready(function() {
 		});
 	}
 	function updateTables() {
-		oTable1.fnReloadAjax();
-		oTable2.fnReloadAjax();
-		oTable3.fnReloadAjax();
+		oTable1.ajax.reload();
+		oTable2.ajax.reload();
+		oTable3.ajax.reload();
 	}
 	function initData() {
 		var data = [], time = (new Date()).getTime();

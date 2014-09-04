@@ -65,14 +65,14 @@ $(document).ready(function() {
 			chart_activity.series[0].setData(result);
 		});
 	}
-	oTable = $("#tbl_activity").dataTable({
+	var oTable = $("#tbl_activity").dataTable({
 		"bFilter": false,
 		"bInfo": false,
 		"bLengthChange": false,
 		"bPaginate": false,
 		"bSort": false,
 		"bEscapeRegex": false,
-		"sAjaxSource": getUrl('activity')+'?format=datatables',
+		"ajax": getUrl('activity')+'?format=datatables',
 		"aoColumns": [
 			{ "mDataProp": "type", "render": function (data) {
 				switch (data) {
@@ -95,8 +95,7 @@ $(document).ready(function() {
 	$("#type").buttonset();
 	$("#radio").change(function(event) {
 		chan = $('input[name=radio]:checked').val();
-		oTable.fnSettings().sAjaxSource = getUrl('activity')+'?format=datatables';
-		oTable.fnReloadAjax();
+		oTable.ajax.url(getUrl('activity')+'?format=datatables').load();
 		updateChart();
 	});
 	$("#type").change(function(event) {
