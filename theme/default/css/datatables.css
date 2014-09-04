@@ -58,7 +58,7 @@ table.dataTable tbody tr.selected {
 }
 table.dataTable tbody th,
 table.dataTable tbody td {
-    padding: 8px 10px;
+    padding: 6px 10px;
 }
 table.dataTable th.center,
 table.dataTable td.center,
@@ -305,7 +305,7 @@ table.dataTable td {
     font-weight: normal;
 }
 .dataTables_wrapper .ui-toolbar {
-    padding: 8px;
+    padding: 6px;
 }
 .dataTables_wrapper:after {
     visibility: hidden;
@@ -329,7 +329,6 @@ table.dataTable td {
     }
 }
 
-table.dataTable tbody tr { height:25px; }
 table.dataTable tbody tr img { vertical-align:middle; }
 table.clickable tbody tr.even:hover td, table.clickable tbody tr.odd:hover td {
 	cursor: pointer;

@@ -60,6 +60,7 @@ ul#chanmenu {
 }
 ul#chanmenu a {
 	color: #222222;
+    text-decoration: none;
 }
 div.halfleft { width:49%; float:left; }
 div.halfright { width:49%; float:right; }
