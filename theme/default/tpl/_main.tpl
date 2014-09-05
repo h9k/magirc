@@ -60,9 +60,9 @@
 			<td style="text-align:left;">
 				<div id="selectlocale">
 					<form method="get" action="./">
-					{t}Language{/t}: <select name="locale" id="locale">
-					{foreach from=$locales item=item}
-						<option value="{$item}"{if $smarty.const.LOCALE eq $item} selected="selected"{/if}>{$item}</option>
+					{t}Language{/t}: <select name="locale" id="locale" autocomplete="off">
+					{foreach from=$locales key=locale item=language}
+						<option value="{$locale}"{if $smarty.const.LOCALE eq $locale} selected="selected"{/if}>{$language}</option>
 					{/foreach}
 					</select>
 					</form>

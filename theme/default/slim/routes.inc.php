@@ -2,7 +2,36 @@
 
 $locales = array();
 foreach (glob(__DIR__."/../../../locale/*") as $filename) {
-	if (is_dir($filename)) $locales[] = basename($filename);
+	if (is_dir($filename)) {
+		$locale = basename($filename);
+		//This is dirty but I'm lazy...
+		switch ($locale){
+			case 'en_US':
+				$language = "English";
+				break;
+			case 'de_DE':
+				$language = "Deutsch";
+				break;
+			case 'es_ES':
+				$language = "Español";
+				break;
+			case 'fr_FR':
+				$language = "Français";
+				break;
+			case 'it_IT':
+				$language = "Italiano";
+				break;
+			case 'nl_NL':
+				$language = "Nederlands";
+				break;
+			case 'ms_MY';
+				$language = "Melayu";
+				break;
+			default:
+				$language = $locale;
+		}
+		$locales[$locale] = $language;
+	}
 }
 $magirc->slim->view()->appendData(array(
 	'cfg' => $magirc->cfg,

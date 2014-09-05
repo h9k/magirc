@@ -110,7 +110,7 @@ class Magirc {
 		if (isset($_COOKIE['magirc_locale']) && in_array($_COOKIE['magirc_locale'], $locales)) {
 			return $_COOKIE['magirc_locale'];
 		}
-		$locale = $this->detectLocale($locales);
+		return $this->detectLocale($locales);
 	}
 
 	/**
@@ -120,7 +120,9 @@ class Magirc {
 	private function getLocales() {
 		$locales = array();
 		foreach (glob(PATH_ROOT."locale/*") as $filename) {
-			if (is_dir($filename)) $locales[] = basename($filename);
+			if (is_dir($filename)) {
+				$locales[] = basename($filename);
+			}
 		}
 		return $locales;
 	}

@@ -11,7 +11,7 @@
 		<li title="denora"><a href="index.php/configuration/service/denora">Denora</a></li>
 		<li title="anope"><a href="index.php/configuration/service/anope">Anope</a></li>
 		<li title="welcome"><a href="index.php/configuration/welcome">Welcome</a></li>
-		<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>
+		{*<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>*}
 	</ul>
 </div>
 <div id="success">Saved successfully</div>
