@@ -32,9 +32,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="right"><strong>Block channel info for secret/private channels</strong></td>
-			<td align="left">yes <input type="radio" name="block_spchans" value="1"{if $cfg->block_spchans} checked="checked"{/if} /> <input type="radio" name="block_spchans" value="0"{if !$cfg->block_spchans} checked="checked"{/if} /> no</td>
+			<td align="right"><strong>Block channel info for secret channels</strong></td>
+			<td align="left">yes <input type="radio" name="block_schans" value="1"{if $cfg->block_schans} checked="checked"{/if} /> <input type="radio" name="block_schans" value="0"{if !$cfg->block_schans} checked="checked"{/if} /> no</td>
 		</tr>
+        <tr>
+            <td align="right"><strong>Block channel info for private channels</strong></td>
+            <td align="left">yes <input type="radio" name="block_pchans" value="1"{if $cfg->block_pchans} checked="checked"{/if} /> <input type="radio" name="block_pchans" value="0"{if !$cfg->block_pchans} checked="checked"{/if} /> no</td>
+        </tr>
 		<tr>
 			<td align="right"><strong>Hide Ulined Servers</strong></td>
 			<td align="left">yes <input type="radio" name="hide_ulined" value="1"{if $cfg->hide_ulined} checked="checked"{/if} /> <input type="radio" name="hide_ulined" value="0"{if !$cfg->hide_ulined} checked="checked"{/if} /> no</td>

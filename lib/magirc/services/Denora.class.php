@@ -424,14 +424,10 @@ class Denora implements Service {
 	 */
 	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
-		$private_mode = Protocol::chan_private_mode;
 
 		$sWhere = "currentusers > 0";
 		if ($secret_mode) {
 			$sWhere .= sprintf(" AND %s='N'", self::getSqlMode($secret_mode));
-		}
-		if ($private_mode) {
-			$sWhere .= sprintf(" AND %s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -474,13 +470,9 @@ class Denora implements Service {
 	 */
 	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
-		$private_mode = Protocol::chan_private_mode;
 		$sQuery = "SELECT channel, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time FROM chan WHERE currentusers > 0";
 		if ($secret_mode) {
 			$sQuery .= sprintf(" AND %s='N'", self::getSqlMode($secret_mode));
-		}
-		if ($private_mode) {
-			$sQuery .= sprintf(" AND %s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
@@ -581,9 +573,11 @@ class Denora implements Service {
 		if (!$data) {
 			return 404;
 		} else {
-			if ($this->cfg->block_spchans) {
-				if (Protocol::chan_secret_mode && @$data[self::getSqlMode(Protocol::chan_secret_mode)] == 'Y' ) return 403;
-				if (Protocol::chan_private_mode && @$data[self::getSqlMode(Protocol::chan_private_mode)] == 'Y' ) return 403;
+			if ($this->cfg->block_schans && Protocol::chan_secret_mode && @$data[self::getSqlMode(Protocol::chan_secret_mode)] == 'Y' ) {
+				return 403;
+			}
+			if ($this->cfg->block_pchans && Protocol::chan_private_mode && @$data[self::getSqlMode(Protocol::chan_private_mode)] == 'Y' ) {
+				return 403;
 			}
 			if (@$data['mode_li'] == "Y" || @$data['mode_lk'] == "Y" || @$data['mode_uo'] == "Y") {
 				return 403;

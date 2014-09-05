@@ -380,14 +380,10 @@ class Anope implements Service {
 	 */
 	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
-		$private_mode = Protocol::chan_private_mode;
 
 		$sWhere = "currentusers > 0";
 		if ($secret_mode) {
 			$sWhere .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
-		}
-		if ($private_mode) {
-			$sWhere .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $private_mode);
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -431,7 +427,6 @@ class Anope implements Service {
 	 */
 	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
-		$private_mode = Protocol::chan_private_mode;
 		$sQuery = sprintf("SELECT channel, currentusers AS users, maxusers AS users_max, maxtime AS users_max_time"
 				. " FROM `%s` AS c"
 				. " LEFT JOIN `%s` AS m ON m.name = c.channel"
@@ -439,9 +434,6 @@ class Anope implements Service {
 				TBL_CHAN, TBL_MAXUSERS);
 		if ($secret_mode) {
 			$sQuery .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
-		}
-		if ($private_mode) {
-			$sQuery .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $private_mode);
 		}
 		$hide_chans = explode(",", $this->cfg->hide_chans);
 		for ($i = 0; $i < count($hide_chans); $i++) {
@@ -687,13 +679,11 @@ class Anope implements Service {
 		if (!$data) {
 			return 404;
 		}
-		if ($this->cfg->block_spchans) {
-			if (Protocol::chan_secret_mode && strpos($data['modes'], Protocol::chan_secret_mode) !== false){
-				return 403;
-			}
-			if (Protocol::chan_private_mode && strpos($data['modes'], Protocol::chan_private_mode) !== false) {
-				return 403;
-			}
+		if ($this->cfg->block_schans && Protocol::chan_secret_mode && strpos($data['modes'], Protocol::chan_secret_mode) !== false) {
+			return 403;
+		}
+		if ($this->cfg->block_pchans && Protocol::chan_private_mode && strpos($data['modes'], Protocol::chan_private_mode) !== false) {
+			return 403;
 		}
 		if (strpos($data['modes'], 'i') !== false || strpos($data['modes'], 'k') !== false || strpos($data['modes'], 'O') !== false) {
 			return 403;

@@ -266,6 +266,12 @@ class Setup {
 			if ($version < 15) {
 				$this->db->insert('magirc_config', array('parameter' => 'hide_nickaliases', 'value' => 0));
 			}
+			if ($version < 16) {
+				$block_spchans = $this->db->selectOne('magirc_config', array('parameter' => 'block_spchans'));
+				$this->db->insert('magirc_config', array('parameter' => 'block_schans', 'value' => $block_spchans['value']));
+				$this->db->insert('magirc_config', array('parameter' => 'block_pchans', 'value' => $block_spchans['value']));
+				$this->db->delete('magirc_config', array('parameter' => 'block_spchans'));
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}

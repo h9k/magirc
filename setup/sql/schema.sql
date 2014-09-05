@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
 -- Dumping data for table `magirc_config`
 --
 
-INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '15'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '16'),
 ('base_url', ''),
 ('service', 'denora'),
 ('net_name', 'MyNetwork'),
@@ -29,7 +29,8 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('ircd_type', 'unreal32'),
 ('theme', 'default'),
 ('locale', 'en_US'),
-('block_spchans', '0'),
+('block_schans', '1'),
+('block_pchans', '1'),
 ('hide_ulined', '1'),
 ('hide_servers', ''),
 ('hide_chans', '#opers,#services'),
