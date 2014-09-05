@@ -330,28 +330,25 @@ class DB {
 	 */
 	function datatablesPaging() {
 		$sLimit = "";
-		if (isset($_GET['iDisplayStart']) && isset($_GET['iDisplayLength']) && $_GET['iDisplayLength'] != '-1') {
-			$sLimit = "LIMIT ". (int) $_GET['iDisplayStart'].", ". (int) $_GET['iDisplayLength'];
+		if (isset($_GET['start']) && isset($_GET['length']) && $_GET['length'] != '-1') {
+			$sLimit = "LIMIT ". (int) $_GET['start'].", ". (int) $_GET['length'];
 		}
 		return $sLimit;
 	}
 
 	/**
 	 * Build the ORDER BY portion of a query (used by DataTables)
-	 * @param array $aColumns Column names
 	 * @return string ORDER BY statement
 	 */
-	function datatablesOrdering($aColumns) {
+	function datatablesOrdering() {
 		$sOrder = "";
-		if (isset($_GET['iSortCol_0'])) {
+		if (isset($_GET['order']) && is_array($_GET['order']) && isset($_GET['columns']) && is_array($_GET['columns'])) {
 			$sOrder = "ORDER BY ";
-			for ($i=0 ; $i<intval(@$_GET['iSortingCols']) ; $i++) {
-				$j = intval(@$_GET['iSortCol_'.$i]);
-				if (@$_GET['bSortable_'.$j] == "true") {
-					$sOrder .= "`".$aColumns[$j]."` ";
-					if (isset($_GET['sSortDir_'.$i])) {
-						$sOrder .= ($_GET['sSortDir_'.$i] == 'desc' ? 'desc' : 'asc') .", ";
-					}
+			foreach ($_GET['order'] as $order){
+				$column = $order['column'];
+				if ($_GET['columns'][$column]['orderable'] == "true"){
+					$sOrder .= "`".$_GET['columns'][$column]['data']."` ";
+					$sOrder .= ($order['dir'] == 'desc' ? 'desc' : 'asc') .", ";
 				}
 			}
 			$sOrder = substr_replace($sOrder, "", -2);
@@ -364,15 +361,23 @@ class DB {
 
 	/**
 	 * Build the WHERE portion of a query to filter results (used by DataTables)
-	 * @param array $aColumns Column names
+	 * @param array $columns Column names
 	 * @return string WHERE statement
 	 */
-	function datatablesFiltering($aColumns) {
+	function datatablesFiltering($columns = array()) {
 		$sWhere = "";
-		if (@$_GET['sSearch'] != "") {
+		if (@$_GET['search']['value'] != "" && isset($_GET['columns']) && is_array($_GET['columns'])) {
 			$sWhere .= " (";
-			for ($i=0 ; $i<count($aColumns) ; $i++) {
-				$sWhere .= $aColumns[$i]." LIKE ".$this->escape('%'.$_GET['sSearch'].'%')." OR ";
+			if (count($columns) > 0) {
+				foreach ($columns as $column){
+					$sWhere .= "`".str_replace(".", "`.`", $column)."` LIKE ".$this->escape('%'.$_GET['search']['value'].'%')." OR ";
+				}
+			} else {
+				foreach ($_GET['columns'] as $column) {
+					if ($column['searchable'] == "true") {
+						$sWhere .= "`".$column['data']."` LIKE ".$this->escape('%'.$_GET['search']['value'].'%')." OR ";
+					}
+				}
 			}
 			$sWhere = substr_replace($sWhere, "", -3);
 			$sWhere .= ')';
@@ -382,17 +387,17 @@ class DB {
 
 	/**
 	 * Output the server-side array for DataTables, to be converted in JSON
-	 * @param int $iTotal Total records
-	 * @param int $iFilteredTotal Total displayed records
-	 * @param array $aaData Data
-	 * @return array (echo, total, displayed, data)
+	 * @param int $recordsTotal Total records
+	 * @param int $recordsFiltered Total displayed records
+	 * @param array $data Data
+	 * @return array (draw, recordsTotal, recordsFiltered, data)
 	 */
-	function datatablesOutput($iTotal, $iFilteredTotal, $aaData) {
+	function datatablesOutput($recordsTotal, $recordsFiltered, $data) {
 		return array(
-			'sEcho' => (int) @$_GET['sEcho'],
-			'iTotalRecords' => (int) $iTotal,
-			'iTotalDisplayRecords' => (int) $iFilteredTotal,
-			'aaData' => $aaData
+			'draw' => (int) @$_GET['draw'],
+			'recordsTotal' => (int) $recordsTotal,
+			'recordsFiltered' => (int) $recordsFiltered,
+			'data' => $data
 		);
 	}
 

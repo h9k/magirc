@@ -26,10 +26,10 @@ $(document).ready(function() {
 			{ "data": "channel", "render": function (data) {
 				return getChannelLinks(data) + ' ' + data;
 			} },
-			{ "data": "users" },
-			{ "data": "users_max" },
-			{ "data": "modes", "orderable": false, "render": function (data) {
-				return data ? '+'+data : '';
+			{ "data": "users", "searchable": false },
+			{ "data": "users_max", "searchable": false },
+			{ "data": "modes", "searchable": false, "orderable": false, "render": function (data) {
+				return data ? '+' + data : '';
 			} }
 		]
 	});

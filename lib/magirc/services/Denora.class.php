@@ -446,7 +446,7 @@ class Denora implements Service {
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery);
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
-			$sOrdering = $this->db->datatablesOrdering(array('channel', 'currentusers', 'maxusers'));
+			$sOrdering = $this->db->datatablesOrdering();
 			$sPaging = $this->db->datatablesPaging();
 			$sQuery .= sprintf(" %s %s %s", $sFiltering ? "AND " . $sFiltering : "", $sOrdering, $sPaging);
 		} else {
@@ -660,7 +660,7 @@ class Denora implements Service {
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => (int) $type));
 			$sFiltering = $this->db->datatablesFiltering(array('cstats.chan', 'chan.topic'));
-			$sOrdering = $this->db->datatablesOrdering(array('chan', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
+			$sOrdering = $this->db->datatablesOrdering();
 			$sPaging = $this->db->datatablesPaging();
 			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
 		}
@@ -695,7 +695,7 @@ class Denora implements Service {
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => (int) $type, ':channel' => $chan));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
-			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
+			$sOrdering = $this->db->datatablesOrdering();
 			$sPaging = $this->db->datatablesPaging();
 			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
 		}
@@ -766,7 +766,7 @@ class Denora implements Service {
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('uname'));
-			$sOrdering = $this->db->datatablesOrdering(array('uname', 'letters', 'words', 'line', 'actions', 'smileys', 'kicks', 'modes', 'topics'));
+			$sOrdering = $this->db->datatablesOrdering();
 			$sPaging = $this->db->datatablesPaging();
 			$sQuery .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
 		}
