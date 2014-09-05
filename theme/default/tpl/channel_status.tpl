@@ -65,15 +65,15 @@ $(document).ready(function() {
 		$("#chan_modes").html(result.modes ? "+"+result.modes : mLang.None);
 	});
 	$('#tbl_users').dataTable({
-		"iDisplayLength": 10,
-		"sPaginationType": "simple",
-		"aaSorting": [[ 0, "asc" ]],
-		"sAjaxSource": 'rest/service.php/channels/'+target+'/users?format=datatables',
-		"aoColumns": [
-			{ "mDataProp": "nickname", "render": function(data, type, row) {
+		"pageLength": 10,
+		"pagingType": "simple",
+		"order": [[ 0, "asc" ]],
+		"ajax": 'rest/service.php/channels/'+target+'/users?format=datatables',
+		"columns": [
+			{ "data": "nickname", "render": function(data, type, row) {
 				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
-			{ "mDataProp": "cmodes", "render": function(data) {
+			{ "data": "cmodes", "render": function(data) {
 				return data ? '+' + data : null;
 			} }
 		]

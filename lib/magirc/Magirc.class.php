@@ -51,16 +51,6 @@ class Magirc {
 	}
 
 	private function initializeTemplateEngine() {
-        /*$view = $this->slim->view();
-        //$view->parserDirectory = __DIR__ . '/../../tmp';
-        $view->parserCompileDirectory = __DIR__ . '/../../tmp';
-        $view->parserCacheDirectory = __DIR__ . '/../../tmp';
-        $view->parserExtensions = array(
-            __DIR__ . '/../../lib/smarty-plugins/',
-            __DIR__ . '/../../vendor/slim/views/Slim/Views/SmartyPlugins'
-        );
-        $view->getInstance()->autoload_filters = array('pre' => array('jsmin'));*/
-
         $view = $this->slim->view()->getInstance();
         $view->template_dir = __DIR__ . '/../../theme/'.$this->cfg->theme.'/tpl';
         $view->compile_dir = __DIR__ . '/../../tmp';

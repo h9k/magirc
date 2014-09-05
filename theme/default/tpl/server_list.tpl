@@ -27,15 +27,15 @@
 {literal}
 $(document).ready(function() {
 	$('#tbl_servers').dataTable({
-		"iDisplayLength": 25,
-		"aaSorting": [[ 1, "asc" ]],
-		"sAjaxSource": 'rest/service.php/servers?format=datatables',
-		"aoColumns": [
-			{ "mDataProp": "online", "render": function (data, type, row, meta) { return data ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
-			{ "mDataProp": "server", "render": function (data, type, row, meta) { return getCountryFlag(row) + ' ' + data } },
-			{ "mDataProp": "description" },
-			{ "mDataProp": "users" },
-			{ "mDataProp": "opers" }
+		"pageLength": 25,
+		"order": [[ 1, "asc" ]],
+		"ajax": 'rest/service.php/servers?format=datatables',
+		"columns": [
+			{ "data": "online", "render": function (data, type, row, meta) { return data ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
+			{ "data": "server", "render": function (data, type, row, meta) { return getCountryFlag(row) + ' ' + data } },
+			{ "data": "description" },
+			{ "data": "users" },
+			{ "data": "opers" }
 		]
 	});
 	$("#tbl_servers tbody").on("click", "tr", function(event) {

@@ -17,15 +17,15 @@
 {literal}
 $(document).ready(function() {
 	$('#tbl_operators').dataTable({
-		"iDisplayLength": 25,
-		"aaSorting": [[ 0, "asc" ]],
-		"sAjaxSource": 'rest/service.php/operators?format=datatables',
-		"aoColumns": [
-			{ "mDataProp": "nickname", "render": function(data, type, row) {
+		"pageLength": 25,
+		"order": [[ 0, "asc" ]],
+		"ajax": 'rest/service.php/operators?format=datatables',
+		"columns": [
+			{ "data": "nickname", "render": function(data, type, row) {
 				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
-			{ "mDataProp": "server" },
-			{ "mDataProp": "connect_time", "render": function(data) { return $.format.date(data, format_datetime); } }
+			{ "data": "server" },
+			{ "data": "connect_time", "render": function(data) { return $.format.date(data, format_datetime); } }
 		]
 	});
 	$("#tbl_operators tbody").on("click", "tr", function() {

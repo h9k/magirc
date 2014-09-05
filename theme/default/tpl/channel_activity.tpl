@@ -38,23 +38,23 @@ $(document).ready(function() {
 			chart_activity.series[0].setData(result);
 		});
 	}
-	var oTable = $('#tbl_activity').dataTable({
-		"bServerSide": true,
-		"iDisplayLength": 10,
-		"aaSorting": [[ 3, "desc" ]],
-		"sAjaxSource": "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
-		"aoColumns": [
-			{ "mDataProp": "uname", "render": function(data, type, row) {
+	var table = $('#tbl_activity').dataTable({
+		"serverSide": true,
+		"pageLength": 10,
+		"order": [[ 3, "desc" ]],
+		"ajax": "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
+		"columns": [
+			{ "data": "uname", "render": function(data, type, row) {
 				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
-			{ "mDataProp": "letters" },
-			{ "mDataProp": "words" },
-			{ "mDataProp": "lines" },
-			{ "mDataProp": "actions" },
-			{ "mDataProp": "smileys" },
-			{ "mDataProp": "kicks" },
-			{ "mDataProp": "modes" },
-			{ "mDataProp": "topics" }
+			{ "data": "letters" },
+			{ "data": "words" },
+			{ "data": "lines" },
+			{ "data": "actions" },
+			{ "data": "smileys" },
+			{ "data": "kicks" },
+			{ "data": "modes" },
+			{ "data": "topics" }
 		]
 	});
 	$("#tbl_activity tbody").on("click", "tr", function(event) {
@@ -63,8 +63,7 @@ $(document).ready(function() {
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').val();
-		oTable.fnSettings().sAjaxSource = "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
-		oTable.fnDraw();
+		table.ajax.url("rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables").load();
 		updateChart();
 	});
 	updateChart();

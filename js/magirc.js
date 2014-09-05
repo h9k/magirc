@@ -27,18 +27,18 @@ $(document).ready(function() {
 	});
 	// Datatable default settings
 	$.extend($.fn.dataTable.defaults, {
-        "bProcessing": true,
-		"bServerSide": false,
-		"bJQueryUI": true,
-		"bAutoWidth": false,
-		"sPaginationType": "full_numbers",
-		"oLanguage": mLang.DataTables
+        "processing": true,
+		"serverSide": false,
+		"jQueryUI": true,
+		"autoWidth": false,
+		"pagingType": "full_numbers",
+		"language": mLang.DataTables
     });
-	$.fn.dataTableExt.aTypes.unshift(function(sData) {
-		if (sData !== null && typeof(sData)=='string') {
-			if (sData.match(/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
+	$.fn.dataTableExt.aTypes.unshift(function(data) {
+		if (data !== null && typeof(data)=='string') {
+			if (data.match(/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
 				return 'date-euro';
-			} else if (sData.match(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
+			} else if (data.match(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20|21)\d\d ([01][0-9]|2[0-4])\:([0-5][0-9])\:([0-5][0-9])$/)) {
 				return 'date-uk';
 			}
 		}

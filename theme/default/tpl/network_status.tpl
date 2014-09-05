@@ -176,9 +176,9 @@ $(document).ready(function() {
 		});
 	}
 	function updateTables() {
-		oTable1.ajax.reload();
-		oTable2.ajax.reload();
-		oTable3.ajax.reload();
+		table1.ajax.reload();
+		table2.ajax.reload();
+		table3.ajax.reload();
 	}
 	function initData() {
 		var data = [], time = (new Date()).getTime();
@@ -187,20 +187,19 @@ $(document).ready(function() {
 		}
 		return data;
 	}
-	oTable1 = $("#tbl_biggestchans").dataTable({
-		"bProcessing": false,
-		"bFilter": false,
-		"bInfo": false,
-		"bLengthChange": false,
-		"bPaginate": false,
-		"bSort": false,
-		"bEscapeRegex": false,
-		"sAjaxSource": "rest/service.php/channels/biggest/10?format=datatables",
-		"aoColumns": [
-			{ "mDataProp": "channel", "render": function (data) {
+	table1 = $("#tbl_biggestchans").dataTable({
+		"processing": false,
+		"searching": false,
+		"info": false,
+		"lengthChange": false,
+		"paging": false,
+		"ordering": false,
+		"ajax": "rest/service.php/channels/biggest/10?format=datatables",
+		"columns": [
+			{ "data": "channel", "render": function (data) {
 				return getChannelLinks(data) + ' ' + data;
 			} },
-			{ "mDataProp": "users" }
+			{ "data": "users" }
 		]
 	});
 	$("#tbl_biggestchans tbody").on("click", "tr", function(event) {
@@ -210,20 +209,19 @@ $(document).ready(function() {
 		event.stopPropagation();
 		openChanMenu(this);
 	});
-	oTable2 = $("#tbl_top10chans").dataTable({
-		"bProcessing": false,
-		"bFilter": false,
-		"bInfo": false,
-		"bLengthChange": false,
-		"bPaginate": false,
-		"bSort": false,
-		"bEscapeRegex": false,
-		"sAjaxSource": "rest/service.php/channels/top/10?format=datatables",
-		"aoColumns": [
-			{ "mDataProp": "channel", "render": function (data) {
+	table2 = $("#tbl_top10chans").dataTable({
+		"processing": false,
+		"searching": false,
+		"info": false,
+		"lengthChange": false,
+		"paging": false,
+		"ordering": false,
+		"ajax": "rest/service.php/channels/top/10?format=datatables",
+		"columns": [
+			{ "data": "channel", "render": function (data) {
 				return getChannelLinks(data) + ' ' + data;
 			} },
-			{ "mDataProp": "lines" }
+			{ "data": "lines" }
 		]
 	});
 	$("#tbl_top10chans tbody").on("click", "tr", function(event) {
@@ -233,20 +231,19 @@ $(document).ready(function() {
 		event.stopPropagation();
 		openChanMenu(this);
 	});
-	oTable3 = $("#tbl_top10users").dataTable({
-		"bProcessing": false,
-		"bFilter": false,
-		"bInfo": false,
-		"bLengthChange": false,
-		"bPaginate": false,
-		"bSort": false,
-		"bEscapeRegex": false,
-		"sAjaxSource": "rest/service.php/users/top/10?format=datatables",
-		"aoColumns": [
-			{ "mDataProp": "uname", "render": function(data, type, row) {
+	table3 = $("#tbl_top10users").dataTable({
+		"processing": false,
+		"searching": false,
+		"info": false,
+		"lengthChange": false,
+		"paging": false,
+		"ordering": false,
+		"ajax": "rest/service.php/users/top/10?format=datatables",
+		"columns": [
+			{ "data": "uname", "render": function(data, type, row) {
 				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
-			{ "mDataProp": "lines" }
+			{ "data": "lines" }
 		]
 	});
 	$("#tbl_top10users tbody").on("click", "tr", function(event) {

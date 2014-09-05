@@ -23,23 +23,23 @@
 {literal}
 $(document).ready(function() {
 	var type = 'monthly';
-	var oTable = $('#tbl_activity').dataTable({
-		"bServerSide": true,
-		"iDisplayLength": 25,
-		"aaSorting": [[ 3, "desc" ]],
-		"sAjaxSource": "rest/service.php/users/activity/"+type+"?format=datatables",
-		"aoColumns": [
-			{ "mDataProp": "uname", "render": function(data, type, row, meta) {
+	var table = $('#tbl_activity').dataTable({
+		"serverSide": true,
+		"pageLength": 25,
+		"order": [[ 3, "desc" ]],
+		"ajax": "rest/service.php/users/activity/"+type+"?format=datatables",
+		"columns": [
+			{ "data": "uname", "render": function(data, type, row, meta) {
 				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
 			} },
-			{ "mDataProp": "letters" },
-			{ "mDataProp": "words" },
-			{ "mDataProp": "lines" },
-			{ "mDataProp": "actions" },
-			{ "mDataProp": "smileys" },
-			{ "mDataProp": "kicks" },
-			{ "mDataProp": "modes" },
-			{ "mDataProp": "topics" }
+			{ "data": "letters" },
+			{ "data": "words" },
+			{ "data": "lines" },
+			{ "data": "actions" },
+			{ "data": "smileys" },
+			{ "data": "kicks" },
+			{ "data": "modes" },
+			{ "data": "topics" }
 		]
 	});
 	$("#tbl_activity tbody").on("click", "tr", function() {
@@ -48,8 +48,8 @@ $(document).ready(function() {
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').val();
-		oTable.fnSettings().sAjaxSource = "rest/service.php/users/activity/"+type+"?format=datatables";
-		oTable.fnDraw();
+		table.fnSettings().ajax = "rest/service.php/users/activity/"+type+"?format=datatables";
+		table.fnDraw();
 	});
 });
 {/literal}

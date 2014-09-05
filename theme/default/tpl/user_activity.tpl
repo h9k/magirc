@@ -65,16 +65,15 @@ $(document).ready(function() {
 			chart_activity.series[0].setData(result);
 		});
 	}
-	var oTable = $("#tbl_activity").dataTable({
-		"bFilter": false,
-		"bInfo": false,
-		"bLengthChange": false,
-		"bPaginate": false,
-		"bSort": false,
-		"bEscapeRegex": false,
+	var table = $("#tbl_activity").dataTable({
+		"searching": false,
+		"info": false,
+		"lengthChange": false,
+		"paging": false,
+		"ordering": false,
 		"ajax": getUrl('activity')+'?format=datatables',
-		"aoColumns": [
-			{ "mDataProp": "type", "render": function (data) {
+		"columns": [
+			{ "data": "type", "render": function (data) {
 				switch (data) {
 					case 'total': return mLang.Total;
 					case 'daily': return mLang.Today;
@@ -82,20 +81,20 @@ $(document).ready(function() {
 					case 'monthly': return mLang.ThisMonth;
 				}
 			} },
-			{ "mDataProp": "letters" },
-			{ "mDataProp": "words" },
-			{ "mDataProp": "lines" },
-			{ "mDataProp": "actions" },
-			{ "mDataProp": "smileys" },
-			{ "mDataProp": "kicks" },
-			{ "mDataProp": "modes" },
-			{ "mDataProp": "topics" }
+			{ "data": "letters" },
+			{ "data": "words" },
+			{ "data": "lines" },
+			{ "data": "actions" },
+			{ "data": "smileys" },
+			{ "data": "kicks" },
+			{ "data": "modes" },
+			{ "data": "topics" }
 		]
 	});
 	$("#type").buttonset();
 	$("#radio").change(function(event) {
 		chan = $('input[name=radio]:checked').val();
-		oTable.ajax.url(getUrl('activity')+'?format=datatables').load();
+		table.ajax.url(getUrl('activity')+'?format=datatables').load();
 		updateChart();
 	});
 	$("#type").change(function(event) {

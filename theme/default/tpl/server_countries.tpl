@@ -35,14 +35,14 @@ $(document).ready(function() {
 		});
 	});
 	$('#tbl_countries').dataTable({
-		"iDisplayLength": 10,
-		"aaSorting": [[ 1, "desc" ]],
-		"sAjaxSource": "rest/service.php/servers/"+target+"/countries?format=datatables",
-		"aoColumns": [
-			{ "mDataProp": "country", "render": function(data, type, row, meta) {
+		"pageLength": 10,
+		"order": [[ 1, "desc" ]],
+		"ajax": "rest/service.php/servers/"+target+"/countries?format=datatables",
+		"columns": [
+			{ "data": "country", "render": function(data, type, row, meta) {
 				return getCountryFlag(row) + ' ' + data;
 			} },
-			{ "mDataProp": "count" }
+			{ "data": "count" }
 		]
 	});
 });

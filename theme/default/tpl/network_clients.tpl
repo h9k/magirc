@@ -66,14 +66,14 @@ $(document).ready(function() {
 		});
 	});
 	$('#tbl_clients').dataTable({
-		"iDisplayLength": 10,
-		"aaSorting": [[ 1, "desc" ]],
-		"sAjaxSource": "rest/service.php/network/clients?format=datatables",
-		"aoColumns": [
-			{ "mDataProp": "client", "render": function (data) {
+		"pageLength": 10,
+		"order": [[ 1, "desc" ]],
+		"ajax": "rest/service.php/network/clients?format=datatables",
+		"columns": [
+			{ "data": "client", "render": function (data) {
 				return data ? data : mLang.Unknown;
 			} },
-			{ "mDataProp": "count" }
+			{ "data": "count" }
 		]
 	});
 });

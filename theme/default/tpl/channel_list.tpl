@@ -18,17 +18,17 @@
 {literal}
 $(document).ready(function() {
 	$('#tbl_channels').dataTable({
-		"bServerSide": true,
-		"iDisplayLength": 25,
-		"aaSorting": [[ 1, "desc" ]],
-		"sAjaxSource": "rest/service.php/channels?format=datatables",
-		"aoColumns": [
-			{ "mDataProp": "channel", "render": function (data) {
+		"serverSide": true,
+		"pageLength": 25,
+		"order": [[ 1, "desc" ]],
+		"ajax": "rest/service.php/channels?format=datatables",
+		"columns": [
+			{ "data": "channel", "render": function (data) {
 				return getChannelLinks(data) + ' ' + data;
 			} },
-			{ "mDataProp": "users" },
-			{ "mDataProp": "users_max" },
-			{ "mDataProp": "modes", "bSortable": false, "render": function (data) {
+			{ "data": "users" },
+			{ "data": "users_max" },
+			{ "data": "modes", "orderable": false, "render": function (data) {
 				return data ? '+'+data : '';
 			} }
 		]
