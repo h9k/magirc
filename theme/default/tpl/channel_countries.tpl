@@ -34,7 +34,7 @@ $(document).ready(function() {
 			}]
 		});
 	});
-	$('#tbl_countries').dataTable({
+	$('#tbl_countries').DataTable({
 		"pageLength": 10,
 		"order": [[ 1, "desc" ]],
 		"ajax": "rest/service.php/channels/"+target+"/countries?format=datatables",

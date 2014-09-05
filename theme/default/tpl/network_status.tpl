@@ -187,7 +187,7 @@ $(document).ready(function() {
 		}
 		return data;
 	}
-	table1 = $("#tbl_biggestchans").dataTable({
+	var table1 = $("#tbl_biggestchans").DataTable({
 		"processing": false,
 		"searching": false,
 		"info": false,
@@ -209,7 +209,7 @@ $(document).ready(function() {
 		event.stopPropagation();
 		openChanMenu(this);
 	});
-	table2 = $("#tbl_top10chans").dataTable({
+	var table2 = $("#tbl_top10chans").DataTable({
 		"processing": false,
 		"searching": false,
 		"info": false,
@@ -231,7 +231,7 @@ $(document).ready(function() {
 		event.stopPropagation();
 		openChanMenu(this);
 	});
-	table3 = $("#tbl_top10users").dataTable({
+	var table3 = $("#tbl_top10users").DataTable({
 		"processing": false,
 		"searching": false,
 		"info": false,

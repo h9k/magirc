@@ -23,7 +23,7 @@
 {literal}
 $(document).ready(function() {
 	var type = 'monthly';
-	var table = $('#tbl_activity').dataTable({
+	var table = $('#tbl_activity').DataTable({
 		"serverSide": true,
 		"pageLength": 25,
 		"order": [[ 3, "desc" ]],

@@ -64,7 +64,7 @@ $(document).ready(function() {
 		$("#chan_users_max_time").html($.format.date(result.users_max_time, format_datetime));
 		$("#chan_modes").html(result.modes ? "+"+result.modes : mLang.None);
 	});
-	$('#tbl_users').dataTable({
+	$('#tbl_users').DataTable({
 		"pageLength": 10,
 		"pagingType": "simple",
 		"order": [[ 0, "asc" ]],

@@ -17,7 +17,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$('#tbl_channels').dataTable({
+	$('#tbl_channels').DataTable({
 		"serverSide": true,
 		"pageLength": 25,
 		"order": [[ 1, "desc" ]],

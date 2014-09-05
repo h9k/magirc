@@ -38,7 +38,7 @@ $(document).ready(function() {
 			chart_activity.series[0].setData(result);
 		});
 	}
-	var table = $('#tbl_activity').dataTable({
+	var table = $('#tbl_activity').DataTable({
 		"serverSide": true,
 		"pageLength": 10,
 		"order": [[ 3, "desc" ]],

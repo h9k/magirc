@@ -65,7 +65,7 @@ $(document).ready(function() {
 			}]
 		});
 	});
-	$('#tbl_clients').dataTable({
+	$('#tbl_clients').DataTable({
 		"pageLength": 10,
 		"order": [[ 1, "desc" ]],
 		"ajax": "rest/service.php/channels/"+target+"/clients?format=datatables",

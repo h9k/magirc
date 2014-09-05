@@ -16,7 +16,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$('#tbl_operators').dataTable({
+	$('#tbl_operators').DataTable({
 		"pageLength": 25,
 		"order": [[ 0, "asc" ]],
 		"ajax": 'rest/service.php/operators?format=datatables',
