@@ -7,6 +7,7 @@
 	<ul>
 		<li title="readme"><a href="index.php/support/doc/readme">README</a></li>
 		<li title="resources"><a href="index.php/support/doc/support">Resources</a></li>
+        <li title="rest"><a href="index.php/support/doc/REST">Web Service Reference</a></li>
 		<li title="registration"><a href="index.php/support/register">Registration</a></li>
 		<li title="credits"><a href="index.php/support/doc/credits">Credits</a></li>
 		<li title="license"><a href="index.php/support/doc/license">License</a></li>

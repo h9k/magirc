@@ -138,10 +138,3 @@ If you do not have `/etc/nginx/fastcgi.conf`, include `/etc/nginx/fastcgi_params
 Your lighttpd configuration file should contain this code (along with other settings you may need). This code requires lighttpd >= 1.4.24.
 
     url.rewrite-if-not-file = ("^" => "/index.php")
-
-
-## Limitations ##
-The current version is considered to be **beta** and has some known limitations:
-
-* **Templating is not officially supported**: This means you are free to create your own templates for MagIRC, but we will not support you and will not guarantee troublefree operation between different versions of MagIRC, as things change rather often during development. This is scheduled for the **release candidate**.
-* **No guarantees for API stability**: You are free to use the RESTful API MagIRC provides, however it is very likely that some things might change. The **release candidate** version will include an API definition that should not change for the whole MagIRC v1.0.x series.
