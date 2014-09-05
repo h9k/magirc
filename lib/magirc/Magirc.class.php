@@ -63,10 +63,10 @@ class Magirc {
 
         $slim = $this->slim;
 		$slim->notFound(function() use ($slim) {
-			$slim->render('error.tpl', array('err_msg' => 'HTTP 404 - Not Found', 'err_extra' => null));
+			$slim->render('error.tpl', array('err_code' => 404), 404);
 		});
 		$slim->error(function (\Exception $e) use ($slim) {
-			$slim->render('error.tpl', array('err_msg' => $e->getMessage(), 'err_extra' => $e->getTraceAsString()));
+			$slim->render('error_fatal.tpl', array('err_msg' => $e->getMessage(), 'err_extra' => $e->getTraceAsString()), 500);
 		});
 	}
 

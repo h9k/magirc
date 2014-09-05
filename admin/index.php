@@ -51,8 +51,7 @@ try {
 	}
 
 	$admin->slim->notFound(function () use ($admin) {
-		$admin->tpl->assign('err_msg', 'HTTP 404 - Not Found');
-		$admin->tpl->assign('err_extra', null);
+		$admin->tpl->assign('err_code', 404);
 		$admin->tpl->display('error.tpl');
 	});
 
@@ -250,7 +249,7 @@ try {
 } catch (Exception $e) {
 	$admin->tpl->assign('err_msg', $e->getMessage());
 	$admin->tpl->assign('err_extra', $e->getTraceAsString());
-	$admin->tpl->display('error.tpl');
+	$admin->tpl->display('error_fatal.tpl');
 }
 
 ?>

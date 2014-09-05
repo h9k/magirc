@@ -1,22 +1,17 @@
 {extends file="_main.tpl"}
 
-{block name="title" append}Error{/block}
+{block name="title" append}{t}Error{/t}{/block}
 
-{block name="js"}{/block}
-
-{block name="css"}<link href="css/bsod.css" rel="stylesheet" type="text/css" />{/block}
-
-{block name="body"}
-*** STOP: {$err_msg}
-<br /><br />
-{if $smarty.const.DEBUG}
-	{if $err_extra}Trace:<br />{$err_extra}{/if}
-	{foreach from=$smarty.server item=item key=key}
-	{$key}: {$item}<br />
-	{/foreach}
-{else}
-This should not have happened. Please contact the Administrator.<br />
-If you are the Administrator, please enable Debug mode to see more information<br />
-and submit it to the MagIRC developers. Thank you!
-{/if}
+{block name="content"}
+    <div id="errorbox">
+        <h1>Something happened!</h1>
+        {if $err_code eq 403}
+            You don't have the rights to view the requested content.
+        {elseif $err_code eq  404}
+            The requested resource does not exist.
+        {else}
+            Unknown error.
+        {/if}
+        <br /><sub>Code: {$err_code}</sub>
+    </div>
 {/block}

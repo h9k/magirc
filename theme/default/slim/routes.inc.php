@@ -27,8 +27,12 @@ $magirc->slim->get('/channel/:target/:action', function($target, $action) use($m
     $tpl_path = 'theme/' . $magirc->cfg->theme . '/tpl/' . $tpl_file;
     if (file_exists($tpl_path)) {
         switch ($magirc->service->checkChannel($target)) {
-            case 404: $magirc->slim->notFound();
-            case 403: $magirc->slim->halt(403, 'Access denied');
+            case 404:
+	            $magirc->slim->notFound();
+		        exit;
+            case 403:
+	            $magirc->slim->render('error.tpl', array('err_code' => 403), 403);
+		        exit;
         }
 		$magirc->slim->render($tpl_file, array(
 			'section' => 'channel',

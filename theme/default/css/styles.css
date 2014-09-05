@@ -52,6 +52,12 @@ div#footer a, div#footer a:visited { color:#FCFCFC; font-size:12px; font-weight:
 div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:underline; }
 div#footer table { width: 100%; }
 div#footer table tr td { width:33%; }
+div#errorbox {
+    text-align: center;
+    width: 500px;
+    margin: 0 auto;
+    padding-top: 200px;
+}
 div#loading { display:none; float:right; margin-top:25px; }
 ul#chanmenu {
 	border: 1px solid #aaaaaa;
