@@ -381,7 +381,7 @@ class Anope implements Service {
 	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
 
-		$sWhere = "currentusers > 0";
+		$sWhere = "true"; // LOL
 		if ($secret_mode) {
 			$sWhere .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
 		}
@@ -391,15 +391,15 @@ class Anope implements Service {
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
-			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(",", $hide_channels));
+			$sWhere .= sprintf("AND LOWER(channel) NOT IN(%s)", implode(",", $hide_channels));
 		}
 
-		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, topic, topicauthor AS topic_author,"
+		$sQuery = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, (SELECT COUNT(*) FROM `%s` AS i WHERE c.chanid = i.chanid) AS users, topic, topicauthor AS topic_author,"
 				. " topictime AS topic_time, modes, maxusers AS users_max, maxtime AS users_max_time"
 				. " FROM `%s` AS c"
 				. " LEFT JOIN `%s` AS m ON m.name = c.channel"
 				. " WHERE %s",
-				TBL_CHAN, TBL_MAXUSERS, $sWhere);
+				TBL_ISON, TBL_CHAN, TBL_MAXUSERS, $sWhere);
 		//TODO: MISSING! kickcount AS kicks
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($sQuery);
@@ -427,11 +427,11 @@ class Anope implements Service {
 	 */
 	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
-		$sQuery = sprintf("SELECT channel, currentusers AS users, maxusers AS users_max, maxtime AS users_max_time"
+		$sQuery = sprintf("SELECT channel, (SELECT COUNT(*) FROM `%s` AS i WHERE c.chanid = i.chanid) AS users, maxusers AS users_max, maxtime AS users_max_time"
 				. " FROM `%s` AS c"
 				. " LEFT JOIN `%s` AS m ON m.name = c.channel"
-				. " WHERE currentusers > 0",
-				TBL_CHAN, TBL_MAXUSERS);
+				. " WHERE 1 > 0",
+				TBL_ISON, TBL_CHAN, TBL_MAXUSERS);
 		if ($secret_mode) {
 			$sQuery .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
 		}
@@ -439,7 +439,7 @@ class Anope implements Service {
 		for ($i = 0; $i < count($hide_chans); $i++) {
 			$sQuery .= " AND LOWER(channel) NOT LIKE " . $this->db->escape(strtolower($hide_chans[$i]));
 		}
-		$sQuery .= " ORDER BY currentusers DESC LIMIT :limit";
+		$sQuery .= " ORDER BY users DESC LIMIT :limit";
 		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':limit', $limit, PDO::PARAM_INT);
 		$ps->execute();
@@ -482,12 +482,12 @@ class Anope implements Service {
 	 * @return Channel
 	 */
 	public function getChannel($chan) {
-		$sQuery = sprintf("SELECT channel, currentusers AS users, topic, topicauthor AS topic_author,
+		$sQuery = sprintf("SELECT channel, (SELECT COUNT(*) FROM `%s` AS i WHERE c.chanid = i.chanid) AS users, topic, topicauthor AS topic_author,
 			topictime AS topic_time, modes, maxusers AS users_max, maxtime AS users_max_time
 			FROM `%s` AS c
 			LEFT JOIN `%s` AS m ON m.name = c.channel
 			WHERE LOWER(channel) = LOWER(:chan)",
-				TBL_CHAN, TBL_MAXUSERS);
+				TBL_ISON, TBL_CHAN, TBL_MAXUSERS);
 		//TODO: MISSING! kickcount AS kicks
 		$ps = $this->db->prepare($sQuery);
 		$ps->bindValue(':chan', $chan, PDO::PARAM_STR);
