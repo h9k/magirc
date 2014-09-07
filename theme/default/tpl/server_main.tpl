@@ -6,7 +6,7 @@
 <div id="tabs">
 	<ul>
 		<li title="servers"><a href="index.php/server/list">{t}Servers{/t}</a></li>
-		<li title="history"><a href="index.php/server/history">{t}History{/t}</a></li>
+        {if $cfg->service eq 'denora'}<li title="history"><a href="index.php/server/history">{t}History{/t}</a></li>{/if}
 	</ul>
 </div>
 {/block}

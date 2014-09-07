@@ -10,7 +10,7 @@
 		<li title="countries"><a href="index.php/network/countries">{t}Countries{/t}</a></li>
 		<li title="clients"><a href="index.php/network/clients">{t}Clients{/t}</a></li>
 		<li title="operators"><a href="index.php/network/operators">{t}Operators{/t}</a></li>
-		<li title="history"><a href="index.php/network/history">{t}History{/t}</a></li>
+        {if $cfg->service eq 'denora'}<li title="history"><a href="index.php/network/history">{t}History{/t}</a></li>{/if}
 		{if $cfg->service_netsplit}<li title="netsplit"><a href="index.php/network/netsplit">{t}Netsplit Graphs{/t}</a></li>{/if}
 		{if $cfg->service_searchirc}<li title="searchirc"><a href="index.php/network/searchirc">{t}Searchirc Graphs{/t}</a></li>{/if}
 		{if $cfg->service_mibbitid}<li title="mibbit"><a href="index.php/network/mibbit">{t}Mibbit Graphs{/t}</a></li>{/if}

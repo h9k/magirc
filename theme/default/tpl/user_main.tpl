@@ -6,7 +6,7 @@
 <div id="tabs">
 	<ul>
 		<li title="activity"><a href="index.php/user/globalactivity">{t}Activity{/t}</a></li>
-		<li title="history"><a href="index.php/user/history">{t}History{/t}</a></li>
+        {if $cfg->service eq 'denora'}<li title="history"><a href="index.php/user/history">{t}History{/t}</a></li>{/if}
 	</ul>
 </div>
 {/block}
