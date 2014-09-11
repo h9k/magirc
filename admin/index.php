@@ -176,16 +176,16 @@ try {
 		}
 		if (isset($_POST['database'])) {
 			//TODO: do proper escaping to avoid breaking php code in the config files
-			$db['username'] = (isset($_POST['username'])) ? $_POST['username'] : $db['username'];
-			$db['password'] = (isset($_POST['password'])) ? $_POST['password'] : $db['password'];
-			$db['database'] = (isset($_POST['database'])) ? $_POST['database'] : $db['database'];
-			$db['prefix'] = (isset($_POST['prefix'])) ? $_POST['prefix'] : $db['prefix'];
-			$db['hostname'] = (isset($_POST['hostname'])) ? $_POST['hostname'] : $db['hostname'];
-			$db['port'] = (isset($_POST['port'])) ? $_POST['port'] : $db['port'];
+			$db['username'] = (isset($_POST['username'])) ? trim($_POST['username']) : $db['username'];
+			$db['password'] = (isset($_POST['password'])) ? trim($_POST['password']) : $db['password'];
+			$db['database'] = (isset($_POST['database'])) ? trim($_POST['database']) : $db['database'];
+			$db['prefix'] = (isset($_POST['prefix'])) ? trim($_POST['prefix']) : $db['prefix'];
+			$db['hostname'] = (isset($_POST['hostname'])) ? trim($_POST['hostname']) : $db['hostname'];
+			$db['port'] = (isset($_POST['port'])) ? trim($_POST['port']) : $db['port'];
 			$db['ssl'] = isset($_POST['ssl']) ? 'true' : 'false';
-			$db['ssl_key'] = (isset($_POST['ssl_key'])) ? $_POST['ssl_key'] : $db['ssl_key'];
-			$db['ssl_cert'] = (isset($_POST['ssl_cert'])) ? $_POST['ssl_cert'] : $db['ssl_cert'];
-			$db['ssl_ca'] = (isset($_POST['ssl_ca'])) ? $_POST['ssl_ca'] : $db['ssl_ca'];
+			$db['ssl_key'] = (isset($_POST['ssl_key'])) ? trim($_POST['ssl_key']) : $db['ssl_key'];
+			$db['ssl_cert'] = (isset($_POST['ssl_cert'])) ? trim($_POST['ssl_cert']) : $db['ssl_cert'];
+			$db['ssl_ca'] = (isset($_POST['ssl_ca'])) ? trim($_POST['ssl_ca']) : $db['ssl_ca'];
 			$db_buffer = "<?php\n".
 				"\$db['username'] = '{$db['username']}';\n".
 				"\$db['password'] = '{$db['password']}';\n".

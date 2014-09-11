@@ -1,6 +1,7 @@
 # MagIRC Web Service Reference #
 
 MagIRC runs on top of a RESTful Web Service to get data. This gives you powerful possibilities for expanding your existing website or developing your own frontend for IRC stats.
+All responses are given in JSON format, which can be easily parsed.
 
 Here are all requests you can make to get info. You need to prefix each path with the full URL to the REST service.
 For example, http://www.denorastats.org/magirc/rest/service.php
