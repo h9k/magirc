@@ -110,9 +110,32 @@ class Anope implements Service {
 	 * @param string $target Target (channel or server name, depends on $mode)
 	 * @return int User count
 	 */
-	public function getUserCount($mode = null, $target = null) { //TODO: $mode and $target not used?
-		$query = sprintf("SELECT COUNT(*) FROM `%s`", TBL_USER); //TODO: MISSING! WHERE online = 'Y'
+	public function getUserCount($mode = null, $target = null) {
+		$query = sprintf("SELECT COUNT(*) FROM `%s` AS u JOIN `%s` AS s ON s.id = u.servid", TBL_USER, TBL_SERVER);
+		$where = null;
+		if ($mode == 'channel' && $target) {
+			$query .= sprintf(" JOIN `%s` AS i ON i.nickid = u.nickid
+			JOIN `%s` AS c ON c.chanid = i.chanid", TBL_ISON, TBL_CHAN);
+			$where .= "LOWER(c.channel) = LOWER(:chan)";
+		} elseif ($mode == 'server' && $target) {
+			$where .= "LOWER(s.name) = LOWER(:server)";
+		}
+		if ($this->cfg->hide_ulined) {
+			$where .= ($where ? " AND " : "") . "s.ulined = 'N'";
+		}
+		if (Protocol::services_protection_mode) {
+			$where .= sprintf(($where ? " AND " : "") . "u.modes NOT LIKE BINARY '%%%s%%'", Protocol::services_protection_mode);
+		}
+		if ($where){
+			$query .= " WHERE {$where}";
+		}
 		$ps = $this->db->prepare($query);
+		if ($mode == 'channel' && $target) {
+			$ps->bindValue(':chan', $target, PDO::PARAM_STR);
+		}
+		if ($mode == 'server' && $target) {
+			$ps->bindValue(':server', $target, PDO::PARAM_STR);
+		}
 		$ps->execute();
 		return $ps->fetch(PDO::FETCH_COLUMN);
 	}
@@ -132,11 +155,10 @@ class Anope implements Service {
 			$query .= sprintf(" JOIN `%s` AS i ON i.nickid = u.nickid
 				JOIN `%s` AS c ON c.chanid = i.chanid
 				WHERE LOWER(c.channel) = LOWER(:chan)",
-				TBL_ISON, TBL_CHAN); // AND user.online='Y'
+				TBL_ISON, TBL_CHAN);
 		} elseif ($mode == 'server' && $target) {
-			$query .= " WHERE LOWER(u.server) = LOWER(:server)"; // AND user.online='Y'
+			$query .= " WHERE LOWER(u.server) = LOWER(:server)";
 		} else {
-			//$query .= " WHERE user.online='Y'";
 			$query .= " WHERE 0 = 0";
 		}
 		if ($this->cfg->hide_ulined) {
@@ -164,22 +186,23 @@ class Anope implements Service {
 			FROM `%s` AS u
 			JOIN `%s` AS s ON s.id = u.servid",
 				TBL_USER, TBL_SERVER);
+		$where = null;
 		if ($mode == 'channel' && $target) {
 			$query .= sprintf(" JOIN `%s` AS i ON i.nickid = u.nickid
-				JOIN `%s` AS c ON i.chanid = c.chanid
-				WHERE LOWER(c.channel) = LOWER(:chan)",
-				TBL_ISON, TBL_CHAN); // AND user.online='Y'
+				JOIN `%s` AS c ON i.chanid = c.chanid",
+				TBL_ISON, TBL_CHAN);
+			$where .= " LOWER(c.channel) = LOWER(:chan)";
 		} elseif ($mode == 'server' && $target) {
-			$query .= " WHERE LOWER(u.server) = LOWER(:server)"; // AND user.online='Y'
-		} else {
-			//$query .= " WHERE user.online='Y'";
-			$query .= " WHERE 0 = 0";
+			$where .= " LOWER(u.server) = LOWER(:server)";
 		}
 		if ($this->cfg->hide_ulined) {
-			$query .= " AND s.ulined = 'N'";
+			$where .= ($where ? " AND " : "") . "s.ulined = 'N'";
 		}
 		if (Protocol::services_protection_mode) {
-			$query .= sprintf(" AND u.modes NOT LIKE BINARY '%%%s%%'", Protocol::services_protection_mode);
+			$where .= sprintf(($where ? " AND " : "") . "u.modes NOT LIKE BINARY '%%%s%%'", Protocol::services_protection_mode);
+		}
+		if ($where){
+			$query .= " WHERE {$where}";
 		}
 		$query .= " GROUP by u.geocountry ORDER BY count DESC";
 		$ps = $this->db->prepare($query);
@@ -344,22 +367,22 @@ class Anope implements Service {
 	 * @return array of Server
 	 */
 	public function getServerList() {
-		$sWhere = null;
+		$where = null;
 		$hide_servers = $this->cfg->hide_servers;
 		if ($hide_servers) {
 			$hide_servers = explode(",", $hide_servers);
 			foreach ($hide_servers as $key => $server) {
 				$hide_servers[$key] = $this->db->escape(trim($server));
 			}
-			$sWhere .= sprintf(" name NOT IN(%s)", implode(",", $hide_servers));
+			$where .= sprintf(" name NOT IN(%s)", implode(",", $hide_servers));
 		}
 		if ($this->cfg->hide_ulined) {
-			$sWhere .= $sWhere ? " AND ulined = 'N'" : " ulined = 'N'";
+			$where .= $where ? " AND ulined = 'N'" : " ulined = 'N'";
 		}
-		$query = sprintf("SELECT name AS server, online, comment AS description, currentusers AS users"
-				. " FROM `%s` AS s WHERE %s",
-				TBL_SERVER, $sWhere);
-		//TODO: MISSING! opers, country, countrycode AS country_code
+		$query = sprintf("SELECT name AS server, online, comment AS description, currentusers AS users,
+		(SELECT COUNT(*) FROM `%s` AS u WHERE u.oper = 'Y' AND u.servid = s.id) AS opers
+		FROM `%s` AS s WHERE %s",
+				TBL_USER, TBL_SERVER, $where);
 		$ps = $this->db->prepare($query);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'Server');
@@ -372,11 +395,11 @@ class Anope implements Service {
 	 */
 	public function getServer($server) {
 		$query = sprintf("SELECT s.name AS server, online, comment AS description, link_time AS connect_time,
-			split_time, version, currentusers AS users, maxusers AS users_max, maxtime AS users_max_time
+			split_time, version, currentusers AS users, maxusers AS users_max, maxtime AS users_max_time,
+			(SELECT COUNT(*) FROM `%s` AS u WHERE u.oper = 'Y' AND u.servid = s.id) AS opers
 			FROM `%s` AS s
 			LEFT JOIN `%s` AS m ON m.name = s.name
-			WHERE s.name = :server", TBL_SERVER, TBL_MAXUSERS);
-		//TODO: MISSING! uptime, motd, ping, highestping AS ping_max, FROM_UNIXTIME(maxpingtime) AS ping_max_time, opers, maxopers AS opers_max, FROM_UNIXTIME(maxopertime) AS opers_max_time, country, countrycode AS country_code
+			WHERE s.name = :server", TBL_USER, TBL_SERVER, TBL_MAXUSERS);
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':server', $server, PDO::PARAM_STR);
 		$ps->execute();
@@ -394,7 +417,6 @@ class Anope implements Service {
 			FROM `%s` AS u
 			LEFT JOIN `%s` AS s ON s.id = u.servid WHERE",
 				TBL_USER, TBL_SERVER);
-		//TODO: MISSING! u.online, u.swhois, u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, s.country AS server_country, s.countrycode AS server_country_code
 		$levels = Protocol::$oper_levels;
 		if (!empty($levels)) {
 			$i = 1;
@@ -410,7 +432,6 @@ class Anope implements Service {
 		} else {
 			$query .= " u.modes LIKE BINARY '%o%'";
 		}
-		//$query .= " AND u.online = 'Y'";
 		if (Protocol::oper_hidden_mode) {
 			$query .= sprintf(" AND u.modes NOT LIKE BINARY '%%%s%%'", Protocol::oper_hidden_mode);
 		}
@@ -435,9 +456,9 @@ class Anope implements Service {
 	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
 
-		$sWhere = "true"; // LOL
+		$where = "true"; // LOL
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
+			$where .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -445,7 +466,7 @@ class Anope implements Service {
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
-			$sWhere .= sprintf("AND LOWER(channel) NOT IN(%s)", implode(",", $hide_channels));
+			$where .= sprintf("AND LOWER(channel) NOT IN(%s)", implode(",", $hide_channels));
 		}
 
 		$query = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, (SELECT COUNT(*) FROM `%s` AS i WHERE c.chanid = i.chanid) AS users, topic, topicauthor AS topic_author,"
@@ -453,8 +474,7 @@ class Anope implements Service {
 				. " FROM `%s` AS c"
 				. " LEFT JOIN `%s` AS m ON m.name = c.channel"
 				. " WHERE %s",
-				TBL_ISON, TBL_CHAN, TBL_MAXUSERS, $sWhere);
-		//TODO: MISSING! kickcount AS kicks
+				TBL_ISON, TBL_CHAN, TBL_MAXUSERS, $where);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($query);
 			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
@@ -542,7 +562,6 @@ class Anope implements Service {
 			LEFT JOIN `%s` AS m ON m.name = c.channel
 			WHERE LOWER(channel) = LOWER(:chan)",
 				TBL_ISON, TBL_CHAN, TBL_MAXUSERS);
-		//TODO: MISSING! kickcount AS kicks
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':chan', $chan, PDO::PARAM_STR);
 		$ps->execute();
@@ -569,7 +588,6 @@ class Anope implements Service {
 			WHERE LOWER(c.channel) = LOWER(:channel)
 			ORDER BY u.nick ASC",
 				TBL_ISON, TBL_CHAN, TBL_USER, TBL_SERVER);
-		//TODO: MISSING! u.swhois, u.online, u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, s.country AS server_country, s.countrycode AS server_country_code
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':channel', $chan, SQL_STR);
 		$ps->execute();
@@ -581,19 +599,18 @@ class Anope implements Service {
 	 * @param int $type 0: total, 1: day, 2: week, 3: month, 4: year
 	 * @param boolean $datatables true: datatables format, false: standard format
 	 * @return array Data
-	 * @todo refactor
 	 */
 	public function getChannelGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 
-		$sWhere = "cs.letters > 0";
+		$where = "cs.letters > 0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'",$secret_mode);
+			$where .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'",$secret_mode);
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'",$private_mode);
+			$where .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'",$private_mode);
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -601,14 +618,14 @@ class Anope implements Service {
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
-			$sWhere .= sprintf(" AND LOWER(cs.chan) NOT IN(%s)", implode(',', $hide_channels));
+			$where .= sprintf(" AND LOWER(cs.chan) NOT IN(%s)", implode(',', $hide_channels));
 		}
 
 		$query = sprintf("SELECT SQL_CALC_FOUND_ROWS chan AS name, letters, words, line AS 'lines', actions,
 			(smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, cs.modes, topics
 			FROM `%s`AS cs
 			LEFT JOIN `%s` AS c ON LOWER(cs.chan) = LOWER(c.channel)
-			WHERE cs.type = :type AND cs.nick = '' AND %s", TBL_CHANSTATS, TBL_CHAN, $sWhere); //TODO: change cs.nick to IS NULL when anope gets fixed
+			WHERE cs.type = :type AND cs.nick = '' AND %s", TBL_CHANSTATS, TBL_CHAN, $where);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($query, array(':type' => $type));
 			$sFiltering = $this->db->datatablesFiltering(array('cs.chan', 'c.topic'));
@@ -638,7 +655,6 @@ class Anope implements Service {
 	 * @param int $type 0: total, 1: day, 2: week, 3: month, 4: year
 	 * @param boolean $datatables true: datatables format, false: standard format
 	 * @return User
-	 * @todo refactor
 	 */
 	public function getChannelActivity($chan, $type, $datatables = false) {
 		$aaData = array();
@@ -687,8 +703,8 @@ class Anope implements Service {
 	 * @return mixed
 	 */
 	public function getChannelHourlyActivity($chan, $type) {
-		$query = sprintf("SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,
-			time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
+		$query = sprintf("SELECT time0, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11,
+			time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23
 			FROM `%s`AS cs
 			WHERE chan=:channel AND type=:type",
 				TBL_CHANSTATS);
@@ -806,7 +822,6 @@ class Anope implements Service {
 			LEFT JOIN `%s` AS s ON s.id = u.servid
 			WHERE u.nick = :nickname",
 				TBL_USER, TBL_SERVER);
-		//TODO: MISSING! u.swhois, u.online, u.lastquit AS quit_time, u.lastquitmsg AS quit_msg, s.country AS server_country, s.countrycode AS server_country_code
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();
@@ -831,12 +846,12 @@ class Anope implements Service {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 
-		$sWhere = "";
+		$where = "";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
+			$where .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $private_mode);
+			$where .= sprintf(" AND c.modes NOT LIKE BINARY '%%%s%%'", $private_mode);
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -844,7 +859,7 @@ class Anope implements Service {
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
-			$sWhere .= sprintf(" AND LOWER(c.channel) NOT IN(%s)", implode(',', $hide_channels));
+			$where .= sprintf(" AND LOWER(c.channel) NOT IN(%s)", implode(',', $hide_channels));
 		}
 
 		$query = sprintf("SELECT DISTINCT cs.chan
@@ -853,7 +868,7 @@ class Anope implements Service {
 			JOIN `%s` AS u ON u.account = cs.nick
 			WHERE cs.type = 'total'
 			AND cs.nick = :uname %s",
-				TBL_CHANSTATS, TBL_CHAN, TBL_USER, $sWhere);
+				TBL_CHANSTATS, TBL_CHAN, TBL_USER, $where);
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
 		$ps->execute();
@@ -865,14 +880,13 @@ class Anope implements Service {
 	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
 	 * @param boolean $datatables true: datatables format, false: standard format
 	 * @return array
-	 * @todo refactor
 	 */
 	public function getUserGlobalActivity($type, $datatables = false) {
 		$aaData = array();
 
 		$query = sprintf("SELECT SQL_CALC_FOUND_ROWS nick AS 'uname', letters, words, line AS 'lines',
 			actions, (smileys_happy + smileys_sad + smileys_other) AS 'smileys', kicks, modes, topics
-			FROM `%s`AS cs
+			FROM `%s` AS cs
 			WHERE type = :type AND letters > 0 and chan = ''",
 				TBL_CHANSTATS);
 		if ($datatables) {
@@ -922,12 +936,11 @@ class Anope implements Service {
 	 * @param string $user User
 	 * @param string $chan Channel
 	 * @return mixed
-	 * @todo refactor
 	 */
 	public function getUserActivity($mode, $user, $chan) {
 		$info = $this->getUserData($mode, $user);
 		if ($chan == null) {
-			$chan = ''; //TODO: this is dirty but should be fixed on the anope side
+			$chan = '';
 			$query = sprintf("SELECT type, letters, words, line AS 'lines', actions,
 				(smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, cs.modes, topics
 				FROM `%s` AS cs
@@ -935,14 +948,14 @@ class Anope implements Service {
 				ORDER BY cs.letters DESC",
 				TBL_CHANSTATS);
 		} else {
-			$sWhere = "";
+			$where = "";
 			$hide_channels = $this->cfg->hide_chans;
 			if ($hide_channels) {
 				$hide_channels = explode(",", $hide_channels);
 				foreach ($hide_channels as $key => $channel) {
 					$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 				}
-				$sWhere .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
+				$where .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
 			}
 			$query = sprintf("SELECT type, letters, words, line AS 'lines', actions,
 				(smileys_happy + smileys_sad + smileys_other) AS smileys, kicks, cs.modes, topics
@@ -950,7 +963,7 @@ class Anope implements Service {
 				JOIN `%s` AS c ON LOWER(c.channel) = LOWER(cs.chan)
 				WHERE cs.nick = :nick AND cs.chan = :chan %s
 				ORDER BY cs.letters DESC",
-					TBL_CHANSTATS, TBL_CHAN, $sWhere);
+					TBL_CHANSTATS, TBL_CHAN, $where);
 		}
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':nick', $info['uname'], PDO::PARAM_STR);
@@ -962,7 +975,7 @@ class Anope implements Service {
 		}
 		foreach ($data as $key => $type) {
 			foreach ($type as $field => $val) {
-				$data[$key][$field] = is_numeric($val) ? (int) $val : $val; //TODO: make int if digit
+				$data[$key][$field] = is_numeric($val) ? (int) $val : $val;
 			}
 		}
 		return $data;
@@ -975,17 +988,15 @@ class Anope implements Service {
 	 * @param string $chan Channel
 	 * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
 	 * @return mixed
-	 * @todo refactor
 	 */
 	public function getUserHourlyActivity($mode, $user, $chan, $type) {
 		$info = $this->getUserData($mode, $user);
-		//TODO: this is dirty but should be fixed on the anope side
 		if ($chan == null){
 			$chan = '';
 		}
-		$query = sprintf("SELECT time0,time1,time2,time3,time4,time5,time6,time7,time8,time9,time10,time11,
-			time12,time13,time14,time15,time16,time17,time18,time19,time20,time21,time22,time23
-			FROM `%s`AS cs
+		$query = sprintf("SELECT time0, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11,
+			time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23
+			FROM `%s` AS cs
 			WHERE nick = :nick AND chan = :channel AND type = :type",
 				TBL_CHANSTATS);
 		$ps = $this->db->prepare($query);

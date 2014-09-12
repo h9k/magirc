@@ -32,7 +32,7 @@ $(document).ready(function() {
 		"ajax": 'rest/service.php/servers?format=datatables',
 		"columns": [
 			{ "data": "online", "render": function (data, type, row, meta) { return data ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
-			{ "data": "server", "render": function (data, type, row, meta) { return getCountryFlag(row) + ' ' + data } },
+			{ "data": "server", "render": function (data, type, row, meta) { return (stats_server == 'denora') ? getCountryFlag(row) + ' ' + data : data;} },
 			{ "data": "description" },
 			{ "data": "users" },
 			{ "data": "opers" }

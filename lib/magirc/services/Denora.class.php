@@ -148,7 +148,7 @@ class Denora implements Service {
 		}
 		if ($this->cfg->hide_ulined) $query .= " AND s.uline = 0";
 		if (Protocol::services_protection_mode) {
-			$query .= sprintf(" AND u.%s='N'", self::getSqlMode(Protocol::services_protection_mode));
+			$query .= sprintf(" AND u.%s = 'N'", self::getSqlMode(Protocol::services_protection_mode));
 		}
 		$ps = $this->db->prepare($query);
 		if ($mode == 'channel' && $target) $ps->bindValue(':chan', $target, PDO::PARAM_STR);
@@ -374,20 +374,20 @@ class Denora implements Service {
 	 * @return array of Server
 	 */
 	public function getServerList() {
-		$sWhere = "";
+		$where = "";
 		$hide_servers = $this->cfg->hide_servers;
 		if ($hide_servers) {
 			$hide_servers = explode(",", $hide_servers);
 			foreach ($hide_servers as $key => $server) {
 				$hide_servers[$key] = $this->db->escape(trim($server));
 			}
-			$sWhere .= sprintf("WHERE server NOT IN(%s)", implode(",", $hide_servers));
+			$where .= sprintf("WHERE server NOT IN(%s)", implode(",", $hide_servers));
 		}
 		if ($this->cfg->hide_ulined) {
-			$sWhere .= $sWhere ? " AND uline = 0" : "WHERE uline = 0";
+			$where .= $where ? " AND uline = 0" : "WHERE uline = 0";
 		}
 		$query = sprintf("SELECT server, online, comment AS description, currentusers AS users, opers,
-			country, countrycode AS country_code FROM `%s` $sWhere", TBL_SERVER);
+			country, countrycode AS country_code FROM `%s` $where", TBL_SERVER);
 		$ps = $this->db->prepare($query);
 		$ps->execute();
 		return $ps->fetchAll(PDO::FETCH_CLASS, 'Server');
@@ -454,9 +454,9 @@ class Denora implements Service {
 	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
 
-		$sWhere = "currentusers > 0";
+		$where = "currentusers > 0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND %s = 'N'", self::getSqlMode($secret_mode));
+			$where .= sprintf(" AND %s = 'N'", self::getSqlMode($secret_mode));
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -464,13 +464,13 @@ class Denora implements Service {
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
-			$sWhere .= sprintf("%s LOWER(channel) NOT IN(%s)", $sWhere ? " AND " : "WHERE ", implode(",", $hide_channels));
+			$where .= sprintf("%s LOWER(channel) NOT IN(%s)", $where ? " AND " : "WHERE ", implode(",", $hide_channels));
 		}
 
 		$query = sprintf("SELECT SQL_CALC_FOUND_ROWS channel, currentusers AS users, maxusers AS users_max, FROM_UNIXTIME(maxusertime) AS users_max_time,
 			topic, topicauthor AS topic_author, topictime AS topic_time, kickcount AS kicks, %s, %s FROM `%s` WHERE %s",
 				implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::chan_modes))),
-				implode(',', array_map(array('Denora', 'getSqlModeData'), str_split(Protocol::chan_modes_data))), TBL_CHAN, $sWhere);
+				implode(',', array_map(array('Denora', 'getSqlModeData'), str_split(Protocol::chan_modes_data))), TBL_CHAN, $where);
 
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($query);
@@ -674,12 +674,12 @@ class Denora implements Service {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 
-		$sWhere = "cs.letters > 0";
+		$where = "cs.letters > 0";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND c.%s='N'", self::getSqlMode($secret_mode));
+			$where .= sprintf(" AND c.%s='N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND c.%s='N'", self::getSqlMode($private_mode));
+			$where .= sprintf(" AND c.%s='N'", self::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -687,13 +687,13 @@ class Denora implements Service {
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
-			$sWhere .= sprintf(" AND LOWER(cs.chan) NOT IN(%s)", implode(',', $hide_channels));
+			$where .= sprintf(" AND LOWER(cs.chan) NOT IN(%s)", implode(',', $hide_channels));
 		}
 
 		$query = sprintf("SELECT SQL_CALC_FOUND_ROWS chan AS name, letters, words, line AS 'lines', actions,
 			smileys, kicks, modes, topics FROM `%s` AS cs
 			JOIN `%s` AS c ON BINARY LOWER(cs.chan) = LOWER(c.channel) WHERE cs.type = :type AND %s",
-			TBL_CSTATS, TBL_CHAN, $sWhere);
+			TBL_CSTATS, TBL_CHAN, $where);
 		$type = self::getDenoraChanstatsType($type);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($query, array(':type' => (int) $type));
@@ -965,12 +965,12 @@ class Denora implements Service {
 		$secret_mode = Protocol::chan_secret_mode;
 		$private_mode = Protocol::chan_private_mode;
 
-		$sWhere = "";
+		$where = "";
 		if ($secret_mode) {
-			$sWhere .= sprintf(" AND c.%s = 'N'", self::getSqlMode($secret_mode));
+			$where .= sprintf(" AND c.%s = 'N'", self::getSqlMode($secret_mode));
 		}
 		if ($private_mode) {
-			$sWhere .= sprintf(" AND c.%s = 'N'", self::getSqlMode($private_mode));
+			$where .= sprintf(" AND c.%s = 'N'", self::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
@@ -978,12 +978,12 @@ class Denora implements Service {
 			foreach ($hide_channels as $key => $channel) {
 				$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 			}
-			$sWhere .= sprintf(" AND LOWER(c.channel) NOT IN(%s)", implode(',', $hide_channels));
+			$where .= sprintf(" AND LOWER(c.channel) NOT IN(%s)", implode(',', $hide_channels));
 		}
 
 		$query = sprintf("SELECT DISTINCT chan FROM `%s` AS us, `%s` AS c, `%s` AS u WHERE us.uname = :uname
 			AND us.type = 0 AND BINARY LOWER(us.chan) = LOWER(c.channel)
-			AND u.nick = :nick %s", TBL_USTATS, TBL_CHAN, $sWhere);
+			AND u.nick = :nick %s", TBL_USTATS, TBL_CHAN, $where);
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
 		$ps->bindValue(':nick', $info['nick'], PDO::PARAM_STR);
@@ -1006,18 +1006,18 @@ class Denora implements Service {
 			$query = sprintf("SELECT type, letters, words, line AS 'lines', actions, smileys, kicks, modes, topics
 				FROM `%s` WHERE uname = :uname AND chan = :chan ORDER BY ustats.letters DESC",  TBL_USTATS);
 		} else {
-			$sWhere = "";
+			$where = "";
 			$hide_channels = $this->cfg->hide_chans;
 			if ($hide_channels) {
 				$hide_channels = explode(",", $hide_channels);
 				foreach ($hide_channels as $key => $channel) {
 					$hide_channels[$key] = $this->db->escape(trim(strtolower($channel)));
 				}
-				$sWhere .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
+				$where .= sprintf(" AND LOWER(channel) NOT IN(%s)", implode(',', $hide_channels));
 			}
 			$query = sprintf("SELECT type, letters, words, line AS 'lines', actions, smileys, kicks, modes, topics
 				FROM `%s` AS us, `%s` AS c WHERE us.uname = :uname AND us.chan = :chan
-				AND BINARY LOWER(us.chan) = LOWER(c.channel) %s ORDER BY us.letters DESC", TBL_USTATS, TBL_CHAN, $sWhere);
+				AND BINARY LOWER(us.chan) = LOWER(c.channel) %s ORDER BY us.letters DESC", TBL_USTATS, TBL_CHAN, $where);
 		}
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':uname', $info['uname'], PDO::PARAM_STR);
