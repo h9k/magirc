@@ -44,6 +44,7 @@ class AnopeDB extends DB {
 		define('TBL_MAXUSERS', $prefix.'maxusers');
 		define('TBL_SERVER', $prefix.'server');
 		define('TBL_USER', $prefix.'user');
+		define('TBL_CURRENTUSAGE', $prefix.'currentusage');
 		define('TBL_HISTORY', $prefix.'history');
 	}
 }
@@ -71,29 +72,36 @@ class Anope implements Service {
 	 * @return array of arrays (int val, int time)
 	 */
 	public function getCurrentStatus() {
+		$query = sprintf("SELECT * FROM `%s`", TBL_CURRENTUSAGE);
+		$this->db->query($query, SQL_INIT, SQL_ASSOC);
+		$result = $this->db->record;
+
 		$data = array(
-			'users' => array('val' => (int) $this->getUserCount(), 'time' => time()),
-			'chans' => array('val' => count($this->getChannelList()), 'time' => time()),
-			'daily_users' => array('val' => 0, 'time' => 0), //TODO: implement!
-			'servers' => array('val' => count($this->getServerList()), 'time' => time()),
-			'opers' => array('val' => count($this->getOperatorList()), 'time' => time())
+			'users' => array('val' => (int) $result['users'], 'time' => $result['datetime']),
+			'chans' => array('val' => (int) $result['channels'], 'time' => $result['datetime']),
+			'servers' => array('val' => (int) $result['servers'], 'time' => $result['datetime']),
+			'opers' => array('val' => (int) $result['operators'], 'time' => $result['datetime'])
 		);
 		return $data;
 	}
 
-	//TODO: implement!
 	/**
 	 * Returns the max values
 	 * @return array of arrays (int val, int time)
 	 */
 	public function getMaxValues() {
 		$data = array(
-			'users' => array('val' => 0, 'time' => 0),
-			'channels' => array('val' => 0, 'time' => 0),
-			'servers' => array('val' => 0, 'time' => 0),
-			'opers' => array('val' => 0, 'time' => 0)
+			'users' => $this->getMaxValue('users'),
+			'channels' => $this->getMaxValue('channels'),
+			'servers' => $this->getMaxValue('servers'),
+			'opers' => $this->getMaxValue('operators')
 		);
 		return $data;
+	}
+
+	private function getMaxValue($val) {
+		$this->db->query(sprintf("SELECT MAX(`%s`) AS 'val', `datetime` AS 'time' FROM `%s`", $val, TBL_HISTORY), SQL_INIT, SQL_ASSOC);
+		return $this->db->record;
 	}
 
 	/**
@@ -102,7 +110,7 @@ class Anope implements Service {
 	 * @param string $target Target (channel or server name, depends on $mode)
 	 * @return int User count
 	 */
-	public function getUserCount($mode = null, $target = null) {
+	public function getUserCount($mode = null, $target = null) { //TODO: $mode and $target not used?
 		$query = sprintf("SELECT COUNT(*) FROM `%s`", TBL_USER); //TODO: MISSING! WHERE online = 'Y'
 		$ps = $this->db->prepare($query);
 		$ps->execute();

@@ -1,22 +1,25 @@
+CREATE VIEW `anope_currentusage` AS
+  SELECT NOW() AS 'datetime',
+         (SELECT COUNT(*) FROM anope_server) AS 'servers',
+         (SELECT COUNT(*) FROM anope_chan) AS 'channels',
+         (SELECT COUNT(*) FROM anope_user) AS 'users',
+         (SELECT COUNT(*) FROM anope_user WHERE oper = 'Y') AS 'operators';
+
 CREATE TABLE `anope_history` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `users` int(10) unsigned DEFAULT NOT NULL,
-  `channels` mediumint(8) unsigned DEFAULT NOT NULL,
-  `servers` tinyint(3) unsigned DEFAULT NOT NULL,
+  `servers` tinyint(3) unsigned NOT NULL,
+  `channels` mediumint(8) unsigned NOT NULL,
+  `users` int(10) unsigned NOT NULL,
+  `operators` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`datetime`)
 ) ENGINE=InnoDB;
 
-DELIMITER $$
-CREATE PROCEDURE `anope_history_update`()
-  BEGIN
-    INSERT INTO `anope_history` (`users`, `channels`, `servers`) VALUES(
-      (SELECT COUNT(*) FROM `anope_user`),
-      (SELECT COUNT(*) FROM `anope_chan`),
-      (SELECT COUNT(*) FROM `anope_server`)
-    );
-  END$$
-DELIMITER ;
-
-CREATE EVENT anope_history_update
-ON SCHEDULE EVERY '1:00:00' HOUR_SECOND
-DO CALL anope_history_update();
+CREATE EVENT `anope_history_update`
+ON SCHEDULE EVERY 1 HOUR_SECOND
+DO
+INSERT INTO `anope_history` (`servers`, `channels`, `users`, `operators`) VALUES(
+(SELECT COUNT(*) FROM `anope_server`),
+(SELECT COUNT(*) FROM `anope_chan`),
+(SELECT COUNT(*) FROM `anope_user`),
+(SELECT COUNT(*) FROM `anope_user` WHERE `oper` = 'Y')
+);

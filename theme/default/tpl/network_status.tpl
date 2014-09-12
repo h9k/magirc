@@ -19,11 +19,6 @@
 		<th>{t}Peak{/t}:</th><td><span id="net_users_max" class="val"></span> {t}on{/t} <span id="net_users_max_time"></span></td>
 		<th>{t}Peak{/t}:</th><td><span id="net_opers_max" class="val"></span> {t}on{/t} <span id="net_opers_max_time"></span></td>
 	</tr>
-	<tr>
-		<td colspan="4" rowspan="2">&nbsp;</td>
-		<th>{t}Today{/t}:</th><td><span id="net_users_today" class="val"></span> {t}on{/t} <span id="net_users_today_time"></span></td>
-		<td rowspan="2">&nbsp;</td>
-	</tr>
 </table>
 
 <table>
@@ -144,8 +139,6 @@ $(document).ready(function() {
 				$("#net_users_max").html(result.users.val);
 				$("#net_users_max_time").html($.format.date(result.users.time, format_datetime));
 			}
-			$("#net_users_today").html(result.daily_users.val);
-			$("#net_users_today_time").html($.format.date(result.daily_users.time, format_datetime));
 			$("#net_chans").html(result.chans.val);
 			if ($("#net_chans").html() > $("#net_chans_max")) {
 				$("#net_chans_max").html(result.chans.val);
