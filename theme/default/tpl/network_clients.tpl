@@ -59,7 +59,8 @@ $(document).ready(function() {
 				innerSize: '60%',
 				dataLabels: {
 					formatter: function() {
-						return this.y > 1 ? '<b>'+ this.point.name.substring(0, 12) + (this.point.version ? ' ' + this.point.version : '') + ':</b> '+ this.y +'%'+' ('+this.point.count+')' : null;
+                        var client = this.point.name.substring(0, 12) + (this.point.version ? ' ' + this.point.version : '');
+						return this.y > 1 ? '<b>'+ client.substring(0, 30) + ':</b> '+ this.y +'%'+' ('+this.point.count+')' : null;
 					}
 				}
 			}]
