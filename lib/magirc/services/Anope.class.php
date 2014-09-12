@@ -46,6 +46,7 @@ class AnopeDB extends DB {
 		define('TBL_USER', $prefix.'user');
 		define('TBL_CURRENTUSAGE', $prefix.'currentusage');
 		define('TBL_HISTORY', $prefix.'history');
+		define('TBL_GEOIP_COUNTRY', $prefix.'geoip_country');
 	}
 }
 
@@ -182,10 +183,11 @@ class Anope implements Service {
 	 * @return array Data
 	 */
 	public function getCountryStats($mode = null, $target = null) {
-		$query = sprintf("SELECT u.geocountry AS country, u.geocode AS country_code, COUNT(*) AS count
+		$query = sprintf("SELECT IFNULL(g.countryname, 'Unknown') AS country, u.geocode AS country_code, COUNT(*) AS count
 			FROM `%s` AS u
-			JOIN `%s` AS s ON s.id = u.servid",
-				TBL_USER, TBL_SERVER);
+			JOIN `%s` AS s ON s.id = u.servid
+			LEFT JOIN `%s` AS g ON g.countrycode = u.geocode",
+				TBL_USER, TBL_SERVER, TBL_GEOIP_COUNTRY);
 		$where = null;
 		if ($mode == 'channel' && $target) {
 			$query .= sprintf(" JOIN `%s` AS i ON i.nickid = u.nickid
@@ -204,7 +206,7 @@ class Anope implements Service {
 		if ($where){
 			$query .= " WHERE {$where}";
 		}
-		$query .= " GROUP by u.geocountry ORDER BY count DESC";
+		$query .= " GROUP by u.geocode ORDER BY count DESC";
 		$ps = $this->db->prepare($query);
 		if ($mode == 'channel' && $target) $ps->bindValue(':chan', $target, PDO::PARAM_STR);
 		if ($mode == 'server' && $target) $ps->bindValue(':server', $target, PDO::PARAM_STR);
@@ -224,10 +226,10 @@ class Anope implements Service {
 		$other = 0;
 		foreach ($result as $val) {
 			$percent = round($val["count"] / $sum * 100, 2);
-			if ($percent < 2) {
-				$other += $val["count"];
-			} elseif (in_array ($val['country'], array(null, "", "Unknown", "localhost"))) {
+			if (in_array ($val['country'], array(null, "", "Unknown", "localhost"))) {
 				$unknown += $val["count"];
+			} elseif ($percent < 2) {
+				$other += $val["count"];
 			} else {
 				$data[] = array('name' => $val['country'], 'count' => $val["count"], 'y' => $percent);
 			}
@@ -413,10 +415,12 @@ class Anope implements Service {
 	public function getOperatorList() {
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
-			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes AS umodes
+			u.geocode AS country_code, IFNULL(g.countryname, 'Unknown') AS country, s.ulined AS service, u.modes AS umodes
 			FROM `%s` AS u
-			LEFT JOIN `%s` AS s ON s.id = u.servid WHERE",
-				TBL_USER, TBL_SERVER);
+			LEFT JOIN `%s` AS s ON s.id = u.servid
+			LEFT JOIN `%s` AS g ON g.countrycode = u.geocode
+			WHERE",
+				TBL_USER, TBL_SERVER, TBL_GEOIP_COUNTRY);
 		$levels = Protocol::$oper_levels;
 		if (!empty($levels)) {
 			$i = 1;
@@ -580,14 +584,15 @@ class Anope implements Service {
 		}
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
-			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, i.modes AS cmodes
+			u.geocode AS country_code, IFNULL(g.countryname, 'Unknown') AS country, s.ulined AS service, i.modes AS cmodes
 			FROM `%s` AS i
 			JOIN `%s` AS c ON c.chanid = i.chanid
 			JOIN `%s` AS u ON u.nickid = i.nickid
 			JOIN `%s` AS s ON s.id = u.servid
+			LEFT JOIN `%s` AS g ON g.countrycode = u.geocode
 			WHERE LOWER(c.channel) = LOWER(:channel)
 			ORDER BY u.nick ASC",
-				TBL_ISON, TBL_CHAN, TBL_USER, TBL_SERVER);
+				TBL_ISON, TBL_CHAN, TBL_USER, TBL_SERVER, TBL_GEOIP_COUNTRY);
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':channel', $chan, SQL_STR);
 		$ps->execute();
@@ -817,11 +822,12 @@ class Anope implements Service {
 		$info = $this->getUserData($mode, $user);
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
-			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes AS umodes
+			u.geocode AS country_code, IFNULL(g.countryname, 'Unknown') AS country, s.ulined AS service, u.modes AS umodes
 			FROM `%s` AS u
 			LEFT JOIN `%s` AS s ON s.id = u.servid
+			LEFT JOIN `%s` AS g ON g.countrycode = u.geocode
 			WHERE u.nick = :nickname",
-				TBL_USER, TBL_SERVER);
+				TBL_USER, TBL_SERVER, TBL_GEOIP_COUNTRY);
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':nickname', $info['nick'], PDO::PARAM_INT);
 		$ps->execute();

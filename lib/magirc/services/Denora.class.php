@@ -228,10 +228,10 @@ class Denora implements Service {
 		$other = 0;
 		foreach ($result as $val) {
 			$percent = round($val["count"] / $sum * 100, 2);
-			if ($percent < 2) {
-				$other += $val["count"];
-			} elseif (in_array ($val['country'], array(null, "", "Unknown", "localhost"))) {
+			if (in_array ($val['country'], array(null, "", "Unknown", "localhost"))) {
 				$unknown += $val["count"];
+			} elseif ($percent < 2) {
+				$other += $val["count"];
 			} else {
 				$data[] = array('name' => $val['country'], 'count' => $val["count"], 'y' => $percent);
 			}
