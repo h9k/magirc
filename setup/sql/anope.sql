@@ -1,6 +1,6 @@
 CREATE VIEW `anope_currentusage` AS
   SELECT NOW() AS 'datetime',
-         (SELECT COUNT(*) FROM anope_server) AS 'servers',
+         (SELECT COUNT(*) FROM anope_server WHERE online = 'Y') AS 'servers',
          (SELECT COUNT(*) FROM anope_chan) AS 'channels',
          (SELECT COUNT(*) FROM anope_user) AS 'users',
          (SELECT COUNT(*) FROM anope_user WHERE oper = 'Y') AS 'operators';
@@ -18,7 +18,7 @@ CREATE EVENT `anope_history_update`
 ON SCHEDULE EVERY 1 HOUR_SECOND
 DO
 INSERT INTO `anope_history` (`servers`, `channels`, `users`, `operators`) VALUES(
-(SELECT COUNT(*) FROM `anope_server`),
+(SELECT COUNT(*) FROM `anope_server` WHERE online = 'Y'),
 (SELECT COUNT(*) FROM `anope_chan`),
 (SELECT COUNT(*) FROM `anope_user`),
 (SELECT COUNT(*) FROM `anope_user` WHERE `oper` = 'Y')
