@@ -67,8 +67,8 @@ $magirc->slim->get('/servers', function() use($magirc) {
 	$magirc->jsonOutput($magirc->service->getServerList(), true, 'server');
 });
 
-$magirc->slim->get('/servers/hourlystats', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getHourlyStats('servers'));
+$magirc->slim->get('/servers/history', function() use($magirc) {
+	$magirc->jsonOutput($magirc->service->getServerHistory());
 });
 
 $magirc->slim->get('/servers/:server', function($server) use($magirc) {
@@ -95,8 +95,8 @@ $magirc->slim->get('/channels', function() use($magirc) {
     $magirc->jsonOutput($magirc->service->getChannelList(@$_GET['format'] == 'datatables'));
 });
 
-$magirc->slim->get('/channels/hourlystats', function() use($magirc) {
-    $magirc->jsonOutput($magirc->service->getHourlyStats('channels'));
+$magirc->slim->get('/channels/history', function() use($magirc) {
+    $magirc->jsonOutput($magirc->service->getChannelHistory());
 });
 
 $magirc->slim->get('/channels/biggest(/:limit)', function($limit = 10) use($magirc) {
@@ -156,8 +156,8 @@ $magirc->slim->get('/channels/:chan/countries', function($chan) use($magirc) {
 	$magirc->jsonOutput($magirc->service->getCountryStats('channel', $chan), true);
 });
 
-$magirc->slim->get('/users/hourlystats', function() use($magirc) {
-    $magirc->jsonOutput($magirc->service->getHourlyStats('users'));
+$magirc->slim->get('/users/history', function() use($magirc) {
+    $magirc->jsonOutput($magirc->service->getUserHistory());
 });
 
 $magirc->slim->get('/users/top(/:limit)', function($limit = 10) use($magirc) {

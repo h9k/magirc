@@ -331,24 +331,30 @@ class Denora implements Service {
 	}
 
 	/**
-	 * Get hourly user/channel/server stats
-	 * @param string $table 'users', 'channels', 'servers'
+	 * Gets the user history data
 	 * @return array of arrays (int milliseconds, int value)
 	 */
-	public function getHourlyStats($table) {
-		switch ($table) {
-			case 'users':
-				$table = TBL_USERSTATS;
-				break;
-			case 'channels':
-				$table = TBL_CHANNELSTATS;;
-				break;
-			case 'servers':
-				$table = TBL_SERVERSTATS;
-				break;
-			default:
-				return null;
-		}
+	public function getUserHistory() {
+		return $this->getHistory(TBL_USERSTATS);
+	}
+
+	/**
+	 * Gets the channel history data
+	 * @return array of arrays (int milliseconds, int value)
+	 */
+	public function getChannelHistory() {
+		return $this->getHistory(TBL_CHANNELSTATS);
+	}
+
+	/**
+	 * Gets the server history data
+	 * @return array of arrays (int milliseconds, int value)
+	 */
+	public function getServerHistory() {
+		return $this->getHistory(TBL_SERVERSTATS);
+	}
+
+	private function getHistory($table) {
 		$query = "SELECT * FROM {$table} ORDER BY year ASC, month ASC, day ASC";
 		$ps = $this->db->prepare($query);
 		$ps->execute();

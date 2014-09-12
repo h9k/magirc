@@ -5,7 +5,7 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/service.php/users/hourlystats', function(data) {
+    $.getJSON('rest/service.php/users/history', function(data) {
         new Highcharts.StockChart({
             chart: { renderTo: 'chart-history' },
 			yAxis: { min: 0 },

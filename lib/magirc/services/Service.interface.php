@@ -8,7 +8,9 @@ interface Service {
 	public function getCountryStats($mode = null, $target = null);
 	public function makeCountryPieData($result, $sum);
 	public function makeClientPieData($result, $sum);
-	public function getHourlyStats($table);
+	public function getUserHistory();
+	public function getChannelHistory();
+	public function getServerHistory();
 	
 	public function getServerList();
 	public function getServer($server);

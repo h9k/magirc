@@ -44,6 +44,7 @@ class AnopeDB extends DB {
 		define('TBL_MAXUSERS', $prefix.'maxusers');
 		define('TBL_SERVER', $prefix.'server');
 		define('TBL_USER', $prefix.'user');
+		define('TBL_HISTORY', $prefix.'history');
 	}
 }
 
@@ -291,11 +292,44 @@ class Anope implements Service {
 			$data['clients'][] = array('name' => T_gettext('Other'), 'count' => (int) $other['count'], 'y' => (double) $other['percent']);
 			$data['versions'] = array_merge($data['versions'], $other['versions']);
 		}
-		#echo "<pre>"; print_r($data); exit;
 		return $data;
 	}
 
-	public function getHourlyStats($table) { }
+	/**
+	 * Gets the user history data
+	 * @return array of arrays (int milliseconds, int value)
+	 */
+	public function getUserHistory() {
+		return $this->getHistory('users');
+	}
+
+	/**
+	 * Gets the channel history data
+	 * @return array of arrays (int milliseconds, int value)
+	 */
+	public function getChannelHistory() {
+		return $this->getHistory('channels');
+	}
+
+	/**
+	 * Gets the server history data
+	 * @return array of arrays (int milliseconds, int value)
+	 */
+	public function getServerHistory() {
+		return $this->getHistory('servers');
+	}
+
+	private function getHistory($value) {
+		$query = sprintf("SELECT `datetime`, `%s` FROM `%s` ORDER BY `datetime` ASC", $value, TBL_HISTORY);
+		$ps = $this->db->prepare($query);
+		$ps->execute();
+		$rows = $ps->fetchAll(PDO::FETCH_ASSOC);
+		$data = array();
+		foreach ($rows as $row) {
+			$data[] = array(strtotime($row['datetime']) * 1000, (int) $row[$value]);
+		}
+		return $data;
+	}
 
 	/**
 	 * Gets a list of servers

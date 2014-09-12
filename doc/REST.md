@@ -26,9 +26,9 @@ This will give you max network stats such as opers, channels, users, etc...
 This will give you a list of servers.
 > /servers
 
-* **Get Hourly Stats**  
+* **Get Servers History**
 This will give hourly stats whose time is in the form of a unix timestamp.
-> /servers/hourlystats
+> /servers/history
 
 * **Get A Servers MOTD**  
 This will show a servers MOTD
@@ -46,9 +46,9 @@ This will show a servers MOTD
 This will get a list of channels with the current topic, topic author, users, max users, etc...
 > /channels
 
-* **Get The Hourly Stats for Channels**  
+* **Get the history for channels**
 This will get hourly stats for the number of channels on the network. The time is unix timestamp in milliseconds.
-> /channels/hourlystats
+> /channels/history
 
 * **Get A List of The Biggest Channels**  
 This will get a list of the biggest channels on the network. A limit can be defined (eg. 10, 5, 2).
@@ -87,9 +87,9 @@ This will show the hourly activity stats for a specific channel. Type can be tot
 * **Get the per channel country stats**  
 > /channels/%23`<channel>`/countries
 
-* **Get Hourly User Stats**  
+* **Get user history**
 This will show hourly stats for users on the network with unix timestamps in milliseconds.
-> /channels/users/hourlystats
+> /channels/users/history
 
 * **Get Top User Stats**  
 This will show hourly stats for users on the network with unix timestamps in milliseconds.

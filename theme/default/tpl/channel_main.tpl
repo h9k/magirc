@@ -7,7 +7,7 @@
 	<ul>
 		<li title="channels"><a href="index.php/channel/list">{t}Channels{/t}</a></li>
 		<li title="activity"><a href="index.php/channel/globalactivity">{t}Activity{/t}</a></li>
-        {if $cfg->service eq 'denora'}<li title="history"><a href="index.php/channel/history">{t}History{/t}</a></li>{/if}
+        <li title="history"><a href="index.php/channel/history">{t}History{/t}</a></li>
 	</ul>
 </div>
 {/block}
