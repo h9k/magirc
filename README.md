@@ -51,6 +51,13 @@ You a git client and [composer](http://getcomposer.org)
    Example: http://`yourpathtomagirc`/setup/
 
 
+## Anope configuration ###
+You need at least Anope 2.0.0 and the `m_mysql`, `m_chanstats` and `ircsql` modules enabled and setup. These modules are included in the Anope codebase.
+Please refer to the Anope documentation on how to set those up.
+Also, you will need additional database tables, views and stored procedures for the Anope database in order to get the data needed by MagIRC.
+Please look at the setup/sql/anope.sql file and adapt it if needed (table prefixes, etc.).
+
+
 ## Denora configuration ##
 
 ### Required Denora settings ###
@@ -80,12 +87,6 @@ Limiting chanstats to +r users improves nick tracking.
 To use this feature **enable** the following parameters by removing the '#' in front:
 
     ustatsregistered;
-
-
-## Anope configuration ###
-Please note that Anope support is not yet fully implemented, but most of the stuff should work.
-You need at least Anope 2.0.0-RC1 and the `m_mysql`, `m_chanstats` and `ircsql` modules enabled and setup. These modules are included in the Anope codebase.
-Please refer to the Anope documentation on how to set those up.
 
 
 ## Web Server configuration ##
