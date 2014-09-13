@@ -34,7 +34,7 @@ function migrateHistory($from, $to) {
 	$denora = new mysqli(DENORA_HOSTNAME, DENORA_USERNAME, DENORA_PASSWORD, DENORA_DATABASE);
 	$anope = new mysqli(ANOPE_HOSTNAME, ANOPE_USERNAME, ANOPE_PASSWORD, ANOPE_DATABASE);
 
-	$result = $denora->query("SELECT * FROM $from ORDER BY id DESC", MYSQLI_USE_RESULT);
+	$result = $denora->query("SELECT * FROM $from ORDER BY id ASC", MYSQLI_USE_RESULT);
 	while($row = $result->fetch_assoc()) {
 		$date = sprintf('%d-%02d-%02d', $row['year'], $row['month'], $row['day']);
 		for ($i = 0; $i < 24; $i++) {

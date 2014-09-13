@@ -15,7 +15,7 @@ CREATE TABLE `anope_history` (
 ) ENGINE=InnoDB;
 
 CREATE EVENT `anope_history_update`
-ON SCHEDULE EVERY 1 HOUR_SECOND
+ON SCHEDULE EVERY 1 HOUR
 DO
 INSERT INTO `anope_history` (`servers`, `channels`, `users`, `operators`) VALUES(
 (SELECT COUNT(*) FROM `anope_server` WHERE online = 'Y'),
