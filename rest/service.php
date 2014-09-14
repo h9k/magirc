@@ -63,6 +63,10 @@ $magirc->slim->get('/network/countries', function() use($magirc) {
 	$magirc->jsonOutput($magirc->service->getCountryStats(), true);
 });
 
+$magirc->slim->get('/network/countries/map', function() use($magirc) {
+	$magirc->jsonOutput($magirc->service->getCountryMap());
+});
+
 $magirc->slim->get('/servers', function() use($magirc) {
 	$magirc->jsonOutput($magirc->service->getServerList(), true, 'server');
 });
