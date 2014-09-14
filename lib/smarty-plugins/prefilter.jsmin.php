@@ -134,7 +134,7 @@ function smarty_prefilter_jsmin_callback( $matches ){
                 }
 
                 if (ord($this->a) <= self::ORD_LF) {
-                  throw new SmartySmartyJSMinException('Unterminated string literal.');
+                  throw new SmartyJSMinException('Unterminated string literal.');
                 }
 
                 if ($this->a === '\\') {
@@ -166,7 +166,7 @@ function smarty_prefilter_jsmin_callback( $matches ){
                   $this->a        = $this->get();
                 }
                 elseif (ord($this->a) <= self::ORD_LF) {
-                  throw new SmartySmartyJSMinException('Unterminated regular expression '.
+                  throw new SmartyJSMinException('Unterminated regular expression '.
                       'literal.');
                 }
 
@@ -316,7 +316,7 @@ function smarty_prefilter_jsmin_callback( $matches ){
                     break;
 
                   case null:
-                    throw new SmartySmartyJSMinException('Unterminated comment.');
+                    throw new SmartyJSMinException('Unterminated comment.');
                 }
               }
 
@@ -337,4 +337,3 @@ function smarty_prefilter_jsmin_callback( $matches ){
     // -- Exceptions ---------------------------------------------------------------
     class SmartyJSMinException extends Exception {}
 
-?>

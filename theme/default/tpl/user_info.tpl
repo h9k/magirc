@@ -7,7 +7,7 @@
 	<tr><th>{t}Real name{/t}:</th><td><span id="user_realname" class="val"></span></td></tr>
 	<tr><th>{t}Hostname{/t}:</th><td><span id="user_hostname" class="val"></span></td></tr>
 	<tr><th>{t}Server{/t}:</th><td><span id="user_server" class="val"></span></td></tr>
-	<tr><th>{t}Connecting from{/t}:</th><td><span id="user_origin" class="val"></span></td></tr>
+	<tr><th>{t}Connecting from{/t}:</th><td><span id="user_cityregion" class="val"></span><span id="user_country" class="val"></span></td></tr>
 	<tr><th>{t}Client{/t}:</th><td><span id="user_client" class="val"></span></td></tr>
 	<tr><th>{t}Status{/t}:</th><td><span id="user_status" class="val"></span><span id="user_status_extra"></span></td></tr>
 </table>
@@ -40,7 +40,10 @@ $(document).ready(function() {
 			$("#user_status_extra").html(status_extra);
 			$("#user_hostname").html(result.hostname);
 			$("#user_server").html('<a href="'+url_base+'server/'+result.server+'/profile">'+result.server+'<\/a>');
-			$("#user_origin").html(getCountryFlag(result)+' '+result.country);
+            if (result.city){
+                $("#user_cityregion").html(result.city + ', ' + result.region + ' ');
+            }
+			$("#user_country").html(getCountryFlag(result)+' '+result.country);
 			$("#user_client").html(result.client);
 		} else {
 			$("#tbl_details").hide();
