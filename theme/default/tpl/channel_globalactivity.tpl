@@ -52,8 +52,7 @@ $(document).ready(function() {
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').val();
-		table.fnSettings().ajax = "rest/service.php/channels/activity/"+type+"?format=datatables";
-		table.fnDraw();
+		table.ajax.url("rest/service.php/channels/activity/"+type+"?format=datatables").load();
 	});
 });
 {/literal}
