@@ -684,7 +684,7 @@ class Anope implements Service {
 				TBL_CHANSTATS);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($query, array(':type' => $type, ':channel' => $chan));
-			$sFiltering = $this->db->datatablesFiltering(array('uname'));
+			$sFiltering = $this->db->datatablesFiltering(array('nick'));
 			$sOrdering = $this->db->datatablesOrdering();
 			$sPaging = $this->db->datatablesPaging();
 			$query .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
@@ -910,7 +910,7 @@ class Anope implements Service {
 				TBL_CHANSTATS);
 		if ($datatables) {
 			$iTotal = $this->db->datatablesTotal($query, array(':type' => $type));
-			$sFiltering = $this->db->datatablesFiltering(array('uname'));
+			$sFiltering = $this->db->datatablesFiltering(array('nick'));
 			$sOrdering = $this->db->datatablesOrdering();
 			$sPaging = $this->db->datatablesPaging();
 			$query .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
