@@ -882,7 +882,7 @@ class Denora implements Service {
 	 */
 	public function checkUser($user, $mode) {
 		if ($mode == "stats") {
-			$query = sprintf("SELECT uname FROM `%s` WHERE LOWER(uname) = LOWER(:user)", TBL_UNAME);
+			$query = sprintf("SELECT uname FROM `%s` WHERE LOWER(uname) = LOWER(:user)", TBL_USTATS);
 		} else {
 			$query = sprintf("SELECT nick FROM `%s` WHERE LOWER(nick) = LOWER(:user)", TBL_USER);
 		}
