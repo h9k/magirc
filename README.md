@@ -4,7 +4,9 @@ Thank you for your interest in MagIRC, a PHP-based Web Frontend for IRC Services
 
 This software is a complete rewrite of phpDenora, a PHP-based Web Frontend for the [Denora Stats](http://www.denorastats.org) project.
 
-Alternatively, MagIRC now also works with [Anope](http://www.anope.org/) 2.0, however it still is work in progress and not 100% production ready.
+Meanwhile, MagIRC also works with [Anope](http://www.anope.org/) 2.0, which supersedes Denora.
+We recommend using Anope, since it is being actively maintained and has improved performance and stability over Denora.
+In case you want to migrate from Denora to Anope, we created a script for this task (see below).
 
 ### Main features ###
 * REST service
@@ -52,10 +54,25 @@ You a git client and [composer](http://getcomposer.org)
 
 
 ## Anope configuration ###
-You need at least Anope 2.0.0 and the `m_mysql`, `m_chanstats` and `ircsql` modules enabled and setup. These modules are included in the Anope codebase.
-Please refer to the Anope documentation on how to set those up.
+You need Anope 2.0.0 or later and the following modules enabled and set up:
+
+    m_mysql
+    m_chanstats
+    irc2sql
+
+These modules are included in the Anope codebase under `extra`. Please refer to the Anope documentation on how to set those up.
+
 Also, you will need additional database tables, views and stored procedures for the Anope database in order to get the data needed by MagIRC.
-Please look at the setup/sql/anope.sql file and adapt it if needed (table prefixes, etc.).
+Please look at the `setup/sql/anope.sql` file and adapt it if needed (table prefixes, etc.) and run it against your Anope database.
+
+Note that you need the MySQL `event_scheduler` set to `ON` in the MySQL server. If you have enough rights, you can turn it on via `SET GLOBAL event_scheduler = ON;`.
+
+### Migrating from Denora to Anope ###
+If you want to switch from Denora to Anope, please proceed as follows:
+1. Install Anope (see above)
+2. Shut down Denora
+3. Make Anope join the network and double check that it is working fine, e.g. the MySQL tables are being filled with data
+4. Configure the `setup/tools/denora2anope.php` script and then run it from command line with `php denora2anope.php`. Be patient and do not interrupt the process!
 
 
 ## Denora configuration ##

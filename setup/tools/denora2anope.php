@@ -1,22 +1,40 @@
 <?php
+/**
+ * MagIRC - Let the magirc begin!
+ * Denora 2 Anope Migration Script
+ *
+ * @author      Sebastian Vassiliou <hal9000@denorastats.org>
+ * @copyright   2014 Sebastian Vassiliou
+ * @link        http://www.magirc.org/
+ * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
+ * @version     0.9.0
+ *
+ * ABOUT:       This script migrates a Denora 1.4/1.5 database to Anope 2.0.
+ * REQUIREMENT: Anope must already be up and running and have the m_mysql, irc2sql and m_chanstats modules enabled!
+ *              Please refer to our README.md file for more information about setting up Anope.
+ * USAGE:       Configure the two databases below, then run this script from command line: 'php denora2anope.php'
+ *              Be patient, migration can take a while!
+ */
 
 /**
- * This script migrates a denora database to anope.
- * Please note that Anope must be already setup with the m_sql, m_irc2sql and m_chanstats modules
+ * Configuration
+ */
+define('DENORA_HOSTNAME', '');
+define('DENORA_USERNAME', '');
+define('DENORA_PASSWORD', '');
+define('DENORA_DATABASE', '');
+
+define('ANOPE_HOSTNAME', '');
+define('ANOPE_USERNAME', '');
+define('ANOPE_PASSWORD', '');
+define('ANOPE_DATABASE', '');
+
+/**
+ * DO NOT TOUCH FROM HERE ON
  */
 
 if (php_sapi_name() !== 'cli')
 	die('Run from commandline!');
-
-define('DENORA_HOSTNAME', 'localhost');
-define('DENORA_USERNAME', 'root');
-define('DENORA_PASSWORD', '');
-define('DENORA_DATABASE', 'denora');
-
-define('ANOPE_HOSTNAME', 'localhost');
-define('ANOPE_USERNAME', 'root');
-define('ANOPE_PASSWORD', '');
-define('ANOPE_DATABASE', 'anope');
 
 echo "Migrating server history...\n";
 migrateHistory("serverstats", "servers");
