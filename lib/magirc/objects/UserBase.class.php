@@ -20,6 +20,8 @@ abstract Class UserBase {
 	public $quit_msg;
 	public $country_code;
 	public $country;
+	public $city;
+	public $region;
 	public $service;
 	public $umodes;
 	public $cmodes;
@@ -27,6 +29,7 @@ abstract Class UserBase {
 	public $operator_level;
 	public $helper;
 	public $bot;
+	public $ipv6;
 
 	function __construct() {
 		$this->online = ($this->online == 'Y');
@@ -39,6 +42,9 @@ abstract Class UserBase {
 		$this->quit_msg = htmlentities($this->quit_msg, ENT_COMPAT, "UTF-8");
 		$this->service = ($this->service == 'Y');
 		$this->bot = $this->hasMode(Protocol::bot_mode);
+		if (filter_var($this->hostname, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)){
+			$this->ipv6 = true;
+		}
 		if (Protocol::host_cloaking && !empty($this->hostname_cloaked)) {
 			$this->hostname = $this->hostname_cloaked;
 		}

@@ -5,7 +5,7 @@ class User extends UserBase {
 	function __construct() {
 		parent::__construct();
 		
-		//TODO: Anope does not keep offline users, you need the seen module for that but MagIRC does not support it yet.
+		//TODO: Anope does not keep offline users
 		$this->online = true;
 		
 		// Oper mode

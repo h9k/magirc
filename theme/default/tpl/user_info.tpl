@@ -38,7 +38,11 @@ $(document).ready(function() {
 			status += getUserExtra(result);
 			$("#user_status").html(status);
 			$("#user_status_extra").html(status_extra);
-			$("#user_hostname").html(result.hostname);
+            if (result.ipv6) {
+                $("#user_hostname").html(result.hostname + ' (IPv6)');
+            } else {
+                $("#user_hostname").html(result.hostname);
+            }
 			$("#user_server").html('<a href="'+url_base+'server/'+result.server+'/profile">'+result.server+'<\/a>');
             if (result.city){
                 $("#user_cityregion").html(result.city + ', ' + result.region + ' ');
