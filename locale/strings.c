@@ -145,9 +145,6 @@ gettext("Activity");
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_main.tpl */
 gettext("History");
 
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_main.tpl */
-gettext("Loading");
-
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_profile.tpl */
 gettext("Channel");
 
@@ -162,9 +159,6 @@ gettext("Clients");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_profile.tpl */
 gettext("Activity");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_profile.tpl */
-gettext("Loading");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_status.tpl */
 gettext("Channel info for %1");
@@ -186,9 +180,6 @@ gettext("on");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_status.tpl */
 gettext("Modes");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_status.tpl */
-gettext("Kicks");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_status.tpl */
 gettext("Join this channel");
@@ -222,6 +213,9 @@ gettext("Modes");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//channel_status.tpl */
 gettext("Loading");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//error.tpl */
+gettext("Error");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_clients.tpl */
 gettext("Current Client Statistics");
@@ -280,8 +274,23 @@ gettext("Searchirc Graphs");
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_main.tpl */
 gettext("Mibbit Graphs");
 
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_main.tpl */
-gettext("Loading");
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Mibbit Graphs");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Day");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Week");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Month");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("Year");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
+gettext("More on");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_netsplit.tpl */
 gettext("Netsplit.de Graphs");
@@ -302,24 +311,6 @@ gettext("Complete history");
 gettext("Complete measured history about users and channels");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_netsplit.tpl */
-gettext("More on");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
-gettext("Mibbit Graphs");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
-gettext("Day");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
-gettext("Week");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
-gettext("Month");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
-gettext("Year");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_mibbit.tpl */
 gettext("More on");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_operators.tpl */
@@ -405,12 +396,6 @@ gettext("on");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_status.tpl */
 gettext("Peak");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_status.tpl */
-gettext("on");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_status.tpl */
-gettext("Today");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//network_status.tpl */
 gettext("on");
@@ -568,9 +553,6 @@ gettext("Servers");
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//server_main.tpl */
 gettext("History");
 
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//server_main.tpl */
-gettext("Loading");
-
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//server_profile.tpl */
 gettext("Server");
 
@@ -583,14 +565,8 @@ gettext("Countries");
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//server_profile.tpl */
 gettext("Clients");
 
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//server_profile.tpl */
-gettext("Loading");
-
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_activity.tpl */
 gettext("User activity for %1");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_activity.tpl */
-gettext("Global");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_activity.tpl */
 gettext("Total");
@@ -603,6 +579,12 @@ gettext("This Week");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_activity.tpl */
 gettext("This Month");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_activity.tpl */
+gettext("Global");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_activity.tpl */
+gettext("Overview");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_activity.tpl */
 gettext("Type");
@@ -704,7 +686,7 @@ gettext("Hostname");
 gettext("Server");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_info.tpl */
-gettext("Country");
+gettext("Connecting from");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_info.tpl */
 gettext("Client");
@@ -724,9 +706,6 @@ gettext("Activity");
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_main.tpl */
 gettext("History");
 
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_main.tpl */
-gettext("Loading");
-
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_profile.tpl */
 gettext("User");
 
@@ -735,9 +714,6 @@ gettext("Info");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_profile.tpl */
 gettext("Activity");
-
-/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//user_profile.tpl */
-gettext("Loading");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("Network");
@@ -939,6 +915,18 @@ gettext("Servers during the last 2 months");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("Servers during the last 2 years");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
+gettext("Day");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
+gettext("Week");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
+gettext("Month");
+
+/* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
+gettext("Year");
 
 /* D:\xampp\htdocs\magirc\locale/../theme/default/tpl//_main.tpl */
 gettext("Processing...");
