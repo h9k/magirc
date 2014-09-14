@@ -836,7 +836,7 @@ class Anope implements Service {
 		$info = $this->getUserData($mode, $user);
 		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
-			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes AS umodes
+			u.geocode AS country_code, u.geocountry AS country, u.geocity AS city, u.georegion AS region, s.ulined AS service, u.modes AS umodes
 			FROM `%s` AS u
 			LEFT JOIN `%s` AS s ON s.id = u.servid
 			WHERE u.nick = :nickname",

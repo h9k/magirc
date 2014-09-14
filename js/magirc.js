@@ -233,7 +233,8 @@ function getUserExtra(user) {
 }
 function getCountryFlag(user) {
 	if (user['country_code'] != null && user['country_code'] != '' && user['country_code'] != '??' && user['country_code'] != 'local') {
-		return '<img src="theme/'+theme+'/img/flags/'+user['country_code'].toLowerCase()+'.png" alt="'+user['country_code']+'" title="'+user['country']+'" />';
+        var prepend = (user.city) ? (user.city + ', ' + user.region + ' ') : '';
+		return prepend+'<img src="theme/'+theme+'/img/flags/'+user['country_code'].toLowerCase()+'.png" alt="'+user['country_code']+'" title="'+user['country']+'" />';
 	} else {
 		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="'+mLang.Unknown+'" />';
 	}
