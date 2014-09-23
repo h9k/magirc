@@ -81,7 +81,7 @@
 				<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
 				{/if}
 			</td>
-			<td style="text-align:right;">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg->version_show} v{$smarty.const.VERSION_FULL}{/if}</td>
+			<td style="text-align:right;">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg->version_show} v{$smarty.const.VERSION_FULL}-{$cfg->service}{/if}</td>
 		</tr>
 	</table>
 </div>

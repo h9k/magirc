@@ -34,7 +34,7 @@
 </div>
 <div id="main">{block name="content"}[content placeholder]{/block}
 </div>
-<div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg->version_show} v{$smarty.const.VERSION_FULL}{/if}</div>
+<div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a> v{$smarty.const.VERSION_FULL}-{$cfg->service}</div>
 {/block}
 {block name="js"}
 {if $cfg->cdn_enable}
