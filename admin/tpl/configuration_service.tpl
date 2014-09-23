@@ -12,11 +12,13 @@
 	<tr>
 		<td align="right">Database Name</td>
 		<td align="left"><input type="text" name="database" id="database" value="{$db.database}" size="32" maxlength="64" /></td>
-	</tr>	
+	</tr>
+    {if $service eq 'anope'}
 	<tr>
 		<td align="right">Database Prefix</td>
 		<td align="left"><input type="text" name="prefix" id="prefix" value="{$db.prefix}" size="16" maxlength="64" /></td>
 	</tr>
+    {/if}
 	<tr>
 		<td align="right">Hostname</td>
 		<td align="left"><input type="text" name="hostname" id="hostname" value="{$db.hostname}" size="32" maxlength="64" /></td>
@@ -41,7 +43,56 @@
 		<td align="right">Path to SSL CA</td>
 		<td align="left"><input type="text" name="ssl_ca" id="ssl_ca" value="{$db.ssl_ca}" size="32" maxlength="256" /></td>
 	</tr>
-		
+	{if $service eq 'denora'}
+        <tr>
+            <td align="right">'current' table name</td>
+            <td align="left"><input type="text" name="current" id="current" value="{$db.current|default:"current"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'maxvalues' table name</td>
+            <td align="left"><input type="text" name="maxvalues" id="maxvalues" value="{$db.maxvalues|default:"maxvalues"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'user' table name</td>
+            <td align="left"><input type="text" name="user" id="user" value="{$db.user|default:"user"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'server' table name</td>
+            <td align="left"><input type="text" name="server" id="server" value="{$db.server|default:"server"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'stats' table name</td>
+            <td align="left"><input type="text" name="stats" id="stats" value="{$db.stats|default:"stats"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'channelstats' table name</td>
+            <td align="left"><input type="text" name="channelstats" id="channelstats" value="{$db.channelstats|default:"channelstats"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'serverstats' table name</td>
+            <td align="left"><input type="text" name="serverstats" id="serverstats" value="{$db.serverstats|default:"serverstats"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'ustats' table name</td>
+            <td align="left"><input type="text" name="ustats" id="ustats" value="{$db.ustats|default:"ustats"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'cstats' table name</td>
+            <td align="left"><input type="text" name="cstats" id="cstats" value="{$db.cstats|default:"cstats"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'chan' table name</td>
+            <td align="left"><input type="text" name="chan" id="chan" value="{$db.chan|default:"chan"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'ison' table name</td>
+            <td align="left"><input type="text" name="ison" id="ison" value="{$db.ison|default:"ison"}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <td align="right">'aliases' table name</td>
+            <td align="left"><input type="text" name="aliases" id="aliases" value="{$db.aliases|default:"aliases"}" size="32" maxlength="256" /></td>
+        </tr>
+	{/if}
 </table>
 
 <pre>The configuration file <em>{$db_config_file}</em> is {if $writable}<span style="color:green;">writable</span>

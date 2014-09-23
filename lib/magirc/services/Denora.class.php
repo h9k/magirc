@@ -28,8 +28,7 @@ class Denora_DB extends DB {
 				$args[PDO::MYSQL_ATTR_SSL_CA] = $db['ssl_ca'];
 			}
 			self::$instance = new DB($dsn, $db['username'], $db['password'], $args);
-			$prefix = isset($db['prefix']) ? $db['prefix'] : null;
-			self::setTableNames($prefix);
+			self::setTableNames($db);
 			if (self::$instance->error) {
 				die('Error opening the Denora database<br />' . self::$instance->error);
 			}
@@ -37,19 +36,19 @@ class Denora_DB extends DB {
 		return self::$instance;
 	}
 
-	private static function setTableNames($prefix) {
-		define('TBL_CURRENT', $prefix.'current');
-		define('TBL_MAXVALUES', $prefix.'maxvalues');
-		define('TBL_USER', $prefix.'user');
-		define('TBL_SERVER', $prefix.'server');
-		define('TBL_USERSTATS', $prefix.'stats');
-		define('TBL_CHANNELSTATS', $prefix.'channelstats');
-		define('TBL_SERVERSTATS', $prefix.'serverstats');
-		define('TBL_USTATS', $prefix.'ustats');
-		define('TBL_CSTATS', $prefix.'cstats');
-		define('TBL_CHAN', $prefix.'chan');
-		define('TBL_ISON', $prefix.'ison');
-		define('TBL_ALIASES', $prefix.'aliases');
+	private static function setTableNames($db) {
+		define('TBL_CURRENT', isset($db['current']) ? $db['current'] : 'current');
+		define('TBL_MAXVALUES', isset($db['maxvalues']) ? $db['maxvalues'] : 'maxvalues');
+		define('TBL_USER', isset($db['user']) ? $db['user'] : 'user');
+		define('TBL_SERVER', isset($db['server']) ? $db['server'] : 'server');
+		define('TBL_USERSTATS', isset($db['stats']) ? $db['stats'] : 'stats');
+		define('TBL_CHANNELSTATS', isset($db['channelstats']) ? $db['channelstats'] : 'channelstats');
+		define('TBL_SERVERSTATS', isset($db['serverstats']) ? $db['serverstats'] : 'serverstats');
+		define('TBL_USTATS', isset($db['ustats']) ? $db['ustats'] : 'ustats');
+		define('TBL_CSTATS', isset($db['cstats']) ? $db['cstats'] : 'cstats');
+		define('TBL_CHAN', isset($db['chan']) ? $db['chan'] : 'chan');
+		define('TBL_ISON', isset($db['ison']) ? $db['ison'] : 'ison');
+		define('TBL_ALIASES', isset($db['aliases']) ? $db['aliases'] : 'aliases');
 	}
 }
 
@@ -473,11 +472,11 @@ class Denora implements Service {
 				implode(',', array_map(array('Denora', 'getSqlModeData'), str_split(Protocol::chan_modes_data))), TBL_CHAN, $where);
 
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($query);
-			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
-			$sOrdering = $this->db->datatablesOrdering();
-			$sPaging = $this->db->datatablesPaging();
-			$query .= sprintf(" %s %s %s", $sFiltering ? "AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$total = $this->db->datatablesTotal($query);
+			$filtering = $this->db->datatablesFiltering(array('channel', 'topic'));
+			$ordering = $this->db->datatablesOrdering();
+			$paging = $this->db->datatablesPaging();
+			$query .= sprintf(" %s %s %s", $filtering ? "AND " . $filtering : "", $ordering, $paging);
 		} else {
 			$query .= " ORDER BY `channel` ASC";
 		}
@@ -486,8 +485,8 @@ class Denora implements Service {
 		$ps->execute();
 		$aaData = $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
-			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+			$filteredTotal = $this->db->foundRows();
+			return $this->db->datatablesOutput($total, $filteredTotal, $aaData);
 		}
 		return $aaData;
 	}
@@ -696,11 +695,11 @@ class Denora implements Service {
 			TBL_CSTATS, TBL_CHAN, $where);
 		$type = self::getDenoraChanstatsType($type);
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($query, array(':type' => (int) $type));
-			$sFiltering = $this->db->datatablesFiltering(array('cstats.chan', 'chan.topic'));
-			$sOrdering = $this->db->datatablesOrdering();
-			$sPaging = $this->db->datatablesPaging();
-			$query .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$total = $this->db->datatablesTotal($query, array(':type' => (int) $type));
+			$filtering = $this->db->datatablesFiltering(array('cstats.chan', 'chan.topic'));
+			$ordering = $this->db->datatablesOrdering();
+			$paging = $this->db->datatablesPaging();
+			$query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
 		}
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':type', $type, PDO::PARAM_INT);
@@ -712,8 +711,8 @@ class Denora implements Service {
 			$aaData[] = $row;
 		}
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
-			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+			$filteredTotal = $this->db->foundRows();
+			return $this->db->datatablesOutput($total, $filteredTotal, $aaData);
 		}
 		return $aaData;
 	}
@@ -732,11 +731,11 @@ class Denora implements Service {
 		smileys, kicks, modes, topics FROM `%s` WHERE chan = :channel AND type = :type AND letters > 0 ", TBL_USTATS);
 		$type = self::getDenoraChanstatsType($type);
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($query, array(':type' => (int) $type, ':channel' => $chan));
-			$sFiltering = $this->db->datatablesFiltering(array('uname'));
-			$sOrdering = $this->db->datatablesOrdering();
-			$sPaging = $this->db->datatablesPaging();
-			$query .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$total = $this->db->datatablesTotal($query, array(':type' => (int) $type, ':channel' => $chan));
+			$filtering = $this->db->datatablesFiltering(array('uname'));
+			$ordering = $this->db->datatablesOrdering();
+			$paging = $this->db->datatablesPaging();
+			$query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
 		}
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':type', $type, PDO::PARAM_INT);
@@ -744,7 +743,7 @@ class Denora implements Service {
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
+			$filteredTotal = $this->db->foundRows();
 		}
 		foreach ($data as $row) {
 			if ($datatables) {
@@ -759,7 +758,7 @@ class Denora implements Service {
 			$aaData[] = $user;
 		}
 		if ($datatables) {
-			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+			return $this->db->datatablesOutput($total, $filteredTotal, $aaData);
 		}
 		return $aaData;
 	}
@@ -804,18 +803,18 @@ class Denora implements Service {
 			WHERE type = :type AND letters > 0 and chan = 'global'", TBL_USTATS);
 		$type = self::getDenoraChanstatsType($type);
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($query, array(':type' => $type));
-			$sFiltering = $this->db->datatablesFiltering(array('uname'));
-			$sOrdering = $this->db->datatablesOrdering();
-			$sPaging = $this->db->datatablesPaging();
-			$query .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$total = $this->db->datatablesTotal($query, array(':type' => $type));
+			$filtering = $this->db->datatablesFiltering(array('uname'));
+			$ordering = $this->db->datatablesOrdering();
+			$paging = $this->db->datatablesPaging();
+			$query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
 		}
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':type', $type, PDO::PARAM_INT);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
+			$filteredTotal = $this->db->foundRows();
 		}
 		if (is_array($data)) {
 			foreach ($data as $row) {
@@ -841,7 +840,7 @@ class Denora implements Service {
 				$aaData[] = $user;
 			}
 		}
-		return $datatables ? $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData) : $aaData;
+		return $datatables ? $this->db->datatablesOutput($total, $filteredTotal, $aaData) : $aaData;
 	}
 
 	/**

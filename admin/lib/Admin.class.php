@@ -140,5 +140,3 @@ class Admin {
 		return $this->db->update('magirc_content', array('text' => $text), array('name' => $name));
 	}
 }
-
-?>

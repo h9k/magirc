@@ -175,29 +175,22 @@ try {
 			}
 		}
 		if (isset($_POST['database'])) {
-			//TODO: do proper escaping to avoid breaking php code in the config files
-			$db['username'] = (isset($_POST['username'])) ? trim($_POST['username']) : $db['username'];
-			$db['password'] = (isset($_POST['password'])) ? trim($_POST['password']) : $db['password'];
-			$db['database'] = (isset($_POST['database'])) ? trim($_POST['database']) : $db['database'];
-			$db['prefix'] = (isset($_POST['prefix'])) ? trim($_POST['prefix']) : $db['prefix'];
-			$db['hostname'] = (isset($_POST['hostname'])) ? trim($_POST['hostname']) : $db['hostname'];
-			$db['port'] = (isset($_POST['port'])) ? trim($_POST['port']) : $db['port'];
+			$fields = array('username', 'password', 'database', 'hostname', 'port', 'ssl', 'ssl_key', 'ssl_cert', 'ssl_ca');
+			if ($service == "anope") {
+				$fields[] = 'prefix';
+			} elseif ($service == "denora") {
+				$fields = array_merge($fields, array('current', 'maxvalues', 'user', 'server', 'stats', 'channelstats', 'serverstats', 'ustats', 'cstats', 'chan', 'ison', 'aliases'));
+			}
+			foreach ($fields as $field) {
+				$db[$field] = (isset($_POST[$field])) ? addslashes(trim($_POST[$field])) : $db[$field];
+			}
 			$db['ssl'] = isset($_POST['ssl']) ? 'true' : 'false';
-			$db['ssl_key'] = (isset($_POST['ssl_key'])) ? trim($_POST['ssl_key']) : $db['ssl_key'];
-			$db['ssl_cert'] = (isset($_POST['ssl_cert'])) ? trim($_POST['ssl_cert']) : $db['ssl_cert'];
-			$db['ssl_ca'] = (isset($_POST['ssl_ca'])) ? trim($_POST['ssl_ca']) : $db['ssl_ca'];
-			$db_buffer = "<?php\n".
-				"\$db['username'] = '{$db['username']}';\n".
-				"\$db['password'] = '{$db['password']}';\n".
-				"\$db['database'] = '{$db['database']}';\n".
-				"\$db['prefix'] = '{$db['prefix']}';\n".
-				"\$db['hostname'] = '{$db['hostname']}';\n".
-				"\$db['port'] = '{$db['port']}';\n".
-				"\$db['ssl'] = {$db['ssl']};\n".
-				"\$db['ssl_key'] = '{$db['ssl_key']}';\n".
-				"\$db['ssl_cert'] = '{$db['ssl_cert']}';\n".
-				"\$db['ssl_ca'] = '{$db['ssl_ca']}';\n".
-				"?>";
+
+			$db_buffer = "<?php\n";
+			foreach ($db as $key => $val) {
+				$db_buffer .= "\$db['{$key}'] = '{$val}';\n";
+			}
+
 			if (is_writable($db_config_file)) {
 				$writefile = fopen($db_config_file,"w");
 				fwrite($writefile,$db_buffer);

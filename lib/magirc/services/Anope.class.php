@@ -495,11 +495,11 @@ class Anope implements Service {
 				. " WHERE %s",
 				TBL_ISON, TBL_CHAN, TBL_MAXUSERS, $where);
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($query);
-			$sFiltering = $this->db->datatablesFiltering(array('channel', 'topic'));
-			$sOrdering = $this->db->datatablesOrdering();
-			$sPaging = $this->db->datatablesPaging();
-			$query .= sprintf(" %s %s %s", $sFiltering ? "AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$total = $this->db->datatablesTotal($query);
+			$filtering = $this->db->datatablesFiltering(array('channel', 'topic'));
+			$ordering = $this->db->datatablesOrdering();
+			$paging = $this->db->datatablesPaging();
+			$query .= sprintf(" %s %s %s", $filtering ? "AND " . $filtering : "", $ordering, $paging);
 		} else {
 			$query .= " ORDER BY `channel` ASC";
 		}
@@ -507,8 +507,8 @@ class Anope implements Service {
 		$ps->execute();
 		$aaData = $ps->fetchAll(PDO::FETCH_CLASS, 'Channel');
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
-			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+			$filteredTotal = $this->db->foundRows();
+			return $this->db->datatablesOutput($total, $filteredTotal, $aaData);
 		}
 		return $aaData;
 	}
@@ -646,11 +646,11 @@ class Anope implements Service {
 			LEFT JOIN `%s` AS c ON LOWER(cs.chan) = LOWER(c.channel)
 			WHERE cs.type = :type AND cs.nick = '' AND %s", TBL_CHANSTATS, TBL_CHAN, $where);
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($query, array(':type' => $type));
-			$sFiltering = $this->db->datatablesFiltering(array('cs.chan', 'c.topic'));
-			$sOrdering = $this->db->datatablesOrdering();
-			$sPaging = $this->db->datatablesPaging();
-			$query .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$total = $this->db->datatablesTotal($query, array(':type' => $type));
+			$filtering = $this->db->datatablesFiltering(array('cs.chan', 'c.topic'));
+			$ordering = $this->db->datatablesOrdering();
+			$paging = $this->db->datatablesPaging();
+			$query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
 		}
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':type', $type, PDO::PARAM_INT);
@@ -662,8 +662,8 @@ class Anope implements Service {
 			$aaData[] = $row;
 		}
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
-			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+			$filteredTotal = $this->db->foundRows();
+			return $this->db->datatablesOutput($total, $filteredTotal, $aaData);
 		}
 		return $aaData;
 	}
@@ -683,11 +683,11 @@ class Anope implements Service {
 				. " WHERE chan = :channel AND nick != '' AND type=:type AND letters > 0 ",
 				TBL_CHANSTATS);
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($query, array(':type' => $type, ':channel' => $chan));
-			$sFiltering = $this->db->datatablesFiltering(array('nick'));
-			$sOrdering = $this->db->datatablesOrdering();
-			$sPaging = $this->db->datatablesPaging();
-			$query .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$total = $this->db->datatablesTotal($query, array(':type' => $type, ':channel' => $chan));
+			$filtering = $this->db->datatablesFiltering(array('nick'));
+			$ordering = $this->db->datatablesOrdering();
+			$paging = $this->db->datatablesPaging();
+			$query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
 		}
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':type', $type, PDO::PARAM_INT);
@@ -695,7 +695,7 @@ class Anope implements Service {
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
+			$filteredTotal = $this->db->foundRows();
 		}
 		foreach ($data as $row) {
 			if ($datatables) {
@@ -710,7 +710,7 @@ class Anope implements Service {
 			$aaData[] = $user;
 		}
 		if ($datatables) {
-			return $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData);
+			return $this->db->datatablesOutput($total, $filteredTotal, $aaData);
 		}
 		return $aaData;
 	}
@@ -909,18 +909,18 @@ class Anope implements Service {
 			WHERE type = :type AND letters > 0 and chan = ''",
 				TBL_CHANSTATS);
 		if ($datatables) {
-			$iTotal = $this->db->datatablesTotal($query, array(':type' => $type));
-			$sFiltering = $this->db->datatablesFiltering(array('nick'));
-			$sOrdering = $this->db->datatablesOrdering();
-			$sPaging = $this->db->datatablesPaging();
-			$query .= sprintf("%s %s %s", $sFiltering ? " AND " . $sFiltering : "", $sOrdering, $sPaging);
+			$total = $this->db->datatablesTotal($query, array(':type' => $type));
+			$filtering = $this->db->datatablesFiltering(array('nick'));
+			$ordering = $this->db->datatablesOrdering();
+			$paging = $this->db->datatablesPaging();
+			$query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
 		}
 		$ps = $this->db->prepare($query);
 		$ps->bindValue(':type', $type, PDO::PARAM_INT);
 		$ps->execute();
 		$data = $ps->fetchAll(PDO::FETCH_ASSOC);
 		if ($datatables) {
-			$iFilteredTotal = $this->db->foundRows();
+			$filteredTotal = $this->db->foundRows();
 		}
 		if (is_array($data)) {
 			foreach ($data as $row) {
@@ -946,7 +946,7 @@ class Anope implements Service {
 				$aaData[] = $user;
 			}
 		}
-		return $datatables ? $this->db->datatablesOutput($iTotal, $iFilteredTotal, $aaData) : $aaData;
+		return $datatables ? $this->db->datatablesOutput($total, $filteredTotal, $aaData) : $aaData;
 	}
 
 	/**

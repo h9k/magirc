@@ -44,7 +44,7 @@ class DB {
 		while (true) {
 			try {
 				$args[PDO::ATTR_PERSISTENT] = true;
-				$this->pdo = new PDO($dsn, $username, $password, $args);
+				$this->pdo = @new PDO($dsn, $username, $password, $args);
 				$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 				$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				$this->pdo->query("SET NAMES utf8");
@@ -53,6 +53,7 @@ class DB {
 				if($e->getCode() == 2006) {
 					$this->pdo = null;
 					$counter++;
+					sleep(1);
 					if ($counter >= $limit) {
 						$this->error = $e->getMessage();
 						return false;

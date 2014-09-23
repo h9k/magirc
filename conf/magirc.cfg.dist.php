@@ -1,6 +1,4 @@
 <?php
-
-
 // Configure and rename this file to magirc.cfg.php
 
 $db = array(
@@ -14,5 +12,3 @@ $db = array(
 	'ssl_cert'	=> null,
 	'ssl_ca'	=> null
 );
-
-?>
