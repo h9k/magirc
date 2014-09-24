@@ -186,10 +186,11 @@ try {
 			}
 			$db['ssl'] = isset($_POST['ssl']) ? 'true' : 'false';
 
-			$db_buffer = "<?php\n";
+			$db_buffer = "<?php\n\$db = array(\n";
 			foreach ($db as $key => $val) {
-				$db_buffer .= "\$db['{$key}'] = '{$val}';\n";
+				$db_buffer .= "    '{$key}' => '{$val}',\n";
 			}
+			$db_buffer .= ");\n";
 
 			if (is_writable($db_config_file)) {
 				$writefile = fopen($db_config_file,"w");

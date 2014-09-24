@@ -107,9 +107,9 @@
 <button id="{$service}-submit" type="button">Save</button>
 </form>
 
-<div id="manual" style="display:none;">
+<div id="{$service}-manual" style="display:none;">
 	<br />MagIRC was unable to write the file.<br />Please create {$db_config_file} and paste the following code:
-	<div id="file" class="file"></div>
+	<div id="{$service}-file" class="file"></div>
 </div>
 
 {jsmin}
@@ -119,18 +119,24 @@ var service = '{$service}';
 $(document).ready(function() {
 	$("#"+service+"-submit").button().click(function() {
 		$("#"+service+"-form").ajaxSubmit({ url: 'index.php/configuration/'+service+'/database', type: 'post', success: function(data) {
-			if (data) $("#success").show().delay(1500).fadeOut(500);
-			else {
+			if (data) {
+                $("#success").show().delay(1500).fadeOut(500);
+            } else {
 				$("#failure").show().delay(1500).fadeOut(500);
-				$("#manual").show();
-				$("#file").html("<pre>&lt;?php\n"+
-				"$db['username'] = \""+$("#username").val()+"\";\n"+
-				"$db['password'] = \""+$("#password").val()+"\";\n"+
-				"$db['database'] = \""+$("#database").val()+"\";\n"+
-				"$db['prefix'] = \""+$("#prefix").val()+"\";\n"+
-				"$db['hostname'] = \""+$("#hostname").val()+"\";\n"+
-				"$db['port'] = \""+$("#port").val()+"\";\n"+
-				"?&gt;<\/pre>");
+				$("#"+service+"-manual").show();
+
+                var config = "<pre>&lt;?php\n$db = array(\n";
+                var params = [];
+                if (service == 'anope') {
+                    params = ['username', 'password', 'database', 'hostname', 'port', 'prefix'];
+                } else if (service == 'denora') {
+                    params = ['username', 'password', 'database', 'hostname', 'port', 'current', 'maxvalues', 'user', 'server', 'stats', 'channelstats', 'serverstats', 'ustats', 'cstats', 'chan', 'ison', 'aliases'];
+                }
+                $.each(params, function(index, value){
+                    config += "    '"+value+"' => \""+$("#"+value).val()+"\",\n";
+                });
+                config += ");</pre>";
+				$("#"+service+"-file").html(config);
 			}
 		} });
 	});
