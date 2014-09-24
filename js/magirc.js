@@ -27,7 +27,7 @@ $(document).ready(function() {
 	});
 	// Datatable default settings
 	$.extend($.fn.dataTable.defaults, {
-        "processing": true,
+        "processing": false,
 		"serverSide": false,
 		"jQueryUI": true,
 		"autoWidth": false,
