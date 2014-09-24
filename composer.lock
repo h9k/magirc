@@ -151,10 +151,16 @@
             "time": "2014-08-07 20:42:11"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": [
+
+    ],
     "prefer-stable": false,
     "platform": {
         "php": ">=5.3.0",
@@ -162,5 +168,7 @@
         "ext-gettext": "*",
         "ext-mcrypt": "*"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }

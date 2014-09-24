@@ -117,6 +117,7 @@ var service_mibbit = '{$cfg->service_mibbit}';
 var stats_server = '{$cfg->service}';
 var format_datetime = '{t}yyyy-MM-dd HH:mm:ss{/t}';
 var format_datetime_charts = '{t}%Y-%m-%d %H:%M:%S{/t}';
+var refresh_interval = {$cfg->live_interval} * 1000;
 {/jsmin}
 var mLang = {
 	"Unknown": "{t}Unknown{/t}",

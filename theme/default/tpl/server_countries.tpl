@@ -14,27 +14,37 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-    $.getJSON('rest/service.php/servers/'+target+'/countries/percent', function(data) {
-		new Highcharts.Chart({
-			chart: { renderTo: 'chart-countries' },
-			tooltip: {
-				formatter: function() {
-					return '<b>'+ this.point.name +'<\/b>: '+ this.y +' %'+' (' + this.point.count +')';
-				}
-			},
-			series: [{
-				type: 'pie',
-				name: mLang.CountryStatistics,
-				data: data,
-				dataLabels: {
-					formatter: function() {
-						return '<b>'+ this.point.name +'<\/b>: '+ this.y +' %'+' (' + this.point.count +')';
-					}
-				}
-			}]
-		});
-	});
-	$('#tbl_countries').DataTable({
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        loadContent();
+        table_countries.ajax.reload();
+    }
+    function loadContent() {
+        $.getJSON('rest/service.php/servers/'+target+'/countries/percent', function(data) {
+            pie_countries.series[0].setData(data);
+        });
+    }
+    var pie_countries = new Highcharts.Chart({
+        chart: { renderTo: 'chart-countries' },
+        tooltip: {
+            formatter: function() {
+                return '<b>'+ this.point.name +'<\/b>: '+ this.y +' %'+' (' + this.point.count +')';
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: mLang.CountryStatistics,
+            data: [],
+            dataLabels: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'<\/b>: '+ this.y +' %'+' (' + this.point.count +')';
+                }
+            }
+        }]
+    });
+	var table_countries = $('#tbl_countries').DataTable({
 		"pageLength": 10,
 		"order": [[ 1, "desc" ]],
 		"ajax": "rest/service.php/servers/"+target+"/countries?format=datatables",
@@ -45,6 +55,7 @@ $(document).ready(function() {
 			{ "data": "count" }
 		]
 	});
+    loadContent();
 });
 {/literal}
 </script>

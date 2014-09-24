@@ -44,6 +44,18 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        loadContent();
+        table.ajax.reload();
+    }
+    function loadContent() {
+        $.getJSON(getUrl('hourly') +'/'+type, function(result) {
+            chart_activity.series[0].setData(result);
+        });
+    }
 	var chan = null;
 	var type = 'monthly';
 	var chart_activity = new Highcharts.Chart({
@@ -59,11 +71,6 @@ $(document).ready(function() {
 		} else {
 			return 'rest/service.php/users/'+mode+'/'+target+'/'+action+'/'+encodeURIComponent(chan);
 		}		
-	}
-	function updateChart() {		
-		$.getJSON(getUrl('hourly') +'/'+type, function(result) {
-			chart_activity.series[0].setData(result);
-		});
 	}
 	var table = $("#tbl_activity").DataTable({
 		"searching": false,
@@ -95,11 +102,11 @@ $(document).ready(function() {
 	$("#radio").change(function(event) {
 		chan = $('input[name=radio]:checked').val();
 		table.ajax.url(getUrl('activity')+'?format=datatables').load();
-		updateChart();
+        loadContent();
 	});
 	$("#type").change(function(event) {
 		type = $('input[name=type]:checked').val();
-		updateChart();
+        loadContent();
 	});
 	$.getJSON("rest/service.php/users/"+mode+"/"+target+"/channels", function(result) {
 		var i = 1;
@@ -109,7 +116,7 @@ $(document).ready(function() {
 		});
 		$('#radio').buttonset();
 	});
-	updateChart();
+	loadContent();
 });
 {/literal}
 </script>

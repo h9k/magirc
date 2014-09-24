@@ -16,7 +16,13 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$('#tbl_operators').DataTable({
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        table_operators.ajax.reload();
+    }
+	var table_operators = $('#tbl_operators').DataTable({
 		"pageLength": 25,
 		"order": [[ 0, "asc" ]],
 		"ajax": 'rest/service.php/operators?format=datatables',

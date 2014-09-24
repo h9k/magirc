@@ -17,7 +17,13 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$('#tbl_channels').DataTable({
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        table_channels.ajax.reload();
+    }
+	var table_channels = $('#tbl_channels').DataTable({
 		"serverSide": true,
 		"pageLength": 25,
 		"order": [[ 1, "desc" ]],

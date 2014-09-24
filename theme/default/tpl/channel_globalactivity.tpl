@@ -22,8 +22,14 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        table_activity.ajax.reload();
+    }
 	var type = 'monthly';
-	var table = $('#tbl_activity').DataTable({
+	var table_activity = $('#tbl_activity').DataTable({
 		"serverSide": true,
 		"pageLength": 25,
 		"order": [[ 3, "desc" ]],
@@ -52,7 +58,7 @@ $(document).ready(function() {
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').val();
-		table.ajax.url("rest/service.php/channels/activity/"+type+"?format=datatables").load();
+		table_activity.ajax.url("rest/service.php/channels/activity/"+type+"?format=datatables").load();
 	});
 });
 {/literal}

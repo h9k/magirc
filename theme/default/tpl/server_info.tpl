@@ -30,32 +30,44 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$.getJSON("rest/service.php/servers/"+target, function(data){
-		if (data) {
-			$("#dialog-server").dialog("option", "title", data.server);
-			$("#srv_description").html(data.description);
-			$("#srv_country").html(getCountryFlag(data)+' '+data.country);
-			$("#srv_online").html(data.online ? mLang.Yes : mLang.No);
-			$("#srv_version").html(data.version);
-			$("#srv_uptime").html(getTimeElapsed(data.uptime));
-			if((data.split_time).indexOf("1970") >= 0) { $("#srv_lastsplit").html(mLang.Never);	}
-			else { $("#srv_lastsplit").html($.format.date(data.split_time, format_datetime)); }
-			$("#srv_ping").html(data.ping);
-			$("#srv_maxping").html(data.ping_max);
-			$("#srv_maxpingtime").html($.format.date(data.ping_max_time, format_datetime));
-			$("#srv_users").html(data.users);
-			$("#srv_maxusers").html(data.users_max);
-			$("#srv_maxusertime").html($.format.date(data.users_max_time, format_datetime));
-			$("#srv_opers").html(data.opers);
-			$("#srv_maxopers").html(data.opers_max);
-			if(data.opers_max_time != null && (data.opers_max_time).indexOf("1970") < 0) { $("#srv_maxopertime").html(mLang.On+" " + $.format.date(data.opers_max_time, format_datetime)); }
-			$("#srv_motd_txt").html(data.motd ? data.motd_html : mLang.NoMotd);
-			$("#dialog-server").dialog("open");
-			$("#srv_motd").scrollTop(0);
-		} else {
-			alert(mLang.Failed);
-		}
-	}, "json");
+    if (refresh_interval > 0) {
+        setInterval(loadContent, refresh_interval);
+    }
+    function loadContent() {
+        $.getJSON("rest/service.php/servers/" + target, function (data) {
+            if (data) {
+                $("#dialog-server").dialog("option", "title", data.server);
+                $("#srv_description").html(data.description);
+                $("#srv_country").html(getCountryFlag(data) + ' ' + data.country);
+                $("#srv_online").html(data.online ? mLang.Yes : mLang.No);
+                $("#srv_version").html(data.version);
+                $("#srv_uptime").html(getTimeElapsed(data.uptime));
+                if ((data.split_time).indexOf("1970") >= 0) {
+                    $("#srv_lastsplit").html(mLang.Never);
+                }
+                else {
+                    $("#srv_lastsplit").html($.format.date(data.split_time, format_datetime));
+                }
+                $("#srv_ping").html(data.ping);
+                $("#srv_maxping").html(data.ping_max);
+                $("#srv_maxpingtime").html($.format.date(data.ping_max_time, format_datetime));
+                $("#srv_users").html(data.users);
+                $("#srv_maxusers").html(data.users_max);
+                $("#srv_maxusertime").html($.format.date(data.users_max_time, format_datetime));
+                $("#srv_opers").html(data.opers);
+                $("#srv_maxopers").html(data.opers_max);
+                if (data.opers_max_time != null && (data.opers_max_time).indexOf("1970") < 0) {
+                    $("#srv_maxopertime").html(mLang.On + " " + $.format.date(data.opers_max_time, format_datetime));
+                }
+                $("#srv_motd_txt").html(data.motd ? data.motd_html : mLang.NoMotd);
+                $("#dialog-server").dialog("open");
+                $("#srv_motd").scrollTop(0);
+            } else {
+                alert(mLang.Failed);
+            }
+        }, "json");
+    }
+    loadContent();
 });
 {/literal}
 </script>

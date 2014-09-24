@@ -51,20 +51,29 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$.getJSON('rest/service.php/channels/'+target, function(result) {
-		if (result.topic_html) {
-			$("#chan_topic").html(result.topic_html);
-			$("#chan_topic_author").html(result.topic_author);
-			$("#chan_topic_time").html($.format.date(result.topic_time, format_datetime));
-		} else {
-			$("#chan_topic_container").hide();
-		}
-		$("#chan_users").html(result.users);
-		$("#chan_users_max").html(result.users_max);
-		$("#chan_users_max_time").html($.format.date(result.users_max_time, format_datetime));
-		$("#chan_modes").html(result.modes ? "+"+result.modes : mLang.None);
-	});
-	$('#tbl_users').DataTable({
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        loadContent();
+        table_users.ajax.reload();
+    }
+    function loadContent() {
+        $.getJSON('rest/service.php/channels/'+target, function(result) {
+            if (result.topic_html) {
+                $("#chan_topic").html(result.topic_html);
+                $("#chan_topic_author").html(result.topic_author);
+                $("#chan_topic_time").html($.format.date(result.topic_time, format_datetime));
+            } else {
+                $("#chan_topic_container").hide();
+            }
+            $("#chan_users").html(result.users);
+            $("#chan_users_max").html(result.users_max);
+            $("#chan_users_max_time").html($.format.date(result.users_max_time, format_datetime));
+            $("#chan_modes").html(result.modes ? "+"+result.modes : mLang.None);
+        });
+    }
+	var table_users = $('#tbl_users').DataTable({
 		"pageLength": 10,
 		"pagingType": "simple",
 		"order": [[ 0, "asc" ]],
@@ -81,6 +90,7 @@ $(document).ready(function() {
 	$("#tbl_users tbody").on("click", "tr", function(event) {
 		if (this.id) window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
 	});
+    loadContent();
 });
 {/literal}
 </script>

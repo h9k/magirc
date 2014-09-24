@@ -26,7 +26,13 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	$('#tbl_servers').DataTable({
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        table_servers.ajax.reload();
+    }
+	var table_servers = $('#tbl_servers').DataTable({
 		"pageLength": 25,
 		"order": [[ 1, "asc" ]],
 		"ajax": 'rest/service.php/servers?format=datatables',

@@ -89,7 +89,6 @@
 </table>
 {jsmin}
 <script type="text/javascript">
-var refresh_interval = {$cfg->live_interval};
 var welcome_msg = '{$cfg->welcome_mode}';
 var searchirc = '{$cfg->service_searchirc}';
 {literal}
@@ -121,8 +120,8 @@ $(document).ready(function() {
 			updateStatus();
 			updateMax();
 			if (refresh_interval > 0) {
-				setInterval(updateStatus, refresh_interval * 1000);
-				setInterval(updateTables, refresh_interval * 1000);
+				setInterval(updateStatus, refresh_interval);
+				setInterval(updateTables, refresh_interval);
 			}
 		}
 	}

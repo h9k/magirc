@@ -25,6 +25,18 @@
 var target = '{$target|escape:'url'}';
 {literal}
 $(document).ready(function() {
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        loadContent();
+        table_activity.ajax.reload();
+    }
+    function loadContent() {
+        $.getJSON('rest/service.php/channels/'+target+'/hourly/'+type, function(result) {
+            chart_activity.series[0].setData(result);
+        });
+    }
 	var type = 'monthly';
 	var chart_activity = new Highcharts.Chart({
 		chart: { renderTo: 'chart_activity', type: 'column' },
@@ -33,12 +45,7 @@ $(document).ready(function() {
 		tooltip: { enabled: false },
 		series: [{ name: 'Lines', data: [] }]
 	});
-	function updateChart() {
-		$.getJSON('rest/service.php/channels/'+target+'/hourly/'+type, function(result) {
-			chart_activity.series[0].setData(result);
-		});
-	}
-	var table = $('#tbl_activity').DataTable({
+	var table_activity = $('#tbl_activity').DataTable({
 		"serverSide": true,
 		"pageLength": 10,
 		"order": [[ 3, "desc" ]],
@@ -63,10 +70,10 @@ $(document).ready(function() {
 	$("#radio").buttonset();
 	$("#radio").change(function(event) {
 		type = $('input[name=radio]:checked').val();
-		table.ajax.url("rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables").load();
-		updateChart();
+        table_activity.ajax.url("rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables").load();
+        loadContent();
 	});
-	updateChart();
+    loadContent();
 });
 {/literal}
 </script>
