@@ -46,6 +46,8 @@ echo "Migrating channel stats...\n";
 migrateChannelStats();
 echo "Migrating user stats...\n";
 migrateUserStats();
+echo "Migrating max values...\n";
+migrateMaxValues();
 echo "DONE\n";
 
 function migrateHistory($from, $to) {
@@ -140,6 +142,24 @@ function migrateUserStats() {
 		if (!$anope->query($query)) {
 			die('FAILURE: '.$query);
 		}
+	}
+	$result->close();
+	$denora->close();
+	$anope->close();
+}
+
+function migrateMaxValues() {
+	$denora = new mysqli(DENORA_HOSTNAME, DENORA_USERNAME, DENORA_PASSWORD, DENORA_DATABASE);
+	$anope = new mysqli(ANOPE_HOSTNAME, ANOPE_USERNAME, ANOPE_PASSWORD, ANOPE_DATABASE);
+
+	$result = $denora->query("SELECT * FROM `maxvalues`", MYSQLI_USE_RESULT);
+	while ($row = $result->fetch_assoc()){
+		if ($row['type'] == 'opers') {
+			$row['type'] = 'operators';
+		}
+		$query = sprintf("UPDATE anope_maxusage SET `count` = %d, `datetime` = '%s' WHERE `type` = '%s' AND `count` < %d",
+			$row['val'], $row['time'], $row['type'], $row['val']);
+		$anope->query($query);
 	}
 	$result->close();
 	$denora->close();

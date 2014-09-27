@@ -45,6 +45,7 @@ class AnopeDB extends DB {
 		define('TBL_SERVER', $prefix.'server');
 		define('TBL_USER', $prefix.'user');
 		define('TBL_CURRENTUSAGE', $prefix.'currentusage');
+		define('TBL_MAXUSAGE', $prefix.'maxusage');
 		define('TBL_HISTORY', $prefix.'history');
 	}
 }
@@ -90,18 +91,15 @@ class Anope implements Service {
 	 * @return array of arrays (int val, int time)
 	 */
 	public function getMaxValues() {
-		$data = array(
-			'users' => $this->getMaxValue('users'),
-			'channels' => $this->getMaxValue('channels'),
-			'servers' => $this->getMaxValue('servers'),
-			'opers' => $this->getMaxValue('operators')
-		);
+		$this->db->query(sprintf("SELECT * FROM `%s`", TBL_MAXUSAGE), SQL_ALL, SQL_ASSOC);
+		$data = array();
+		foreach ($this->db->record as $row) {
+			if ($row['type'] == 'operators') {
+				$row['type'] = 'opers';
+			}
+			$data[$row['type']] = array('val' => $row['count'], 'time' => $row['datetime']);
+		}
 		return $data;
-	}
-
-	private function getMaxValue($val) {
-		$this->db->query(sprintf("SELECT MAX(`%s`) AS 'val', `datetime` AS 'time' FROM `%s`", $val, TBL_HISTORY), SQL_INIT, SQL_ASSOC);
-		return $this->db->record;
 	}
 
 	/**
