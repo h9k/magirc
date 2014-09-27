@@ -22,7 +22,7 @@ In case you want to migrate from Denora to Anope, we created a script for this t
 * Web Browser supporting HTML5, CSS3 and JavaScript
 * Any of the following:
 	* [Denora Stats](http://www.denorastats.org) v1.5 server with MySQL enabled
-	* [Anope](http://www.anope.org/) v2.0 with the `m_mysql`, `m_chanstats` and `ircsql` modules enabled
+	* [Anope](http://www.anope.org/) v2.0 with the `m_mysql`, `m_chanstats` and `irc2sql` modules enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
 
 
@@ -69,6 +69,7 @@ Note that you need the MySQL `event_scheduler` set to `ON` in the MySQL server. 
 
 ### Migrating from Denora to Anope ###
 If you want to switch from Denora to Anope, please proceed as follows:
+
 1. Install Anope (see above)
 2. Shut down Denora
 3. Make Anope join the network and double check that it is working fine, e.g. the MySQL tables are being filled with data
@@ -129,7 +130,6 @@ Your Nginx configuration file should contain this code, if Magirc is in the docu
             include /etc/nginx/fastcgi.conf;
             fastcgi_pass  backend;
             fastcgi_index index.php;
-           #fastcgi_intercept_errors on;
     }
 
 or this for a directory in document root (`document_root/magirc_directory`) :
@@ -144,11 +144,9 @@ or this for a directory in document root (`document_root/magirc_directory`) :
             include /etc/nginx/fastcgi.conf;
             fastcgi_pass  backend;
             fastcgi_index index.php;
-           #fastcgi_intercept_errors on;
     }
 
 This will work with or without Magirc rewrite.
-Comment out `fastcgi_intercept_errors on;` to override Magirc 404 blue pages.
 Don't forget to replace `fastcgi_pass  backend;` by your actual backend.
 If you do not have `/etc/nginx/fastcgi.conf`, include `/etc/nginx/fastcgi_params`.
 
