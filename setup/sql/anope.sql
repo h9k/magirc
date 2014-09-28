@@ -32,10 +32,14 @@ CREATE TABLE IF NOT EXISTS `anope_maxusage` (
 INSERT IGNORE INTO `anope_maxusage` (`type`) VALUES  ('users'), ('channels'), ('servers'), ('operators');
 
 DROP EVENT IF EXISTS anope_maxusage_update;
+delimiter |
 CREATE EVENT `anope_maxusage_update`
   ON SCHEDULE EVERY 1 MINUTE STARTS '2014-09-01 00:00:00'
 DO
-  UPDATE anope_maxusage SET `count` = (SELECT `servers` FROM `anope_currentusage` LIMIT 1) WHERE `type` = 'servers' AND `count` < (SELECT `servers` FROM `anope_currentusage` LIMIT 1);
-  UPDATE anope_maxusage SET `count` = (SELECT `channels` FROM `anope_currentusage` LIMIT 1) WHERE `type` = 'channels' AND `count` < (SELECT `channels` FROM `anope_currentusage` LIMIT 1);
-  UPDATE anope_maxusage SET `count` = (SELECT `users` FROM `anope_currentusage` LIMIT 1) WHERE `type` = 'users' AND `count` < (SELECT `users` FROM `anope_currentusage` LIMIT 1);
-  UPDATE anope_maxusage SET `count` = (SELECT `operators` FROM `anope_currentusage` LIMIT 1) WHERE `type` = 'operators' AND `count` < (SELECT `operators` FROM `anope_currentusage` LIMIT 1);
+  BEGIN
+    UPDATE anope_maxusage SET `count` = (SELECT `servers` FROM `anope_currentusage` LIMIT 1) WHERE `type` = 'servers' AND `count` < (SELECT `servers` FROM `anope_currentusage` LIMIT 1);
+    UPDATE anope_maxusage SET `count` = (SELECT `channels` FROM `anope_currentusage` LIMIT 1) WHERE `type` = 'channels' AND `count` < (SELECT `channels` FROM `anope_currentusage` LIMIT 1);
+    UPDATE anope_maxusage SET `count` = (SELECT `users` FROM `anope_currentusage` LIMIT 1) WHERE `type` = 'users' AND `count` < (SELECT `users` FROM `anope_currentusage` LIMIT 1);
+    UPDATE anope_maxusage SET `count` = (SELECT `operators` FROM `anope_currentusage` LIMIT 1) WHERE `type` = 'operators' AND `count` < (SELECT `operators` FROM `anope_currentusage` LIMIT 1);
+  END |
+delimiter ;
