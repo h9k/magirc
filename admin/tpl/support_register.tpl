@@ -1,5 +1,5 @@
 <h1>Registration</h1>
-<form id="registration" method="post" action="http://denorastats.org/register.php">
+<form id="registration" method="post" action="http://www.magirc.org/register.php">
 	<input type="hidden" name="form" value="registration" />
 	<table border="0" cellspacing="2" cellpadding="2">
 		<tr>
