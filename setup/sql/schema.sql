@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `magirc_content` (
 -- Dumping data for table `magirc_content`
 --
 
-INSERT IGNORE INTO `magirc_content` (`name`, `text`) VALUES ('welcome', '<h1>Welcome to Magirc</h1><p>These are the Web Stats of this IRC Network.<br />You will find detailed information about the network status and the activity of its channels and users.<br />Enjoy your stay!</p>');
+INSERT IGNORE INTO `magirc_content` (`name`, `text`) VALUES ('welcome', '<h1>Welcome to MagIRC</h1><p>These are the Web Stats of this IRC Network.<br />You will find detailed information about the network status and the activity of its channels and users.<br />Enjoy your stay!</p>');
 
 --
 -- Table structure for table `magirc_admin`

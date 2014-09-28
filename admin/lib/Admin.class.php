@@ -50,7 +50,7 @@ class Admin {
 		$this->ckeditor->config['width'] = 740;
 		$this->ckeditor->config['baseHref'] = '../';
 		$this->ckeditor->config['contentsCss'] = array('../theme/'.$this->cfg->theme.'/css/styles.css', '../theme/'.$this->cfg->theme.'/css/editor.css', 'http://fonts.googleapis.com/css?family=Share');
-		$this->ckeditor->config['docType'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+		$this->ckeditor->config['docType'] = '<!DOCTYPE html>';
 		$this->ckeditor->config['emailProtection'] = 'encode';
 		$this->ckeditor->config['entities'] = true;
 		$this->ckeditor->config['forcePasteAsPlainText'] = true;

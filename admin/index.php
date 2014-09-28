@@ -134,7 +134,7 @@ try {
 			@touch($db_config_file);
 		}
 		if (!$db) {
-			$db = array('username' => $service, 'password' => $service, 'database' => $service, 'prefix' => null, 'hostname' => 'localhost');
+			$db = array('username' => $service, 'password' => $service, 'database' => $service, 'prefix' => ($service == "anope") ? "anope_" : null, 'hostname' => 'localhost');
 		}
 		$admin->tpl->assign('db_config_file', $db_config_file);
 		$admin->tpl->assign('writable', is_writable($db_config_file));
