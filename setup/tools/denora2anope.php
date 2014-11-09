@@ -7,7 +7,7 @@
  * @copyright   2014 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     0.9.0
+ * @version     1.0.0
  *
  * ABOUT:       This script migrates a Denora 1.4/1.5 database to Anope 2.0.
  * REQUIREMENT: Anope must already be up and running and have the m_mysql, irc2sql and m_chanstats modules enabled!
