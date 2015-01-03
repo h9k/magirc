@@ -11,7 +11,7 @@
  */
 
 ini_set('display_errors','on');
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 ini_set('default_charset','UTF-8');
 date_default_timezone_set('UTC');
 
