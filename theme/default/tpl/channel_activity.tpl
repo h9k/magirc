@@ -52,7 +52,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
 		"columns": [
 			{ "data": "uname", "render": function(data, type, row) {
-				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
 			} },
 			{ "data": "letters" },
 			{ "data": "words" },

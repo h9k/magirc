@@ -83,7 +83,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/network/clients?format=datatables",
 		"columns": [
 			{ "data": "client", "render": function (data) {
-				return data ? data : mLang.Unknown;
+				return data ? escapeTags(data) : mLang.Unknown;
 			} },
 			{ "data": "count" }
 		]

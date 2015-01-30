@@ -36,7 +36,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/users/activity/"+type+"?format=datatables",
 		"columns": [
 			{ "data": "uname", "render": function(data, type, row, meta) {
-				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
 			} },
 			{ "data": "letters" },
 			{ "data": "words" },

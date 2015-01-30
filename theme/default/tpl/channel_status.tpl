@@ -62,15 +62,15 @@ $(document).ready(function() {
         $.getJSON('rest/service.php/channels/'+target, function(result) {
             if (result.topic_html) {
                 $("#chan_topic").html(result.topic_html);
-                $("#chan_topic_author").html(result.topic_author);
-                $("#chan_topic_time").html($.format.date(result.topic_time, format_datetime));
+                $("#chan_topic_author").text(result.topic_author);
+                $("#chan_topic_time").text($.format.date(result.topic_time, format_datetime));
             } else {
                 $("#chan_topic_container").hide();
             }
-            $("#chan_users").html(result.users);
-            $("#chan_users_max").html(result.users_max);
-            $("#chan_users_max_time").html($.format.date(result.users_max_time, format_datetime));
-            $("#chan_modes").html(result.modes ? "+"+result.modes : mLang.None);
+            $("#chan_users").text(result.users);
+            $("#chan_users_max").text(result.users_max);
+            $("#chan_users_max_time").text($.format.date(result.users_max_time, format_datetime));
+            $("#chan_modes").text(result.modes ? "+"+result.modes : mLang.None);
         });
     }
 	var table_users = $('#tbl_users').DataTable({
@@ -80,7 +80,7 @@ $(document).ready(function() {
 		"ajax": 'rest/service.php/channels/'+target+'/users?format=datatables',
 		"columns": [
 			{ "data": "nickname", "render": function(data, type, row) {
-				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
 			} },
 			{ "data": "cmodes", "render": function(data) {
 				return data ? '+' + data : null;

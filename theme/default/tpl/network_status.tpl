@@ -133,38 +133,38 @@ $(document).ready(function() {
 			chart_line.series[2].addPoint([x, result.users.val], true, true);
 			chart_line.series[3].addPoint([x, result.opers.val], true, true);
 			chart_status.series[0].setData([result.servers.val, result.chans.val, result.users.val, result.opers.val ]);
-			$("#net_users").html(result.users.val);
-			if ($("#net_users").html() > $("#net_users_max")) {
-				$("#net_users_max").html(result.users.val);
-				$("#net_users_max_time").html($.format.date(result.users.time, format_datetime));
+			$("#net_users").text(result.users.val);
+			if ($("#net_users").text() > $("#net_users_max")) {
+				$("#net_users_max").text(result.users.val);
+				$("#net_users_max_time").text($.format.date(result.users.time, format_datetime));
 			}
-			$("#net_chans").html(result.chans.val);
-			if ($("#net_chans").html() > $("#net_chans_max")) {
-				$("#net_chans_max").html(result.chans.val);
-				$("#net_chans_max_time").html($.format.date(result.chans.time, format_datetime));
+			$("#net_chans").text(result.chans.val);
+			if ($("#net_chans").text() > $("#net_chans_max")) {
+				$("#net_chans_max").text(result.chans.val);
+				$("#net_chans_max_time").text($.format.date(result.chans.time, format_datetime));
 			}
-			$("#net_servers").html(result.servers.val);
-			if ($("#net_servers").html() > $("#net_servers_max")) {
-				$("#net_servers_max").html(result.servers.val);
-				$("#net_servers_max_time").html($.format.date(result.servers.time, format_datetime));
+			$("#net_servers").text(result.servers.val);
+			if ($("#net_servers").text() > $("#net_servers_max")) {
+				$("#net_servers_max").text(result.servers.val);
+				$("#net_servers_max_time").text($.format.date(result.servers.time, format_datetime));
 			}
-			$("#net_opers").html(result.opers.val);
-			if ($("#net_opers").html() > $("#net_opers_max")) {
-				$("#net_opers_max").html(result.opers.val);
-				$("#net_opers_max_time").html($.format.date(result.opers.time, format_datetime));
+			$("#net_opers").text(result.opers.val);
+			if ($("#net_opers").text() > $("#net_opers_max")) {
+				$("#net_opers_max").text(result.opers.val);
+				$("#net_opers_max_time").text($.format.date(result.opers.time, format_datetime));
 			}
 		});
 	}
 	function updateMax() {
 		$.getJSON('rest/service.php/network/max', function(result) {
-			$("#net_users_max").html(result.users.val);
-			$("#net_chans_max").html(result.channels.val);
-			$("#net_servers_max").html(result.servers.val);
-			$("#net_opers_max").html(result.opers.val);
-			$("#net_users_max_time").html($.format.date(result.users.time, format_datetime));
-			$("#net_chans_max_time").html($.format.date(result.channels.time, format_datetime));
-			$("#net_servers_max_time").html($.format.date(result.servers.time, format_datetime));
-			$("#net_opers_max_time").html($.format.date(result.opers.time, format_datetime));
+			$("#net_users_max").text(result.users.val);
+			$("#net_chans_max").text(result.channels.val);
+			$("#net_servers_max").text(result.servers.val);
+			$("#net_opers_max").text(result.opers.val);
+			$("#net_users_max_time").text($.format.date(result.users.time, format_datetime));
+			$("#net_chans_max_time").text($.format.date(result.channels.time, format_datetime));
+			$("#net_servers_max_time").text($.format.date(result.servers.time, format_datetime));
+			$("#net_opers_max_time").text($.format.date(result.opers.time, format_datetime));
 		});
 	}
 	function updateTables() {
@@ -189,7 +189,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/channels/biggest/10?format=datatables",
 		"columns": [
 			{ "data": "channel", "render": function (data) {
-				return getChannelLinks(data) + ' ' + data;
+				return getChannelLinks(data) + ' ' + escapeTags(data);
 			} },
 			{ "data": "users" }
 		]
@@ -211,7 +211,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/channels/top/10?format=datatables",
 		"columns": [
 			{ "data": "channel", "render": function (data) {
-				return getChannelLinks(data) + ' ' + data;
+				return getChannelLinks(data) + ' ' + escapeTags(data);
 			} },
 			{ "data": "lines" }
 		]
@@ -233,7 +233,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/users/top/10?format=datatables",
 		"columns": [
 			{ "data": "uname", "render": function(data, type, row) {
-				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
 			} },
 			{ "data": "lines" }
 		]

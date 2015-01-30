@@ -34,7 +34,7 @@ $(document).ready(function() {
 				ui.tab.data("loaded", true);
 			});
 			ui.jqXHR.error(function() {
-				ui.panel.html(mLang.LoadError);
+				ui.panel.text(mLang.LoadError);
 			});
 		}
 	});

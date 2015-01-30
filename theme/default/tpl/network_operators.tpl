@@ -28,7 +28,7 @@ $(document).ready(function() {
 		"ajax": 'rest/service.php/operators?format=datatables',
 		"columns": [
 			{ "data": "nickname", "render": function(data, type, row) {
-				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + data + getUserExtra(row);
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
 			} },
 			{ "data": "server" },
 			{ "data": "connect_time", "render": function(data) { return $.format.date(data, format_datetime); } }

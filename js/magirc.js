@@ -32,7 +32,10 @@ $(document).ready(function() {
 		"jQueryUI": true,
 		"autoWidth": false,
 		"pagingType": "full_numbers",
-		"language": mLang.DataTables
+		"language": mLang.DataTables,
+		"createdRow": function( row, data, dataIndex ) {
+			for (var i = 1; i < 4; i++) $("td:eq(" + i + ")", row).text(data[i]);
+		}
     });
     $.fn.dataTableExt.sErrMode = 'throw';
 	$.fn.dataTableExt.aTypes.unshift(function(data) {
@@ -252,4 +255,8 @@ function getTimeElapsed(seconds) {
 	var hours = Math.floor((seconds - (days * 86400 ))/3600)
 	var minutes = Math.floor((seconds - (days * 86400 ) - (hours *3600 ))/60)
 	return days + " " + mLang.Days + " " + hours + " " + mLang.Hours + " " + minutes + " " + mLang.Minutes;
+}
+
+function escapeTags(str) {
+	return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }

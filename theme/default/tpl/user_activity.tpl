@@ -111,7 +111,7 @@ $(document).ready(function() {
 	$.getJSON("rest/service.php/users/"+mode+"/"+target+"/channels", function(result) {
 		var i = 1;
 		$.each(result, function(key, value) {
-			$("#radio").append('<input type="radio" id="radio'+i+'" name="radio" value="'+value+'"\/><label for="radio'+i+'">'+value+'<\/label>');
+			$("#radio").append('<input type="radio" id="radio'+i+'" name="radio" value="'+escapeTags(value)+'"\/><label for="radio'+i+'">'+escapeTags(value)+'<\/label>');
 			i++;
 		});
 		$('#radio').buttonset();

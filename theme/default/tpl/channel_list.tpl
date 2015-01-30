@@ -30,7 +30,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/channels?format=datatables",
 		"columns": [
 			{ "data": "channel", "render": function (data) {
-				return getChannelLinks(data) + ' ' + data;
+				return getChannelLinks(data) + ' ' + escapeTags(data);
 			} },
 			{ "data": "users", "searchable": false },
 			{ "data": "users_max", "searchable": false },

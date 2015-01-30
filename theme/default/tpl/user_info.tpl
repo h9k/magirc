@@ -20,35 +20,35 @@ $(document).ready(function() {
     $.getJSON('rest/service.php/users/'+mode+'/'+target, function(result) {
 		if (result) {
 			var aliases = '', status = '', status_extra = '';
-			$("#user_nick").html(result.nickname);
+			$("#user_nick").text(result.nickname);
 			$.each(result.aliases, function(key, value) {
 				aliases += value + '<br \/>';
 			});
-			$("#user_aliases").html(aliases ? aliases : '-');
-			$("#user_uname").html(result.uname);
-			$("#user_realname").html(result.realname);
+			$("#user_aliases").text(aliases ? aliases : '-');
+			$("#user_uname").text(result.uname);
+			$("#user_realname").text(result.realname);
 			status = getUserStatus(result);
 			if (result.online) {
-				if (result.away && result.away_msg) status_extra += '<br \/>'+mLang.Message+': ' + result.away_msg;
+				if (result.away && result.away_msg) status_extra += '<br \/>'+mLang.Message+': ' + escapeTags(result.away_msg);
 				status_extra += '<br \/>'+mLang.ConnectedSince+' ' + $.format.date(result.connect_time, format_datetime);
 			} else {
 				if (result.lastquit_time) status_extra += '<br \/>'+mLang.LastQuit+' ' + $.format.date(result.quit_time, format_datetime);
-				if (result.lastquit_msg) status_extra += '<br \/>'+mLang.Message+' ' + result.quit_msg;
+				if (result.lastquit_msg) status_extra += '<br \/>'+mLang.Message+' ' + escapeTags(result.quit_msg);
 			}
 			status += getUserExtra(result);
 			$("#user_status").html(status);
 			$("#user_status_extra").html(status_extra);
             if (result.ipv6) {
-                $("#user_hostname").html(result.hostname + ' (IPv6)');
+                $("#user_hostname").text(result.hostname + ' (IPv6)');
             } else {
-                $("#user_hostname").html(result.hostname);
+                $("#user_hostname").text(result.hostname);
             }
 			$("#user_server").html('<a href="'+url_base+'server/'+result.server+'/profile">'+result.server+'<\/a>');
             if (result.city){
-                $("#user_cityregion").html(result.city + ', ' + result.region + ' ');
+                $("#user_cityregion").text(result.city + ', ' + result.region + ' ');
             }
 			$("#user_country").html(getCountryFlag(result)+' '+result.country);
-			$("#user_client").html(result.client);
+			$("#user_client").text(result.client);
 		} else {
 			$("#tbl_details").hide();
 			$("#nodata").show();

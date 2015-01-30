@@ -30,7 +30,7 @@ $(document).ready(function() {
 	});
 	function updateMibbit(type) {
 		$("#mibbit_relation").attr('src', 'http://netgraphs.mibbit.com/graphs/'+mibbitid+'_'+type+'.png');
-		$("#mibbit_range_relation").html(types_lang_relation[type]);
+		$("#mibbit_range_relation").text(types_lang_relation[type]);
 	}
 	updateMibbit(type);
 });

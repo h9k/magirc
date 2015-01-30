@@ -36,7 +36,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/channels/activity/"+type+"?format=datatables",
 		"columns": [
 			{ "data": "name", "render": function (data) {
-				return getChannelLinks(data) + ' ' + data;
+				return getChannelLinks(data) + ' ' + escapeTags(data);
 			} },
 			{ "data": "letters" },
 			{ "data": "words" },

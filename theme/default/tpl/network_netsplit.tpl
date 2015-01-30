@@ -50,9 +50,9 @@ $(document).ready(function() {
 			$("#netsplit_relation").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_uc.png');
 			$("#netsplit_channels").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_c.png');
 			$("#netsplit_servers").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_s.png');
-			$("#netsplit_range_relation").html(types_lang_relation[type]);
-			$("#netsplit_range_relation").html(types_lang_channels[type]);
-			$("#netsplit_range_relation").html(types_lang_servers[type]);
+			$("#netsplit_range_relation").text(types_lang_relation[type]);
+			$("#netsplit_range_relation").text(types_lang_channels[type]);
+			$("#netsplit_range_relation").text(types_lang_servers[type]);
 		}
 	}
 	updateNetsplit(type);
