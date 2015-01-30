@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "slim/slim",
-            "version": "2.4.3",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeguy/Slim.git",
-                "reference": "4906b77a07c7bd6ff1a99aea903e940a2d4fa106"
+                "reference": "04958a10ed95bc7bc97568e573877d4f9b62db48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeguy/Slim/zipball/4906b77a07c7bd6ff1a99aea903e940a2d4fa106",
-                "reference": "4906b77a07c7bd6ff1a99aea903e940a2d4fa106",
+                "url": "https://api.github.com/repos/codeguy/Slim/zipball/04958a10ed95bc7bc97568e573877d4f9b62db48",
+                "reference": "04958a10ed95bc7bc97568e573877d4f9b62db48",
                 "shasum": ""
             },
             "require": {
@@ -50,21 +50,20 @@
                 "rest",
                 "router"
             ],
-            "time": "2014-04-05 18:33:59"
+            "time": "2014-12-09 19:59:29"
         },
         {
             "name": "slim/views",
-            "version": "0.1.2",
-            "target-dir": "Slim/Views",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeguy/Slim-Views.git",
-                "reference": "f0a05ea0b654218e40de692ed7cddcad1cf4b828"
+                "reference": "8561c785e55a39df6cb6f95c3aba3281a60ed5b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeguy/Slim-Views/zipball/f0a05ea0b654218e40de692ed7cddcad1cf4b828",
-                "reference": "f0a05ea0b654218e40de692ed7cddcad1cf4b828",
+                "url": "https://api.github.com/repos/codeguy/Slim-Views/zipball/8561c785e55a39df6cb6f95c3aba3281a60ed5b0",
+                "reference": "8561c785e55a39df6cb6f95c3aba3281a60ed5b0",
                 "shasum": ""
             },
             "require": {
@@ -77,8 +76,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Slim\\Views": ""
+                "psr-4": {
+                    "Slim\\Views\\": "./"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -87,14 +86,14 @@
             ],
             "authors": [
                 {
-                    "name": "Andrew Smith",
-                    "email": "a.smith@silentworks.co.uk",
-                    "homepage": "http://www.silentworks.co.uk/"
-                },
-                {
                     "name": "Josh Lockhart",
                     "email": "info@joshlockhart.com",
                     "homepage": "http://www.joshlockhart.com/"
+                },
+                {
+                    "name": "Andrew Smith",
+                    "email": "a.smith@silentworks.co.uk",
+                    "homepage": "http://thoughts.silentworks.co.uk/"
                 }
             ],
             "description": "Smarty and Twig View Parser package for the Slim Framework",
@@ -104,25 +103,36 @@
                 "slimphp",
                 "templating"
             ],
-            "time": "2014-04-03 16:31:10"
+            "time": "2014-12-09 23:48:51"
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.19",
+            "version": "v3.1.21",
             "source": {
-                "type": "svn",
-                "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.19/@4867"
+                "type": "git",
+                "url": "https://github.com/smarty-php/smarty.git",
+                "reference": "1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a",
+                "reference": "1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
-                    "distribution/libs/Smarty.class.php",
-                    "distribution/libs/SmartyBC.class.php",
-                    "distribution/libs/sysplugins/smarty_security.php"
+                    "libs/Smarty.class.php",
+                    "libs/SmartyBC.class.php",
+                    "libs/sysplugins/smarty_security.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -148,27 +158,20 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-08-07 20:42:11"
+            "time": "2014-10-31 04:22:20"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.0",
         "ext-pdo_mysql": "*",
         "ext-gettext": "*",
         "ext-mcrypt": "*"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
