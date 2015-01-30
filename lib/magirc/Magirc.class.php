@@ -21,7 +21,8 @@ class Magirc {
 
 	private function initializeFramework() {
 		return new \Slim\Slim(array(
-			'view' => new \Slim\Views\Smarty()
+			'view' => new \Slim\Views\Smarty(),
+			'debug' => true
 		));
 	}
 

@@ -40,4 +40,3 @@ $setup->tpl->assign('dump', $dump);
 $setup->tpl->assign('updated', $updated);
 $setup->tpl->assign('version', DB_VERSION);
 $setup->tpl->display('step2.tpl');
-?>

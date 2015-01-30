@@ -12,5 +12,3 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 $setup->tpl->assign('admins', $setup->checkAdmins());
 $setup->tpl->assign('error', !$success);
 $setup->tpl->display('step3.tpl');
-
-?>
