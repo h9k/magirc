@@ -272,6 +272,9 @@ class Setup {
 				$this->db->insert('magirc_config', array('parameter' => 'block_pchans', 'value' => $block_spchans['value']));
 				$this->db->delete('magirc_config', array('parameter' => 'block_spchans'));
 			}
+			if ($version < 17) {
+				$this->db->delete('magirc_config', array('parameter' => 'service_searchirc'));
+			}
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}
