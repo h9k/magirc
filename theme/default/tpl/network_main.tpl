@@ -12,11 +12,9 @@
 		<li title="operators"><a href="index.php/network/operators">{t}Operators{/t}</a></li>
         <li title="history"><a href="index.php/network/history">{t}History{/t}</a></li>
 		{if $cfg->service_netsplit}<li title="netsplit"><a href="index.php/network/netsplit">{t}Netsplit Graphs{/t}</a></li>{/if}
-		{if $cfg->service_searchirc}<li title="searchirc"><a href="index.php/network/searchirc">{t}Searchirc Graphs{/t}</a></li>{/if}
 		{if $cfg->service_mibbitid}<li title="mibbit"><a href="index.php/network/mibbit">{t}Mibbit Graphs{/t}</a></li>{/if}
 	</ul>
 </div>
-{if $cfg->service_searchirc}<div id="searchirc_html" style="display:none;"><script type="text/javascript" src="http://searchirc.com/official_rank.php?ID={$cfg->service_searchirc}&amp;outof=1"></script></div>{/if}
 {/block}
 
 {block name="js" append}

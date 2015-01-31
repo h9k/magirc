@@ -12,26 +12,9 @@
 		<tr>
 			<td align="right">
 				<strong>Mibbit settings key</strong>
+				<br />This enables links to the Mibbit web chat
 			</td>
 			<td align="left"><input name="service_mibbit" type="text" id="service_mibbit" value="{$cfg->service_mibbit}" size="32" maxlength="64" /></td>
-		</tr>
-		<tr>
-			<td align="right">
-				<strong>SearchIRC ID</strong>
-				<br />Set your network ID of SearchIRC features.
-				<br />For more information about being ranked on SearchIRC visit <a href="http://searchirc.com/">http://searchirc.com/</a>
-				<br />To find out your ID go to your network information page<br />(usually http://searchirc.com/network/YourNetwork)
-				<br />then right click on the Users graph on the right to get its path<br />and get the number from the 'n=' parameter
-			</td>
-			<td align="left"><input name="service_searchirc" type="text" id="service_searchirc" value="{$cfg->service_searchirc}" size="32" maxlength="64" /></td>
-		</tr>
-		<tr>
-			<td align="right">
-				<strong>Netsplit ID</strong>
-				<br />The URL parameter for the Netsplit.de features, usually your network name.
-				<br />For more information about being ranked on Netsplit.de visit <a href="http://irc.netsplit.de/">http://irc.netsplit.de/</a>
-			</td>
-			<td align="left"><input name="service_netsplit" type="text" id="service_netsplit" value="{$cfg->service_netsplit}" size="32" maxlength="64" /></td>
 		</tr>
 		<tr>
 			<td align="right">
@@ -42,6 +25,14 @@
 				<br />then right click on the graph on the left to get its path<br />and get the number from the png's name : 1234_week.png
 			</td>
 			<td align="left"><input name="service_mibbitid" type="text" id="service_mibbitid" value="{$cfg->service_mibbitid}" size="32" maxlength="64" /></td>
+		</tr>
+		<tr>
+			<td align="right">
+				<strong>Netsplit ID</strong>
+				<br />The URL parameter for the Netsplit.de features, usually your network name.
+				<br />For more information about being ranked on Netsplit.de visit <a href="http://irc.netsplit.de/">http://irc.netsplit.de/</a>
+			</td>
+			<td align="left"><input name="service_netsplit" type="text" id="service_netsplit" value="{$cfg->service_netsplit}" size="32" maxlength="64" /></td>
 		</tr>
 		<tr>
 			<td align="right"><strong>Enable AddThis sharing buttons</strong></td>

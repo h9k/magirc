@@ -23,13 +23,8 @@
 
 <table>
 	<tr>
-		<td><div id="chart_line" style="height: 175px; width: {if $cfg->service_searchirc}446{else}560{/if}px;"></div></td>
+		<td><div id="chart_line" style="height: 175px; width: 560px;"></div></td>
 		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
-		{if $cfg->service_searchirc}<td style="width: 114px; margin: auto; vertical-align: top; text-align: center;">
-			<img height="40" width="114" border="0" alt="Overall_Ranking" src="http://searchirc.com/img/ranked_logo.gif">
-			<br /><a target="_blank" href="http://searchirc.com/rank/{$cfg->service_searchirc}">{$cfg->net_name}</a>
-			<br /><span id="searchirc_ranking"></span>
-		</td>{/if}
 	</tr>
 </table>
 
@@ -90,7 +85,6 @@
 {jsmin}
 <script type="text/javascript">
 var welcome_msg = '{$cfg->welcome_mode}';
-var searchirc = '{$cfg->service_searchirc}';
 {literal}
 $(document).ready(function() {
 	if (welcome_msg == 'statuspage') {
@@ -241,9 +235,6 @@ $(document).ready(function() {
 	$("#tbl_top10users tbody").on("click", "tr", function(event) {
 		if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile';
 	});
-	if (searchirc) {
-		$("#searchirc_ranking").html($(".searchirc6").html());
-	}
 });
 {/literal}
 </script>
