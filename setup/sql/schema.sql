@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `magirc_config` (
 -- Dumping data for table `magirc_config`
 --
 
-INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '16'),
+INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', '17'),
 ('base_url', ''),
 ('service', 'anope'),
 ('net_name', 'MyNetwork'),
@@ -41,7 +41,6 @@ INSERT IGNORE INTO `magirc_config` (`parameter`, `value`) VALUES ('db_version', 
 ('rewrite_enable', '0'),
 ('service_adsense_id', ''),
 ('service_adsense_channel', ''),
-('service_searchirc', ''),
 ('service_netsplit', ''),
 ('service_webchat', ''),
 ('service_mibbit', ''),
