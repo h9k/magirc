@@ -2,9 +2,8 @@
 
 <form>
 	<div id="netsplit_type" class="choser">
-		<input type="radio" id="nstype0" name="nstype" checked="checked" /><label for="nstype0">{t}Last two weeks{/t}</label>
-		<input type="radio" id="nstype1" name="nstype" /><label for="nstype1">{t}Last two months{/t}</label>
-		<input type="radio" id="nstype2" name="nstype" /><label for="nstype2">{t}Last two years{/t}</label>
+		<input type="radio" id="nstype0" name="nstype" checked="checked" /><label for="nstype0">{t}Last week{/t}</label>
+		<input type="radio" id="nstype2" name="nstype" /><label for="nstype2">{t}Last year{/t}</label>
 		<input type="radio" id="nstype3" name="nstype" /><label for="nstype3">{t}Complete history{/t}</label>
 	</div>
 </form>
@@ -29,10 +28,10 @@
 <script type="text/javascript">
 {literal}
 $(document).ready(function() {
-	var types_lang_relation = { 'weeks': mLang.NetsplitRelWeeks, 'months': mLang.NetsplitRelMonths, 'years': mLang.NetsplitRelYears };
-	var types_lang_channels = { 'weeks': mLang.NetsplitChanWeeks, 'months': mLang.NetsplitChanMonths, 'years': mLang.NetsplitChanYears };
-	var types_lang_servers = { 'weeks': mLang.NetsplitSrvWeeks, 'months': mLang.NetsplitSrvMonths, 'years': mLang.NetsplitSrvYears };
-	var types = [ 'weeks', 'months', 'years', 'history' ];
+	var types_lang_relation = { 'week': mLang.NetsplitRelWeek, 'year': mLang.NetsplitRelYear };
+	var types_lang_channels = { 'week': mLang.NetsplitChanWeek, 'year': mLang.NetsplitChanYear };
+	var types_lang_servers = { 'week': mLang.NetsplitSrvWeek, 'year': mLang.NetsplitSrvYear };
+	var types = [ 'week', 'year', 'history' ];
 	var type = types[0];
 	$("#netsplit_type").buttonset();
     $("#netsplit_type").change(function() {
@@ -43,16 +42,16 @@ $(document).ready(function() {
 		if (type == 'history') {
 			$("#netsplit_normal").hide();
 			$("#netsplit_complete").show();
-			$("#netsplit_history").attr('src', 'http://irc.netsplit.de/tmp/networks/history_'+netsplit+'_uc.png');
+			$("#netsplit_history").attr('src', 'http://irc.netsplit.de/tmp/networks/stats-'+netsplit+'-history-uc.png');
 		} else {
 			$("#netsplit_complete").hide();
 			$("#netsplit_normal").show();
-			$("#netsplit_relation").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_uc.png');
-			$("#netsplit_channels").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_c.png');
-			$("#netsplit_servers").attr('src', 'http://irc.netsplit.de/tmp/networks/'+type+'_'+netsplit+'_s.png');
+			$("#netsplit_relation").attr('src', 'http://irc.netsplit.de/tmp/networks/stats-'+netsplit+'-'+type+'-uc.png');
+			$("#netsplit_channels").attr('src', 'http://irc.netsplit.de/tmp/networks/stats-'+netsplit+'-'+type+'-c.png');
+			$("#netsplit_servers").attr('src', 'http://irc.netsplit.de/tmp/networks/stats-'+netsplit+'-'+type+'-s.png');
 			$("#netsplit_range_relation").text(types_lang_relation[type]);
-			$("#netsplit_range_relation").text(types_lang_channels[type]);
-			$("#netsplit_range_relation").text(types_lang_servers[type]);
+			$("#netsplit_range_channels").text(types_lang_channels[type]);
+			$("#netsplit_range_servers").text(types_lang_servers[type]);
 		}
 	}
 	updateNetsplit(type);

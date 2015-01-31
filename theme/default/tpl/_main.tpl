@@ -94,9 +94,9 @@
 {/block}
 {block name="js"}
 {if $cfg->cdn_enable}
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 {else}
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
@@ -164,15 +164,12 @@ var mLang = {
 	"CountryStatistics": "{t}Country Statistics{/t}",
 	"ClientStatistics": "{t}Client Statistics{/t}",
 	"None": "{t}none{/t}",
-	"NetsplitRelWeeks": "{t}Relation of users and channels during the last 2 weeks{/t}",
-	"NetsplitRelMonths": "{t}Relation of users and channels during the last 2 months{/t}",
-	"NetsplitRelYears": "{t}Relation of users and channels during the last 2 years{/t}",
-	"NetsplitChanWeeks": "{t}Channels during the last 2 weeks{/t}",
-	"NetsplitChanMonths": "{t}Channels during the last 2 months{/t}",
-	"NetsplitChanYears": "{t}Channels during the last 2 years{/t}",
-	"NetsplitSrvWeeks": "{t}Servers during the last 2 weeks{/t}",
-	"NetsplitSrvMonths": "{t}Servers during the last 2 months{/t}",
-	"NetsplitSrvYears": "{t}Servers during the last 2 years{/t}",
+	"NetsplitRelWeek": "{t}Relation of users and channels during the last week{/t}",
+	"NetsplitRelYear": "{t}Relation of users and channels during the last year{/t}",
+	"NetsplitChanWeek": "{t}Channels during the last week{/t}",
+	"NetsplitChanYear": "{t}Channels during the last year{/t}",
+	"NetsplitSrvWeek": "{t}Servers during the last week{/t}",
+	"NetsplitSrvYear": "{t}Servers during the last year{/t}",
 	"MibbitRelDay": "{t}Day{/t}",
 	"MibbitRelWeek": "{t}Week{/t}",
 	"MibbitRelMonth": "{t}Month{/t}",
