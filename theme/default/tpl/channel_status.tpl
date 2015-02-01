@@ -56,7 +56,7 @@ $(document).ready(function() {
     }
     function updateContent() {
         loadContent();
-        table_users.ajax.reload();
+        table_users.ajax.reload(null, false);
     }
     function loadContent() {
         $.getJSON('rest/service.php/channels/'+target, function(result) {

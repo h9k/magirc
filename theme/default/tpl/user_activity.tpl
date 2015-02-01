@@ -49,7 +49,7 @@ $(document).ready(function() {
     }
     function updateContent() {
         loadContent();
-        table.ajax.reload();
+        table.ajax.reload(null, false);
     }
     function loadContent() {
         $.getJSON(getUrl('hourly') +'/'+type, function(result) {

@@ -19,7 +19,7 @@ $(document).ready(function() {
     }
     function updateContent() {
         loadContent();
-        table_countries.ajax.reload();
+        table_countries.ajax.reload(null, false);
     }
     function loadContent() {
         $.getJSON('rest/service.php/network/countries/percent', function(data) {

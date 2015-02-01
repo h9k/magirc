@@ -30,7 +30,7 @@ $(document).ready(function() {
     }
     function updateContent() {
         loadContent();
-        table_activity.ajax.reload();
+        table_activity.ajax.reload(null, false);
     }
     function loadContent() {
         $.getJSON('rest/service.php/channels/'+target+'/hourly/'+type, function(result) {

@@ -162,9 +162,9 @@ $(document).ready(function() {
 		});
 	}
 	function updateTables() {
-		table1.ajax.reload();
-		table2.ajax.reload();
-		table3.ajax.reload();
+		table1.ajax.reload(null, false);
+		table2.ajax.reload(null, false);
+		table3.ajax.reload(null, false);
 	}
 	function initData() {
 		var data = [], time = (new Date()).getTime();

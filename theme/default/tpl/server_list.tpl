@@ -30,7 +30,7 @@ $(document).ready(function() {
         setInterval(updateContent, refresh_interval);
     }
     function updateContent() {
-        table_servers.ajax.reload();
+        table_servers.ajax.reload(null, false);
     }
 	var table_servers = $('#tbl_servers').DataTable({
 		"pageLength": 25,

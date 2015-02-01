@@ -19,7 +19,7 @@ $(document).ready(function() {
     }
     function updateContent() {
         loadContent();
-        table_clients.ajax.reload();
+        table_clients.ajax.reload(null, false);
     }
     function loadContent() {
         $.getJSON('rest/service.php/network/clients/percent', function(data) {

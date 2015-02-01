@@ -21,7 +21,7 @@ $(document).ready(function() {
         setInterval(updateContent, refresh_interval);
     }
     function updateContent() {
-        table_channels.ajax.reload();
+        table_channels.ajax.reload(null, false);
     }
 	var table_channels = $('#tbl_channels').DataTable({
 		"serverSide": true,

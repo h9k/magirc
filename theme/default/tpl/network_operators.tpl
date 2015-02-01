@@ -20,7 +20,7 @@ $(document).ready(function() {
         setInterval(updateContent, refresh_interval);
     }
     function updateContent() {
-        table_operators.ajax.reload();
+        table_operators.ajax.reload(null, false);
     }
 	var table_operators = $('#tbl_operators').DataTable({
 		"pageLength": 25,

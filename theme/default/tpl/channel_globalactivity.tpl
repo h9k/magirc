@@ -26,7 +26,7 @@ $(document).ready(function() {
         setInterval(updateContent, refresh_interval);
     }
     function updateContent() {
-        table_activity.ajax.reload();
+        table_activity.ajax.reload(null, false);
     }
 	var type = 'monthly';
 	var table_activity = $('#tbl_activity').DataTable({
