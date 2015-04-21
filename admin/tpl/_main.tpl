@@ -13,7 +13,7 @@
 <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 <link href="css/datatables.css" rel="stylesheet" type="text/css" />
 {if $cfg->cdn_enable}
-<link href='http://fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
 {else}
 <link href="css/font.css" rel="stylesheet" type="text/css" />
 {/if}
