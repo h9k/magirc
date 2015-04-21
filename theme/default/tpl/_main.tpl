@@ -14,7 +14,7 @@
 <link href="theme/{$cfg->theme}/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 <link href="theme/{$cfg->theme}/css/datatables.css" rel="stylesheet" type="text/css" />
 {if $cfg->cdn_enable}
-<link href='http://fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
 {else}
 <link href="theme/{$cfg->theme}/css/font.css" rel="stylesheet" type="text/css" />
 {/if}
@@ -51,7 +51,7 @@
 		google_color_text = "666666";
 		google_color_url = "0066CC";
 		</script>
-		<div style="width:728px; margin:auto;"><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
+		<div style="width:728px; margin:auto;"><script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
 	{/if}
 </div>
 <div id="footer">
@@ -78,7 +78,7 @@
 				<a class="addthis_button_compact"></a>
 				<a class="addthis_counter addthis_bubble_style"></a>
 				</div>
-				<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+				<script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
 				{/if}
 			</td>
 			<td style="text-align:right;">powered by <a href="http://www.magirc.org/">MagIRC</a>{if $cfg->version_show} v{$smarty.const.VERSION_FULL}-{$cfg->service}{/if}</td>
