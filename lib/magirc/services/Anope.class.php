@@ -766,13 +766,16 @@ class Anope implements Service {
 		if (!$data) {
 			return 404;
 		}
-		if ($this->cfg->block_schans && Protocol::chan_secret_mode && strpos($data['modes'], Protocol::chan_secret_mode) !== false) {
+
+		list($modes) = explode(' ', $data['modes']);
+
+		if ($this->cfg->block_schans && Protocol::chan_secret_mode && strpos($modes, Protocol::chan_secret_mode) !== false) {
 			return 403;
 		}
-		if ($this->cfg->block_pchans && Protocol::chan_private_mode && strpos($data['modes'], Protocol::chan_private_mode) !== false) {
+		if ($this->cfg->block_pchans && Protocol::chan_private_mode && strpos($modes, Protocol::chan_private_mode) !== false) {
 			return 403;
 		}
-		if (strpos($data['modes'], 'i') !== false || strpos($data['modes'], 'k') !== false || strpos($data['modes'], 'O') !== false) {
+		if (strpos($modes, 'i') !== false || strpos($modes, 'k') !== false || strpos($modes, 'O') !== false) {
 			return 403;
 		} else {
 			return 200;
