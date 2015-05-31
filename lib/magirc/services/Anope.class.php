@@ -427,7 +427,7 @@ class Anope implements Service {
 	 * @return array of User
 	 */
 	public function getOperatorList() {
-		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
+		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked, u.vhost AS vhost,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
 			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, u.modes AS umodes
 			FROM `%s` AS u
@@ -595,7 +595,7 @@ class Anope implements Service {
 		if ($this->checkChannel($chan) != 200) {
 			return null;
 		}
-		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
+		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked, u.vhost AS vhost,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
 			u.geocode AS country_code, u.geocountry AS country, s.ulined AS service, i.modes AS cmodes
 			FROM `%s` AS i
@@ -832,7 +832,7 @@ class Anope implements Service {
 	 */
 	public function getUser($mode, $user) {
 		$info = $this->getUserData($mode, $user);
-		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked,
+		$query = sprintf("SELECT u.nick AS nickname, u.realname, u.host AS hostname, u.chost AS hostname_cloaked, u.vhost AS vhost,
 			u.ident AS username, u.signon AS connect_time, u.server, u.away, u.awaymsg AS away_msg, u.version AS client,
 			u.geocode AS country_code, u.geocountry AS country, u.geocity AS city, u.georegion AS region, s.ulined AS service, u.modes AS umodes
 			FROM `%s` AS u

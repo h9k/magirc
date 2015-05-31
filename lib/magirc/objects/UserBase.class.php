@@ -5,6 +5,7 @@ abstract Class UserBase {
 	public $realname;
 	public $hostname;
 	public $hostname_cloaked;
+	public $vhost;
 	public $username;
 	public $swhois;
 	public $connect_time;
@@ -45,7 +46,9 @@ abstract Class UserBase {
 		if (filter_var($this->hostname, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)){
 			$this->ipv6 = true;
 		}
-		if (Protocol::host_cloaking && !empty($this->hostname_cloaked)) {
+		if (!empty($this->vhost)) {
+			$this->hostname = $this->vhost;
+		} elseif (Protocol::host_cloaking && !empty($this->hostname_cloaked)) {
 			$this->hostname = $this->hostname_cloaked;
 		}
 		if (!Protocol::oper_hidden_mode || !$this->hasMode(Protocol::oper_hidden_mode)) {
