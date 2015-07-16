@@ -818,6 +818,15 @@ class Anope implements Service {
 				$user = $this->getUser('stats', $row['uname']);
 				if (!$user) {
 					$user = new User();
+					$user->nickname = $row['uname'];
+					$user->country = 'Unknown';
+					$user->country_code = '';
+					$user->online = false;
+					$user->away = false;
+					$user->bot = false;
+					$user->service = false;
+					$user->operator = false;
+					$user->helper = false;
 				}
 				$user->uname = $row['uname'];
 				$user->lines = $row['lines'];
