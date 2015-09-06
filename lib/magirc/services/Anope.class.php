@@ -701,7 +701,18 @@ class Anope implements Service {
 			}
 			// Get country code and online status
 			$user = $this->getUser('stats', $row['uname']);
-			if (!$user) $user = new User();
+			if (!$user) {
+				$user = new User();
+				$user->nickname = $row['uname'];
+				$user->country = 'Unknown';
+				$user->country_code = '';
+				$user->online = false;
+				$user->away = false;
+				$user->bot = false;
+				$user->service = false;
+				$user->operator = false;
+				$user->helper = false;
+			}
 			foreach ($row as $key => $val) {
 				$user->$key = $val;
 			}
