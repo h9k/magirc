@@ -14,7 +14,7 @@
 	<img id="mibbit_relation" src="" alt="" />
 </div>
 
-<br />{t}More on{/t} <a href="http://search.mibbit.com/networks/{$cfg->net_name}" rel="external" target="_blank">Mibbit</a>
+<br />{t}More on{/t} <a href="https://search.mibbit.com/networks/{$cfg->net_name}" rel="external" target="_blank">Mibbit</a>
 
 {jsmin}
 <script type="text/javascript">
@@ -29,7 +29,7 @@ $(document).ready(function() {
 		updateMibbit(type);
 	});
 	function updateMibbit(type) {
-		$("#mibbit_relation").attr('src', 'http://netgraphs.mibbit.com/graphs/'+mibbitid+'_'+type+'.png');
+		$("#mibbit_relation").attr('src', 'https://netgraphs.mibbit.com/graphs/'+mibbitid+'_'+type+'.png');
 		$("#mibbit_range_relation").text(types_lang_relation[type]);
 	}
 	updateMibbit(type);
