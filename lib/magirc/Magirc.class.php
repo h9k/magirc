@@ -198,7 +198,7 @@ class Magirc {
 				if (is_array($data[$key])) $data[$key]["DT_RowId"] = $val[$idcolumn];
 				else $data[$key]->DT_RowId = $val->$idcolumn;
 			}
-			echo json_encode(array('aaData' => $data));
+			echo json_encode(array('data' => $data));
 		} else {
 			echo json_encode($data);
 		}
