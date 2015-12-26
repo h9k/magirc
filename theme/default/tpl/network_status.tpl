@@ -183,7 +183,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/channels/biggest/10?format=datatables",
 		"columns": [
 			{ "data": "channel", "render": function (data) {
-				return getChannelLinks(data) + ' ' + escapeTags(data);
+				return getChannelLinks() + ' ' + escapeTags(data);
 			} },
 			{ "data": "users" }
 		]
@@ -205,7 +205,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/channels/top/10?format=datatables",
 		"columns": [
 			{ "data": "channel", "render": function (data) {
-				return getChannelLinks(data) + ' ' + escapeTags(data);
+				return getChannelLinks() + ' ' + escapeTags(data);
 			} },
 			{ "data": "lines" }
 		]

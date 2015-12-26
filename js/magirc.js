@@ -5,7 +5,7 @@ $(document).ready(function() {
 	}).ajaxStop(function(){
 		$(this).hide();
 	});
-	$("#locale").change(function(data) {
+	$("#locale").change(function() {
 		$.cookie("magirc_locale", $("#locale").val(), { expires: 30, path: '/' });
 		window.location.reload();
 	});
@@ -33,7 +33,7 @@ $(document).ready(function() {
 		"autoWidth": false,
 		"pagingType": "full_numbers",
 		"language": mLang.DataTables,
-		"createdRow": function( row, data, dataIndex ) {
+		"createdRow": function( row, data ) {
 			for (var i = 1; i < 4; i++) $("td:eq(" + i + ")", row).text(data[i]);
 		}
     });
@@ -130,7 +130,7 @@ $(document).ready(function() {
 				type: 'all',
 				text: mLang.zoom_All
 			}],
-			selected: 3
+			selected: 4
 		},
 		tooltip: { valueDecimals: 0, yDecimals: 0, xDateFormat: format_datetime_charts },
 		legend: { enabled: false },
@@ -173,7 +173,6 @@ $(document).ready(function() {
 				}
 			}
 		},
-		rangeSelector: { selected: 4 },
 		credits: { enabled: false }
 	});
 	menu = $('#chanmenu').menu({
@@ -185,7 +184,7 @@ $(document).ready(function() {
 					location.href = 'irc://'+net_roundrobin+':'+net_port+'/'+chan.replace('%23', '');
 					break;
 				case 'ircs':
-					location.href = 'irc://'+net_roundrobin+':+'+net_port_ssl+'/'+chan.replace('%23', '');
+					location.href = 'ircs://'+net_roundrobin+':'+net_port_ssl+'/'+chan.replace('%23', '');
 					break;
 				case 'webchat':
 					location.href = service_webchat + chan;
@@ -196,15 +195,15 @@ $(document).ready(function() {
 			}
 		}
 	}).hide().css({position: 'absolute', zIndex: 1});
-	$(document).on('mouseenter', '.chanbutton', function(event) {
+	$(document).on('mouseenter', '.chanbutton', function() {
 		$(this).removeClass('ui-state-default').addClass('ui-state-focus');
 	});
-	$(document).on('mouseleave', '.chanbutton', function(event) {
+	$(document).on('mouseleave', '.chanbutton', function() {
 		$(this).removeClass('ui-state-focus').addClass('ui-state-default');
 	});
 });
 
-function openChanMenu(element) {;
+function openChanMenu(element) {
 	menu.data('channel', $(element).parent().parent().attr('id'));
 	if (menu.is(':visible') ){
 		menu.hide();
@@ -243,7 +242,7 @@ function getCountryFlag(user) {
 		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="'+mLang.Unknown+'" />';
 	}
 }
-function getChannelLinks(chan) {
+function getChannelLinks() {
 	if (net_roundrobin || service_webchat) {
 		return '<button type="button" title="'+mLang.Join+'..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:18px; width:30px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>';
 	} else {
@@ -252,8 +251,8 @@ function getChannelLinks(chan) {
 }
 function getTimeElapsed(seconds) {
 	var days = Math.floor(seconds / 86400);
-	var hours = Math.floor((seconds - (days * 86400 ))/3600)
-	var minutes = Math.floor((seconds - (days * 86400 ) - (hours *3600 ))/60)
+	var hours = Math.floor((seconds - (days * 86400 ))/3600);
+	var minutes = Math.floor((seconds - (days * 86400 ) - (hours *3600 ))/60);
 	return days + " " + mLang.Days + " " + hours + " " + mLang.Hours + " " + minutes + " " + mLang.Minutes;
 }
 

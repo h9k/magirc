@@ -30,7 +30,7 @@ $(document).ready(function() {
 		"ajax": "rest/service.php/channels?format=datatables",
 		"columns": [
 			{ "data": "channel", "render": function (data) {
-				return getChannelLinks(data) + ' ' + escapeTags(data);
+				return getChannelLinks() + ' ' + escapeTags(data);
 			} },
 			{ "data": "users", "searchable": false },
 			{ "data": "users_max", "searchable": false },
@@ -39,10 +39,11 @@ $(document).ready(function() {
 			} }
 		]
 	});
-	$("#tbl_channels tbody").on("click", "tr", function(event) {
+	var tbody = $("#tbl_channels tbody");
+	tbody.on("click", "tr", function() {
 		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
 	});
-	$("#tbl_channels tbody").on("click", "tr button", function(event) {
+	tbody.on("click", "tr button", function(event) {
 		event.stopPropagation();
 		openChanMenu(this);
 	});
