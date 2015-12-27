@@ -20,7 +20,7 @@
 	{/if}
 	{if $cfg->net_roundrobin && $cfg->net_port_ssl}
 		<img src="theme/{$cfg->theme}/img/icons/ssl.png" alt="" title="{t}Secure connection{/t}" style="vertical-align:middle;" />
-		<a href="irc://{$cfg->net_roundrobin}:+{$cfg->net_port_ssl}/{$target|escape:"url"}">{t}IRC secure connection{/t}</a><br />
+		<a href="ircs://{$cfg->net_roundrobin}:{$cfg->net_port_ssl}/{$target|escape:"url"}">{t}IRC secure connection{/t}</a><br />
 	{/if}
 	{if $cfg->service_webchat}
 		<img src="theme/{$cfg->theme}/img/icons/webchat.png" alt="" title="{t}Webchat{/t}" style="vertical-align:middle;" />
