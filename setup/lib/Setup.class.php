@@ -27,12 +27,12 @@ class Setup {
 	public $tpl;
 
 	function __construct() {
-		$this->tpl = new Smarty;
-		$this->tpl->template_dir = 'tpl';
-		$this->tpl->compile_dir = '../tmp';
-		$this->tpl->cache_dir = 'tmp';
-		$this->tpl->autoload_filters = array('pre' => array('jsmin'));
-		$this->tpl->addPluginsDir('../lib/smarty-plugins/');
+		$loader = new Twig_Loader_Filesystem(__DIR__.'/../tpl');
+		$this->tpl = new Twig_Environment($loader, array(
+			'cache' => __DIR__ . '/../../tmp',
+			'debug' => true
+		));
+
 		// We skip db connection in the first steps for check purposes
 		if (@$_GET['step'] > 2) {
 			$this->db = Magirc_DB::getInstance();
@@ -46,7 +46,7 @@ class Setup {
 	function requirementsCheck() {
 		$status = array('error' => false);
 
-		if (version_compare("5.3.0", phpversion(), "<") == 1) {
+		if (version_compare("5.5.0", phpversion(), "<") == 1) {
 			$status['php'] = true;
 		} else {
 			$status['php'] = false;
@@ -93,13 +93,6 @@ class Setup {
 		} else {
 			$status['tmp'] = false;
 			$status['error'] = true;
-		}
-
-		if (get_magic_quotes_gpc()) {
-			$status['magic_quotes'] = true;
-			$status['error'] = true;
-		} else {
-			$status['magic_quotes'] = false;
 		}
 
 		return $status;

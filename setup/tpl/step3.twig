@@ -1,12 +1,12 @@
-{extends file="_main.tpl"}
+{% extends "layout.twig" %}
 
-{block name="content"}
+{% block content %}
 <h2>3. Admin check</h2>
 
-<pre>Checking for MagIRC Admin users... {if $admins}<span style="color:green;">Found</span>{else}<span style="color:red">Not found</span>{/if}</pre>
+<pre>Checking for MagIRC Admin users... {% if admins %}<span style="color:green;">Found</span>{% else %}<span style="color:red">Not found</span>{% endif %}</pre>
 
-{if !$admins}
-	{if $error}<pre>Creating Admin user... <span style="color:red;">Failed</span></pre>{/if}
+{% if not admins %}
+	{% if error %}<pre>Creating Admin user... <span style="color:red;">Failed</span></pre>{% endif %}
 	<p>You must now create a MagIRC admin user</p>
 	<form id="login" method="post" action="?step=3">
 		<table class="form">
@@ -21,8 +21,8 @@
 		</table>
 		<button type="submit" name="login" >Create</button>
 	</form>
-{else}
+{% else %}
 	<button class="next">Continue</button>
-{/if}
+{% endif %}
 
-{/block}
+{% endblock %}

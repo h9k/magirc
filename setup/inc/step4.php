@@ -1,3 +1,4 @@
 <?php
 
-$setup->tpl->display('step4.tpl');
+$template = $setup->tpl->loadTemplate('step4.twig');
+echo $template->render(array());

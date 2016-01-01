@@ -11,12 +11,10 @@ if (file_exists(MAGIRC_CFG_FILE)) {
 	if (isset($db) && is_array($db)) {
 		$setup->db = Magirc_DB::getInstance();
 		$status['error'] = $setup->db->error;
-		$setup->tpl->assign('db_magirc', $db);
 	} else {
 		$status['error'] = "Invalid configuration file";
 	}
 } else {
-	$setup->tpl->assign('db_magirc', array('username' => '', 'password' => '', 'database' => '', 'hostname' => 'localhost', 'port' => 3306, 'ssl' => false, 'ssl_key' => null, 'ssl_cert' => null, 'ssl_ca' => null));
 	$status['error'] = 'new';
 }
 
@@ -24,7 +22,6 @@ if (file_exists(MAGIRC_CFG_FILE)) {
 $dump = $check = $updated = false;
 if (!$status['error']) {
 	$check = $setup->configCheck();
-	$setup->tpl->assign('check', $check);
 	if (!$check) { // Dump sql file to db
 		$dump = $setup->configDump();
 		$base_url = $setup->generateBaseUrl();
@@ -34,9 +31,15 @@ if (!$status['error']) {
 	}
 }
 
-$setup->tpl->assign('magirc_conf', MAGIRC_CFG_FILE);
-$setup->tpl->assign('status', $status);
-$setup->tpl->assign('dump', $dump);
-$setup->tpl->assign('updated', $updated);
-$setup->tpl->assign('version', DB_VERSION);
-$setup->tpl->display('step2.tpl');
+$template = $setup->tpl->loadTemplate('step2.twig');
+echo $template->render(array(
+	'step' => 2,
+	'magirc_conf' => MAGIRC_CFG_FILE,
+	'status' => $status,
+	'dump' => $dump,
+	'updated' => $updated,
+	'version' => DB_VERSION,
+	'check' => $check,
+	'db_magirc' => file_exists(MAGIRC_CFG_FILE) ? @$db : array('username' => '', 'password' => '', 'database' => '', 'hostname' => 'localhost', 'port' => 3306, 'ssl' => false, 'ssl_key' => null, 'ssl_cert' => null, 'ssl_ca' => null),
+	'savedb' => isset($_POST['savedb'])
+));

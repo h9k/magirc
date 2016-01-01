@@ -9,6 +9,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 	$ps->bindParam(':password', $_POST['password'], PDO::PARAM_STR);
 	$success = $ps->execute();
 }
-$setup->tpl->assign('admins', $setup->checkAdmins());
-$setup->tpl->assign('error', !$success);
-$setup->tpl->display('step3.tpl');
+
+$template = $setup->tpl->loadTemplate('step3.twig');
+echo $template->render(array(
+	'step' => 3,
+	'admins' => $setup->checkAdmins(),
+	'error' => !$success
+));

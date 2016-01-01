@@ -16,7 +16,7 @@ pre { white-space:normal; }
 </style>
 </head>
 <body>
-{block name="body"}
+{% block body %}
 <div id="header">
 	<a href="./"><img src="../admin/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
 	<div id="loading"><img src="../admin/img/loading.gif" alt="loading..." /></div>
@@ -25,16 +25,16 @@ pre { white-space:normal; }
 	<div id="content">
 		<h1>Welcome to the MagIRC Setup</h1>
 		<p>Please follow the on-screen instructions to install MagIRC</p>
-		{block name="content"}[content placeholder]{/block}
+		{% block content %}[content placeholder]{% endblock %}
 	</div>
 </div>
 <div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a></div>
-{/block}
-{block name="js"}
+{% endblock %}
+{% block js %}
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../js/jquery.form.js"></script>
-<script type="text/javascript"><!--
+<script type="text/javascript">
 $(document).ready(function() {
 	$("#loading").ajaxStart(function(){
 		$(this).show();
@@ -42,9 +42,9 @@ $(document).ready(function() {
 		$(this).hide();
 	});
 	$("button").button();
-	$(".next").click(function() { window.location = '?step=' + {$smarty.get.step + 1}; });
+	$(".next").click(function() { window.location = '?step=' + {{ step + 1 }}; });
 });
---></script>
-{/block}
+</script>
+{% endblock %}
 </body>
 </html>
