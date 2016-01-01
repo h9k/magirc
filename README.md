@@ -10,7 +10,7 @@ In case you want to migrate from Denora to Anope, we created a script for this t
 
 ### Main features ###
 * REST service
-* [Smarty](http://www.smarty.net/) templating engine
+* [Twig](http://twig.sensiolabs.org) templating engine
 * [jQuery](http://www.jquery.com/)-based UI with AJAX interactions
 * HTML5 and CSS3
 * Easy installation
@@ -18,7 +18,7 @@ In case you want to migrate from Denora to Anope, we created a script for this t
 * Slick design
 
 ### Requirements ###
-* Web Server with PHP 5.3+ and the `pdo_mysql`, `mcrypt` and `gettext` modules installed
+* Web Server with PHP 5.5+ and the `pdo_mysql`, `mcrypt` and `gettext` modules installed
 * Web Browser supporting HTML5, CSS3 and JavaScript
 * Any of the following:
 	* [Denora Stats](http://www.denorastats.org) v1.5 server with MySQL enabled
@@ -118,32 +118,29 @@ This is optional, MagIRC also works without rewriting on Apache.
 It is also recommended, if you allow slashes `/` in your nicknames or channel names, to set `AllowEncodedSlashes On`
 
 ### Nginx ###
-Your Nginx configuration file should contain this code, if Magirc is in the document root :
+Your Nginx configuration file should look like this, adapted to your needs of course:
 
-    index index.php index.html;
-    location / {
-            try_files $uri $uri/ /index.php;
-    }
+    server {
+        listen 80;
+        server_name example.com;
+        index index.php;
+        error_log /path/to/example.error.log;
+        access_log /path/to/example.access.log;
+        root /path/to/public;
 
-    location ~ ^(/.*\.php)(/.*)?$ {
-            try_files $1 =404;
-            include /etc/nginx/fastcgi.conf;
-            fastcgi_pass  backend;
+        location / {
+            try_files $uri $uri/ /index.php$is_args$args;
+        }
+
+        location ~ \.php {
+            try_files $uri =404;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param SCRIPT_NAME $fastcgi_script_name;
             fastcgi_index index.php;
-    }
-
-or this for a directory in document root (`document_root/magirc_directory`) :
-
-    index index.php index.html;
-    location /magirc_directory {
-            try_files $uri $uri/ /magirc_directory/index.php;
-    }
-
-    location ~ ^(/magirc_directory/.*\.php)(/.*)?$ {
-            try_files $1 =404;
-            include /etc/nginx/fastcgi.conf;
-            fastcgi_pass  backend;
-            fastcgi_index index.php;
+            fastcgi_pass 127.0.0.1:9000;
+        }
     }
 
 This will work with or without Magirc rewrite.

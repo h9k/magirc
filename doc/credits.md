@@ -7,7 +7,7 @@ Used software
 MagIRC uses the following open source products developed by third parties:
 
 * [Slim Framework](http://www.slimframework.com)
-* [Smarty Template Engine](http://www.smarty.net)
+* [Twig](http://twig.sensiolabs.org)
 * [PHP-gettext](https://launchpad.net/php-gettext/)
 * [jQuery](http://www.jquery.com)
 * [jQuery-UI](http://www.jqueryui.com)
@@ -15,5 +15,3 @@ MagIRC uses the following open source products developed by third parties:
 * [Highcharts and Highstock](http://www.highcharts.com)
 * [jQuery dateFormat](https://github.com/phstc/jquery-dateFormat)
 * [CKEditor](http://www.ckeditor.com)
-* [Smarty JSMin Plugin](http://www.nsmith.me.uk/jsmin-smarty-wrapper/)
-* [Smarty Markdown Plugin](http://michelf.com/projects/php-markdown/)
