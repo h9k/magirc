@@ -1,13 +1,13 @@
-{extends file="_main.tpl"}
+{% extends "layout.twig" %}
 
-{block name="title" append}Overview{/block}
+{% block title %}{{ parent() }}Overview{% endblock %}
 
-{block name="content"}
+{% block content %}
 <div id="content" class="div.ui-tabs-panel">
 
 	<div class="halfleft">
 		<form id="logout" method="post" action="index.php/logout">
-			<h1>Welcome, {$smarty.session.username} <button type="submit" name="logout">Logout</button></h1>
+			<h1>Welcome, {{ username }} <button type="submit" name="logout">Logout</button></h1>
 		</form>
 		<p>Here you can configure your installation and get access to support resources</p>
 
@@ -21,12 +21,12 @@
 
 		<h3>Software information</h3>
 		<table>
-			<tr><th style="text-align:right;">MagIRC</th><td style="text-align:left;">{$smarty.const.VERSION_FULL}</td></tr>
-            <tr><th style="text-align:right;">Service</th><td style="text-align:left;">{$cfg->service}</td></tr>
-			<tr><th style="text-align:right;">IRCd</th><td style="text-align:left;">{$cfg->ircd_type}</td></tr>
-			<tr><th style="text-align:right;">PHP</th><td style="text-align:left;">{$version.php}</td></tr>
-			<tr><th style="text-align:right;">Slim Framework</th><td style="text-align:left;">{$version.slim}</td></tr>
-			<tr><th style="text-align:right;">Smarty</th><td style="text-align:left;">{$smarty.version}</td></tr>
+			<tr><th style="text-align:right;">MagIRC</th><td style="text-align:left;">{{ constant('VERSION_FULL') }}</td></tr>
+            <tr><th style="text-align:right;">Service</th><td style="text-align:left;">{{ cfg.service }}</td></tr>
+			<tr><th style="text-align:right;">IRCd</th><td style="text-align:left;">{{ cfg.ircd_type }}</td></tr>
+			<tr><th style="text-align:right;">PHP</th><td style="text-align:left;">{{ version.php }}</td></tr>
+			<tr><th style="text-align:right;">Slim Framework</th><td style="text-align:left;">{{ version.slim }}</td></tr>
+			<tr><th style="text-align:right;">Twig</th><td style="text-align:left;">{{ constant('Twig_Environment::VERSION') }}</td></tr>
 		</table>
 		<br /><img src="img/gplv3.png" alt="GPLv3" />
 	</div>
@@ -47,11 +47,11 @@
 		Please let us know any wishes you have or any bugs you encounter by opening a ticket in our <a href="https://github.com/h9k/magirc/issues">Issue Tracker</a>
 
 		<h2>Important notes</h2>
-		{if $setup}
+		{% if setup %}
 		<div class="warning">
 			<p>As a safety measure, please<br /><strong>remove the <em>setup/</em> directory</strong>!</p>
 		</div>
-		{/if}
+		{% endif %}
 		<div class="warning">
 			<p>You are using a beta version of MagIRC.<br />
 			This version should be usable but most certainly does contain bugs. 
@@ -62,15 +62,13 @@
 	<div class="clear"></div>
 
 </div>
-{/block}
+{% endblock %}
 
-{block name="js" append}
-{jsmin}
-<script type="text/javascript">{literal}
+{% block js %}
+{{ parent() }}
+<script type="text/javascript">
 $(document).ready(function() {
 	$("button").button();
 });
-{/literal}
 </script>
-{/jsmin}
-{/block}
+{% endblock %}

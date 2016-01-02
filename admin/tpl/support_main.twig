@@ -1,8 +1,8 @@
-{extends file="_main.tpl"}
+{% extends "layout.twig" %}
 
-{block name="title" append}Support{/block}
+{% block title %}{{ parent() }}Support{% endblock %}
 
-{block name="content"}
+{% block content %}
 <div id="tabs">
 	<ul>
 		<li title="readme"><a href="index.php/support/doc/readme">README</a></li>
@@ -13,11 +13,11 @@
 		<li title="license"><a href="index.php/support/doc/license">License</a></li>
 	</ul>
 </div>
-{/block}
+{% endblock %}
 
-{block name="js" append}
-{jsmin}
-<script type="text/javascript">{literal}
+{% block js %}
+{{ parent() }}
+<script type="text/javascript">
 $(document).ready(function() {
 	$( "#tabs" ).tabs({
 		beforeActivate: function(event, ui) {
@@ -41,7 +41,5 @@ $(document).ready(function() {
 		}
 	});
 });
-{/literal}
 </script>
-{/jsmin}
-{/block}
+{% endblock %}

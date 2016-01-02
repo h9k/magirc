@@ -1,0 +1,63 @@
+<h1>Welcome message</h1>
+<p>You can welcome your users, describe your network, and put whatever information you want in here.</p>
+<form id="welcome-form">
+	<input type="radio" name="welcome_mode" value="statuspage"{% if cfg.welcome_mode == 'statuspage' %} checked="checked"{% endif %} /> Show the welcome message on the live network status page<br />
+	<input type="radio" name="welcome_mode" value="ownpage"{% if cfg.welcome_mode == 'ownpage' %} checked="checked"{% endif %} /> Show the welcome message as a separate tab in the network section<br />
+	<input type="radio" name="welcome_mode" value="disabled"{% if cfg.welcome_mode == 'disabled' %} checked="checked"{% endif %} /> Disable the welcome message<br />
+</form>
+<br />
+<form id="content-form">{{ content|raw }}</form>
+<br /><button id="welcome-submit" type="button">Save</button>
+
+<script type="text/javascript" src="../vendor/ckeditor/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#welcome-submit").button().click(function() {
+		var success = true;
+		$("#welcome-form").ajaxSubmit({
+			url: 'index.php/configuration',
+			type: 'post',
+			success: function(data) {
+				if (!data) success = false; 
+			}
+		});
+		$("#content-form").ajaxSubmit({
+			url: 'index.php/content',
+			type: 'post',
+			data: { welcome: CKEDITOR.instances['content-form'].getData() },
+			success: function(data) {
+				if (!data) success = false;
+			}
+		});
+		if (success) $("#success").show().delay(1500).fadeOut(500);
+		else $("#failure").show().delay(1500).fadeOut(500);
+	});
+
+	CKEDITOR.replace( 'content-form', {
+		language: 'en',
+		height: 300,
+		width: 740,
+		baseHref: '../',
+		contentsCss: ['../theme/{{ cfg.theme }}/css/styles.css', '../theme/{{ cfg.theme }}/css/editor.css', 'http://fonts.googleapis.com/css?family=Share'],
+		docType: '<!DOCTYPE html>',
+		emailProtection: 'encode',
+		entities: true,
+		forcePasteAsPlainText: true,
+		language: 'en',
+		resizeEnabled: true,
+		toolbar: [
+			['Maximize','ShowBlocks','Preview','Templates'],
+			['Cut','Copy','PasteText','-','Print','Scayt'],
+			['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+			['Source'],
+			['Link','Unlink','Anchor'],
+			['Image','Table','HorizontalRule','Smiley','SpecialChar'],
+			'/',
+			['Format','FontSize','TextColor','BGColor'],
+			['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+			['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+			['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']
+		]
+	});
+});
+</script>

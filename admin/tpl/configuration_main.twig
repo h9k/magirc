@@ -1,8 +1,8 @@
-{extends file="_main.tpl"}
+{% extends "layout.twig" %}
 
-{block name="title" append}Configuration{/block}
+{% block title %}{{ parent() }}Configuration{% endblock %}
 
-{block name="content"}
+{% block content %}
 <div id="tabs">
 	<ul>
 		<li title="interface"><a href="index.php/configuration/interface">System</a></li>
@@ -11,16 +11,16 @@
 		<li title="denora"><a href="index.php/configuration/service/denora">Denora</a></li>
 		<li title="anope"><a href="index.php/configuration/service/anope">Anope</a></li>
 		<li title="welcome"><a href="index.php/configuration/welcome">Welcome</a></li>
-		{*<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>*}
+		{#<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>#}
 	</ul>
 </div>
 <div id="success">Saved successfully</div>
 <div id="failure">Failed</div>
-{/block}
+{% endblock %}
 
-{block name="js" append}
-{jsmin}
-<script type="text/javascript">{literal}
+{% block js %}
+{{ parent() }}
+<script type="text/javascript">
 $(document).ready(function() {
 	$( "#tabs" ).tabs({
 		beforeActivate: function(event, ui) {
@@ -40,7 +40,5 @@ $(document).ready(function() {
 		}
 	});
 });
-{/literal}
 </script>
-{/jsmin}
-{/block}
+{% endblock %}

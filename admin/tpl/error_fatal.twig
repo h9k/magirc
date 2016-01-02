@@ -1,0 +1,20 @@
+{% extends "layout.twig" %}
+
+{% block title %}{{ parent() }}Error{% endblock %}
+
+{% block css %}<link href="css/bsod.css" rel="stylesheet" type="text/css" />{% endblock %}
+
+{% block body %}
+    *** STOP: {{ err_msg }}
+    <br /><br />
+    {% if constant('DEBUG') %}
+        {% if err_extra %}Trace:<br />{{ err_extra|raw }}<br /><br />{% endif %}
+        {% for key,item in server %}
+            {{ key }}: {{ item }}<br />
+        {% endfor %}
+    {% else %}
+        This should not have happened. Please contact the Administrator.<br />
+        If you are the Administrator, please enable Debug mode to see more information<br />
+        and submit it to the MagIRC developers. Thank you!
+    {% endif %}
+{% endblock %}

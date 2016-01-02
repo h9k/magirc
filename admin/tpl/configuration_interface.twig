@@ -1,0 +1,86 @@
+<form id="interface-form">
+	<h1>System settings</h1>
+	<table border="0" cellspacing="0" cellpadding="5">
+		<tr>
+			<td align="right"><strong>Base URL</strong><br />The URL MagIRC will be reachable under.<br />Please type in a full URL with http:// and a trailing /</td>
+			<td align="left"><input type="text" size="64" maxlength="255" name="base_url" value="{{ cfg.base_url }}" /></td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Operation mode</strong></td>
+			<td align="left">
+				<select name="service" id="service">
+					<option value="anope"{% if cfg.service == 'anope' %} selected="selected"{% endif %}>Anope 2.0</option>
+					<option value="denora"{% if cfg.service == 'denora' %} selected="selected"{% endif %}>Denora 1.5</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Theme</strong><br />This only applies to the frontend</td>
+			<td align="left">
+				<select name="theme" id="theme">
+				{% for item in themes %}
+					<option value="{{ item }}"{% if cfg.theme == item %} selected="selected"{% endif %}>{{ item }}</option>
+				{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Default Language</strong><br />Will not override automatic detection by browser</td>
+			<td align="left">
+				<select name="locale" id="locale">
+				{% for item in locales %}
+					<option value="{{ item }}"{% if cfg.locale == item %} selected="selected"{% endif %}>{{ item }}</option>
+				{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Timezone</strong></td>
+			<td align="left">
+				<select name="timezone" id="timezone">
+				{%for item in timezones %}
+					<option value="{{ item }}"{% if cfg.timezone == item %} selected="selected"{% endif %}>{{ item }}</option>
+				{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Enable CDN</strong><br />Improves performance</td>
+			<td align="left">yes <input type="radio" name="cdn_enable" value="1"{% if cfg.cdn_enable %} checked="checked"{% endif %} /> <input type="radio" name="cdn_enable" value="0"{% if not cfg.cdn_enable %} checked="checked"{% endif %} /> no</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Enable URL Rewrite</strong><br />Requires rewriting support on the web server.<br />For apache, please rename htaccess.txt to .htaccess</td>
+			<td align="left">yes <input type="radio" name="rewrite_enable" value="1"{% if cfg.rewrite_enable %} checked="checked"{% endif %} /> <input type="radio" name="rewrite_enable" value="0"{%if not cfg.rewrite_enable %} checked="checked"{% endif %} /> no</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Live update interval</strong><br />0 to disable</td>
+			<td align="left"><input type="text" size="3" maxlength="3" name="live_interval" value="{{ cfg.live_interval }}" /> seconds</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Show MagIRC version in footer</strong></td>
+			<td align="left">yes <input type="radio" name="version_show" value="1"{% if cfg.version_show %} checked="checked"{% endif %} /> <input type="radio" name="version_show" value="0"{%if not cfg.version_show %} checked="checked"{% endif %} /> no</td>
+		</tr>
+		<tr>
+			<td align="right"><strong>Debug mode</strong></td>
+			<td align="left">
+				<select name="debug_mode" id="debug_mode">
+					<option value="0"{% if cfg.debug_mode == '0' %} selected="selected"{% endif %}>Off</option>
+					<option value="1"{% if cfg.debug_mode == '1' %} selected="selected"{% endif %}>PHP Warnings/SQL Errors</option>
+					<option value="2"{% if cfg.debug_mode == '2' %} selected="selected"{% endif %}>Verbose debugging</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	<br /><button id="interface-submit" type="button">Save</button>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#interface-submit").button().click(function() {
+		$("#interface-form").ajaxSubmit({ url: 'index.php/configuration', type: 'post', success: function(data) {
+			if (data) $("#success").show().delay(1500).fadeOut(500);
+			else $("#failure").show().delay(1500).fadeOut(500);
+		} });
+	});
+});
+</script>

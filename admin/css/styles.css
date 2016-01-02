@@ -53,6 +53,12 @@ div#footer {
 div#footer a, div#footer a:visited { color:#FCFCFC; font-size:12px; font-weight:bold; text-decoration:none; }
 div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:underline; }
 div#loading { display:none; float:right; margin-top:25px; }
+div#errorbox {
+	text-align: center;
+	width: 500px;
+	margin: 0 auto;
+	padding-top: 200px;
+}
 
 div.halfleft { width:49%; float:left; }
 div.halfright { width:49%; float:right; }

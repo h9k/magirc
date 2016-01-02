@@ -1,0 +1,17 @@
+{% extends "layout.twig" %}
+
+{% block title %}{{ parent() }}Error{% endblock %}
+
+{% block content %}
+    <div id="errorbox">
+        <h1>Something happened!</h1>
+        {% if err_code == 403 or err_code == 405 %}
+            You don't have the rights to view the requested content.
+        {% elseif err_code ==  404 %}
+            The requested resource does not exist.
+        {% else %}
+            Unknown error.
+        {% endif %}
+        <br /><sub>Code: {{ err_code }}</sub>
+    </div>
+{% endblock %}
