@@ -1,0 +1,50 @@
+<h1>{% trans "Channel history" %}</h1>
+<div id="chart-history" style="height: 350px; min-width: 700px"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $.getJSON('rest/service.php/channels/history', function(data) {
+        new Highcharts.StockChart({
+            chart: { renderTo: 'chart-history' },
+			yAxis: { min: 0 },
+			rangeSelector: {
+				buttons: [{
+					type: 'day',
+					count: 1,
+					text: mLang.zoom_1d
+				},{
+					type: 'week',
+					count: 1,
+					text: mLang.zoom_1w
+				},{
+					type: 'month',
+					count: 1,
+					text: mLang.zoom_1m
+				}, {
+					type: 'month',
+					count: 3,
+					text: mLang.zoom_3m
+				}, {
+					type: 'month',
+					count: 6,
+					text: mLang.zoom_6m
+				}, {
+					type: 'year',
+					count: 1,
+					text: mLang.zoom_1y
+				}, {
+					type: 'all',
+					text: mLang.zoom_All
+				}],
+				selected: 3
+			},
+            series: [{
+                name: mLang.Channels,
+                data: data,
+                step: false,
+                tooltip: { valueDecimals: 0 }
+            }]
+        });
+    });
+});
+</script>

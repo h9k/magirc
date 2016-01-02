@@ -5,7 +5,7 @@ class User extends UserBase {
 	function __construct() {
 		parent::__construct();
 		
-		//TODO: Anope does not keep offline users
+		// Anope does not keep offline users
 		$this->online = true;
 		
 		// Oper mode

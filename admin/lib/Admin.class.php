@@ -50,7 +50,6 @@ class Admin {
                 $c['router'],
                 $c['request']->getUri()
             ));
-            $view->addExtension(new Twig_Extensions_Extension_I18n());
             $engine = new Aptoma\Twig\Extension\MarkdownEngine\MichelfMarkdownEngine();
             $view->addExtension(new \Aptoma\Twig\Extension\MarkdownExtension($engine));
             return $view;

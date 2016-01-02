@@ -10,18 +10,18 @@
  * NOTE: To make this work you should rename this file to customRoutes.inc.php
  */
 
-$magirc->slim->get('/custom/', function() use($magirc) {
-	$magirc->slim->render('custom.tpl', array(
+$magirc->slim->get('/custom/', function(Request $req,  Response $res, $args = []) use($magirc) {
+	$magirc->slim->view->render($res, 'custom.twig', [
 		'section' => 'custom',
 		'example' => 'Hello World',
 		'channels' => $magirc->service->getChannelList()
-	));
+	]);
 });
 
-$magirc->slim->get('/custom/:example', function($example) use($magirc) {
-	$magirc->slim->render('custom.tpl', array(
+$magirc->slim->get('/custom/{example}', function(Request $req,  Response $res, $args = []) use($magirc) {
+	$magirc->slim->view->render($res, 'custom.twig', [
 		'section' => 'custom',
-		'example' => $example,
+		'example' => $args['example'],
 		'channels' => $magirc->service->getChannelList()
-	));
+	]);
 });

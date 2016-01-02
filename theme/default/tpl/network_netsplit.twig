@@ -1,0 +1,57 @@
+<h1>{% trans "Netsplit.de Graphs" %}</h1>
+
+<form>
+	<div id="netsplit_type" class="choser">
+		<input type="radio" id="nstype0" name="nstype" checked="checked" /><label for="nstype0">{% trans "Last week" %}</label>
+		<input type="radio" id="nstype2" name="nstype" /><label for="nstype2">{% trans "Last year" %}</label>
+		<input type="radio" id="nstype3" name="nstype" /><label for="nstype3">{% trans "Complete history" %}</label>
+	</div>
+</form>
+
+<div id="netsplit_normal" style="width:560px; margin:auto;">
+	<h2><span id="netsplit_range_relation"></span></h2>
+	<img id="netsplit_relation" src="" alt="" />
+	<h2><span id="netsplit_range_channels"></span></h2>
+	<img id="netsplit_channels" src="" alt="" />
+	<h2><span id="netsplit_range_servers"></span></h2>
+	<img id="netsplit_servers" src="" alt="" />
+</div>
+
+<div id="netsplit_complete" style="width:560px; margin:auto; display:none">
+	<h2>{% trans "Complete measured history about users and channels" %}</h2>
+	<img id="netsplit_history" src="" alt="" />
+</div>
+
+<br />{% trans "More on" %} <a href="http://irc.netsplit.de/networks/{$cfg->service_netsplit}/" rel="external" target="_blank">Netsplit.de</a>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	var types_lang_relation = { 'week': mLang.NetsplitRelWeek, 'year': mLang.NetsplitRelYear };
+	var types_lang_channels = { 'week': mLang.NetsplitChanWeek, 'year': mLang.NetsplitChanYear };
+	var types_lang_servers = { 'week': mLang.NetsplitSrvWeek, 'year': mLang.NetsplitSrvYear };
+	var types = [ 'week', 'year', 'history' ];
+	var type = types[0];
+	$("#netsplit_type").buttonset();
+    $("#netsplit_type").change(function() {
+		type = types[$('input[name=nstype]:checked').index() / 2];
+		updateNetsplit(type);
+	});
+	function updateNetsplit(type) {
+		if (type == 'history') {
+			$("#netsplit_normal").hide();
+			$("#netsplit_complete").show();
+			$("#netsplit_history").attr('src', 'http://irc.netsplit.de/tmp/networks/stats-'+netsplit+'-history-uc.png');
+		} else {
+			$("#netsplit_complete").hide();
+			$("#netsplit_normal").show();
+			$("#netsplit_relation").attr('src', 'http://irc.netsplit.de/tmp/networks/stats-'+netsplit+'-'+type+'-uc.png');
+			$("#netsplit_channels").attr('src', 'http://irc.netsplit.de/tmp/networks/stats-'+netsplit+'-'+type+'-c.png');
+			$("#netsplit_servers").attr('src', 'http://irc.netsplit.de/tmp/networks/stats-'+netsplit+'-'+type+'-s.png');
+			$("#netsplit_range_relation").text(types_lang_relation[type]);
+			$("#netsplit_range_channels").text(types_lang_channels[type]);
+			$("#netsplit_range_servers").text(types_lang_servers[type]);
+		}
+	}
+	updateNetsplit(type);
+});
+</script>

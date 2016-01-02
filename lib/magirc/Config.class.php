@@ -2,7 +2,7 @@
 
 class Config {
 
-	private $config;
+	public $config;
 
 	function __construct() {
 		$this->loadConfig();

@@ -1,0 +1,55 @@
+{% extends "layout.twig" %}
+
+{% block title %}{{ parent() }}{% trans "Network" %}{% endblock %}
+
+{% block content %}
+<div id="tabs">
+	<ul>
+		{%if cfg.welcome_mode == 'ownpage' %}<li title="welcome"><a href="index.php/content/welcome">{% trans "Welcome" %}</a></li>{% endif %}
+		<li title="status"><a href="index.php/network/status">{% trans "Status" %}</a></li>
+		<li title="countries"><a href="index.php/network/countries">{% trans "Countries" %}</a></li>
+		<li title="clients"><a href="index.php/network/clients">{% trans "Clients" %}</a></li>
+		<li title="operators"><a href="index.php/network/operators">{% trans "Operators" %}</a></li>
+        <li title="history"><a href="index.php/network/history">{% trans "History" %}</a></li>
+		{%if cfg.service_netsplit %}<li title="netsplit"><a href="index.php/network/netsplit">{% trans "Netsplit Graphs" %}</a></li>{% endif %}
+		{%if cfg.service_mibbitid %}<li title="mibbit"><a href="index.php/network/mibbit">{% trans "Mibbit Graphs" %}</a></li>{% endif %}
+	</ul>
+</div>
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script type="text/javascript">
+var netsplit = '{{ cfg.service_netsplit }}';
+var mibbitid = '{{ cfg.service_mibbitid }}';
+$(document).ready(function() {
+	$("#tabs").tabs({
+		beforeActivate: function(event, ui) {
+			window.location.hash = ui.newTab.attr('title');
+		},
+		beforeLoad: function(event, ui) {
+			if (window.location.hash) {
+				var title = window.location.hash.substring(1, window.location.hash.length);
+				$("li[title='"+title+"'] a").trigger("click");
+			}
+			if (ui.tab.data("loaded")) {
+				event.preventDefault();
+				return;
+			}
+			ui.jqXHR.success(function() {
+				ui.tab.data("loaded", true);
+			});
+			ui.jqXHR.error(function() {
+				ui.panel.text(mLang.LoadError);
+			});
+		}
+	});
+	// Temporary fix to make sure netsplit generates the graphs we need
+	if (netsplit) {
+		$.get('http://irc.netsplit.de/networks/details.php.en?net='+netsplit+'&submenu=weeks');
+		$.get('http://irc.netsplit.de/networks/details.php.en?net='+netsplit+'&submenu=months');
+		$.get('http://irc.netsplit.de/networks/details.php.en?net='+netsplit+'&submenu=years');
+	}
+});
+</script>
+{% endblock %}

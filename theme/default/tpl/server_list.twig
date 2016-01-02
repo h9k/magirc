@@ -1,0 +1,49 @@
+<h1>{% trans "Server list" %}</h1>
+{%if cfg.net_roundrobin %}
+	{% trans "Connect to our network round robin" %} <strong>{{ cfg.net_roundrobin }}</strong>:
+	<a href="irc://{{ cfg.net_roundrobin }}{% if cfg.net_port %}:{{ cfg.net_port }}{% endif %}"><img src="theme/{{ cfg.theme }}/img/icons/server-link.png" alt="standard" title="{% trans "Standard connection" %}" /></a>
+	{%if cfg.net_port_ssl %} <a href="ircs://{{ cfg.net_roundrobin }}:{{ cfg.net_port_ssl }}"><img src="theme/{{ cfg.theme }}/img/icons/ssl.png" alt="ssl" title="{% trans "Secure connection" %}" /></a>{% endif %}
+	<br /><br />
+{% endif %}
+
+<table id="tbl_servers" class="display clickable">
+<thead>
+	<tr>
+		<th>{% trans "Status" %}</th>
+		<th>{% trans "Server" %}</th>
+		<th>{% trans "Description" %}</th>
+		<th>{% trans "Users" %}</th>
+		<th>{% trans "Operators" %}</th>
+	</tr>
+</thead>
+<tbody>
+	<tr><td colspan="5">{% trans "Loading" %}...</td></tr>
+</tbody>
+</table>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        table_servers.ajax.reload(null, false);
+    }
+	var table_servers = $('#tbl_servers').DataTable({
+		"pageLength": 25,
+		"order": [[ 1, "asc" ]],
+		"ajax": 'rest/service.php/servers?format=datatables',
+		"columns": [
+			{ "data": "online", "render": function (data, type, row, meta) { return data ? '<img src="theme/'+theme+'/img/status/online.png" alt="online" title="'+mLang.Online+'" \/>' : '<img src="theme/'+theme+'/img/status/offline.png" alt="offline" title="'+mLang.Offline+'" \/>'; } },
+			{ "data": "server", "render": function (data, type, row, meta) { return (stats_server == 'denora') ? getCountryFlag(row) + ' ' + data : data;} },
+			{ "data": "description" },
+			{ "data": "users" },
+			{ "data": "opers" }
+		]
+	});
+	$("#tbl_servers tbody").on("click", "tr", function(event) {
+		if (this.id) window.location = url_base + 'server/' + encodeURIComponent(this.id) + '/profile';
+	});
+});
+</script>

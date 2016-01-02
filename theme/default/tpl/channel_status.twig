@@ -1,0 +1,93 @@
+<h1>{% trans %}Channel info for {{ target }}{% endtrans %}</h1>
+
+<div class="halfleft">
+
+<div id="chan_topic_container">
+	<div id="chan_topic" class="topic"></div>
+	<div style="text-align:right;">{% trans "Topic set by" %} <span id="chan_topic_author" class="val"></span> {% trans "on" %} <span id="chan_topic_time" class="val"></span></div>
+</div>
+<br />
+<table class="details">
+	<tr><th>{% trans "Current users" %}:</th><td><span id="chan_users" class="val"></span></td></tr>
+	<tr><th>{% trans "User peak" %}:</th><td><span id="chan_users_max" class="val"></span> {% trans "on" %} <span id="chan_users_max_time"></span></td></tr>
+	<tr><th>{% trans "Modes" %}:</th><td><span id="chan_modes" class="val"></span></td></tr>
+</table>
+{% if cfg.net_roundrobin or cfg.service_webchat %}
+<h2>{% trans "Join this channel" %}</h2>
+	{% if cfg.net_roundrobin %}
+		<img src="theme/{{ cfg.theme }}/img/icons/link.png" alt="" title="{% trans "Standard connection" %}" style="vertical-align:middle;" />
+		<a href="irc://{{ cfg.net_roundrobin }}:{{ cfg.net_port|default('6667') }}/{{ target|e('url') }}">{% trans "IRC standard connection" %}</a><br />
+	{% endif %}
+	{% if cfg.net_roundrobin and cfg.net_port_ssl %}
+		<img src="theme/{{ cfg.theme }}/img/icons/ssl.png" alt="" title="{% trans "Secure connection" %}" style="vertical-align:middle;" />
+		<a href="ircs://{{ cfg.net_roundrobin }}:{{ cfg.net_port_ssl }}/{{ target|e('url') }}">{% trans "IRC secure connection" %}</a><br />
+	{% endif %}
+	{% if cfg.service_webchat %}
+		<img src="theme/{{ cfg.theme }}/img/icons/webchat.png" alt="" title="{% trans "Webchat" %}" style="vertical-align:middle;" />
+		<a href="{{ cfg.service_webchat }}{{ target|e('url') }}">{% trans "Webchat" %}</a><br />
+	{% endif %}
+	{% if cfg.net_roundrobin and cfg.service_mibbit %}
+		<img src="theme/{{ cfg.theme }}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" />
+		<a href="http://widget.mibbit.com/?settings={{ cfg.service_mibbit }}&amp;server={{ cfg.net_roundrobin }}&amp;channel={{ target|e('url') }}&amp;promptPass=true">Mibbit</a><br />
+	{% endif %}
+	{% endif %}
+</div>
+
+<div class="halfright">
+	<h2>{% trans "Users currently in channel" %}</h2>
+	<table id="tbl_users" class="display clickable">
+		<thead>
+			<tr><th>{% trans "Nickname" %}</th><th>{% trans "Modes" %}</th></tr>
+		</thead>
+		<tbody>
+			<tr><td colspan="2">{% trans "Loading" %}...</td></tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="clear"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    if (refresh_interval > 0) {
+        setInterval(updateContent, refresh_interval);
+    }
+    function updateContent() {
+        loadContent();
+        table_users.ajax.reload(null, false);
+    }
+    function loadContent() {
+        $.getJSON('rest/service.php/channels/'+target, function(result) {
+            if (result.topic_html) {
+                $("#chan_topic").html(result.topic_html);
+                $("#chan_topic_author").text(result.topic_author);
+                $("#chan_topic_time").text($.format.date(result.topic_time, format_datetime));
+            } else {
+                $("#chan_topic_container").hide();
+            }
+            $("#chan_users").text(result.users);
+            $("#chan_users_max").text(result.users_max);
+            $("#chan_users_max_time").text($.format.date(result.users_max_time, format_datetime));
+            $("#chan_modes").text(result.modes ? "+"+result.modes : mLang.None);
+        });
+    }
+	var table_users = $('#tbl_users').DataTable({
+		"pageLength": 10,
+		"pagingType": "simple",
+		"order": [[ 0, "asc" ]],
+		"ajax": 'rest/service.php/channels/'+target+'/users?format=datatables',
+		"columns": [
+			{ "data": "nickname", "render": function(data, type, row) {
+				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
+			} },
+			{ "data": "cmodes", "render": function(data) {
+				return data ? '+' + data : null;
+			} }
+		]
+	});
+	$("#tbl_users tbody").on("click", "tr", function(event) {
+		if (this.id) window.location = url_base + 'user/nick:' + encodeURIComponent(this.id) + '/profile';
+	});
+    loadContent();
+});
+</script>

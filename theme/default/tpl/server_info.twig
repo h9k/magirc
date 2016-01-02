@@ -1,0 +1,70 @@
+<h1>{% trans %}Server info for {{ target }}{% endtrans %}</h1>
+
+<div class="halfleft">
+	<table class="details">
+		<tr><th>{% trans "Description" %}:</th><td><span id="srv_description" class="val"></span></td></tr>
+        {% if cfg.service == 'denora' %}<tr><th>{% trans "Country" %}:</th><td><span id="srv_country" class="val"></span></td></tr>{% endif %}
+		<tr><th>{% trans "Online" %}:</th><td><span id="srv_online" class="val"></span></td></tr>
+        {% if cfg.service == 'denora' %}<tr><th>{% trans "Version" %}:</th><td><span id="srv_version" class="val"></span></td></tr>
+        <tr><th>{% trans "Uptime" %}:</th><td><span id="srv_uptime" class="val"></span></td></tr>{% endif %}
+		<tr><th>{% trans "Last split" %}:</th><td><span id="srv_lastsplit" class="val"></span></td></tr>
+	</table>
+</div>
+<div class="halfright">
+	<table class="details">
+        {% if cfg.service == 'denora' %}<tr><th>{% trans "Last ping" %}:</th><td><span id="srv_ping" class="val"></span></td></tr>
+		<tr><th>{% trans "Highest ping" %}:</th><td><span id="srv_maxping" class="val"></span> {% trans "on" %} <span id="srv_maxpingtime"></td></tr>{% endif %}
+		<tr><th>{% trans "Current users" %}:</th><td><span id="srv_users" class="val"></span></td></tr>
+		<tr><th>{% trans "Max users" %}:</th><td><span id="srv_maxusers" class="val"></span> {% trans "on" %} <span id="srv_maxusertime"></td></tr>
+		<tr><th>{% trans "Current opers" %}:</th><td><span id="srv_opers" class="val"></span></td></tr>
+        {% if cfg.service == 'denora' %}<tr><th>{% trans "Max opers" %}:</th><td><span id="srv_maxopers" class="val"></span> {% trans "on" %} <span id="srv_maxopertime"></td></tr>{% endif %}
+	</table>
+</div>
+
+<div class="clear">&nbsp;</div>
+
+{% if cfg.service == 'denora' %}<h2>{% trans "Message of the day" %}</h2>
+<div id="srv_motd" class="motd clear" title="MOTD"><pre id="srv_motd_txt"></pre></div>{% endif %}
+
+<script type="text/javascript">
+$(document).ready(function() {
+    if (refresh_interval > 0) {
+        setInterval(loadContent, refresh_interval);
+    }
+    function loadContent() {
+        $.getJSON("rest/service.php/servers/" + target, function (data) {
+            if (data) {
+                $("#dialog-server").dialog("option", "title", data.server);
+                $("#srv_description").text(data.description);
+                $("#srv_country").html(getCountryFlag(data) + ' ' + data.country);
+                $("#srv_online").text(data.online ? mLang.Yes : mLang.No);
+                $("#srv_version").text(data.version);
+                $("#srv_uptime").text(getTimeElapsed(data.uptime));
+                if ((data.split_time).indexOf("1970") >= 0) {
+                    $("#srv_lastsplit").text(mLang.Never);
+                }
+                else {
+                    $("#srv_lastsplit").text($.format.date(data.split_time, format_datetime));
+                }
+                $("#srv_ping").text(data.ping);
+                $("#srv_maxping").text(data.ping_max);
+                $("#srv_maxpingtime").text($.format.date(data.ping_max_time, format_datetime));
+                $("#srv_users").text(data.users);
+                $("#srv_maxusers").text(data.users_max);
+                $("#srv_maxusertime").text($.format.date(data.users_max_time, format_datetime));
+                $("#srv_opers").text(data.opers);
+                $("#srv_maxopers").text(data.opers_max);
+                if (data.opers_max_time != null && (data.opers_max_time).indexOf("1970") < 0) {
+                    $("#srv_maxopertime").text(mLang.On + " " + $.format.date(data.opers_max_time, format_datetime));
+                }
+                $("#srv_motd_txt").html(data.motd ? data.motd_html : mLang.NoMotd);
+                $("#dialog-server").dialog("open");
+                $("#srv_motd").scrollTop(0);
+            } else {
+                alert(mLang.Failed);
+            }
+        }, "json");
+    }
+    loadContent();
+});
+</script>

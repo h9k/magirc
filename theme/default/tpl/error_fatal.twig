@@ -1,0 +1,19 @@
+{% extends "layout.twig" %}
+
+{% block title %}{{ parent() }}{% trans "Error" %}{% endblock %}
+
+{% block css %}<link href="theme/{{ cfg.theme }}/css/bsod.css" rel="stylesheet" type="text/css" />{% endblock %}
+
+{% block body %}
+    *** STOP: {{ err_msg }}
+    <br /><br />
+    {% if constant('DEBUG') %}
+        {% if err_extra %}Trace:<br />{{ err_extra|raw }}<br /><br />{% endif %}
+        {% for key,item in server %}
+            {{ key }}: {{ item }}<br />
+        {% endfor %}
+    {% else %}
+        {% trans "This should not have happened. Please contact the Administrator." %}<br />
+        {% trans "If you are the Administrator, please enable Debug mode to see more information and submit it to the MagIRC developers. Thank you!" %}
+    {% endif %}
+{% endblock %}

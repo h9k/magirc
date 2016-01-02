@@ -1,0 +1,22 @@
+{% extends "layout.twig" %}
+
+{% block title %}{{ parent() }}Customization template{% endblock %}
+
+{% block content %}
+	<div style="margin:20px;">
+		<h1>{{ example }}!</h1>
+		
+		<ul>
+		{% for channel in channels}
+			<li>{{ channel.channel }}</li>
+		{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
+
+{%block js}
+{{ parent() }}
+<script type="text/javascript">
+
+</script>
+{% endblock %}
