@@ -18,10 +18,75 @@ class Magirc {
 
     private function initializeFramework($useTemplateEngine) {
         if ($useTemplateEngine) {
-            $container = self::initializeTemplateEngine();
-            return new \Slim\App($container);
+            $configuration = [
+                'settings' => [
+                    'displayErrorDetails' => $this->cfg->debug > 0,
+                ],
+            ];
+            $container = new \Slim\Container($configuration);
+            $container['view'] = function ($c) {
+                $view = new \Slim\Views\Twig(__DIR__ . '/../../theme/'.$this->cfg->theme.'/tpl', [
+                    'cache' => __DIR__ . '/../../tmp',
+                    'debug' => $this->cfg->debug > 0
+                ]);
+                $view->addExtension(new \Slim\Views\TwigExtension(
+                    $c['router'],
+                    $c['request']->getUri()
+                ));
+                $view->addExtension(new Twig_Extensions_Extension_I18n());
+                return $view;
+            };
+            $container['notFoundHandler'] = function ($c) {
+                return function ($request, $response) use ($c) {
+                    return $c['view']->render($response, 'error.twig', [
+                        'err_code' => 404,
+                        'cfg' => $this->cfg->config
+                    ])->withStatus(404);
+                };
+            };
+            $container['notAllowedHandler'] = function ($c) {
+                return function ($request, $response) use ($c) {
+                    return $c['view']->render($response, 'error.twig', [
+                        'err_code' => 405,
+                        'cfg' => $this->cfg->config
+                    ])->withStatus(405);
+                };
+            };
+            $container['errorHandler'] = function ($c) {
+                return function ($request, $response, $exception) use ($c) {
+                    return $c['view']->render($response, 'error_fatal.twig', [
+                        'err_msg' => $exception->getMessage(),
+                        'err_extra' => nl2br($exception->getTraceAsString()),
+                        'server' => $_SERVER
+                    ])->withStatus(500);
+                };
+            };
+            $container['locales'] = $this->getLocalesSelect();
+            $container['config'] = $this->cfg->config;
+        } else {
+            $configuration = [
+                'settings' => [
+                    'http.version' => '1.0'
+                ],
+            ];
+            $container['notFoundHandler'] = function ($c) {
+                return function ($request, $response) use ($c) {
+                    return $response->withJson(array('error' => "HTTP 404 Not Found"))->withStatus(404);
+                };
+            };
+            $container['notAllowedHandler'] = function ($c) {
+                return function ($request, $response) use ($c) {
+                    return $response->withJson(array('error' => "HTTP 405 Not Allowed"))->withStatus(405);
+                };
+            };
+            $container['errorHandler'] = function ($c) {
+                return function ($request, $response, $exception) use ($c) {
+                    return $response->withJson(array('error' => "HTTP 500 Internal Server Error"))->withStatus(500);
+                };
+            };
+            $container = new \Slim\Container($configuration);
         }
-        return new \Slim\App();
+        return new \Slim\App($container);
     }
 
     private function initializeDatabase() {
@@ -45,55 +110,6 @@ class Magirc {
             error_reporting(E_ERROR);
         }
         return $cfg;
-    }
-
-    private function initializeTemplateEngine() {
-        $configuration = [
-            'settings' => [
-                'displayErrorDetails' => $this->cfg->debug > 0,
-            ],
-        ];
-        $container = new \Slim\Container($configuration);
-        $container['view'] = function ($c) {
-            $view = new \Slim\Views\Twig(__DIR__ . '/../../theme/'.$this->cfg->theme.'/tpl', [
-                'cache' => __DIR__ . '/../../tmp',
-                'debug' => $this->cfg->debug > 0
-            ]);
-            $view->addExtension(new \Slim\Views\TwigExtension(
-                $c['router'],
-                $c['request']->getUri()
-            ));
-            $view->addExtension(new Twig_Extensions_Extension_I18n());
-            return $view;
-        };
-        $container['notFoundHandler'] = function ($c) {
-            return function ($request, $response) use ($c) {
-                return $c['view']->render($response, 'error.twig', [
-                    'err_code' => 404,
-                    'cfg' => $this->cfg->config
-                ])->withStatus(404);
-            };
-        };
-        $container['notAllowedHandler'] = function ($c) {
-            return function ($request, $response) use ($c) {
-                return $c['view']->render($response, 'error.twig', [
-                    'err_code' => 405,
-                    'cfg' => $this->cfg->config
-                ])->withStatus(405);
-            };
-        };
-        $container['errorHandler'] = function ($c) {
-            return function ($request, $response, $exception) use ($c) {
-                return $c['view']->render($response, 'error_fatal.twig', [
-                    'err_msg' => $exception->getMessage(),
-                    'err_extra' => nl2br($exception->getTraceAsString()),
-                    'server' => $_SERVER
-                ])->withStatus(500);
-            };
-        };
-        $container['locales'] = $this->getLocalesSelect();
-        $container['config'] = $this->cfg->config;
-        return $container;
     }
 
     private function initializeService() {
@@ -246,23 +262,21 @@ class Magirc {
     }
 
     /**
-     * Encodes the given data as a JSON object.
+     * Prepares the given data array for use with DataTables
      * (Used by the RESTful API)
      * @param mixed $data Data
-     * @param boolean $datatables allow/forbid DataTables format
      * @param string $idcolumn Column name to use as index for the DataTables automatic row id. If not specified, the first column will be used.
      */
-    function jsonOutput($data, $datatables = false, $idcolumn = null) {
-        if ($datatables && @$_GET['format'] == "datatables") {
+    function arrayForDataTables($data, $idcolumn = null) {
+        if (@$_GET['format'] == "datatables") {
             if (!$idcolumn && count($data) > 0) $idcolumn = key($data[0]);
             foreach ($data as $key => $val) {
                 if (is_array($data[$key])) $data[$key]["DT_RowId"] = $val[$idcolumn];
                 else $data[$key]->DT_RowId = $val->$idcolumn;
             }
-            echo json_encode(array('data' => $data));
-        } else {
-            echo json_encode($data);
+            return array('data' => $data);
         }
+        return $data;
     }
 
     /**

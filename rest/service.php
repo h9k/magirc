@@ -29,178 +29,171 @@ require '../vendor/autoload.php';
 
 // Initialization
 $magirc = new Magirc('service');
-//NOTE: we need to use HTTP 1.0 because nginx might chunk otherwise
-$magirc->slim->config('http.version', '1.0');
-$magirc->slim->contentType('application/json');
-$magirc->slim->notFound(function() use($magirc) {
-    $magirc->jsonOutput(array('error' => "HTTP 404 Not Found"));
-});
-date_default_timezone_set($magirc->cfg->timezone);
 
 // Routing definitions
 
-$magirc->slim->get('/network/status', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getCurrentStatus());
+$magirc->slim->get('/network/status', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->getCurrentStatus());
 });
 
-$magirc->slim->get('/network/max', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getMaxValues());
+$magirc->slim->get('/network/max', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->getMaxValues());
 });
 
-$magirc->slim->get('/network/clients/percent', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->makeClientPieData($magirc->service->getClientStats(), $magirc->service->getUserCount()));
+$magirc->slim->get('/network/clients/percent', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->makeClientPieData($magirc->service->getClientStats(), $magirc->service->getUserCount()));
 });
 
-$magirc->slim->get('/network/clients', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getClientStats(), true);
+$magirc->slim->get('/network/clients', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getClientStats()));
 });
 
-$magirc->slim->get('/network/countries/percent', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->makeCountryPieData($magirc->service->getCountryStats(), $magirc->service->getUserCount()));
+$magirc->slim->get('/network/countries/percent', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->makeCountryPieData($magirc->service->getCountryStats(), $magirc->service->getUserCount()));
 });
 
-$magirc->slim->get('/network/countries', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getCountryStats(), true);
+$magirc->slim->get('/network/countries', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getCountryStats()));
 });
 
-$magirc->slim->get('/network/countries/map', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getCountryMap());
+$magirc->slim->get('/network/countries/map', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->getCountryMap());
 });
 
-$magirc->slim->get('/servers', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getServerList(), true, 'server');
+$magirc->slim->get('/servers', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getServerList(), 'server'));
 });
 
-$magirc->slim->get('/servers/history', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getServerHistory());
+$magirc->slim->get('/servers/history', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->getServerHistory());
 });
 
 $magirc->slim->get('/servers/{server}', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getServer($args['server']));
+    return $res->withJson($magirc->service->getServer($args['server']));
 });
 
 $magirc->slim->get('/servers/{server}/clients/percent', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->makeClientPieData($magirc->service->getClientStats('server', $args['server']), $magirc->service->getUserCount('server', $args['server'])));
+    return $res->withJson($magirc->service->makeClientPieData($magirc->service->getClientStats('server', $args['server']), $magirc->service->getUserCount('server', $args['server'])));
 });
 
 $magirc->slim->get('/servers/{server}/clients', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getClientStats('server', $args['server']), true);
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getClientStats('server', $args['server'])));
 });
 
 $magirc->slim->get('/servers/{server}/countries/percent', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->makeCountryPieData($magirc->service->getCountryStats('server', $args['server']), $magirc->service->getUserCount('server', $args['server'])));
+    return $res->withJson($magirc->service->makeCountryPieData($magirc->service->getCountryStats('server', $args['server']), $magirc->service->getUserCount('server', $args['server'])));
 });
 
 $magirc->slim->get('/servers/{server}/countries', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getCountryStats('server', $args['server']), true);
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getCountryStats('server', $args['server'])));
 });
 
-$magirc->slim->get('/channels', function() use($magirc) {
-    $magirc->jsonOutput($magirc->service->getChannelList(@$_GET['format'] == 'datatables'));
+$magirc->slim->get('/channels', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->getChannelList(@$_GET['format'] == 'datatables'));
 });
 
-$magirc->slim->get('/channels/history', function() use($magirc) {
-    $magirc->jsonOutput($magirc->service->getChannelHistory());
+$magirc->slim->get('/channels/history', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->getChannelHistory());
 });
 
 $magirc->slim->get('/channels/biggest[/{limit}]', function($req, $res, $args) use($magirc) {
-	$limit = isset($args['limit']) ? $args['limit'] : 10;
-	$magirc->jsonOutput($magirc->service->getChannelBiggest((int) $limit), true, 'channel');
+    $limit = isset($args['limit']) ? $args['limit'] : 10;
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getChannelBiggest((int) $limit), 'channel'));
 });
 
 $magirc->slim->get('/channels/top[/{limit}]', function($req, $res, $args) use($magirc) {
-	$limit = isset($args['limit']) ? $args['limit'] : 10;
-	$magirc->jsonOutput($magirc->service->getChannelTop((int) $limit), true, 'channel');
+    $limit = isset($args['limit']) ? $args['limit'] : 10;
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getChannelTop((int) $limit), 'channel'));
 });
 
 $magirc->slim->get('/channels/activity/{type}', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getChannelGlobalActivity($args['type'], @$_GET['format'] == 'datatables'));
+    return $res->withJson($magirc->service->getChannelGlobalActivity($args['type'], @$_GET['format'] == 'datatables'));
 });
 
 $magirc->slim->get('/channels/{chan}', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->getChannel($args['chan']));
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->service->getChannel($args['chan']));
 });
 
 $magirc->slim->get('/channels/{chan}/users', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->getChannelUsers($args['chan']), true, 'nickname');
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getChannelUsers($args['chan']), 'nickname'));
 });
 
 $magirc->slim->get('/channels/{chan}/activity/{type}', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->getChannelActivity($args['chan'], $args['type'], @$_GET['format'] == 'datatables'));
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->service->getChannelActivity($args['chan'], $args['type'], @$_GET['format'] == 'datatables'));
 });
 
 $magirc->slim->get('/channels/{chan}/hourly/{type}', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->getChannelHourlyActivity($args['chan'], $args['type']));
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->service->getChannelHourlyActivity($args['chan'], $args['type']));
 });
 
 $magirc->slim->get('/channels/{chan}/checkstats', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->checkChannelStats($args['chan']));
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->service->checkChannelStats($args['chan']));
 });
 
 $magirc->slim->get('/channels/{chan}/clients/percent', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->makeClientPieData($magirc->service->getClientStats('channel', $args['chan']), $magirc->service->getUserCount('channel', $args['chan'])));
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->service->makeClientPieData($magirc->service->getClientStats('channel', $args['chan']), $magirc->service->getUserCount('channel', $args['chan'])));
 });
 
 $magirc->slim->get('/channels/{chan}/clients', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->getClientStats('channel', $args['chan']), true);
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getClientStats('channel', $args['chan'])));
 });
 
 $magirc->slim->get('/channels/{chan}/countries/percent', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->makeCountryPieData($magirc->service->getCountryStats('channel', $args['chan']), $magirc->service->getUserCount('channel', $args['chan'])));
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->service->makeCountryPieData($magirc->service->getCountryStats('channel', $args['chan']), $magirc->service->getUserCount('channel', $args['chan'])));
 });
 
 $magirc->slim->get('/channels/{chan}/countries', function($req, $res, $args) use($magirc) {
-	$magirc->checkPermission('channel', $args['chan']);
-	$magirc->jsonOutput($magirc->service->getCountryStats('channel', $args['chan']), true);
+    $magirc->checkPermission('channel', $args['chan']);
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getCountryStats('channel', $args['chan'])));
 });
 
-$magirc->slim->get('/users/history', function() use($magirc) {
-    $magirc->jsonOutput($magirc->service->getUserHistory());
+$magirc->slim->get('/users/history', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->service->getUserHistory());
 });
 
 $magirc->slim->get('/users/top[/{limit}]', function($req, $res, $args) use($magirc) {
-	$limit = isset($args['limit']) ? $args['limit'] : 10;
-	$magirc->jsonOutput($magirc->service->getUsersTop((int) $limit), true, 'uname');
+    $limit = isset($args['limit']) ? $args['limit'] : 10;
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getUsersTop((int) $limit), 'uname'));
 });
 
 $magirc->slim->get('/users/activity/{type}', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getUserGlobalActivity($args['type'], @$_GET['format'] == 'datatables'));
+    return $res->withJson($magirc->service->getUserGlobalActivity($args['type'], @$_GET['format'] == 'datatables'));
 });
 
 $magirc->slim->get('/users/{mode}/{user}', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getUser($args['mode'], $args['user']));
+    return $res->withJson($magirc->service->getUser($args['mode'], $args['user']));
 });
 
 $magirc->slim->get('/users/{mode}/{user}/channels', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getUserChannels($args['mode'], $args['user']));
+    return $res->withJson($magirc->service->getUserChannels($args['mode'], $args['user']));
 });
 
 $magirc->slim->get('/users/{mode}/{user}/activity[/{chan}]', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getUserActivity($args['mode'], $args['user'], $args['chan']), true);
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getUserActivity($args['mode'], $args['user'], $args['chan'])));
 });
 
 $magirc->slim->get('/users/{mode}/{user}/hourly/{type}', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getUserHourlyActivity($args['mode'], $args['user'], null, $args['type']));
+    return $res->withJson($magirc->service->getUserHourlyActivity($args['mode'], $args['user'], null, $args['type']));
 });
 
 $magirc->slim->get('/users/{mode}/{user}/hourly/{chan}/{type}', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->getUserHourlyActivity($args['mode'], $args['user'], $args['chan'], $args['type']));
+    return $res->withJson($magirc->service->getUserHourlyActivity($args['mode'], $args['user'], $args['chan'], $args['type']));
 });
 
 $magirc->slim->get('/users/{mode}/{user}/checkstats', function($req, $res, $args) use($magirc) {
-	$magirc->jsonOutput($magirc->service->checkUserStats($args['user'], $args['mode']));
+    return $res->withJson($magirc->service->checkUserStats($args['user'], $args['mode']));
 });
 
-$magirc->slim->get('/operators', function() use($magirc) {
-	$magirc->jsonOutput($magirc->service->getOperatorList(), true, 'nickname');
+$magirc->slim->get('/operators', function($req, $res) use($magirc) {
+    return $res->withJson($magirc->arrayForDataTables($magirc->service->getOperatorList(), 'nickname'));
 });
 
 // Go! :)

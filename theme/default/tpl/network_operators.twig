@@ -23,7 +23,7 @@ $(document).ready(function() {
 	var table_operators = $('#tbl_operators').DataTable({
 		"pageLength": 25,
 		"order": [[ 0, "asc" ]],
-		"ajax": 'rest/service.php/operators?format=datatables',
+		"ajax": "rest/service.php/operators?format=datatables",
 		"columns": [
 			{ "data": "nickname", "render": function(data, type, row) {
 				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
