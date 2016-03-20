@@ -452,10 +452,14 @@ class Denora implements Service {
 	 */
 	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
+		$private_mode = Protocol::chan_private_mode;
 
 		$where = "currentusers > 0";
 		if ($secret_mode) {
 			$where .= sprintf(" AND %s = 'N'", self::getSqlMode($secret_mode));
+		}
+		if ($private_mode) {
+			$where .= sprintf(" AND %s = 'N'", self::getSqlMode($private_mode));
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {

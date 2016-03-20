@@ -472,10 +472,14 @@ class Anope implements Service {
 	 */
 	public function getChannelList($datatables = false) {
 		$secret_mode = Protocol::chan_secret_mode;
+		$private_mode = Protocol::chan_private_mode;
 
 		$where = "true"; // LOL
 		if ($secret_mode) {
 			$where .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $secret_mode);
+		}
+		if ($private_mode) {
+			$where .= sprintf(" AND modes NOT LIKE BINARY '%%%s%%'", $private_mode);
 		}
 		$hide_channels = $this->cfg->hide_chans;
 		if ($hide_channels) {
