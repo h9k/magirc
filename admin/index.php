@@ -59,8 +59,8 @@ $admin->slim->post('/login', function($req, $res, $args) use ($admin) {
     }
 });
 $admin->slim->post('/ajaxlogin', function($req, $res, $args) use ($admin) {
-    $admin->slim->contentType('application/json');
     echo json_encode($admin->login($_POST['username'], $_POST['password']));
+    return $res->withHeader('Content-Type', 'application/json');
 });
 $admin->slim->post('/logout', function($req, $res, $args) use ($admin) {
     // Unset session variables
@@ -172,27 +172,26 @@ $admin->slim->post('/content', function($req, $res, $args) use ($admin) {
     if (!$admin->sessionStatus()) {
         return $res->withStatus(403)->write('HTTP 403 Access Denied');
     }
-    $admin->slim->contentType('application/json');
     foreach ($_POST as $key => $val) {
         $admin->saveContent($key, $val);
     }
     echo json_encode(true);
+    return $res->withHeader('Content-Type', 'application/json');
 });
 $admin->slim->post('/configuration', function($req, $res, $args) use ($admin) {
     if (!$admin->sessionStatus()) {
         return $res->withStatus(403)->write('HTTP 403 Access Denied');
     }
-    $admin->slim->contentType('application/json');
     foreach ($_POST as $key => $val) {
         $admin->saveConfig($key, $val);
     }
     echo json_encode(true);
+    return $res->withHeader('Content-Type', 'application/json');
 });
 $admin->slim->post('/configuration/{service}/database', function($req, $res, $args) use ($admin) {
     if (!$admin->sessionStatus()) {
         return $res->withStatus(403)->write('HTTP 403 Access Denied');
     }
-    $admin->slim->contentType('application/json');
     $db_config_file = "../conf/{$args['service']}.cfg.php";
     $db = array();
     if (file_exists($db_config_file)) {
@@ -245,6 +244,7 @@ $admin->slim->post('/configuration/{service}/database', function($req, $res, $ar
         }
     }
     echo json_encode(false);
+    return $res->withHeader('Content-Type', 'application/json');
 });
 $admin->slim->get('/support/register', function($req, $res, $args) use ($admin) {
     if (!$admin->sessionStatus()) {
@@ -278,6 +278,7 @@ $admin->slim->get('/admin/list', function($req, $res, $args) use ($admin) {
     }
     $admins = $admin->db->query("SELECT username, realname, email FROM magirc_admin", SQL_ALL, SQL_ASSOC);
     echo json_encode(array('aaData' => $admin->db->record));
+    return $res->withHeader('Content-Type', 'application/json');
 });
 $admin->slim->get('/{section}[/{action}]', function($req, $res, $args) use ($admin) {
     $action = isset($args['action']) ? $args['action'] : "main";
