@@ -32,7 +32,7 @@ class Channel extends ChannelBase {
 		// Channel mode data
 		if ($this->mode_lf_data) $this->modes_data .= " " . $this->mode_lf_data;
 		if ($this->mode_lj_data) $this->modes_data .= " " . $this->mode_lj_data;
-		if ($this->mode_lk_data) $this->modes_data .= " " . $this->mode_lk_data;
+		//if ($this->mode_lk_data) $this->modes_data .= " " . $this->mode_lk_data;
 		if ($this->mode_ll_data) $this->modes_data .= " " . $this->mode_ll_data;
 		if ($this->mode_uf_data) $this->modes_data .= " " . $this->mode_uf_data;
 		if ($this->mode_uj_data) $this->modes_data .= " " . $this->mode_uj_data;
