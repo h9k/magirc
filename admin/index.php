@@ -42,7 +42,7 @@ $admin = new Admin();
 
 date_default_timezone_set($admin->cfg->timezone);
 define('DEBUG', $admin->cfg->debug_mode);
-define('BASE_URL', $admin->cfg->base_url . basename(__DIR__) . '/');
+define('BASE_URL', $admin->cfg->base_url . '/' . basename(__DIR__) . '/');
 if ($admin->cfg->db_version < DB_VERSION)
     die('SQL Config Table is missing or out of date!<br />Please run the <em>MagIRC Installer</em>');
 if ($admin->cfg->debug_mode < 1) {
