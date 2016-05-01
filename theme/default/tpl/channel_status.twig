@@ -75,7 +75,7 @@ $(document).ready(function() {
 		"pageLength": 10,
 		"pagingType": "simple",
 		"order": [[ 0, "asc" ]],
-		"ajax": "rest/service.php/channels/'+target+'/users?format=datatables",
+		"ajax": "rest/service.php/channels/"+target+"/users?format=datatables",
 		"columns": [
 			{ "data": "nickname", "render": function(data, type, row) {
 				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
