@@ -177,7 +177,7 @@ class Setup {
 		$base_url .= $_SERVER['SERVER_NAME'];
 		$base_url .= $_SERVER['SERVER_PORT'] == 80 ? '' : ':'.$_SERVER['SERVER_PORT'];
 		$base_url .= str_replace('setup/index.php', '', $_SERVER['SCRIPT_NAME']);
-		return $base_url;
+		return (substr($base_url, -1) == "/") ? substr($base_url, 0, -1) : $base_url;
 	}
 
 	/**
@@ -245,10 +245,6 @@ class Setup {
 				$base_url = $this->generateBaseUrl();
 				$this->db->insert('magirc_config', array('parameter' => 'base_url', 'value' => $base_url));
 			}
-			if ($version == 11) {
-				$base_url = $this->generateBaseUrl();
-				$this->db->update('magirc_config', array('value' => $base_url), array('parameter' => 'base_url'));
-			}
 			if ($version < 13) {
 				$this->db->insert('magirc_config', array('parameter' => 'service_mibbitid', 'value' => ''));
 			}
@@ -268,6 +264,10 @@ class Setup {
 			if ($version < 17) {
 				$this->db->delete('magirc_config', array('parameter' => 'service_searchirc'));
 			}
+            if ($version < 18) {
+                $base_url = $this->generateBaseUrl();
+                $this->db->update('magirc_config', array('value' => $base_url), array('parameter' => 'base_url'));
+            }
 			$this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
 			$updated = true;
 		}
@@ -283,5 +283,3 @@ class Setup {
 		return $this->db->record ? true : false;
 	}
 }
-
-?>

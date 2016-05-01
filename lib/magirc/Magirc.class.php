@@ -104,7 +104,7 @@ class Magirc {
         if ($cfg->db_version < DB_VERSION) die('Upgrade in progress. Please wait a few minutes, thank you.');
         date_default_timezone_set($cfg->timezone);
         define('DEBUG', $cfg->debug_mode);
-        define('BASE_URL', $cfg->base_url);
+        define('BASE_URL', $cfg->base_url . '/');
         if ($cfg->debug_mode < 1) {
             ini_set('display_errors','off');
             error_reporting(E_ERROR);
