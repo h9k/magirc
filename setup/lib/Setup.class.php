@@ -6,8 +6,9 @@ class Magirc_DB extends DB {
 
 	public static function getInstance() {
 		if (is_null(self::$instance) === true) {
-			if (file_exists('../conf/magirc.cfg.php')) {
-				include('../conf/magirc.cfg.php');
+            $db = array();
+			if (file_exists(__DIR__.'/../../conf/magirc.cfg.php')) {
+				include(__DIR__.'/../../conf/magirc.cfg.php');
 			} else {
 				die ('magirc.cfg.php configuration file missing');
 			}
@@ -115,20 +116,21 @@ class Setup {
 	\$db['ssl_key'] = '{$_POST['ssl_key']}';
 	\$db['ssl_cert'] = '{$_POST['ssl_cert']}';
 	\$db['ssl_ca'] = '{$_POST['ssl_ca']}';
-?>";
-			$this->tpl->assign('db_buffer', $db_buffer);
+";
 			if (is_writable(MAGIRC_CFG_FILE)) {
 				$writefile = fopen(MAGIRC_CFG_FILE,"w");
 				fwrite($writefile, $db_buffer);
 				fclose($writefile);
 			}
+			return $db_buffer;
 		}
+		return null;
 	}
 
 	/**
 	 * Checks if the configuration table is there
-	 * @return type
-	 */
+	 * @return PDOStatement Configuration
+     */
 	function configCheck() {
 		$query = "SHOW TABLES LIKE 'magirc_config'";
 		$this->db->query($query, SQL_INIT);

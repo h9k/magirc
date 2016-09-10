@@ -3,7 +3,7 @@ $status = $setup->requirementsCheck();
 if ($status['error']) die('Failure. <a href="?step=1">back</a>');
 
 // Handle saving of the database configuration
-$setup->saveConfig();
+$db_config = $setup->saveConfig();
 
 // Check Magirc Database connection
 if (file_exists(MAGIRC_CFG_FILE)) {
@@ -41,5 +41,6 @@ echo $template->render(array(
 	'version' => DB_VERSION,
 	'check' => $check,
 	'db_magirc' => file_exists(MAGIRC_CFG_FILE) ? @$db : array('username' => '', 'password' => '', 'database' => '', 'hostname' => 'localhost', 'port' => 3306, 'ssl' => false, 'ssl_key' => null, 'ssl_cert' => null, 'ssl_ca' => null),
+    'db_config' => $db_config,
 	'savedb' => isset($_POST['savedb'])
 ));
