@@ -522,7 +522,8 @@ class Anope implements Service {
 	 */
 	public function getChannelBiggest($limit = 10) {
 		$secret_mode = Protocol::chan_secret_mode;
-		$query = sprintf("SELECT channel, (SELECT COUNT(*) FROM `%s` AS i WHERE c.chanid = i.chanid) AS users, maxusers AS users_max, maxtime AS users_max_time"
+		$query = sprintf("SELECT channel, (SELECT COUNT(*) FROM `%s` AS i WHERE c.chanid = i.chanid) AS users, topic, topicauthor AS topic_author,"
+                . " topictime AS topic_time, modes, maxusers AS users_max, maxtime AS users_max_time"
 				. " FROM `%s` AS c"
 				. " LEFT JOIN `%s` AS m ON m.name = c.channel"
 				. " WHERE 1 > 0",
