@@ -236,10 +236,11 @@ function getUserExtra(user) {
 }
 function getCountryFlag(user) {
 	if (user['country_code'] != null && user['country_code'] != '' && user['country_code'] != '??' && user['country_code'] != 'local') {
-        var title = (user.city) ? (user.city + ', ' + user.region + ', ' + user['country']) : user['country'];
-		return '<img src="theme/'+theme+'/img/flags/'+user['country_code'].toLowerCase()+'.png" alt="'+user['country_code']+'" title="'+title+'" />';
+	    var country = user.country ? user.country : user.country_code;
+        var title = (user.city) ? (user.city + ', ' + user.region + ', ' + country) : country;
+        return '<span class="flag-icon flag-icon-'+user['country_code'].toLowerCase()+'" alt="'+user['country_code']+'" title="'+title+'"></span>';
 	} else {
-		return '<img src="theme/'+theme+'/img/flags/unknown.png" alt="Unknown" title="'+mLang.Unknown+'" />';
+        return '<span class="flag-icon" alt="Unknown" title="'+mLang.Unknown+'"></span>';
 	}
 }
 function getChannelLinks() {
