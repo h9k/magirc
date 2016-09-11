@@ -240,12 +240,14 @@ class Anope implements Service {
         $other = 0;
         foreach ($result as $val) {
             $percent = round($val["count"] / $sum * 100, 2);
-            if (in_array ($val['country'], array(null, "", "Unknown", "localhost"))) {
+            if (in_array ($val['country'], array("Unknown", "localhost"))) {
+                $unknown += $val["count"];
+            } elseif (in_array ($val['country_code'], array(null, "", "??"))) {
                 $unknown += $val["count"];
             } elseif ($percent < 2) {
                 $other += $val["count"];
             } else {
-                $data[] = array('name' => $val['country'], 'count' => $val["count"], 'y' => $percent);
+                $data[] = array('name' => $val['country'] ? $val['country'] : $val['country_code'], 'count' => $val["count"], 'y' => $percent);
             }
         }
         if ($unknown > 0) {
