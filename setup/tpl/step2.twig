@@ -5,86 +5,86 @@
 
 <pre>Testing MagIRC Database connection...
 {% if status.error %}
-	{% if status.error == 'new' %}<span style="color:orange;">Unconfigured</span>
-	{% else %}<span style="color:red">{{ status.error }}</span>
-	{% endif %}
-	</pre>
-	<p>Please configure the access to the MagIRC SQL database
-	<br />You can use an existing database (for example the Denora database) if you like, or use a separate one.</p>
-	<form name="database" method="post" action="?step=2">
-	<table class="form">
-		<tr>
-			<th><label for="username">Username</label></th>
-			<td><input name="username" type="text" id="username" value="{{ db_magirc.username }}" size="32" maxlength="128" /></td>
-		</tr>
-		<tr>
-			<th><label for="password">Password</label></th>
-			<td><input type="password" name="password" id="password" value="{{ db_magirc.password }}" size="32" maxlength="128" /></td>
-		</tr>
-		<tr>
-			<th><label for="database">Database Name</label></th>
-			<td><input type="text" name="database" id="database" value="{{ db_magirc.database }}" size="32" maxlength="128" /></td>
-		</tr>
-		{#<tr>
-			<th><label for="prefix">Database Prefix</label></th>
-			<td><input type="text" name="prefix" id="prefix" value="{{ db_magirc.prefix }}" size="32" maxlength="128" /></td>
-		</tr>#}
-		<tr>
-			<th><label for="hostname">Hostname</label></th>
-			<td><input type="text" name="hostname" id="hostname" value="{{ db_magirc.hostname }}" size="32" maxlength="128" /></td>
-		</tr>
-		<tr>
-			<th><label for="port">TCP Port</label></th>
-			<td><input type="text" name="port" id="port" tabindex="5" value="{{ db_magirc.port }}" size="32" maxlength="16" /></td>
-		</tr>
-		<tr>
-			<th><label for="ssl">Enable SSL</label></th>
-			<td align="left"><input type="checkbox" name="ssl" id="ssl" value="1" {% if db_magirc.ssl %}checked="checked" {% endif %}/></td>
-		</tr>
-		<tr>
-			<th><label for="ssl_key">Path to SSL Key</label></th>
-			<td align="left"><input type="text" name="ssl_key" id="ssl_key" value="{{ db_magirc.ssl_key }}" size="32" maxlength="256" /></td>
-		</tr>
-		<tr>
-			<th><label for="ssl_cert">Path to SSL Certificate</label></th>
-			<td align="left"><input type="text" name="ssl_cert" id="ssl_cert" value="{{ db_magirc.ssl_cert }}" size="32" maxlength="256" /></td>
-		</tr>
-		<tr>
-			<th><label for="ssl_ca">Path to SSL CA</label></th>
-			<td align="left"><input type="text" name="ssl_ca" id="ssl_ca" value="{{ db_magirc.ssl_ca }}" size="32" maxlength="256" /></td>
-		</tr>
-	</table>
-	<button type="submit" name="savedb" id="button">Save</button>
-	</form>
+    {% if status.error == 'new' %}<span style="color:orange;">Unconfigured</span>
+    {% else %}<span style="color:red">{{ status.error }}</span>
+    {% endif %}
+    </pre>
+    <p>Please configure the access to the MagIRC SQL database
+    <br />You can use an existing database (for example the Denora database) if you like, or use a separate one.</p>
+    <form name="database" method="post" action="?step=2">
+    <table class="form">
+        <tr>
+            <th><label for="username">Username</label></th>
+            <td><input name="username" type="text" id="username" value="{{ db_magirc.username }}" size="32" maxlength="128" /></td>
+        </tr>
+        <tr>
+            <th><label for="password">Password</label></th>
+            <td><input type="password" name="password" id="password" value="{{ db_magirc.password }}" size="32" maxlength="128" /></td>
+        </tr>
+        <tr>
+            <th><label for="database">Database Name</label></th>
+            <td><input type="text" name="database" id="database" value="{{ db_magirc.database }}" size="32" maxlength="128" /></td>
+        </tr>
+        {#<tr>
+            <th><label for="prefix">Database Prefix</label></th>
+            <td><input type="text" name="prefix" id="prefix" value="{{ db_magirc.prefix }}" size="32" maxlength="128" /></td>
+        </tr>#}
+        <tr>
+            <th><label for="hostname">Hostname</label></th>
+            <td><input type="text" name="hostname" id="hostname" value="{{ db_magirc.hostname }}" size="32" maxlength="128" /></td>
+        </tr>
+        <tr>
+            <th><label for="port">TCP Port</label></th>
+            <td><input type="text" name="port" id="port" tabindex="5" value="{{ db_magirc.port }}" size="32" maxlength="16" /></td>
+        </tr>
+        <tr>
+            <th><label for="ssl">Enable SSL</label></th>
+            <td align="left"><input type="checkbox" name="ssl" id="ssl" value="1" {% if db_magirc.ssl %}checked="checked" {% endif %}/></td>
+        </tr>
+        <tr>
+            <th><label for="ssl_key">Path to SSL Key</label></th>
+            <td align="left"><input type="text" name="ssl_key" id="ssl_key" value="{{ db_magirc.ssl_key }}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <th><label for="ssl_cert">Path to SSL Certificate</label></th>
+            <td align="left"><input type="text" name="ssl_cert" id="ssl_cert" value="{{ db_magirc.ssl_cert }}" size="32" maxlength="256" /></td>
+        </tr>
+        <tr>
+            <th><label for="ssl_ca">Path to SSL CA</label></th>
+            <td align="left"><input type="text" name="ssl_ca" id="ssl_ca" value="{{ db_magirc.ssl_ca }}" size="32" maxlength="256" /></td>
+        </tr>
+    </table>
+    <button type="submit" name="savedb" id="button">Save</button>
+    </form>
     <pre>
 {% else %}
-	<span style="color:green;">Passed</span>
+    <span style="color:green;">Passed</span>
 
-	{% if savedb %}
-		<pre>Saving configuration to file...
-		{% if not status.writable %}
-		<span style="color:red;">Failed</span></pre>
-		<p><strong><label for="sql_buffer">Please replace the contents of the {{ constant('MAGIRC_CFG_FILE') }} file with the text below:</label></strong></p>
-		<textarea name="sql_buffer" id="sql_buffer" cols="64" rows="8" readonly="readonly">{{ db_config }}</textarea>
-		<p>Once you are done, please <a href="?step=2">repeat this step</a></p>
-		{% else %}
-		<span style="color:green;">Saved</span>
-		{% endif %}
-	{% endif %}
+    {% if savedb %}
+        <pre>Saving configuration to file...
+        {% if not status.writable %}
+        <span style="color:red;">Failed</span></pre>
+        <p><strong><label for="sql_buffer">Please replace the contents of the {{ constant('MAGIRC_CFG_FILE') }} file with the text below:</label></strong></p>
+        <textarea name="sql_buffer" id="sql_buffer" cols="64" rows="8" readonly="readonly">{{ db_config }}</textarea>
+        <p>Once you are done, please <a href="?step=2">repeat this step</a></p>
+        {% else %}
+        <span style="color:green;">Saved</span>
+        {% endif %}
+    {% endif %}
 
-	{%if not savedb or status.writable %}
-		<pre>Checking MagIRC database schema...
-		{% if not check %} Creating...
-			{% if dump %}<span style="color:green;">Done</span>{% else %}<span style="color:red;">Failed</span>{% endif %}
-		{% elseif updated %}
-		<span style="color:green;">Upgraded</span> (version {{ version }})
-		{% else %}
-		<span style="color:green;">OK</span> (version {{ version }})
-		{% endif %}
-		</pre>
+    {%if not savedb or status.writable %}
+        <pre>Checking MagIRC database schema...
+        {% if not check %} Creating...
+            {% if dump %}<span style="color:green;">Done</span>{% else %}<span style="color:red;">Failed</span>{% endif %}
+        {% elseif updated %}
+        <span style="color:green;">Upgraded</span> (version {{ version }})
+        {% else %}
+        <span style="color:green;">OK</span> (version {{ version }})
+        {% endif %}
+        </pre>
 
-		{% if dump or check %}<button class="next">Continue</button>{% endif %}
-	{% endif %}
+        {% if dump or check %}<button class="next">Continue</button>{% endif %}
+    {% endif %}
 
 {% endif %}
 </pre>

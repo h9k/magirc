@@ -20,24 +20,24 @@
 <h2>{% trans "Overview" %}</h2>
 
 <table id="tbl_activity" class="display">
-	<thead>
-		<tr>
-			<th>{% trans "Type" %}</th>
-			<th>{% trans "Letters" %}</th>
-			<th>{% trans "Words" %}</th>
-			<th>{% trans "Lines" %}</th>
-			<th>{% trans "Actions" %}</th>
-			<th>{% trans "Smileys" %}</th>
-			<th>{% trans "Kicks" %}</th>
-			<th>{% trans "Modes" %}</th>
-			<th>{% trans "Topics" %}</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td colspan="9">{% trans "Loading" %}...</td>
-		</tr>
-	</tbody>
+    <thead>
+        <tr>
+            <th>{% trans "Type" %}</th>
+            <th>{% trans "Letters" %}</th>
+            <th>{% trans "Words" %}</th>
+            <th>{% trans "Lines" %}</th>
+            <th>{% trans "Actions" %}</th>
+            <th>{% trans "Smileys" %}</th>
+            <th>{% trans "Kicks" %}</th>
+            <th>{% trans "Modes" %}</th>
+            <th>{% trans "Topics" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9">{% trans "Loading" %}...</td>
+        </tr>
+    </tbody>
 </table>
 
 <script type="text/javascript">
@@ -54,66 +54,70 @@ $(document).ready(function() {
             chart_activity.series[0].setData(result);
         });
     }
-	var chan = null;
-	var type = 'monthly';
-	var chart_activity = new Highcharts.Chart({
-		chart: { renderTo: 'chart_activity', type: 'column' },
-		xAxis: { type: 'linear', categories: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ], title: { text: 'Hour' } },
-		yAxis: { min: 0, title: { text: 'Lines' } },
-		tooltip: { enabled: false },
-		series: [{ name: 'Lines', data: [] }]
-	});
-	function getUrl(action) {
-		if (!chan) {
-			return 'rest/service.php/users/'+mode+'/'+target+'/'+action;
-		} else {
-			return 'rest/service.php/users/'+mode+'/'+target+'/'+action+'/'+encodeURIComponent(chan);
-		}		
-	}
-	var table = $("#tbl_activity").DataTable({
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"paging": false,
-		"ordering": false,
-		"ajax": getUrl('activity')+'?format=datatables',
-		"columns": [
-			{ "data": "type", "render": function (data) {
-				switch (data) {
-					case 'total': return mLang.Total;
-					case 'daily': return mLang.Today;
-					case 'weekly': return mLang.ThisWeek;
-					case 'monthly': return mLang.ThisMonth;
-				}
-			} },
-			{ "data": "letters" },
-			{ "data": "words" },
-			{ "data": "lines" },
-			{ "data": "actions" },
-			{ "data": "smileys" },
-			{ "data": "kicks" },
-			{ "data": "modes" },
-			{ "data": "topics" }
-		]
-	});
-	$("#type").buttonset();
-	$("#radio").change(function(event) {
-		chan = $('input[name=radio]:checked').val();
-		table.ajax.url(getUrl('activity')+'?format=datatables').load();
+    var chan = null;
+    var type = 'monthly';
+    var chart_activity = new Highcharts.Chart({
+        chart: { renderTo: 'chart_activity', type: 'column' },
+        xAxis: { type: 'linear', categories: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ], title: { text: 'Hour' } },
+        yAxis: { min: 0, title: { text: 'Lines' } },
+        tooltip: { enabled: false },
+        series: [{ name: 'Lines', data: [] }]
+    });
+    function getUrl(action) {
+        if (!chan) {
+            return 'rest/service.php/users/'+mode+'/'+target+'/'+action;
+        } else {
+            return 'rest/service.php/users/'+mode+'/'+target+'/'+action+'/'+encodeURIComponent(chan);
+        }
+    }
+    var table = $("#tbl_activity").DataTable({
+        "searching": false,
+        "info": false,
+        "lengthChange": false,
+        "paging": false,
+        "ordering": false,
+        "ajax": getUrl('activity')+'?format=datatables',
+        "columns": [
+            { "data": "type", "render": function (data) {
+                switch (data) {
+                    case 'total': return mLang.Total;
+                    case 'daily': return mLang.Today;
+                    case 'weekly': return mLang.ThisWeek;
+                    case 'monthly': return mLang.ThisMonth;
+                }
+            } },
+            { "data": "letters" },
+            { "data": "words" },
+            { "data": "lines" },
+            { "data": "actions" },
+            { "data": "smileys" },
+            { "data": "kicks" },
+            { "data": "modes" },
+            { "data": "topics" }
+        ]
+    });
+    $("#type input").checkboxradio({
+        icon: false
+    });
+    $("#radio").change(function(event) {
+        chan = $('input[name=radio]:checked').val();
+        table.ajax.url(getUrl('activity')+'?format=datatables').load();
         loadContent();
-	});
-	$("#type").change(function(event) {
-		type = $('input[name=type]:checked').val();
+    });
+    $("#type").change(function(event) {
+        type = $('input[name=type]:checked').val();
         loadContent();
-	});
-	$.getJSON("rest/service.php/users/"+mode+"/"+target+"/channels", function(result) {
-		var i = 1;
-		$.each(result, function(key, value) {
-			$("#radio").append('<input type="radio" id="radio'+i+'" name="radio" value="'+escapeTags(value)+'"\/><label for="radio'+i+'">'+escapeTags(value)+'<\/label>');
-			i++;
-		});
-		$('#radio').buttonset();
-	});
-	loadContent();
+    });
+    $.getJSON("rest/service.php/users/"+mode+"/"+target+"/channels", function(result) {
+        var i = 1;
+        $.each(result, function(key, value) {
+            $("#radio").append('<input type="radio" id="radio'+i+'" name="radio" value="'+escapeTags(value)+'"\/><label for="radio'+i+'">'+escapeTags(value)+'<\/label>');
+            i++;
+        });
+        $('#radio input').checkboxradio({
+            icon: false
+        });
+    });
+    loadContent();
 });
 </script>

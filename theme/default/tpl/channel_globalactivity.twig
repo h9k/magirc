@@ -1,21 +1,21 @@
 <h1>{% trans "Global channel activity" %}</h1>
 
 <form>
-	<div id="radio" class="choser">
-		<input type="radio" id="radio0" name="radio" value="total" /><label for="radio0">{% trans "Total" %}</label>
-		<input type="radio" id="radio1" name="radio" value="daily" /><label for="radio1">{% trans "Today" %}</label>
-		<input type="radio" id="radio2" name="radio" value="weekly" /><label for="radio2">{% trans "This Week" %}</label>
-		<input type="radio" id="radio3" name="radio" value="monthly" checked="checked" /><label for="radio3">{% trans "This Month" %}</label>
-	</div>
+    <div id="radio" class="choser">
+        <input type="radio" id="radio0" name="radio" value="total" /><label for="radio0">{% trans "Total" %}</label>
+        <input type="radio" id="radio1" name="radio" value="daily" /><label for="radio1">{% trans "Today" %}</label>
+        <input type="radio" id="radio2" name="radio" value="weekly" /><label for="radio2">{% trans "This Week" %}</label>
+        <input type="radio" id="radio3" name="radio" value="monthly" checked="checked" /><label for="radio3">{% trans "This Month" %}</label>
+    </div>
 </form>
 
 <table id="tbl_activity" class="display clickable">
-	<thead>
-		<tr><th>{% trans "Channel" %}</th><th>{% trans "Letters" %}</th><th>{% trans "Words" %}</th><th>{% trans "Lines" %}</th><th>{% trans "Actions" %}</th><th>{% trans "Smileys" %}</th><th>{% trans "Kicks" %}</th><th>{% trans "Modes" %}</th><th>{% trans "Topics" %}</th></tr>
-	</thead>
-	<tbody>
-		<tr><td colspan="9">{% trans "Loading" %}...</td></tr>
-	</tbody>
+    <thead>
+        <tr><th>{% trans "Channel" %}</th><th>{% trans "Letters" %}</th><th>{% trans "Words" %}</th><th>{% trans "Lines" %}</th><th>{% trans "Actions" %}</th><th>{% trans "Smileys" %}</th><th>{% trans "Kicks" %}</th><th>{% trans "Modes" %}</th><th>{% trans "Topics" %}</th></tr>
+    </thead>
+    <tbody>
+        <tr><td colspan="9">{% trans "Loading" %}...</td></tr>
+    </tbody>
 </table>
 
 <script type="text/javascript">
@@ -26,37 +26,39 @@ $(document).ready(function() {
     function updateContent() {
         table_activity.ajax.reload(null, false);
     }
-	var type = 'monthly';
-	var table_activity = $('#tbl_activity').DataTable({
-		"serverSide": true,
-		"pageLength": 25,
-		"order": [[ 3, "desc" ]],
-		"ajax": "rest/service.php/channels/activity/"+type+"?format=datatables",
-		"columns": [
-			{ "data": "name", "render": function (data) {
-				return getChannelLinks() + ' ' + escapeTags(data);
-			} },
-			{ "data": "letters" },
-			{ "data": "words" },
-			{ "data": "lines" },
-			{ "data": "actions" },
-			{ "data": "smileys" },
-			{ "data": "kicks" },
-			{ "data": "modes" },
-			{ "data": "topics" }
-		]
-	});
-	$("#tbl_activity tbody").on("click", "tr", function(event) {
-		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
-	});
-	$("#tbl_activity tbody").on("click", "tr button", function(e) {
-		e.stopPropagation();
-		openChanMenu(this);
-	});
-	$("#radio").buttonset();
-	$("#radio").change(function(event) {
-		type = $('input[name=radio]:checked').val();
-		table_activity.ajax.url("rest/service.php/channels/activity/"+type+"?format=datatables").load();
-	});
+    var type = 'monthly';
+    var table_activity = $('#tbl_activity').DataTable({
+        "serverSide": true,
+        "pageLength": 25,
+        "order": [[ 3, "desc" ]],
+        "ajax": "rest/service.php/channels/activity/"+type+"?format=datatables",
+        "columns": [
+            { "data": "name", "render": function (data) {
+                return getChannelLinks() + ' ' + escapeTags(data);
+            } },
+            { "data": "letters" },
+            { "data": "words" },
+            { "data": "lines" },
+            { "data": "actions" },
+            { "data": "smileys" },
+            { "data": "kicks" },
+            { "data": "modes" },
+            { "data": "topics" }
+        ]
+    });
+    $("#tbl_activity tbody").on("click", "tr", function(event) {
+        if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
+    });
+    $("#tbl_activity tbody").on("click", "tr button", function(e) {
+        e.stopPropagation();
+        openChanMenu(this);
+    });
+    $("#radio").checkboxradio({
+        icon: false
+    });
+    $("#radio").change(function(event) {
+        type = $('input[name=radio]:checked').val();
+        table_activity.ajax.url("rest/service.php/channels/activity/"+type+"?format=datatables").load();
+    });
 });
 </script>

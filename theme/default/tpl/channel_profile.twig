@@ -4,12 +4,12 @@
 
 {% block content %}
 <div id="tabs">
-	<ul>
-		<li title="status"><a href="index.php/channel/{{ target|e('url') }}/status">{% trans "Status" %}</a></li>
-		<li title="countries"><a href="index.php/channel/{{ target|e('url') }}/countries">{% trans "Countries" %}</a></li>
-		<li title="clients"><a href="index.php/channel/{{ target|e('url') }}/clients">{% trans "Clients" %}</a></li>
-		<li title="activity"><a href="index.php/channel/{{ target|e('url') }}/activity">{% trans "Activity" %}</a></li>
-	</ul>
+    <ul>
+        <li title="status"><a href="index.php/channel/{{ target|e('url') }}/status">{% trans "Status" %}</a></li>
+        <li title="countries"><a href="index.php/channel/{{ target|e('url') }}/countries">{% trans "Countries" %}</a></li>
+        <li title="clients"><a href="index.php/channel/{{ target|e('url') }}/clients">{% trans "Clients" %}</a></li>
+        <li title="activity"><a href="index.php/channel/{{ target|e('url') }}/activity">{% trans "Activity" %}</a></li>
+    </ul>
 </div>
 {% endblock %}
 
@@ -18,30 +18,30 @@
 <script type="text/javascript">
 var target = '{{ target|e('url') }}';
 $(document).ready(function() {
-	var tabs = $("#tabs").tabs({
-		beforeActivate: function(event, ui) {
-			window.location.hash = ui.newTab.attr('title');
-		},
-		beforeLoad: function(event, ui) {
-			if (window.location.hash) {
-				var title = window.location.hash.substring(1, window.location.hash.length);
-				$("li[title='"+title+"'] a").trigger("click");
-			}			
-			if (ui.tab.data("loaded")) {
-				event.preventDefault();
-				return;
-			}
-			ui.jqXHR.success(function() {
-				ui.tab.data("loaded", true);
-			});
-			ui.jqXHR.error(function() {
-				ui.panel.text(mLang.LoadError);
-			});
-		}
-	});
-	$.getJSON('rest/service.php/channels/'+target+'/checkstats', function(data) {
-		if (!data) tabs.tabs("disable", 3);
-	});
+    var tabs = $("#tabs").tabs({
+        beforeActivate: function(event, ui) {
+            window.location.hash = ui.newTab.attr('title');
+        },
+        beforeLoad: function(event, ui) {
+            if (window.location.hash) {
+                var title = window.location.hash.substring(1, window.location.hash.length);
+                $("li[title='"+title+"'] a").trigger("click");
+            }
+            if (ui.tab.data("loaded")) {
+                event.preventDefault();
+                return;
+            }
+            ui.jqXHR.done(function() {
+                ui.tab.data("loaded", true);
+            });
+            ui.jqXHR.fail(function() {
+                ui.panel.text(mLang.LoadError);
+            });
+        }
+    });
+    $.getJSON('rest/service.php/channels/'+target+'/checkstats', function(data) {
+        if (!data) tabs.tabs("disable", 3);
+    });
 });
 </script>
 {% endblock %}

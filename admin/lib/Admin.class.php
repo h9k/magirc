@@ -9,8 +9,8 @@ class Magirc_DB extends DB {
     public static function getInstance() {
         if (is_null(self::$instance) === true) {
             $db = array();
-            if (file_exists('../conf/magirc.cfg.php')) {
-                include('../conf/magirc.cfg.php');
+            if (file_exists(__DIR__.'/../../conf/magirc.cfg.php')) {
+                include(__DIR__.'/../../conf/magirc.cfg.php');
             } else {
                 die ('magirc.cfg.php configuration file missing');
             }

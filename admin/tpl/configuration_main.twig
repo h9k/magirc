@@ -4,15 +4,15 @@
 
 {% block content %}
 <div id="tabs">
-	<ul>
-		<li title="interface"><a href="index.php/configuration/interface">System</a></li>
-		<li title="network"><a href="index.php/configuration/network">Network</a></li>
-		<li title="services"><a href="index.php/configuration/services">Services</a></li>
-		<li title="denora"><a href="index.php/configuration/service/denora">Denora</a></li>
-		<li title="anope"><a href="index.php/configuration/service/anope">Anope</a></li>
-		<li title="welcome"><a href="index.php/configuration/welcome">Welcome</a></li>
-		{#<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>#}
-	</ul>
+    <ul>
+        <li title="interface"><a href="index.php/configuration/interface">System</a></li>
+        <li title="network"><a href="index.php/configuration/network">Network</a></li>
+        <li title="services"><a href="index.php/configuration/services">Services</a></li>
+        <li title="denora"><a href="index.php/configuration/service/denora">Denora</a></li>
+        <li title="anope"><a href="index.php/configuration/service/anope">Anope</a></li>
+        <li title="welcome"><a href="index.php/configuration/welcome">Welcome</a></li>
+        {#<li title="admins"><a href="index.php/configuration/admins">Administrators</a></li>#}
+    </ul>
 </div>
 <div id="success">Saved successfully</div>
 <div id="failure">Failed</div>
@@ -22,23 +22,23 @@
 {{ parent() }}
 <script type="text/javascript">
 $(document).ready(function() {
-	$( "#tabs" ).tabs({
-		beforeActivate: function(event, ui) {
-			window.location.hash = ui.newTab.attr('title');
-		},
-		beforeLoad: function(event, ui) {
-			if (window.location.hash) {
-				var title = window.location.hash.substring(1, window.location.hash.length);
-				$("li[title='"+title+"'] a").trigger("click");
-			}
-			ui.jqXHR.success(function() {
-				ui.tab.data("loaded", true);
-			});
-			ui.jqXHR.error(function() {
-				ui.panel.html(mLang.LoadError);
-			});
-		}
-	});
+    $( "#tabs" ).tabs({
+        beforeActivate: function(event, ui) {
+            window.location.hash = ui.newTab.attr('title');
+        },
+        beforeLoad: function(event, ui) {
+            if (window.location.hash) {
+                var title = window.location.hash.substring(1, window.location.hash.length);
+                $("li[title='"+title+"'] a").trigger("click");
+            }
+            ui.jqXHR.done(function() {
+                ui.tab.data("loaded", true);
+            });
+            ui.jqXHR.fail(function() {
+                ui.panel.html(mLang.LoadError);
+            });
+        }
+    });
 });
 </script>
 {% endblock %}

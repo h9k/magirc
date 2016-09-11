@@ -7,7 +7,7 @@
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link href="../admin/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="../admin/css/font.css" rel="stylesheet" type="text/css" />
-<link href="../admin/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="../js/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 div#header { width:580px; }
 div#main { width:600px; min-height:400px; }
@@ -18,31 +18,31 @@ pre { white-space:normal; }
 <body>
 {% block body %}
 <div id="header">
-	<a href="./"><img src="../admin/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
-	<div id="loading"><img src="../admin/img/loading.gif" alt="loading..." /></div>
+    <a href="./"><img src="../admin/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
+    <div id="loading"><img src="../admin/img/loading.gif" alt="loading..." /></div>
 </div>
 <div id="main">
-	<div id="content">
-		<h1>Welcome to the MagIRC Setup</h1>
-		<p>Please follow the on-screen instructions to install MagIRC</p>
-		{% block content %}[content placeholder]{% endblock %}
-	</div>
+    <div id="content">
+        <h1>Welcome to the MagIRC Setup</h1>
+        <p>Please follow the on-screen instructions to install MagIRC</p>
+        {% block content %}[content placeholder]{% endblock %}
+    </div>
 </div>
 <div id="footer">powered by <a href="http://www.magirc.org/">MagIRC</a></div>
 {% endblock %}
 {% block js %}
-<script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script type="text/javascript" src="../js/vendor/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../js/vendor/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/vendor/jquery-form/jquery.form.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#loading").ajaxStart(function(){
-		$(this).show();
-	}).ajaxStop(function(){
-		$(this).hide();
-	});
-	$("button").button();
-	$(".next").click(function() { window.location = '?step=' + {{ step + 1 }}; });
+    $("#loading").ajaxStart(function(){
+        $(this).show();
+    }).ajaxStop(function(){
+        $(this).hide();
+    });
+    $("button").button();
+    $(".next").click(function() { window.location = '?step=' + {{ step + 1 }}; });
 });
 </script>
 {% endblock %}

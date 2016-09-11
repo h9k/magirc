@@ -28,15 +28,18 @@ if (!is_writable('../tmp/'))
 
 session_start();
 
-include_once('../lib/magirc/version.inc.php');
-if (file_exists('../vendor/autoload.php')) {
-    require '../vendor/autoload.php';
+include_once(__DIR__.'/../lib/magirc/version.inc.php');
+if (file_exists(__DIR__.'/../vendor/autoload.php')) {
+    require __DIR__.'/../vendor/autoload.php';
 } else {
-    die('Please run the `composer install` or `php composer.phar install` command. See README for more information');
+    die('Please run the `composer install` command to install library dependencies. See README for more information.');
 }
-require_once('../lib/magirc/DB.class.php');
-require_once('../lib/magirc/Config.class.php');
-require_once('lib/Admin.class.php');
+if (!file_exists(__DIR__.'/../js/vendor/')) {
+    die('Please run the `bower install` command to install script dependencies. See README for more information.');
+}
+require_once(__DIR__.'/../lib/magirc/DB.class.php');
+require_once(__DIR__.'/../lib/magirc/Config.class.php');
+require_once(__DIR__.'/lib/Admin.class.php');
 
 $admin = new Admin();
 
@@ -143,7 +146,7 @@ $admin->slim->get('/configuration/service/{service}', function($req, $res, $args
     if (!$admin->sessionStatus()) {
         return $res->withStatus(403)->write('HTTP 403 Access Denied');
     }
-    $db_config_file = "../conf/{$args['service']}.cfg.php";
+    $db_config_file = __DIR__."/../conf/{$args['service']}.cfg.php";
     $db = array();
     if (file_exists($db_config_file)) {
         include($db_config_file);
@@ -192,7 +195,7 @@ $admin->slim->post('/configuration/{service}/database', function($req, $res, $ar
     if (!$admin->sessionStatus()) {
         return $res->withStatus(403)->write('HTTP 403 Access Denied');
     }
-    $db_config_file = "../conf/{$args['service']}.cfg.php";
+    $db_config_file = __DIR__."/../conf/{$args['service']}.cfg.php";
     $db = array();
     if (file_exists($db_config_file)) {
         include($db_config_file);
@@ -276,7 +279,7 @@ $admin->slim->get('/admin/list', function($req, $res, $args) use ($admin) {
     if (!$admin->sessionStatus()) {
         return $res->withStatus(403)->write('HTTP 403 Access Denied');
     }
-    $admins = $admin->db->query("SELECT username, realname, email FROM magirc_admin", SQL_ALL, SQL_ASSOC);
+    $admin->db->query("SELECT username, realname, email FROM magirc_admin", SQL_ALL, SQL_ASSOC);
     echo json_encode(array('aaData' => $admin->db->record));
     return $res->withHeader('Content-Type', 'application/json');
 });

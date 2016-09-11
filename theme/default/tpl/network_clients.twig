@@ -2,12 +2,12 @@
 <div id="chart-clients" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
 
 <table id="tbl_clients" class="display">
-	<thead>
-		<tr><th>{% trans "Client" %}</th><th>{% trans "Count" %}</th></tr>
-	</thead>
-	<tbody>
+    <thead>
+        <tr><th>{% trans "Client" %}</th><th>{% trans "Count" %}</th></tr>
+    </thead>
+    <tbody>
         <tr><td colspan="2">{% trans "Loading" %}...</td></tr>
-	</tbody>
+    </tbody>
 </table>
 
 <script type="text/javascript">
@@ -75,17 +75,17 @@ $(document).ready(function() {
             }
         }]
     });
-	var table_clients = $('#tbl_clients').DataTable({
-		"pageLength": 10,
-		"order": [[ 1, "desc" ]],
-		"ajax": "rest/service.php/network/clients?format=datatables",
-		"columns": [
-			{ "data": "client", "render": function (data) {
-				return data ? escapeTags(data) : mLang.Unknown;
-			} },
-			{ "data": "count" }
-		]
-	});
+    var table_clients = $('#tbl_clients').DataTable({
+        "pageLength": 10,
+        "order": [[ 1, "desc" ]],
+        "ajax": "rest/service.php/network/clients?format=datatables",
+        "columns": [
+            { "data": "client", "render": function (data) {
+                return data ? escapeTags(data) : mLang.Unknown;
+            } },
+            { "data": "count" }
+        ]
+    });
     loadContent();
 });
 </script>

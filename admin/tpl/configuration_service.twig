@@ -1,49 +1,49 @@
 <h1>Database settings</h1>
 <form id="{{ service }}-form">
 <table width="100%" border="0" cellspacing="0" cellpadding="5">
-	<tr>
-		<td align="right">Username</td>
+    <tr>
+        <td align="right">Username</td>
         <td align="left"><input name="username" type="text" id="username" value="{{ db.username }}" size="32" maxlength="64" /></td>
-	</tr>
-	<tr>
-		<td align="right">Password</td>
-		<td align="left"><input type="password" name="password" id="password" value="{{ db.password }}" size="32" maxlength="64" /></td>
-	</tr>
-	<tr>
-		<td align="right">Database Name</td>
-		<td align="left"><input type="text" name="database" id="database" value="{{ db.database }}" size="32" maxlength="64" /></td>
-	</tr>
+    </tr>
+    <tr>
+        <td align="right">Password</td>
+        <td align="left"><input type="password" name="password" id="password" value="{{ db.password }}" size="32" maxlength="64" /></td>
+    </tr>
+    <tr>
+        <td align="right">Database Name</td>
+        <td align="left"><input type="text" name="database" id="database" value="{{ db.database }}" size="32" maxlength="64" /></td>
+    </tr>
     {% if service == 'anope' %}
-	<tr>
-		<td align="right">Database Prefix</td>
-		<td align="left"><input type="text" name="prefix" id="prefix" value="{{ db.prefix }}" size="16" maxlength="64" /></td>
-	</tr>
+    <tr>
+        <td align="right">Database Prefix</td>
+        <td align="left"><input type="text" name="prefix" id="prefix" value="{{ db.prefix }}" size="16" maxlength="64" /></td>
+    </tr>
     {% endif %}
-	<tr>
-		<td align="right">Hostname</td>
-		<td align="left"><input type="text" name="hostname" id="hostname" value="{{ db.hostname }}" size="32" maxlength="64" /></td>
-	</tr>
-	<tr>
-		<td align="right">TCP Port</td>
-		<td align="left"><input type="text" name="port" id="port" value="{{ db.port }}" size="32" maxlength="64" /></td>
-	</tr>
-	<tr>
-		<td align="right">Enable SSL</td>
-		<td align="left"><input type="checkbox" name="ssl" id="ssl" value="1" {% if db.ssl %}checked="checked" {% endif %}/></td>
-	</tr>
-	<tr>
-		<td align="right">Path to SSL Key</td>
-		<td align="left"><input type="text" name="ssl_key" id="ssl_key" value="{{ db.ssl_key }}" size="32" maxlength="256" /></td>
-	</tr>
-	<tr>
-		<td align="right">Path to SSL Certificate</td>
-		<td align="left"><input type="text" name="ssl_cert" id="ssl_cert" value="{{ db.ssl_cert }}" size="32" maxlength="256" /></td>
-	</tr>
-	<tr>
-		<td align="right">Path to SSL CA</td>
-		<td align="left"><input type="text" name="ssl_ca" id="ssl_ca" value="{{ db.ssl_ca }}" size="32" maxlength="256" /></td>
-	</tr>
-	{% if service == 'denora' %}
+    <tr>
+        <td align="right">Hostname</td>
+        <td align="left"><input type="text" name="hostname" id="hostname" value="{{ db.hostname }}" size="32" maxlength="64" /></td>
+    </tr>
+    <tr>
+        <td align="right">TCP Port</td>
+        <td align="left"><input type="text" name="port" id="port" value="{{ db.port }}" size="32" maxlength="64" /></td>
+    </tr>
+    <tr>
+        <td align="right">Enable SSL</td>
+        <td align="left"><input type="checkbox" name="ssl" id="ssl" value="1" {% if db.ssl %}checked="checked" {% endif %}/></td>
+    </tr>
+    <tr>
+        <td align="right">Path to SSL Key</td>
+        <td align="left"><input type="text" name="ssl_key" id="ssl_key" value="{{ db.ssl_key }}" size="32" maxlength="256" /></td>
+    </tr>
+    <tr>
+        <td align="right">Path to SSL Certificate</td>
+        <td align="left"><input type="text" name="ssl_cert" id="ssl_cert" value="{{ db.ssl_cert }}" size="32" maxlength="256" /></td>
+    </tr>
+    <tr>
+        <td align="right">Path to SSL CA</td>
+        <td align="left"><input type="text" name="ssl_ca" id="ssl_ca" value="{{ db.ssl_ca }}" size="32" maxlength="256" /></td>
+    </tr>
+    {% if service == 'denora' %}
         <tr>
             <td align="right">'current' table name</td>
             <td align="left"><input type="text" name="current" id="current" value="{{ db.current|default("current") }}" size="32" maxlength="256" /></td>
@@ -92,7 +92,7 @@
             <td align="right">'aliases' table name</td>
             <td align="left"><input type="text" name="aliases" id="aliases" value="{{ db.aliases|default("aliases") }}" size="32" maxlength="256" /></td>
         </tr>
-	{% endif %}
+    {% endif %}
 </table>
 
 <pre>The configuration file <em>{{ db_config_file }}</em> is {% if writable %}<span style="color:green;">writable</span>
@@ -108,20 +108,20 @@
 </form>
 
 <div id="{{ service }}-manual" style="display:none;">
-	<br />MagIRC was unable to write the file.<br />Please create {{ db_config_file }} and paste the following code:
-	<div id="{{ service }}-file" class="file"></div>
+    <br />MagIRC was unable to write the file.<br />Please create {{ db_config_file }} and paste the following code:
+    <div id="{{ service }}-file" class="file"></div>
 </div>
 
 <script type="text/javascript">
 var service = '{{ service }}';
 $(document).ready(function() {
-	$("#"+service+"-submit").button().click(function() {
-		$("#"+service+"-form").ajaxSubmit({ url: 'index.php/configuration/'+service+'/database', type: 'post', success: function(data) {
-			if (data) {
+    $("#"+service+"-submit").button().click(function() {
+        $("#"+service+"-form").ajaxSubmit({ url: 'index.php/configuration/'+service+'/database', type: 'post', success: function(data) {
+            if (data) {
                 $("#success").show().delay(1500).fadeOut(500);
             } else {
-				$("#failure").show().delay(1500).fadeOut(500);
-				$("#"+service+"-manual").show();
+                $("#failure").show().delay(1500).fadeOut(500);
+                $("#"+service+"-manual").show();
 
                 var config = "<pre>&lt;?php\n$db = array(\n";
                 var params = [];
@@ -134,9 +134,9 @@ $(document).ready(function() {
                     config += "    '"+value+"' => \""+$("#"+value).val()+"\",\n";
                 });
                 config += ");</pre>";
-				$("#"+service+"-file").html(config);
-			}
-		} });
-	});
+                $("#"+service+"-file").html(config);
+            }
+        } });
+    });
 });
 </script>

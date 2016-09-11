@@ -1,24 +1,24 @@
 <h1>{% trans %}Server info for {{ target }}{% endtrans %}</h1>
 
 <div class="halfleft">
-	<table class="details">
-		<tr><th>{% trans "Description" %}:</th><td><span id="srv_description" class="val"></span></td></tr>
+    <table class="details">
+        <tr><th>{% trans "Description" %}:</th><td><span id="srv_description" class="val"></span></td></tr>
         {% if cfg.service == 'denora' %}<tr><th>{% trans "Country" %}:</th><td><span id="srv_country" class="val"></span></td></tr>{% endif %}
-		<tr><th>{% trans "Online" %}:</th><td><span id="srv_online" class="val"></span></td></tr>
+        <tr><th>{% trans "Online" %}:</th><td><span id="srv_online" class="val"></span></td></tr>
         {% if cfg.service == 'denora' %}<tr><th>{% trans "Version" %}:</th><td><span id="srv_version" class="val"></span></td></tr>
         <tr><th>{% trans "Uptime" %}:</th><td><span id="srv_uptime" class="val"></span></td></tr>{% endif %}
-		<tr><th>{% trans "Last split" %}:</th><td><span id="srv_lastsplit" class="val"></span></td></tr>
-	</table>
+        <tr><th>{% trans "Last split" %}:</th><td><span id="srv_lastsplit" class="val"></span></td></tr>
+    </table>
 </div>
 <div class="halfright">
-	<table class="details">
+    <table class="details">
         {% if cfg.service == 'denora' %}<tr><th>{% trans "Last ping" %}:</th><td><span id="srv_ping" class="val"></span></td></tr>
-		<tr><th>{% trans "Highest ping" %}:</th><td><span id="srv_maxping" class="val"></span> {% trans "on" %} <span id="srv_maxpingtime"></td></tr>{% endif %}
-		<tr><th>{% trans "Current users" %}:</th><td><span id="srv_users" class="val"></span></td></tr>
-		<tr><th>{% trans "Max users" %}:</th><td><span id="srv_maxusers" class="val"></span> {% trans "on" %} <span id="srv_maxusertime"></td></tr>
-		<tr><th>{% trans "Current opers" %}:</th><td><span id="srv_opers" class="val"></span></td></tr>
+        <tr><th>{% trans "Highest ping" %}:</th><td><span id="srv_maxping" class="val"></span> {% trans "on" %} <span id="srv_maxpingtime"></td></tr>{% endif %}
+        <tr><th>{% trans "Current users" %}:</th><td><span id="srv_users" class="val"></span></td></tr>
+        <tr><th>{% trans "Max users" %}:</th><td><span id="srv_maxusers" class="val"></span> {% trans "on" %} <span id="srv_maxusertime"></td></tr>
+        <tr><th>{% trans "Current opers" %}:</th><td><span id="srv_opers" class="val"></span></td></tr>
         {% if cfg.service == 'denora' %}<tr><th>{% trans "Max opers" %}:</th><td><span id="srv_maxopers" class="val"></span> {% trans "on" %} <span id="srv_maxopertime"></td></tr>{% endif %}
-	</table>
+    </table>
 </div>
 
 <div class="clear">&nbsp;</div>

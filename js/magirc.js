@@ -244,7 +244,7 @@ function getCountryFlag(user) {
 }
 function getChannelLinks() {
 	if (net_roundrobin || service_webchat) {
-		return '<button type="button" title="'+mLang.Join+'..." class="chanbutton ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icons" style="height:18px; width:30px; margin:0; vertical-align:middle;"><span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span></button>';
+		return '<button type="button" title="'+mLang.Join+'..." class="chanbutton ui-button ui-corner-all ui-widget ui-button-icon-only" style="height:18px; width:30px; margin:0; vertical-align:middle;"><span class="ui-button-icon ui-icon ui-icon-triangle-1-s"></span><span class="ui-button-icon-space"> </span></button>';
 	} else {
 		return '';
 	}

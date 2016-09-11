@@ -24,7 +24,10 @@ include_once('lib/magirc/version.inc.php');
 if (file_exists('vendor/autoload.php')) {
 	require 'vendor/autoload.php';
 } else {
-	die('Please run the `composer install` or `php composer.phar install` command. See README for more information');
+	die('Please run the `composer install` command to install library dependencies. See README for more information.');
+}
+if (!file_exists('js/vendor/')) {
+    die('Please run the `bower install` command to install script dependencies. See README for more information.');
 }
 require_once('lib/magirc/DB.class.php');
 require_once('lib/magirc/Config.class.php');

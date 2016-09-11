@@ -14,101 +14,91 @@
 <base href="{{ constant('BASE_URL') }}" />
 <link rel="icon" href="theme/{{ cfg.theme}}/img/favicon.ico" type="image/x-icon">
 {% block css %}
-<link href="theme/{{ cfg.theme }}/css/styles.css" rel="stylesheet" type="text/css" />
-<link href="theme/{{ cfg.theme }}/css/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="theme/{{ cfg.theme }}/css/datatables.css" rel="stylesheet" type="text/css" />
-{% if cfg.cdn_enable %}
-<link href='//fonts.googleapis.com/css?family=Share' rel='stylesheet' type='text/css'>
-{% else %}
+<link href="js/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="js/vendor/datatables.net-jqui/css/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css" />
 <link href="theme/{{ cfg.theme }}/css/font.css" rel="stylesheet" type="text/css" />
-{% endif %}
+<link href="theme/{{ cfg.theme }}/css/styles.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 </head>
 <body>
 {% block body %}
 <div id="header">
-	<a href="./"><img src="theme/{{ cfg.theme }}/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
-	<div id="menu">
-		<ul>
-			<li><a href="{% if not cfg.rewrite_enable %}index.php/{% endif %}network"{% if section == 'network' %} class="active"{% endif %}><span>&nbsp;{% trans "Network" %}</span></a></li>
-			<li><a href="{% if not cfg.rewrite_enable %}index.php/{% endif %}server"{% if section == 'server' %} class="active"{% endif %}><span>&nbsp;{% trans "Servers" %}</span></a></li>
-			<li><a href="{% if not cfg.rewrite_enable %}index.php/{% endif %}channel"{% if section == 'channel' %} class="active"{% endif %}><span>&nbsp;{% trans "Channels" %}</span></a></li>
-			<li><a href="{% if not cfg.rewrite_enable %}index.php/{% endif %}user"{% if section == 'user' %} class="active"{% endif %}><span>&nbsp;{% trans "Users" %}</span></a></li>
-		</ul>
-	</div>
-	<div id="loading"><img src="theme/{{ cfg.theme }}/img/loading.gif" alt="{% trans "Loading" %}..." /></div>
+    <a href="./"><img src="theme/{{ cfg.theme }}/img/magirc.png" alt="MagIRC" title="" id="logo" /></a>
+    <div id="menu">
+        <ul>
+            <li><a href="{% if not cfg.rewrite_enable %}index.php/{% endif %}network"{% if section == 'network' %} class="active"{% endif %}><span>&nbsp;{% trans "Network" %}</span></a></li>
+            <li><a href="{% if not cfg.rewrite_enable %}index.php/{% endif %}server"{% if section == 'server' %} class="active"{% endif %}><span>&nbsp;{% trans "Servers" %}</span></a></li>
+            <li><a href="{% if not cfg.rewrite_enable %}index.php/{% endif %}channel"{% if section == 'channel' %} class="active"{% endif %}><span>&nbsp;{% trans "Channels" %}</span></a></li>
+            <li><a href="{% if not cfg.rewrite_enable %}index.php/{% endif %}user"{% if section == 'user' %} class="active"{% endif %}><span>&nbsp;{% trans "Users" %}</span></a></li>
+        </ul>
+    </div>
+    <div id="loading"><img src="theme/{{ cfg.theme }}/img/loading.gif" alt="{% trans "Loading" %}..." /></div>
 </div>
 <div id="main">
-	{% block content %}[content placeholder]{% endblock %}
-	{% if cfg.service_adsense_id %}
-		<script type="text/javascript">
-		google_ad_client = "{{ cfg.service_adsense_id }}";
-		google_ad_width = 728;
-		google_ad_height = 90;
-		google_ad_format = "728x90_as";
-		google_ad_type = "text_image";
-		google_ad_channel ="{{ cfg.service_adsense_channel }}";
-		google_alternate_color = "f9f3df";
-		google_color_border = "CCCCCC";
-		google_color_bg = "FFFFFF";
-		google_color_link = "333333";
-		google_color_text = "666666";
-		google_color_url = "0066CC";
-		</script>
-		<div style="width:728px; margin:auto;"><script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
-	{% endif %}
+    {% block content %}[content placeholder]{% endblock %}
+    {% if cfg.service_adsense_id %}
+        <script type="text/javascript">
+        google_ad_client = "{{ cfg.service_adsense_id }}";
+        google_ad_width = 728;
+        google_ad_height = 90;
+        google_ad_format = "728x90_as";
+        google_ad_type = "text_image";
+        google_ad_channel ="{{ cfg.service_adsense_channel }}";
+        google_alternate_color = "f9f3df";
+        google_color_border = "CCCCCC";
+        google_color_bg = "FFFFFF";
+        google_color_link = "333333";
+        google_color_text = "666666";
+        google_color_url = "0066CC";
+        </script>
+        <div style="width:728px; margin:auto;"><script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
+    {% endif %}
 </div>
 <div id="footer">
-	<table>
-		<tr>
-			<td style="text-align:left;">
-				<div id="selectlocale">
-					<form method="get" action="./">
-					{% trans "Language" %}: <select name="locale" id="locale" autocomplete="off">
-					{% for locale,language in locales %}
-						<option value="{{ locale }}"{% if constant('LOCALE') == locale %} selected="selected"{% endif %}>{{ language }}</option>
-					{% endfor %}
-					</select>
-					</form>
-				</div>
-			</td>
-			<td style="text-align:center;">
-				{% if cfg.service_addthis %}
-				<div class="addthis_toolbox addthis_default_style">
-				<a class="addthis_button_preferred_1"></a>
-				<a class="addthis_button_preferred_2"></a>
-				<a class="addthis_button_preferred_3"></a>
-				<a class="addthis_button_preferred_4"></a>
-				<a class="addthis_button_compact"></a>
-				<a class="addthis_counter addthis_bubble_style"></a>
-				</div>
-				<script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
-				{% endif %}
-			</td>
-			<td style="text-align:right;">powered by <a href="http://www.magirc.org/">MagIRC</a>{% if cfg.version_show %} v{{ constant('VERSION_FULL') }}-{{ cfg.service }}{% endif %}</td>
-		</tr>
-	</table>
+    <table>
+        <tr>
+            <td style="text-align:left;">
+                <div id="selectlocale">
+                    <form method="get" action="./">
+                    {% trans "Language" %}: <select name="locale" id="locale" autocomplete="off">
+                    {% for locale,language in locales %}
+                        <option value="{{ locale }}"{% if constant('LOCALE') == locale %} selected="selected"{% endif %}>{{ language }}</option>
+                    {% endfor %}
+                    </select>
+                    </form>
+                </div>
+            </td>
+            <td style="text-align:center;">
+                {% if cfg.service_addthis %}
+                <div class="addthis_toolbox addthis_default_style">
+                <a class="addthis_button_preferred_1"></a>
+                <a class="addthis_button_preferred_2"></a>
+                <a class="addthis_button_preferred_3"></a>
+                <a class="addthis_button_preferred_4"></a>
+                <a class="addthis_button_compact"></a>
+                <a class="addthis_counter addthis_bubble_style"></a>
+                </div>
+                <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+                {% endif %}
+            </td>
+            <td style="text-align:right;">powered by <a href="http://www.magirc.org/">MagIRC</a>{% if cfg.version_show %} v{{ constant('VERSION_FULL') }}-{{ cfg.service }}{% endif %}</td>
+        </tr>
+    </table>
 </div>
 <ul id="chanmenu" style="display:none;">
-	{% if cfg.net_roundrobin %}<li data-action="irc"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/link.png" alt="" title="{% trans "Standard connection" %}" style="vertical-align:middle;" /> {% trans "IRC standard connection" %}</a></li>{% endif %}
-	{% if cfg.net_roundrobin and cfg.net_port_ssl %}<li data-action="ircs"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/ssl.png" alt="" title="{% trans "Secure connection" %}" style="vertical-align:middle;" /> {% trans "IRC secure connection" %}</a></li>{% endif %}
-	{% if cfg.service_webchat %}<li data-action="webchat"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/webchat.png" alt="" title="{% trans "Webchat" %}" style="vertical-align:middle;" /> {% trans "Webchat" %}</a></li>{% endif %}
-	{% if cfg.net_roundrobin and cfg.service_mibbit %}<li data-action="mibbit"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> Mibbit</a></li>{% endif %}
+    {% if cfg.net_roundrobin %}<li data-action="irc"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/link.png" alt="" title="{% trans "Standard connection" %}" style="vertical-align:middle;" /> {% trans "IRC standard connection" %}</a></li>{% endif %}
+    {% if cfg.net_roundrobin and cfg.net_port_ssl %}<li data-action="ircs"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/ssl.png" alt="" title="{% trans "Secure connection" %}" style="vertical-align:middle;" /> {% trans "IRC secure connection" %}</a></li>{% endif %}
+    {% if cfg.service_webchat %}<li data-action="webchat"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/webchat.png" alt="" title="{% trans "Webchat" %}" style="vertical-align:middle;" /> {% trans "Webchat" %}</a></li>{% endif %}
+    {% if cfg.net_roundrobin and cfg.service_mibbit %}<li data-action="mibbit"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> Mibbit</a></li>{% endif %}
 </ul>
 {% endblock %}
 {% block js %}
-{% if cfg.cdn_enable %}
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"></script>
-<script type="text/javascript" src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-{% else %}
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/jquery.datatables.min.js"></script>
-{% endif %}
-<script type="text/javascript" src="js/highstock.js"></script>
-<script type="text/javascript" src="js/jquery.cookie.js"></script>
-<script type="text/javascript" src="js/jquery.dateformat.js"></script>
+<script type="text/javascript" src="js/vendor/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="js/vendor/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/vendor/highcharts/highstock.js"></script>
+<script type="text/javascript" src="js/vendor/js-cookie/src/js.cookie.js"></script>
+<script type="text/javascript" src="js/vendor/jquery-dateFormat/dist/jquery-dateFormat.min.js"></script>
 <script type="text/javascript">
 var url_base = '{{ constant('BASE_URL') }}{% if not cfg.rewrite_enable %}index.php/{% endif %}';
 var theme = '{{ cfg.theme }}';
@@ -122,84 +112,84 @@ var format_datetime = '{% trans "yyyy-MM-dd HH:mm:ss" %}';
 var format_datetime_charts = '{% trans "%Y-%m-%d %H:%M:%S" %}';
 var refresh_interval = {{ cfg.live_interval }} * 1000;
 var mLang = {
-	"Unknown": "{% trans "Unknown" %}",
-	"AwayAs": "{% trans "Away as" %}",
-	"OnlineAs": "{% trans "Online as" %}",
-	"Online": "{% trans "Online" %}",
-	"Offline": "{% trans "Offline" %}",
-	"Bot": "{% trans "Bot" %}",
-	"Service": "{% trans "Service" %}",
-	"Helper": "{% trans "Available for help" %}",
-	"Join": "{% trans "join" %}",
-	"Days": "{% trans "days" %}",
-	"Hours": "{% trans "hours" %}",
-	"Minutes": "{% trans "minutes" %}",
-	"zoom_All": "{% trans "All" %}",
-	"zoom_1d": "{% trans "1d" %}",
-	"zoom_1w": "{% trans "1w" %}",
-	"zoom_1m": "{% trans "1m" %}",
-	"zoom_3m": "{% trans "3m" %}",
-	"zoom_6m": "{% trans "6m" %}",
-	"zoom_1y": "{% trans "1y" %}",
-	"LoadError": "{% trans "Unable to load contents" %}",
-	"Message": "{% trans "Message" %}",
-	"ConnectedSince": "{% trans "Connected since" %}",
-	"LastQuit": "{% trans "Last quit" %}",
-	"UsersOnline": "{% trans "Users online" %}",
-	"ServersOnline": "{% trans "Servers online" %}",
-	"Servers": "{% trans "Servers" %}",
-	"Channels": "{% trans "Channels" %}",
-	"Users": "{% trans "Users" %}",
-	"Operators": "{% trans "Operators" %}",
-	"Total": "{% trans "Total" %}",
-	"Today": "{% trans "Today" %}",
-	"ThisWeek": "{% trans "This Week" %}",
-	"ThisMonth": "{% trans "This Month" %}",
-	"Yes": "{% trans "Yes" %}",
-	"No": "{% trans "No" %}",
-	"Never": "{% trans "Never" %}",
-	"On": "{% trans "on" %}",
-	"NoMotd": "{% trans "MOTD not available for this server" %}",
-	"Failed": "{% trans "Failed" %}",
-	"Close": "{% trans "Close" %}",
-	"Status": "{% trans "Status" %}",
-	"CountryStatistics": "{% trans "Country Statistics" %}",
-	"ClientStatistics": "{% trans "Client Statistics" %}",
-	"None": "{% trans "none" %}",
-	"NetsplitRelWeek": "{% trans "Relation of users and channels during the last week" %}",
-	"NetsplitRelYear": "{% trans "Relation of users and channels during the last year" %}",
-	"NetsplitChanWeek": "{% trans "Channels during the last week" %}",
-	"NetsplitChanYear": "{% trans "Channels during the last year" %}",
-	"NetsplitSrvWeek": "{% trans "Servers during the last week" %}",
-	"NetsplitSrvYear": "{% trans "Servers during the last year" %}",
-	"MibbitRelDay": "{% trans "Day" %}",
-	"MibbitRelWeek": "{% trans "Week" %}",
-	"MibbitRelMonth": "{% trans "Month" %}",
-	"MibbitRelYear": "{% trans "Year" %}",
-	"DataTables": {
-		"processing": "{% trans "Processing..." %}",
-		"loadingRecords": "{% trans "Please wait - loading..." %}",
-		"lengthMenu": "{% trans "Show _MENU_ entries" %}",
-		"zeroRecords": "{% trans "No matching records found" %}",
-		"emptyTable": "{% trans "No data available in table" %}",
-		"info": "{% trans "Showing _START_ to _END_ of _TOTAL_ entries" %}",
-		"infoEmpty": "{% trans "Showing 0 to 0 of 0 entries" %}",
-		"infoFiltered": "{% trans "(filtered from _MAX_ total entries)" %}",
-		"infoPostFix": "",
-		"infoThousands": "'",
-		"search": "{% trans "Search" %}:",
-		"url": "",
-		"aria": {
-			"sortAscending": " - {% trans "click/return to sort ascending" %}",
-			"sortDescending": " - {% trans "click/return to sort descending" %}"
-		},
-		"paginate": {
-			"first": "{% trans "First" %}",
-			"previous": "{% trans "Previous" %}",
-			"next": "{% trans "Next" %}",
-			"last": "{% trans "Last" %}"
-		}
-	}
+    "Unknown": "{% trans "Unknown" %}",
+    "AwayAs": "{% trans "Away as" %}",
+    "OnlineAs": "{% trans "Online as" %}",
+    "Online": "{% trans "Online" %}",
+    "Offline": "{% trans "Offline" %}",
+    "Bot": "{% trans "Bot" %}",
+    "Service": "{% trans "Service" %}",
+    "Helper": "{% trans "Available for help" %}",
+    "Join": "{% trans "join" %}",
+    "Days": "{% trans "days" %}",
+    "Hours": "{% trans "hours" %}",
+    "Minutes": "{% trans "minutes" %}",
+    "zoom_All": "{% trans "All" %}",
+    "zoom_1d": "{% trans "1d" %}",
+    "zoom_1w": "{% trans "1w" %}",
+    "zoom_1m": "{% trans "1m" %}",
+    "zoom_3m": "{% trans "3m" %}",
+    "zoom_6m": "{% trans "6m" %}",
+    "zoom_1y": "{% trans "1y" %}",
+    "LoadError": "{% trans "Unable to load contents" %}",
+    "Message": "{% trans "Message" %}",
+    "ConnectedSince": "{% trans "Connected since" %}",
+    "LastQuit": "{% trans "Last quit" %}",
+    "UsersOnline": "{% trans "Users online" %}",
+    "ServersOnline": "{% trans "Servers online" %}",
+    "Servers": "{% trans "Servers" %}",
+    "Channels": "{% trans "Channels" %}",
+    "Users": "{% trans "Users" %}",
+    "Operators": "{% trans "Operators" %}",
+    "Total": "{% trans "Total" %}",
+    "Today": "{% trans "Today" %}",
+    "ThisWeek": "{% trans "This Week" %}",
+    "ThisMonth": "{% trans "This Month" %}",
+    "Yes": "{% trans "Yes" %}",
+    "No": "{% trans "No" %}",
+    "Never": "{% trans "Never" %}",
+    "On": "{% trans "on" %}",
+    "NoMotd": "{% trans "MOTD not available for this server" %}",
+    "Failed": "{% trans "Failed" %}",
+    "Close": "{% trans "Close" %}",
+    "Status": "{% trans "Status" %}",
+    "CountryStatistics": "{% trans "Country Statistics" %}",
+    "ClientStatistics": "{% trans "Client Statistics" %}",
+    "None": "{% trans "none" %}",
+    "NetsplitRelWeek": "{% trans "Relation of users and channels during the last week" %}",
+    "NetsplitRelYear": "{% trans "Relation of users and channels during the last year" %}",
+    "NetsplitChanWeek": "{% trans "Channels during the last week" %}",
+    "NetsplitChanYear": "{% trans "Channels during the last year" %}",
+    "NetsplitSrvWeek": "{% trans "Servers during the last week" %}",
+    "NetsplitSrvYear": "{% trans "Servers during the last year" %}",
+    "MibbitRelDay": "{% trans "Day" %}",
+    "MibbitRelWeek": "{% trans "Week" %}",
+    "MibbitRelMonth": "{% trans "Month" %}",
+    "MibbitRelYear": "{% trans "Year" %}",
+    "DataTables": {
+        "processing": "{% trans "Processing..." %}",
+        "loadingRecords": "{% trans "Please wait - loading..." %}",
+        "lengthMenu": "{% trans "Show _MENU_ entries" %}",
+        "zeroRecords": "{% trans "No matching records found" %}",
+        "emptyTable": "{% trans "No data available in table" %}",
+        "info": "{% trans "Showing _START_ to _END_ of _TOTAL_ entries" %}",
+        "infoEmpty": "{% trans "Showing 0 to 0 of 0 entries" %}",
+        "infoFiltered": "{% trans "(filtered from _MAX_ total entries)" %}",
+        "infoPostFix": "",
+        "infoThousands": "'",
+        "search": "{% trans "Search" %}:",
+        "url": "",
+        "aria": {
+            "sortAscending": " - {% trans "click/return to sort ascending" %}",
+            "sortDescending": " - {% trans "click/return to sort descending" %}"
+        },
+        "paginate": {
+            "first": "{% trans "First" %}",
+            "previous": "{% trans "Previous" %}",
+            "next": "{% trans "Next" %}",
+            "last": "{% trans "Last" %}"
+        }
+    }
 }
 </script>
 <script type="text/javascript" src="js/magirc.js"></script>

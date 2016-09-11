@@ -11,17 +11,17 @@
  */
 
 $magirc->slim->get('/custom/', function(Request $req,  Response $res, $args = []) use($magirc) {
-	$magirc->slim->view->render($res, 'custom.twig', [
-		'section' => 'custom',
-		'example' => 'Hello World',
-		'channels' => $magirc->service->getChannelList()
-	]);
+    $magirc->slim->view->render($res, 'custom.twig', [
+        'section' => 'custom',
+        'example' => 'Hello World',
+        'channels' => $magirc->service->getChannelList()
+    ]);
 });
 
 $magirc->slim->get('/custom/{example}', function(Request $req,  Response $res, $args = []) use($magirc) {
-	$magirc->slim->view->render($res, 'custom.twig', [
-		'section' => 'custom',
-		'example' => $args['example'],
-		'channels' => $magirc->service->getChannelList()
-	]);
+    $magirc->slim->view->render($res, 'custom.twig', [
+        'section' => 'custom',
+        'example' => $args['example'],
+        'channels' => $magirc->service->getChannelList()
+    ]);
 });

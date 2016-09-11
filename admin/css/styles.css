@@ -10,16 +10,16 @@ div#menu { float:left; margin:0; padding:0; }
 div#menu ul { list-style:none; margin:0; padding:0; }
 div#menu li { display:inline; margin:0; padding:0; }
 div#menu a {
-	float:left;
-	height:30px;
-	width:150px;
-	padding-top:45px;
-	display:block;
-	text-decoration:none;
-	color:white;
-	font-size:18px;
-	text-shadow: #333 1px 1px;
-	-webkit-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
+    float:left;
+    height:30px;
+    width:150px;
+    padding-top:45px;
+    display:block;
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+    text-shadow: #333 1px 1px;
+    -webkit-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
     -moz-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
     -o-transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
     transition: background 200ms ease-in 100ms, color 200ms ease-in 100ms, text-shadow 200ms ease-in 100ms;
@@ -27,15 +27,15 @@ div#menu a {
 div#menu a:hover { color:orange; background-color:rgba(255,255,255,0.2); }
 div#menu a.active { color:orange; }
 div#main {
-	width:900px;
-	margin:5px auto;
-	padding:0;
-	background-color:white;
-	border-radius:8px;
-	min-height:500px;
-	-moz-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
-	-webkit-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
-	box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
+    width:900px;
+    margin:5px auto;
+    padding:0;
+    background-color:white;
+    border-radius:8px;
+    min-height:500px;
+    -moz-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 }
 div#content { padding:5px 10px 10px 10px; }
 div.ui-tabs-panel a, div.ui-tabs-panel a:visited { color:#000099; }
@@ -43,21 +43,21 @@ div.ui-tabs-panel a:hover, div.ui-tabs-panel a:active { color:#000033; text-deco
 div.ui-tabs { padding: 0; }
 div.ui-tabs .ui-corner-all { border-radius: 4px 4px 0 0; }
 div#footer {
-	text-align:right;
-	font-size:x-small;
-	color:#FCFCFC;
-	padding:0px 5px 10px 5px;
-	margin:0px auto 10px auto;
-	width:890px;
+    text-align:right;
+    font-size:x-small;
+    color:#FCFCFC;
+    padding:0px 5px 10px 5px;
+    margin:0px auto 10px auto;
+    width:890px;
 }
 div#footer a, div#footer a:visited { color:#FCFCFC; font-size:12px; font-weight:bold; text-decoration:none; }
 div#footer a:hover, div#footer a:active { color:#FFFFFF; text-decoration:underline; }
 div#loading { display:none; float:right; margin-top:25px; }
 div#errorbox {
-	text-align: center;
-	width: 500px;
-	margin: 0 auto;
-	padding-top: 200px;
+    text-align: center;
+    width: 500px;
+    margin: 0 auto;
+    padding-top: 200px;
 }
 
 div.halfleft { width:49%; float:left; }
@@ -71,3 +71,27 @@ div#failure { color:red; text-align:center; font-size:large; display:none; borde
 table.form { margin:auto; }
 table.form th { text-align:left; }
 table.form input { background-color:#DDDDDD; padding:3px; border:0; }
+
+/* jQuery-UI overrides */
+.ui-widget {
+    font-family:'Share', Verdana, Arial !important;
+    font-size:13px !important;
+}
+.ui-widget .ui-widget {
+    font-size:13px !important;
+}
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+    font-family:'Share', Verdana, Arial !important;
+    font-size:13px !important;
+}
+.ui-widget-content {
+    border: 0 !important;
+    background: none !important;
+    color:#333333 !important;
+}
+.ui-widget-content a {
+    color: #333333 !important;
+}

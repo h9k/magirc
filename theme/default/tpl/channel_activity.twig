@@ -1,23 +1,23 @@
 <h1>{% trans %}Channel activity for {{ target }}{% endtrans %}</h1>
 
 <form>
-	<div id="radio" class="choser">
-		<input type="radio" id="radio0" name="radio" value="total" /><label for="radio0">{% trans "Total" %}</label>
-		<input type="radio" id="radio1" name="radio" value="daily" /><label for="radio1">{% trans "Today" %}</label>
-		<input type="radio" id="radio2" name="radio" value="weekly" /><label for="radio2">{% trans "This Week" %}</label>
-		<input type="radio" id="radio3" name="radio" value="monthly" checked="checked" /><label for="radio3">{% trans "This Month" %}</label>
-	</div>
+    <div id="radio" class="choser">
+        <input type="radio" id="radio0" name="radio" value="total" /><label for="radio0">{% trans "Total" %}</label>
+        <input type="radio" id="radio1" name="radio" value="daily" /><label for="radio1">{% trans "Today" %}</label>
+        <input type="radio" id="radio2" name="radio" value="weekly" /><label for="radio2">{% trans "This Week" %}</label>
+        <input type="radio" id="radio3" name="radio" value="monthly" checked="checked" /><label for="radio3">{% trans "This Month" %}</label>
+    </div>
 </form>
 
 <div id="chart_activity" style="height: 225px;"></div>
 
 <table id="tbl_activity" class="display clickable">
-	<thead>
-		<tr><th>{% trans "Nickname" %}</th><th>{% trans "Letters" %}</th><th>{% trans "Words" %}</th><th>{% trans "Lines" %}</th><th>{% trans "Actions" %}</th><th>{% trans "Smileys" %}</th><th>{% trans "Kicks" %}</th><th>{% trans "Modes" %}</th><th>{% trans "Topics" %}</th></tr>
-	</thead>
-	<tbody>
-		<tr><td colspan="9">{% trans "Loading" %}...</td></tr>
-	</tbody>
+    <thead>
+        <tr><th>{% trans "Nickname" %}</th><th>{% trans "Letters" %}</th><th>{% trans "Words" %}</th><th>{% trans "Lines" %}</th><th>{% trans "Actions" %}</th><th>{% trans "Smileys" %}</th><th>{% trans "Kicks" %}</th><th>{% trans "Modes" %}</th><th>{% trans "Topics" %}</th></tr>
+    </thead>
+    <tbody>
+        <tr><td colspan="9">{% trans "Loading" %}...</td></tr>
+    </tbody>
 </table>
 
 <script type="text/javascript">
@@ -35,42 +35,44 @@ $(document).ready(function() {
             chart_activity.series[0].setData(result);
         });
     }
-	var type = 'monthly';
-	var chart_activity = new Highcharts.Chart({
-		chart: { renderTo: 'chart_activity', type: 'column' },
-		xAxis: { type: 'linear', categories: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ], title: { text: 'Hour' } },
-		yAxis: { min: 0, title: { text: 'Lines' } },
-		tooltip: { enabled: false },
-		series: [{ name: 'Lines', data: [] }]
-	});
-	var table_activity = $('#tbl_activity').DataTable({
-		"serverSide": true,
-		"pageLength": 10,
-		"order": [[ 3, "desc" ]],
-		"ajax": "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
-		"columns": [
-			{ "data": "uname", "render": function(data, type, row) {
-				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
-			} },
-			{ "data": "letters" },
-			{ "data": "words" },
-			{ "data": "lines" },
-			{ "data": "actions" },
-			{ "data": "smileys" },
-			{ "data": "kicks" },
-			{ "data": "modes" },
-			{ "data": "topics" }
-		]
-	});
-	$("#tbl_activity tbody").on("click", "tr", function(event) {
-		if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile#activity';
-	});
-	$("#radio").buttonset();
-	$("#radio").change(function(event) {
-		type = $('input[name=radio]:checked').val();
+    var type = 'monthly';
+    var chart_activity = new Highcharts.Chart({
+        chart: { renderTo: 'chart_activity', type: 'column' },
+        xAxis: { type: 'linear', categories: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ], title: { text: 'Hour' } },
+        yAxis: { min: 0, title: { text: 'Lines' } },
+        tooltip: { enabled: false },
+        series: [{ name: 'Lines', data: [] }]
+    });
+    var table_activity = $('#tbl_activity').DataTable({
+        "serverSide": true,
+        "pageLength": 10,
+        "order": [[ 3, "desc" ]],
+        "ajax": "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
+        "columns": [
+            { "data": "uname", "render": function(data, type, row) {
+                return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
+            } },
+            { "data": "letters" },
+            { "data": "words" },
+            { "data": "lines" },
+            { "data": "actions" },
+            { "data": "smileys" },
+            { "data": "kicks" },
+            { "data": "modes" },
+            { "data": "topics" }
+        ]
+    });
+    $("#tbl_activity tbody").on("click", "tr", function(event) {
+        if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile#activity';
+    });
+    $("#radio input").checkboxradio({
+        icon: false
+    });
+    $("#radio").change(function(event) {
+        type = $('input[name=radio]:checked').val();
         table_activity.ajax.url("rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables").load();
         loadContent();
-	});
+    });
     loadContent();
 });
 </script>

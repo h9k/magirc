@@ -28,12 +28,15 @@ In case you want to migrate from Denora to Anope, we created a script for this t
 
 ## Magirc installation / upgrade ##
 
-### Using [composer](http://getcomposer.org) (recommended) ###
-You need [composer](http://getcomposer.org)
+### Using [composer](http://getcomposer.org) and [bower](http://bower.io) (recommended) ###
 
 1. Execute the following command:
-	- To install: `composer create-project magirc/magirc`
-	- To update: `composer update`
+	- To install:
+	    - `composer create-project magirc/magirc`
+	    - `bower install`
+	- To update:
+	    - `composer update`
+	    - `bower update`
 2. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 
@@ -44,11 +47,17 @@ You need [composer](http://getcomposer.org)
    Example: http://`yourpathtomagirc`/setup/
 
 ### Using git ###
-You a git client and [composer](http://getcomposer.org)
+You need a git client, [composer](http://getcomposer.org) and [bower](http://bower.io)
 
 1. Execute the following commands:
-	- To install: `git clone git://github.com/h9k/magirc.git` and `composer install`
-	- To update: `git pull` and `composer update`
+	- To install:
+	    - `git clone git://github.com/h9k/magirc.git`
+	    - `composer install`
+	    - `bower install`
+	- To update:
+	    - `git pull`
+	    - `composer update`
+	    - `bower update`
 2. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 

@@ -22,9 +22,9 @@ if (!is_writable('../tmp/')) die("ERROR: The 'tmp/' directory is not writable. P
 
 include_once('../lib/magirc/version.inc.php');
 if (file_exists('../vendor/autoload.php')) {
-	require '../vendor/autoload.php';
+    require '../vendor/autoload.php';
 } else {
-	die('Please run the `composer install` or `php composer.phar install` command. See README for more information');
+    die('Please run the `composer install` or `php composer.phar install` command. See README for more information');
 }
 require_once('../lib/magirc/DB.class.php');
 require_once('lib/Setup.class.php');
@@ -32,20 +32,20 @@ require_once('lib/Setup.class.php');
 $setup = new Setup();
 
 switch($_GET['step']) {
-	case 1: // System requirements checks
-		include('inc/step1.php');
-		break;
-	case 2: // SQL config check, Create/Update MagIRC SQL database
-		include('inc/step2.php');
-		break;
-	case 3: // Create admin user if necessary, display link to admin panel when done
-		include('inc/step3.php');
-		break;
-	case 4: // Installation successful
-		include('inc/step4.php');
-		break;
-	default:
-		die("ERROR: Unknown step {$_GET['step']}");
+    case 1: // System requirements checks
+        include('inc/step1.php');
+        break;
+    case 2: // SQL config check, Create/Update MagIRC SQL database
+        include('inc/step2.php');
+        break;
+    case 3: // Create admin user if necessary, display link to admin panel when done
+        include('inc/step3.php');
+        break;
+    case 4: // Installation successful
+        include('inc/step4.php');
+        break;
+    default:
+        die("ERROR: Unknown step {$_GET['step']}");
 }
 
 ?>

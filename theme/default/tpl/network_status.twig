@@ -1,237 +1,237 @@
 <div id="welcome"><h1>{%if cfg.live_interval %}{% trans "Live Network Status" %}{% else %}{% trans "Network Status" %}{% endif %}</h1></div>
 
 <table class="details" style="width:100%;">
-	<tr>
-		<th colspan="2"><h3>{% trans "Servers" %}</h3></th>
-		<th colspan="2"><h3>{% trans "Channels" %}</h3></th>
-		<th colspan="2"><h3>{% trans "Users" %}</h3></th>
-		<th colspan="2"><h3>{% trans "Operators" %}</h3></th>
-	</tr>
-	<tr>
-		<th>{% trans "Current" %}:</th><td><span id="net_servers" class="val"></span></td>
-		<th>{% trans "Current" %}:</th><td><span id="net_chans" class="val"></span></td>
-		<th>{% trans "Current" %}:</th><td><span id="net_users" class="val"></span></td>
-		<th>{% trans "Current" %}:</th><td><span id="net_opers" class="val"></span></td>
-	</tr>
-	<tr>
-		<th>{% trans "Peak" %}:</th><td><span id="net_servers_max" class="val"></span> {% trans "on" %} <span id="net_servers_max_time"></span></td>
-		<th>{% trans "Peak" %}:</th><td><span id="net_chans_max" class="val"></span> {% trans "on" %} <span id="net_chans_max_time"></span></td>
-		<th>{% trans "Peak" %}:</th><td><span id="net_users_max" class="val"></span> {% trans "on" %} <span id="net_users_max_time"></span></td>
-		<th>{% trans "Peak" %}:</th><td><span id="net_opers_max" class="val"></span> {% trans "on" %} <span id="net_opers_max_time"></span></td>
-	</tr>
+    <tr>
+        <th colspan="2"><h3>{% trans "Servers" %}</h3></th>
+        <th colspan="2"><h3>{% trans "Channels" %}</h3></th>
+        <th colspan="2"><h3>{% trans "Users" %}</h3></th>
+        <th colspan="2"><h3>{% trans "Operators" %}</h3></th>
+    </tr>
+    <tr>
+        <th>{% trans "Current" %}:</th><td><span id="net_servers" class="val"></span></td>
+        <th>{% trans "Current" %}:</th><td><span id="net_chans" class="val"></span></td>
+        <th>{% trans "Current" %}:</th><td><span id="net_users" class="val"></span></td>
+        <th>{% trans "Current" %}:</th><td><span id="net_opers" class="val"></span></td>
+    </tr>
+    <tr>
+        <th>{% trans "Peak" %}:</th><td><span id="net_servers_max" class="val"></span> {% trans "on" %} <span id="net_servers_max_time"></span></td>
+        <th>{% trans "Peak" %}:</th><td><span id="net_chans_max" class="val"></span> {% trans "on" %} <span id="net_chans_max_time"></span></td>
+        <th>{% trans "Peak" %}:</th><td><span id="net_users_max" class="val"></span> {% trans "on" %} <span id="net_users_max_time"></span></td>
+        <th>{% trans "Peak" %}:</th><td><span id="net_opers_max" class="val"></span> {% trans "on" %} <span id="net_opers_max_time"></span></td>
+    </tr>
 </table>
 
 <table>
-	<tr>
-		<td><div id="chart_line" style="height: 175px; width: 560px;"></div></td>
-		<td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
-	</tr>
+    <tr>
+        <td><div id="chart_line" style="height: 175px; width: 560px;"></div></td>
+        <td><div id="chart_status" style="height: 175px; width: 280px;"></div></td>
+    </tr>
 </table>
 
 <table class="details" style="width:100%;">
-	<tr>
-		<th style="width:33%;"><h3>{% trans "Current 10 Biggest Chans" %}</h3></th>
-		<th style="width:33%;"><h3>{% trans "Top 10 Channels Today" %}</h3></th>
-		<th style="width:33%;"><h3>{% trans "Top 10 Users Today" %}</h3></th>
-	</tr>
-	<tr>
-		<td valign="top">
-			<table id="tbl_biggestchans" class="display clickable">
-				<thead>
-					<tr>
-						<th>{% trans "Channel" %}</th>
-						<th>{% trans "Users" %}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="2">{% trans "Loading" %}...</td>
-					</tr>
-				</tbody>
-			</table>
-		</td>
-		<td valign="top">
-			<table id="tbl_top10chans" class="display clickable">
-				<thead>
-					<tr>
-						<th>{% trans "Channel" %}</th>
-						<th>{% trans "Lines" %}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="2">{% trans "Loading" %}...</td>
-					</tr>
-				</tbody>
-			</table>
-		</td>
-		<td valign="top">
-			<table id="tbl_top10users" class="display clickable">
-				<thead>
-					<tr>
-						<th>{% trans "User" %}</th>
-						<th>{% trans "Lines" %}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td colspan="2">{% trans "Loading" %}...</td>
-					</tr>
-				</tbody>
-			</table>
-		</td>
-	</tr>
+    <tr>
+        <th style="width:33%;"><h3>{% trans "Current 10 Biggest Chans" %}</h3></th>
+        <th style="width:33%;"><h3>{% trans "Top 10 Channels Today" %}</h3></th>
+        <th style="width:33%;"><h3>{% trans "Top 10 Users Today" %}</h3></th>
+    </tr>
+    <tr>
+        <td valign="top">
+            <table id="tbl_biggestchans" class="display clickable">
+                <thead>
+                    <tr>
+                        <th>{% trans "Channel" %}</th>
+                        <th>{% trans "Users" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">{% trans "Loading" %}...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td valign="top">
+            <table id="tbl_top10chans" class="display clickable">
+                <thead>
+                    <tr>
+                        <th>{% trans "Channel" %}</th>
+                        <th>{% trans "Lines" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">{% trans "Loading" %}...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td valign="top">
+            <table id="tbl_top10users" class="display clickable">
+                <thead>
+                    <tr>
+                        <th>{% trans "User" %}</th>
+                        <th>{% trans "Lines" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">{% trans "Loading" %}...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
 </table>
 <script type="text/javascript">
 var welcome_msg = '{{ cfg.welcome_mode }}';
 $(document).ready(function() {
-	if (welcome_msg == 'statuspage') {
-		$.get('index.php/content/welcome', function(result) {
-			$("#welcome").html(result);
-		});
-	}
-	var count = 0;
+    if (welcome_msg == 'statuspage') {
+        $.get('index.php/content/welcome', function(result) {
+            $("#welcome").html(result);
+        });
+    }
+    var count = 0;
 
-	var chart_line = new Highcharts.Chart({
-		chart: { type: 'line', renderTo: 'chart_line', events: { load: startCron() } },
-		yAxis: { title: { text: null } },
-		series: [{ name: mLang.Servers, data: initData(), visible:false }, { name: mLang.Channels, data: initData(), visible:false }, { name: mLang.Users, data: initData() }, { name: mLang.Operators, data: initData(), visible:false }],
-		legend: { enabled: true }
-	});
-	var chart_status = new Highcharts.Chart({
-		chart: { renderTo: 'chart_status', type: 'column', events: { load: startCron() } },
-		xAxis: { type: 'linear', categories: [ mLang.Servers, mLang.Channels, mLang.Users, mLang.Operators,  ], labels: { rotation: -45, align: 'right' } },
-		yAxis: { min: 0, title: { text: null } },
-		tooltip: { formatter: function() { return '<b>'+ this.x +'</b>: '+ Highcharts.numberFormat(this.y, 0); } },
-		series: [{ name: mLang.Status, data: [0, 0, 0] }]
-	});
+    var chart_line = new Highcharts.Chart({
+        chart: { type: 'line', renderTo: 'chart_line', events: { load: startCron() } },
+        yAxis: { title: { text: null } },
+        series: [{ name: mLang.Servers, data: initData(), visible:false }, { name: mLang.Channels, data: initData(), visible:false }, { name: mLang.Users, data: initData() }, { name: mLang.Operators, data: initData(), visible:false }],
+        legend: { enabled: true }
+    });
+    var chart_status = new Highcharts.Chart({
+        chart: { renderTo: 'chart_status', type: 'column', events: { load: startCron() } },
+        xAxis: { type: 'linear', categories: [ mLang.Servers, mLang.Channels, mLang.Users, mLang.Operators,  ], labels: { rotation: -45, align: 'right' } },
+        yAxis: { min: 0, title: { text: null } },
+        tooltip: { formatter: function() { return '<b>'+ this.x +'</b>: '+ Highcharts.numberFormat(this.y, 0); } },
+        series: [{ name: mLang.Status, data: [0, 0, 0] }]
+    });
 
-	function startCron() {
-		count++;
-		if (count >= 2) {
-			updateStatus();
-			updateMax();
-			if (refresh_interval > 0) {
-				setInterval(updateStatus, refresh_interval);
-				setInterval(updateTables, refresh_interval);
-			}
-		}
-	}
-	function updateStatus() {
-		$.getJSON('rest/service.php/network/status', function(result) {
-			var x = (new Date()).getTime();
-			chart_line.series[0].addPoint([x, result.servers.val], true, true);
-			chart_line.series[1].addPoint([x, result.chans.val], true, true);
-			chart_line.series[2].addPoint([x, result.users.val], true, true);
-			chart_line.series[3].addPoint([x, result.opers.val], true, true);
-			chart_status.series[0].setData([result.servers.val, result.chans.val, result.users.val, result.opers.val ]);
-			$("#net_users").text(result.users.val);
-			if ($("#net_users").text() > $("#net_users_max")) {
-				$("#net_users_max").text(result.users.val);
-				$("#net_users_max_time").text($.format.date(result.users.time, format_datetime));
-			}
-			$("#net_chans").text(result.chans.val);
-			if ($("#net_chans").text() > $("#net_chans_max")) {
-				$("#net_chans_max").text(result.chans.val);
-				$("#net_chans_max_time").text($.format.date(result.chans.time, format_datetime));
-			}
-			$("#net_servers").text(result.servers.val);
-			if ($("#net_servers").text() > $("#net_servers_max")) {
-				$("#net_servers_max").text(result.servers.val);
-				$("#net_servers_max_time").text($.format.date(result.servers.time, format_datetime));
-			}
-			$("#net_opers").text(result.opers.val);
-			if ($("#net_opers").text() > $("#net_opers_max")) {
-				$("#net_opers_max").text(result.opers.val);
-				$("#net_opers_max_time").text($.format.date(result.opers.time, format_datetime));
-			}
-		});
-	}
-	function updateMax() {
-		$.getJSON('rest/service.php/network/max', function(result) {
-			$("#net_users_max").text(result.users.val);
-			$("#net_chans_max").text(result.channels.val);
-			$("#net_servers_max").text(result.servers.val);
-			$("#net_opers_max").text(result.opers.val);
-			$("#net_users_max_time").text($.format.date(result.users.time, format_datetime));
-			$("#net_chans_max_time").text($.format.date(result.channels.time, format_datetime));
-			$("#net_servers_max_time").text($.format.date(result.servers.time, format_datetime));
-			$("#net_opers_max_time").text($.format.date(result.opers.time, format_datetime));
-		});
-	}
-	function updateTables() {
-		table1.ajax.reload(null, false);
-		table2.ajax.reload(null, false);
-		table3.ajax.reload(null, false);
-	}
-	function initData() {
-		var data = [], time = (new Date()).getTime();
-		for (i = -19; i <= 0; i++) {
-			data.push({ x: time + i * refresh_interval * 1000, y: null });
-		}
-		return data;
-	}
-	var table1 = $("#tbl_biggestchans").DataTable({
-		"processing": false,
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"paging": false,
-		"ordering": false,
-		"ajax": "rest/service.php/channels/biggest/10?format=datatables",
-		"columns": [
-			{ "data": "channel", "render": function (data) {
-				return getChannelLinks() + ' ' + escapeTags(data);
-			} },
-			{ "data": "users" }
-		]
-	});
-	$("#tbl_biggestchans tbody").on("click", "tr", function(event) {
-		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
-	});
-	$("#tbl_biggestchans tbody").on("click", "tr button", function(event) {
-		event.stopPropagation();
-		openChanMenu(this);
-	});
-	var table2 = $("#tbl_top10chans").DataTable({
-		"processing": false,
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"paging": false,
-		"ordering": false,
-		"ajax": "rest/service.php/channels/top/10?format=datatables",
-		"columns": [
-			{ "data": "channel", "render": function (data) {
-				return getChannelLinks() + ' ' + escapeTags(data);
-			} },
-			{ "data": "lines" }
-		]
-	});
-	$("#tbl_top10chans tbody").on("click", "tr", function(event) {
-		if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
-	});
-	$("#tbl_top10chans tbody").on("click", "tr button", function(event) {
-		event.stopPropagation();
-		openChanMenu(this);
-	});
-	var table3 = $("#tbl_top10users").DataTable({
-		"processing": false,
-		"searching": false,
-		"info": false,
-		"lengthChange": false,
-		"paging": false,
-		"ordering": false,
-		"ajax": "rest/service.php/users/top/10?format=datatables",
-		"columns": [
-			{ "data": "uname", "render": function(data, type, row) {
-				return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
-			} },
-			{ "data": "lines" }
-		]
-	});
-	$("#tbl_top10users tbody").on("click", "tr", function(event) {
-		if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile';
-	});
+    function startCron() {
+        count++;
+        if (count >= 2) {
+            updateStatus();
+            updateMax();
+            if (refresh_interval > 0) {
+                setInterval(updateStatus, refresh_interval);
+                setInterval(updateTables, refresh_interval);
+            }
+        }
+    }
+    function updateStatus() {
+        $.getJSON('rest/service.php/network/status', function(result) {
+            var x = (new Date()).getTime();
+            chart_line.series[0].addPoint([x, result.servers.val], true, true);
+            chart_line.series[1].addPoint([x, result.chans.val], true, true);
+            chart_line.series[2].addPoint([x, result.users.val], true, true);
+            chart_line.series[3].addPoint([x, result.opers.val], true, true);
+            chart_status.series[0].setData([result.servers.val, result.chans.val, result.users.val, result.opers.val ]);
+            $("#net_users").text(result.users.val);
+            if ($("#net_users").text() > $("#net_users_max")) {
+                $("#net_users_max").text(result.users.val);
+                $("#net_users_max_time").text($.format.date(result.users.time, format_datetime));
+            }
+            $("#net_chans").text(result.chans.val);
+            if ($("#net_chans").text() > $("#net_chans_max")) {
+                $("#net_chans_max").text(result.chans.val);
+                $("#net_chans_max_time").text($.format.date(result.chans.time, format_datetime));
+            }
+            $("#net_servers").text(result.servers.val);
+            if ($("#net_servers").text() > $("#net_servers_max")) {
+                $("#net_servers_max").text(result.servers.val);
+                $("#net_servers_max_time").text($.format.date(result.servers.time, format_datetime));
+            }
+            $("#net_opers").text(result.opers.val);
+            if ($("#net_opers").text() > $("#net_opers_max")) {
+                $("#net_opers_max").text(result.opers.val);
+                $("#net_opers_max_time").text($.format.date(result.opers.time, format_datetime));
+            }
+        });
+    }
+    function updateMax() {
+        $.getJSON('rest/service.php/network/max', function(result) {
+            $("#net_users_max").text(result.users.val);
+            $("#net_chans_max").text(result.channels.val);
+            $("#net_servers_max").text(result.servers.val);
+            $("#net_opers_max").text(result.opers.val);
+            $("#net_users_max_time").text($.format.date(result.users.time, format_datetime));
+            $("#net_chans_max_time").text($.format.date(result.channels.time, format_datetime));
+            $("#net_servers_max_time").text($.format.date(result.servers.time, format_datetime));
+            $("#net_opers_max_time").text($.format.date(result.opers.time, format_datetime));
+        });
+    }
+    function updateTables() {
+        table1.ajax.reload(null, false);
+        table2.ajax.reload(null, false);
+        table3.ajax.reload(null, false);
+    }
+    function initData() {
+        var data = [], time = (new Date()).getTime();
+        for (i = -19; i <= 0; i++) {
+            data.push({ x: time + i * refresh_interval * 1000, y: null });
+        }
+        return data;
+    }
+    var table1 = $("#tbl_biggestchans").DataTable({
+        "processing": false,
+        "searching": false,
+        "info": false,
+        "lengthChange": false,
+        "paging": false,
+        "ordering": false,
+        "ajax": "rest/service.php/channels/biggest/10?format=datatables",
+        "columns": [
+            { "data": "channel", "render": function (data) {
+                return getChannelLinks() + ' ' + escapeTags(data);
+            } },
+            { "data": "users" }
+        ]
+    });
+    $("#tbl_biggestchans tbody").on("click", "tr", function(event) {
+        if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile';
+    });
+    $("#tbl_biggestchans tbody").on("click", "tr button", function(event) {
+        event.stopPropagation();
+        openChanMenu(this);
+    });
+    var table2 = $("#tbl_top10chans").DataTable({
+        "processing": false,
+        "searching": false,
+        "info": false,
+        "lengthChange": false,
+        "paging": false,
+        "ordering": false,
+        "ajax": "rest/service.php/channels/top/10?format=datatables",
+        "columns": [
+            { "data": "channel", "render": function (data) {
+                return getChannelLinks() + ' ' + escapeTags(data);
+            } },
+            { "data": "lines" }
+        ]
+    });
+    $("#tbl_top10chans tbody").on("click", "tr", function(event) {
+        if (this.id) window.location = url_base + 'channel/' + encodeURIComponent(this.id) + '/profile#activity';
+    });
+    $("#tbl_top10chans tbody").on("click", "tr button", function(event) {
+        event.stopPropagation();
+        openChanMenu(this);
+    });
+    var table3 = $("#tbl_top10users").DataTable({
+        "processing": false,
+        "searching": false,
+        "info": false,
+        "lengthChange": false,
+        "paging": false,
+        "ordering": false,
+        "ajax": "rest/service.php/users/top/10?format=datatables",
+        "columns": [
+            { "data": "uname", "render": function(data, type, row) {
+                return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
+            } },
+            { "data": "lines" }
+        ]
+    });
+    $("#tbl_top10users tbody").on("click", "tr", function(event) {
+        if (this.id) window.location = url_base + 'user/stats:' + encodeURIComponent(this.id) + '/profile';
+    });
 });
 </script>
