@@ -186,6 +186,9 @@ $admin->slim->post('/configuration', function($req, $res, $args) use ($admin) {
         return $res->withStatus(403)->write('HTTP 403 Access Denied');
     }
     foreach ($_POST as $key => $val) {
+        if ($key == 'base_url') {
+            $val = (substr($val, -1) == "/") ? substr($val, 0, -1) : $val;
+        }
         $admin->saveConfig($key, $val);
     }
     echo json_encode(true);

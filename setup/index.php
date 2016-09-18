@@ -47,5 +47,3 @@ switch($_GET['step']) {
     default:
         die("ERROR: Unknown step {$_GET['step']}");
 }
-
-?>
