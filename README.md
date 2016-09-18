@@ -37,6 +37,7 @@ In case you want to migrate from Denora to Anope, we created a script for this t
 	- To update:
 	    - `composer update`
 	    - `bower update`
+	    - Clean up cached pages with `rm -r tmp/*`
 2. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: http://`yourpathtomagirc`/setup/
 

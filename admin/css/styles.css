@@ -89,7 +89,7 @@ table.form input { background-color:#DDDDDD; padding:3px; border:0; }
 }
 .ui-widget-content {
     border: 0 !important;
-    background: none !important;
+    /*background: none !important;*/
     color:#333333 !important;
 }
 .ui-widget-content a {

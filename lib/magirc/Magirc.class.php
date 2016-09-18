@@ -20,14 +20,14 @@ class Magirc {
         if ($useTemplateEngine) {
             $configuration = [
                 'settings' => [
-                    'displayErrorDetails' => $this->cfg->debug > 0,
+                    'displayErrorDetails' => $this->cfg->debug_mode > 0,
                 ],
             ];
             $container = new \Slim\Container($configuration);
             $container['view'] = function ($c) {
                 $view = new \Slim\Views\Twig(__DIR__ . '/../../theme/'.$this->cfg->theme.'/tpl', [
                     'cache' => __DIR__ . '/../../tmp',
-                    'debug' => $this->cfg->debug > 0
+                    'debug' => $this->cfg->debug_mode > 0
                 ]);
                 $view->addExtension(new \Slim\Views\TwigExtension(
                     $c['router'],
