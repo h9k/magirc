@@ -166,10 +166,10 @@ class Denora implements Service {
     private function getPieStats($type, $mode = null, $target = null) {
         $query = "SELECT ";
         if ($type == 'clients') {
-            $type = 'ctcpversion';
+            $groupby = 'u.ctcpversion';
             $query .= " u.ctcpversion AS client, ";
         } else {
-            $type = 'country';
+            $groupby = 'u.country, u.countrycode';
             $query .= " u.country, u.countrycode AS country_code, ";
         }
         $query .= sprintf("COUNT(*) AS count FROM `%s` AS u JOIN `%s` AS s ON s.servid = u.servid",
@@ -187,7 +187,7 @@ class Denora implements Service {
         if (Protocol::services_protection_mode) {
             $query .= sprintf(" AND u.%s = 'N'", self::getSqlMode(Protocol::services_protection_mode));
         }
-        $query .= " GROUP by u.$type ORDER BY count DESC";
+        $query .= " GROUP by $groupby ORDER BY count DESC";
         $ps = $this->db->prepare($query);
         if ($mode == 'channel' && $target) $ps->bindValue(':chan', $target, PDO::PARAM_STR);
         if ($mode == 'server' && $target) $ps->bindValue(':server', $target, PDO::PARAM_STR);

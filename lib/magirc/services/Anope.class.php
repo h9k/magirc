@@ -202,7 +202,7 @@ class Anope implements Service {
         if ($where){
             $query .= " WHERE {$where}";
         }
-        $query .= " GROUP by u.geocode ORDER BY count DESC";
+        $query .= " GROUP by u.geocode, u.geocountry ORDER BY count DESC";
         $ps = $this->db->prepare($query);
         if ($mode == 'channel' && $target) $ps->bindValue(':chan', $target, PDO::PARAM_STR);
         if ($mode == 'server' && $target) $ps->bindValue(':server', $target, PDO::PARAM_STR);
