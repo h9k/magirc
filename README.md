@@ -144,7 +144,7 @@ Your Nginx configuration file should look like this, adapted to your needs of co
 
         location ~ \.php {
             try_files $uri =404;
-            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+			fastcgi_split_path_info ^(.+\.php)([\:\/A-z0-9]+)$;
             include fastcgi_params;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             fastcgi_param SCRIPT_NAME $fastcgi_script_name;
