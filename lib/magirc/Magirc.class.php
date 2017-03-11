@@ -199,6 +199,9 @@ class Magirc {
                     case 'tr_TR';
                         $language = "Türkçe";
                         break;
+                    case 'pt_PT':
+                        $language = "Português";
+                        break;
                     default:
                         $language = $locale;
                 }
