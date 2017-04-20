@@ -130,32 +130,58 @@ It is also recommended, if you allow slashes `/` in your nicknames or channel na
 ### Nginx ###
 Your Nginx configuration file should look like this, adapted to your needs of course:
 
-    server {
-        listen 80;
-        server_name example.com;
-        index index.php;
-        error_log /path/to/example.error.log;
-        access_log /path/to/example.access.log;
-        root /path/to/public;
+```
+server {
+	listen 80;
+	server_name magirc.example.com;
 
-        location / {
-            try_files $uri $uri/ /index.php$is_args$args;
-        }
+	access_log /var/log/nginx/magirc_access.log main;
+	error_log /var/log/nginx/magirc_error.log info;
 
-        location ~ \.php {
-            try_files $uri =404;
-			fastcgi_split_path_info ^(.+\.php)([\:\/A-z0-9]+)$;
-            include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            fastcgi_param SCRIPT_NAME $fastcgi_script_name;
-            fastcgi_index index.php;
-            fastcgi_pass 127.0.0.1:9000;
-        }
-    }
+	root /path/to/magirc;
+	index index.php index.html;
+
+	location / {
+		try_files $uri $uri/ /index.php;
+	}
+
+	location ~ ^(/.+\.php)(/.*)?$ {
+		try_files $1 =404;
+		include /etc/nginx/fastcgi.conf;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+	}
+}
+```
 
 This will work with or without Magirc rewrite.
-Don't forget to replace `fastcgi_pass  backend;` by your actual backend.
 If you do not have `/etc/nginx/fastcgi.conf`, include `/etc/nginx/fastcgi_params`.
+
+If MagIRC is installed in a directory within your webroot (example.com/magirc/), your Nginx configuration file should look like this, adapted to your needs of course:
+
+```
+server {
+	listen 80;
+	server_name example.com;
+
+	access_log /var/log/nginx/magirc_access.log main;
+	error_log /var/log/nginx/magirc_error.log info;
+
+	root /path/to/webroot;
+	index index.php index.html;
+
+	location /magirc {
+		try_files $uri $uri/ /magirc/index.php;
+	}
+
+	location ~ ^(/magirc/.+\.php)(/.*)?$ {
+		try_files $1 =404;
+		include /etc/nginx/fastcgi.conf;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+	}
+}
+```
 
 ### lighttpd ###
 Your lighttpd configuration file should contain this code (along with other settings you may need). This code requires lighttpd >= 1.4.24.
