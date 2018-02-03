@@ -5,7 +5,7 @@
     "keywords": [ "irc", "denora", "anope", "stats", "statistics", "frontend" ],
     "homepage": "https://www.magirc.org",
     "license": [
-        "GPL-3.0+"
+        "GPL-3.0-or-later"
     ],
     "authors": [
         {
