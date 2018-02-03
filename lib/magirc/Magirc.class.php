@@ -2,10 +2,14 @@
 // Root path
 define('PATH_ROOT', __DIR__ . '/../../');
 
+use \Gettext\Translator as Translator;
+use JaimePerez\TwigConfigurableI18n\Twig\Extensions\Extension\I18n as Twig_Extensions_Extension_I18n;
+
 class Magirc {
     public $db;
     public $cfg;
     public $slim;
+    public $translator;
     public $service;
 
     function __construct($useTemplateEngine = false) {
@@ -13,6 +17,8 @@ class Magirc {
         $this->cfg = self::initializeConfiguration();
         $this->service = self::initializeService();
         $this->slim = self::initializeFramework($useTemplateEngine);
+        $this->translator = new Translator();
+        $this->translator->register();
         self::initializeLocalization();
     }
 
@@ -23,17 +29,20 @@ class Magirc {
                     'displayErrorDetails' => $this->cfg->debug_mode > 0,
                 ],
             ];
+
             $container = new \Slim\Container($configuration);
             $container['view'] = function ($c) {
                 $view = new \Slim\Views\Twig(__DIR__ . '/../../theme/'.$this->cfg->theme.'/tpl', [
                     'cache' => __DIR__ . '/../../tmp',
-                    'debug' => $this->cfg->debug_mode > 0
+                    'debug' => $this->cfg->debug_mode > 0,
+                    'translation_function' => 'translate',
+                    'translation_function_plural' => 'translate_plural'
                 ]);
                 $view->addExtension(new \Slim\Views\TwigExtension(
                     $c['router'],
                     $c['request']->getUri()
                 ));
-                $view->addExtension(new Twig_Extensions_Extension_I18n());
+                $view->addExtension(new Twig_Extensions_Extension_I18n);
                 return $view;
             };
             $container['notFoundHandler'] = function ($c) {
@@ -57,7 +66,8 @@ class Magirc {
                     return $c['view']->render($response, 'error_fatal.twig', [
                         'err_msg' => $exception->getMessage(),
                         'err_extra' => nl2br($exception->getTraceAsString()),
-                        'server' => $_SERVER
+                        'server' => $_SERVER,
+                        'cfg' => $this->cfg->config
                     ])->withStatus(500);
                 };
             };
@@ -131,13 +141,8 @@ class Magirc {
     private function initializeLocalization() {
         $locale = self::getLocale();
         $domain = "messages";
-        //putenv("LC_ALL={$locale}.utf8");
-        //setlocale(LC_ALL, $locale.'.UTF-8');
-        putenv("LC_ALL={$locale}");
-        setlocale(LC_ALL, $locale);
-        bindtextdomain($domain, PATH_ROOT.'locale/');
-        bind_textdomain_codeset($domain, 'UTF-8');
-        textdomain($domain);
+        $translations = Gettext\Translations::fromPoFile(PATH_ROOT . "locale/$locale/LC_MESSAGES/$domain.po");
+        $this->translator->loadTranslations($translations);
         define('LOCALE', $locale);
         define('LANG', substr($locale, 0, 2));
     }
@@ -244,27 +249,6 @@ class Magirc {
         $ps->bindParam(':name', $name, PDO::PARAM_STR);
         $ps->execute();
         return $ps->fetch(PDO::FETCH_COLUMN);
-    }
-
-    /**
-     * Checks thet permission for the given type and target.
-     * Terminates the program with an appropriate error message on failure.
-     * (Used by the RESTful API)
-     * @param string $type Choices: 'channel'
-     * @param string $target For example the channel name
-     */
-    function checkPermission($type, $target) {
-        $result = 200;
-        switch($type) {
-            case 'channel':
-                $result = $this->service->checkChannel($target);
-                break;
-        }
-        // In case of error the application will terminate, otherwise it will continue normally
-        switch ($result) {
-            case 404: $this->slim->notFound();
-            case 403: $this->slim->halt(403, $this->jsonOutput(array('error' => "HTTP 403 Access Denied")));
-        }
     }
 
     /**
