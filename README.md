@@ -18,7 +18,7 @@ In case you want to migrate from Denora to Anope, we created a script for this t
 * Slick design
 
 ### Requirements ###
-* Web Server with PHP 5.5+ and the `pdo_mysql`, `mcrypt` and `gettext` modules installed
+* Web Server with PHP 5.6+ and the `pdo_mysql` and `gettext` modules installed
 * Web Browser supporting HTML5, CSS3 and JavaScript
 * Any of the following:
 	* [Denora Stats](http://www.denorastats.org) v1.5 server with MySQL enabled

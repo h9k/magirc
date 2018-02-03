@@ -68,13 +68,6 @@ class Setup {
             $status['error'] = true;
         }
 
-        if (extension_loaded('mcrypt') == 1) {
-            $status['mcrypt'] = true;
-        } else {
-            $status['mcrypt'] = false;
-            $status['error'] = true;
-        }
-
         if (file_exists(MAGIRC_CFG_FILE)) {
             if (is_writable(MAGIRC_CFG_FILE)) {
                 $status['writable'] = true;
