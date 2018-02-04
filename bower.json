@@ -30,6 +30,7 @@
     "js-cookie": "^2.2.0",
     "highcharts": "^6.0.5",
     "jquery-form": "^4.2.2",
+    "momentjs": "^2.20.1",
     "requirejs": "^2.3.5",
     "flag-icon-css": "^2.9.0"
   }
