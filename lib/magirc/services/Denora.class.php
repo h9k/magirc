@@ -947,7 +947,7 @@ class Denora implements Service {
             implode(',', array_map(array('Denora', 'getSqlMode'), str_split(Protocol::user_modes))),
             TBL_USER, TBL_SERVER);
         $ps = $this->db->prepare($query);
-        $ps->bindValue(':nickname', $info['nick'], PDO::PARAM_INT);
+        $ps->bindValue(':nickname', $info['nick'], PDO::PARAM_STR);
         $ps->execute();
         $user = $ps->fetchObject('User');
         if ($user) {

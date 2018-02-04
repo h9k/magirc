@@ -658,7 +658,7 @@ class Anope implements Service {
             $query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
         }
         $ps = $this->db->prepare($query);
-        $ps->bindValue(':type', $type, PDO::PARAM_INT);
+        $ps->bindValue(':type', $type, PDO::PARAM_STR);
         $ps->execute();
         foreach ($ps->fetchAll(PDO::FETCH_ASSOC) as $row) {
             if ($datatables) {
@@ -695,7 +695,7 @@ class Anope implements Service {
             $query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
         }
         $ps = $this->db->prepare($query);
-        $ps->bindValue(':type', $type, PDO::PARAM_INT);
+        $ps->bindValue(':type', $type, PDO::PARAM_STR);
         $ps->bindValue(':channel', $chan, PDO::PARAM_STR);
         $ps->execute();
         $data = $ps->fetchAll(PDO::FETCH_ASSOC);
@@ -744,7 +744,7 @@ class Anope implements Service {
             WHERE chan=:channel AND type=:type",
                 TBL_CHANSTATS);
         $ps = $this->db->prepare($query);
-        $ps->bindValue(':type', $type, PDO::PARAM_INT);
+        $ps->bindValue(':type', $type, PDO::PARAM_STR);
         $ps->bindValue(':channel', $chan, PDO::PARAM_STR);
         $ps->execute();
         $result = $ps->fetch(PDO::FETCH_NUM);
@@ -871,7 +871,7 @@ class Anope implements Service {
             WHERE u.nick = :nickname",
                 TBL_USER, TBL_SERVER);
         $ps = $this->db->prepare($query);
-        $ps->bindValue(':nickname', $info['nick'], PDO::PARAM_INT);
+        $ps->bindValue(':nickname', $info['nick'], PDO::PARAM_STR);
         $ps->execute();
         $user = $ps->fetchObject('User');
         if ($user) {
@@ -945,7 +945,7 @@ class Anope implements Service {
             $query .= sprintf("%s %s %s", $filtering ? " AND " . $filtering : "", $ordering, $paging);
         }
         $ps = $this->db->prepare($query);
-        $ps->bindValue(':type', $type, PDO::PARAM_INT);
+        $ps->bindValue(':type', $type, PDO::PARAM_STR);
         $ps->execute();
         $data = $ps->fetchAll(PDO::FETCH_ASSOC);
         if ($datatables) {
@@ -1048,7 +1048,7 @@ class Anope implements Service {
             WHERE nick = :nick AND chan = :channel AND type = :type",
                 TBL_CHANSTATS);
         $ps = $this->db->prepare($query);
-        $ps->bindValue(':type', $type, PDO::PARAM_INT);
+        $ps->bindValue(':type', $type, PDO::PARAM_STR);
         $ps->bindValue(':channel', $chan, PDO::PARAM_STR);
         $ps->bindValue(':nick', $info['uname'], PDO::PARAM_STR);
         $ps->execute();
