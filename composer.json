@@ -32,7 +32,6 @@
         "aptoma/twig-markdown": "^2.0",
         "michelf/php-markdown": "^1.6",
         "ckeditor/ckeditor": "^4.5",
-        "gettext/gettext": "^4.4",
-        "symfony/translation": "^4.0"
+        "gettext/gettext": "^4.4"
     }
 }
