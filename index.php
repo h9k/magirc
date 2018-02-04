@@ -3,7 +3,7 @@
  * MagIRC - Let the magirc begin!
  * Frontend
  *
- * @author      Sebastian Vassiliou <hal9000@denorastats.org>
+ * @author      Sebastian Vassiliou <hal9000@magirc.org>
  * @copyright   2012 - 2018 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
