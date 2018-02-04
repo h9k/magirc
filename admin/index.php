@@ -15,7 +15,7 @@ error_reporting(E_ALL);
 ini_set('default_charset','UTF-8');
 date_default_timezone_set('UTC');
 
-if (version_compare(PHP_VERSION, '5.5.0', '<')
+if (version_compare(PHP_VERSION, '5.6.0', '<')
     || !extension_loaded('pdo')
     || !in_array('mysql', PDO::getAvailableDrivers())
     || !extension_loaded('gettext'))
