@@ -1,18 +1,16 @@
 $(document).ready(function() {
-	$.format.date.defaultShortDateFormat = "dd/MM/yyyy";
-	$.format.date.defaultLongDateFormat = "dd/MM/yyyy hh:mm:ss";
 	$(".shortDateFormat").each(function (idx, elem) {
 		if ($(elem).is(":input")) {
-			$(elem).val($.format.date($(elem).val(), $.format.date.defaultShortDateFormat));
+			$(elem).val(moment($(elem).val()).format('L'));
 		} else {
-			$(elem).text($.format.date($(elem).text(), $.format.date.defaultShortDateFormat));
+			$(elem).text(moment($(elem).text()).format('L'));
 		}
 	});
 	$(".longDateFormat").each(function (idx, elem) {
 		if ($(elem).is(":input")) {
-			$(elem).val($.format.date($(elem).val(), $.format.date.defaultLongDateFormat));
+			$(elem).val(moment($(elem).val()).format('lll'));
 		} else {
-			$(elem).text($.format.date($(elem).text(), $.format.date.defaultLongDateFormat));
+			$(elem).text(moment($(elem).text()).format('lll'));
 		}
 	});
 	$.extend($.fn.dataTable.defaults, {

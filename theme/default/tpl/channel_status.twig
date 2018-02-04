@@ -61,13 +61,13 @@ $(document).ready(function() {
             if (result.topic_html) {
                 $("#chan_topic").html(result.topic_html);
                 $("#chan_topic_author").text(result.topic_author);
-                $("#chan_topic_time").text($.format.date(result.topic_time, format_datetime));
+                $("#chan_topic_time").text(moment(result.topic_time).format(format_datetime));
             } else {
                 $("#chan_topic_container").hide();
             }
             $("#chan_users").text(result.users);
             $("#chan_users_max").text(result.users_max);
-            $("#chan_users_max_time").text($.format.date(result.users_max_time, format_datetime));
+            $("#chan_users_max_time").text(moment(result.users_max_time).format(format_datetime));
             $("#chan_modes").text(result.modes ? "+"+result.modes : mLang.None);
         });
     }

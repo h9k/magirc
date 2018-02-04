@@ -100,8 +100,9 @@
 <script type="text/javascript" src="js/vendor/datatables.net-jqui/js/dataTables.jqueryui.min.js"></script>
 <script type="text/javascript" src="js/vendor/highcharts/highstock.js"></script>
 <script type="text/javascript" src="js/vendor/js-cookie/src/js.cookie.js"></script>
-<script type="text/javascript" src="js/vendor/jquery-dateFormat/dist/jquery-dateFormat.min.js"></script>
+<script type="text/javascript" src="js/vendor/moment/min/moment-with-locales.min.js"></script>
 <script type="text/javascript">
+moment.locale('{{ constant('LANG') }}');
 var url_base = '{{ constant('BASE_URL') }}{% if not cfg.rewrite_enable %}index.php/{% endif %}';
 var theme = '{{ cfg.theme }}';
 var net_roundrobin = '{{ cfg.net_roundrobin }}';
@@ -110,7 +111,7 @@ var net_port_ssl = '{{ cfg.net_port_ssl }}';
 var service_webchat = '{{ cfg.service_webchat }}';
 var service_mibbit = '{{ cfg.service_mibbit }}';
 var stats_server = '{{ cfg.service }}';
-var format_datetime = '{% trans "yyyy-MM-dd HH:mm:ss" %}';
+var format_datetime = '{% trans "YYYY-MM-DD hh:mm:ss" %}';
 var format_datetime_charts = '{% trans "%Y-%m-%d %H:%M:%S" %}';
 var refresh_interval = {{ cfg.live_interval }} * 1000;
 var mLang = {

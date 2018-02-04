@@ -44,10 +44,6 @@ $(document).ready(function() {
             });
         }
     });
-    // Temporary fix to make sure netsplit generates the graphs we need
-    if (netsplit) {
-        $.get('http://irc.netsplit.de/networks/statistics.php?net='+netsplit);
-    }
 });
 </script>
 {% endblock %}

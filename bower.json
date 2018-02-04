@@ -1,6 +1,6 @@
 {
   "name": "magirc",
-  "homepage": "http://www.magirc.org/",
+  "homepage": "https://www.magirc.org/",
   "description": "MagIRC",
   "main": "js/magirc.js",
   "keywords": [
@@ -21,15 +21,16 @@
     "tests"
   ],
   "dependencies": {
-    "datatables.net-jqui": "^1.10.12",
-    "datatables.net": "^1.10.12",
-    "jquery-ui": "^1.12.0",
-    "jquery": "^3.1.0",
-    "js-cookie": "^2.1.3",
-    "highcharts": "^4.2.6",
-    "jquery-form": "^3.46.0",
-    "jquery-dateFormat": "^1.0.2",
-    "requirejs": "^2.3.1",
-    "flag-icon-css": "^2.4.0"
+    "jquery": "^3.3.1",
+    "jquery-ui": "^1.12.1",
+    "bootstrap": "^4.0.0",
+    "datatables.net": "^1.10.16",
+    "datatables.net-jqui": "^1.10.16",
+    "datatables.net-bs": "^1.10.16",
+    "js-cookie": "^2.2.0",
+    "highcharts": "^6.0.5",
+    "jquery-form": "^4.2.2",
+    "requirejs": "^2.3.5",
+    "flag-icon-css": "^2.9.0"
   }
 }

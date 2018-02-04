@@ -128,22 +128,22 @@ $(document).ready(function() {
             $("#net_users").text(result.users.val);
             if ($("#net_users").text() > $("#net_users_max")) {
                 $("#net_users_max").text(result.users.val);
-                $("#net_users_max_time").text($.format.date(result.users.time, format_datetime));
+                $("#net_users_max_time").text(moment(result.users.time).format(format_datetime));
             }
             $("#net_chans").text(result.chans.val);
             if ($("#net_chans").text() > $("#net_chans_max")) {
                 $("#net_chans_max").text(result.chans.val);
-                $("#net_chans_max_time").text($.format.date(result.chans.time, format_datetime));
+                $("#net_chans_max_time").text(moment(result.chans.time).format(format_datetime));
             }
             $("#net_servers").text(result.servers.val);
             if ($("#net_servers").text() > $("#net_servers_max")) {
                 $("#net_servers_max").text(result.servers.val);
-                $("#net_servers_max_time").text($.format.date(result.servers.time, format_datetime));
+                $("#net_servers_max_time").text(moment(result.servers.time).format(format_datetime));
             }
             $("#net_opers").text(result.opers.val);
             if ($("#net_opers").text() > $("#net_opers_max")) {
                 $("#net_opers_max").text(result.opers.val);
-                $("#net_opers_max_time").text($.format.date(result.opers.time, format_datetime));
+                $("#net_opers_max_time").text(moment(result.opers.time).format(format_datetime));
             }
         });
     }
@@ -153,10 +153,10 @@ $(document).ready(function() {
             $("#net_chans_max").text(result.channels.val);
             $("#net_servers_max").text(result.servers.val);
             $("#net_opers_max").text(result.opers.val);
-            $("#net_users_max_time").text($.format.date(result.users.time, format_datetime));
-            $("#net_chans_max_time").text($.format.date(result.channels.time, format_datetime));
-            $("#net_servers_max_time").text($.format.date(result.servers.time, format_datetime));
-            $("#net_opers_max_time").text($.format.date(result.opers.time, format_datetime));
+            $("#net_users_max_time").text(moment(result.users.time).format(format_datetime));
+            $("#net_chans_max_time").text(moment(result.channels.time).format(format_datetime));
+            $("#net_servers_max_time").text(moment(result.servers.time).format(format_datetime));
+            $("#net_opers_max_time").text(moment(result.opers.time).format(format_datetime));
         });
     }
     function updateTables() {

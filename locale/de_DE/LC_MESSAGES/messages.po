@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: MagIRC\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-31 10:23+0100\n"
-"PO-Revision-Date: 2015-01-31 10:25+0100\n"
+"PO-Revision-Date: 2018-02-04 13:29+0100\n"
 "Last-Translator: Hal9000 <hal9000@magirc.org>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;T_gettext\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SearchPath-0: ../..\n"
 "X-Poedit-SearchPath-1: ../../../lib/magirc\n"
 
@@ -21,13 +21,13 @@ msgstr ""
 msgid "Channel activity for %1"
 msgstr "Raum-Aktivität für %1"
 
-#: ../../strings.c:5 ../../strings.c:74 ../../strings.c:548
-#: ../../strings.c:599 ../../strings.c:824
+#: ../../strings.c:5 ../../strings.c:74 ../../strings.c:548 ../../strings.c:599
+#: ../../strings.c:824
 msgid "Total"
 msgstr "Gesamt"
 
-#: ../../strings.c:8 ../../strings.c:77 ../../strings.c:551
-#: ../../strings.c:602 ../../strings.c:827
+#: ../../strings.c:8 ../../strings.c:77 ../../strings.c:551 ../../strings.c:602
+#: ../../strings.c:827
 msgid "Today"
 msgstr "Heute"
 
@@ -87,12 +87,12 @@ msgstr "Modes"
 msgid "Topics"
 msgstr "Topics"
 
-#: ../../strings.c:44 ../../strings.c:56 ../../strings.c:68
-#: ../../strings.c:113 ../../strings.c:134 ../../strings.c:215
-#: ../../strings.c:230 ../../strings.c:242 ../../strings.c:323
-#: ../../strings.c:395 ../../strings.c:404 ../../strings.c:413
-#: ../../strings.c:425 ../../strings.c:437 ../../strings.c:521
-#: ../../strings.c:593 ../../strings.c:638 ../../strings.c:707
+#: ../../strings.c:44 ../../strings.c:56 ../../strings.c:68 ../../strings.c:113
+#: ../../strings.c:134 ../../strings.c:215 ../../strings.c:230
+#: ../../strings.c:242 ../../strings.c:323 ../../strings.c:395
+#: ../../strings.c:404 ../../strings.c:413 ../../strings.c:425
+#: ../../strings.c:437 ../../strings.c:521 ../../strings.c:593
+#: ../../strings.c:638 ../../strings.c:707
 msgid "Loading"
 msgstr "Laden"
 
@@ -471,8 +471,8 @@ msgid "Language"
 msgstr "Sprache"
 
 #: ../../strings.c:731
-msgid "yyyy-MM-dd HH:mm:ss"
-msgstr "dd.MM.yyyy HH:mm:ss"
+msgid "YYYY-MM-DD hh:mm:ss"
+msgstr "DD.MM.YYYY hh:mm:ss"
 
 #: ../../strings.c:734
 msgid "%Y-%m-%d %H:%M:%S"

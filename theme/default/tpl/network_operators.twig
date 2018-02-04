@@ -29,7 +29,7 @@ $(document).ready(function() {
                 return getUserStatus(row) + ' ' + getCountryFlag(row) + ' ' + escapeTags(data) + getUserExtra(row);
             } },
             { "data": "server" },
-            { "data": "connect_time", "render": function(data) { return $.format.date(data, format_datetime); } }
+            { "data": "connect_time", "render": function(data) { return moment(data).format(format_datetime); } }
         ]
     });
     $("#tbl_operators tbody").on("click", "tr", function() {

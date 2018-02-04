@@ -28,9 +28,9 @@ $(document).ready(function() {
             status = getUserStatus(result);
             if (result.online) {
                 if (result.away && result.away_msg) status_extra += '<br \/>'+mLang.Message+': ' + escapeTags(result.away_msg);
-                status_extra += '<br \/>'+mLang.ConnectedSince+' ' + $.format.date(result.connect_time, format_datetime);
+                status_extra += '<br \/>'+mLang.ConnectedSince+' ' + moment(result.connect_time).format(format_datetime);
             } else {
-                if (result.lastquit_time) status_extra += '<br \/>'+mLang.LastQuit+' ' + $.format.date(result.quit_time, format_datetime);
+                if (result.lastquit_time) status_extra += '<br \/>'+mLang.LastQuit+' ' + moment(result.quit_time).format(format_datetime);
                 if (result.lastquit_msg) status_extra += '<br \/>'+mLang.Message+' ' + escapeTags(result.quit_msg);
             }
             status += getUserExtra(result);

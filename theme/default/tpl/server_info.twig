@@ -44,18 +44,18 @@ $(document).ready(function() {
                     $("#srv_lastsplit").text(mLang.Never);
                 }
                 else {
-                    $("#srv_lastsplit").text($.format.date(data.split_time, format_datetime));
+                    $("#srv_lastsplit").text(moment(data.split_time).format(format_datetime));
                 }
                 $("#srv_ping").text(data.ping);
                 $("#srv_maxping").text(data.ping_max);
-                $("#srv_maxpingtime").text($.format.date(data.ping_max_time, format_datetime));
+                $("#srv_maxpingtime").text(moment(data.ping_max_time).format(format_datetime));
                 $("#srv_users").text(data.users);
                 $("#srv_maxusers").text(data.users_max);
-                $("#srv_maxusertime").text($.format.date(data.users_max_time, format_datetime));
+                $("#srv_maxusertime").text(moment(data.users_max_time).format(format_datetime));
                 $("#srv_opers").text(data.opers);
                 $("#srv_maxopers").text(data.opers_max);
                 if (data.opers_max_time != null && (data.opers_max_time).indexOf("1970") < 0) {
-                    $("#srv_maxopertime").text(mLang.On + " " + $.format.date(data.opers_max_time, format_datetime));
+                    $("#srv_maxopertime").text(mLang.On + " " + moment(data.opers_max_time).format(format_datetime));
                 }
                 $("#srv_motd_txt").html(data.motd ? data.motd_html : mLang.NoMotd);
                 $("#dialog-server").dialog("open");
