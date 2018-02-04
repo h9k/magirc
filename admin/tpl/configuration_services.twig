@@ -27,14 +27,6 @@
             <td align="left"><input name="service_mibbitid" type="text" id="service_mibbitid" value="{{ cfg.service_mibbitid }}" size="32" maxlength="64" /></td>
         </tr>
         <tr>
-            <td align="right">
-                <strong>Netsplit ID</strong>
-                <br />The URL parameter for the Netsplit.de features, usually your network name.
-                <br />For more information about being ranked on Netsplit.de visit <a href="http://irc.netsplit.de/">http://irc.netsplit.de/</a>
-            </td>
-            <td align="left"><input name="service_netsplit" type="text" id="service_netsplit" value="{{ cfg.service_netsplit }}" size="32" maxlength="64" /></td>
-        </tr>
-        <tr>
             <td align="right"><strong>Enable AddThis sharing buttons</strong></td>
             <td align="left">yes <input type="radio" name="service_addthis" value="1"{% if cfg.service_addthis %} checked="checked"{% endif %} /> <input type="radio" name="service_addthis" value="0"{% if not cfg.service_addthis %} checked="checked"{% endif %} /> no</td>
         </tr>
