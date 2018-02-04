@@ -3,7 +3,6 @@
 define('PATH_ROOT', __DIR__ . '/../../');
 
 use \Gettext\Translator as Translator;
-use JaimePerez\TwigConfigurableI18n\Twig\Extensions\Extension\I18n as Twig_Extensions_Extension_I18n;
 
 class Magirc {
     public $db;
@@ -140,9 +139,11 @@ class Magirc {
 
     private function initializeLocalization() {
         $locale = self::getLocale();
-        $domain = "messages";
-        $translations = Gettext\Translations::fromPoFile(PATH_ROOT . "locale/$locale/LC_MESSAGES/$domain.po");
-        $this->translator->loadTranslations($translations);
+        putenv("LC_ALL=$locale");
+        setlocale(LC_ALL, $locale);
+        bindtextdomain('messages', 'locale');
+        bind_textdomain_codeset('messages', 'UTF-8');
+        textdomain('messages');
         define('LOCALE', $locale);
         define('LANG', substr($locale, 0, 2));
     }

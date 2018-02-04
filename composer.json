@@ -10,7 +10,7 @@
     "authors": [
         {
             "name": "Sebastian Vassiliou",
-            "email": "hal9000@denorastats.org",
+            "email": "hal9000@magirc.org",
             "role": "Developer"
         }
     ],
@@ -28,11 +28,11 @@
         "ext-gettext": "*",
         "slim/slim": "3.*",
         "slim/twig-view": "^2.0",
-        "twig/extensions": "^1.3",
+        "twig/extensions": "^1.5",
         "aptoma/twig-markdown": "^2.0",
         "michelf/php-markdown": "^1.6",
         "ckeditor/ckeditor": "^4.5",
         "gettext/gettext": "^4.4",
-        "jaimeperez/twig-configurable-i18n": "^1.2"
+        "symfony/translation": "^4.0"
     }
 }
