@@ -77,6 +77,8 @@ Please look at the `setup/sql/anope.sql` file and adapt it if needed (table pref
 
 Note that you need the MySQL `event_scheduler` set to `ON` in the MySQL server. If you have enough rights, you can turn it on via `SET GLOBAL event_scheduler = ON;`.
 
+If you have access to the server configuration, you can modify the msql configuration file (usually `my.cnf` or `mysqld.cnf`) by setting `event_scheduler = on` in the `[mysqld]` block.
+
 ### Migrating from Denora to Anope ###
 If you want to switch from Denora to Anope, please proceed as follows:
 
