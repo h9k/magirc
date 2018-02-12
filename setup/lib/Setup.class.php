@@ -68,6 +68,13 @@ class Setup {
             $status['error'] = true;
         }
 
+        if (extension_loaded('xml') == 1) {
+            $status['xml'] = true;
+        } else {
+            $status['xml'] = false;
+            $status['error'] = true;
+        }
+
         if (file_exists(MAGIRC_CFG_FILE)) {
             if (is_writable(MAGIRC_CFG_FILE)) {
                 $status['writable'] = true;

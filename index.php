@@ -18,7 +18,8 @@ date_default_timezone_set('UTC');
 if (version_compare(PHP_VERSION, '5.6.0', '<')
     || !extension_loaded('pdo')
     || !in_array('mysql', PDO::getAvailableDrivers())
-    || !extension_loaded('gettext'))
+    || !extension_loaded('gettext')
+    || !extension_loaded('xml'))
     die('ERROR: System requirements not met. Please run Setup.');
 if (!file_exists('conf/magirc.cfg.php')) die('ERROR: MagIRC is not configured. Please run Setup.');
 if (!is_writable('tmp/')) die('ERROR: Unable to write temporary files. Please run Setup.');
