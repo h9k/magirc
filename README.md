@@ -79,6 +79,8 @@ Note that you need the MySQL `event_scheduler` set to `ON` in the MySQL server. 
 
 If you have access to the server configuration, you can modify the msql configuration file (usually `my.cnf` or `mysqld.cnf`) by setting `event_scheduler = on` in the `[mysqld]` block.
 
+NOTE: Ubuntu/Debian users: You should **ONLY** edit the file located under `/etc/mysql/mysql.conf.d/` directory, otherwise MySQL will refuse to start/restart. On other distros/OS's, you should look for where the `mysqld.cnf` file is located.
+
 ### Migrating from Denora to Anope ###
 If you want to switch from Denora to Anope, please proceed as follows:
 
