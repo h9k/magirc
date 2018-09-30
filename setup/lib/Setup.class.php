@@ -270,6 +270,9 @@ class Setup {
                 $base_url = $this->generateBaseUrl();
                 $this->db->update('magirc_config', array('value' => $base_url), array('parameter' => 'base_url'));
             }
+            if ($version < 19) {
+                $this->db->insert('magirc_config', array('parameter' => 'service_webchat', 'value' => 1));
+            }
             $this->db->update('magirc_config', array('value' => DB_VERSION), array('parameter' => 'db_version'));
             $updated = true;
         }

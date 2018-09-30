@@ -10,6 +10,10 @@
             <td align="left"><input name="service_webchat" type="text" id="service_webchat" value="{{ cfg.service_webchat }}" size="32" maxlength="64" /></td>
         </tr>
         <tr>
+            <td align="right"><strong>URL encode channel name</strong></td>
+            <td align="left">yes <input type="radio" name="service_webchat_urlencode" value="1"{% if cfg.service_webchat_urlencode %} checked="checked"{% endif %} /> <input type="radio" name="service_webchat_urlencode" value="0"{% if not cfg.service_webchat_urlencode %} checked="checked"{% endif %} /> no</td>
+        </tr>
+        <tr>
             <td align="right">
                 <strong>Mibbit settings key</strong>
                 <br />This enables links to the Mibbit web chat

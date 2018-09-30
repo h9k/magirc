@@ -23,6 +23,9 @@ $(document).ready(function() {
                 case 'webchat':
                     location.href = service_webchat + chan;
                     break;
+                case 'webchat2':
+                    location.href = service_webchat + menu.data('channel');
+                    break;
                 case 'mibbit':
                     location.href = 'http://widget.mibbit.com/?settings='+service_mibbit+'&server='+net_roundrobin+'&channel='+chan+'&promptPass=true';
                     break;

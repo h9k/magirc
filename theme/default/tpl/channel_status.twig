@@ -24,7 +24,7 @@
     {% endif %}
     {% if cfg.service_webchat %}
         <img src="theme/{{ cfg.theme }}/img/icons/webchat.png" alt="" title="{% trans "Webchat" %}" style="vertical-align:middle;" />
-        <a href="{{ cfg.service_webchat }}{{ target|e('url') }}">{% trans "Webchat" %}</a><br />
+        <a href="{{ cfg.service_webchat }}{% if cfg.service_webchat_urlencode %}{{ target|e('url') }}{% else %}{{ target }}{% endif %}">{% trans "Webchat" %}</a><br />
     {% endif %}
     {% if cfg.net_roundrobin and cfg.service_mibbit %}
         <img src="theme/{{ cfg.theme }}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" />
