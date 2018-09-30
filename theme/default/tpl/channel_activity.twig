@@ -46,7 +46,7 @@ $(document).ready(function() {
     var table_activity = $('#tbl_activity').DataTable({
         "serverSide": true,
         "pageLength": 10,
-        "order": [[ 3, "desc" ]],
+        "order": [[ 2, "desc" ]],
         "ajax": "rest/service.php/channels/"+target+"/activity/"+type+"?format=datatables",
         "columns": [
             { "data": "uname", "render": function(data, type, row) {
