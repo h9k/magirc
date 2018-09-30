@@ -89,7 +89,7 @@
 <ul id="chanmenu" style="display:none;">
     {% if cfg.net_roundrobin %}<li data-action="irc"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/link.png" alt="" title="{% trans "Standard connection" %}" style="vertical-align:middle;" /> {% trans "IRC standard connection" %}</a></li>{% endif %}
     {% if cfg.net_roundrobin and cfg.net_port_ssl %}<li data-action="ircs"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/ssl.png" alt="" title="{% trans "Secure connection" %}" style="vertical-align:middle;" /> {% trans "IRC secure connection" %}</a></li>{% endif %}
-    {% if cfg.service_webchat %}<li data-action="webchat{% if !cfg.service_webchat_urlencode %}2{% endif %}"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/webchat.png" alt="" title="{% trans "Webchat" %}" style="vertical-align:middle;" /> {% trans "Webchat" %}</a></li>{% endif %}
+    {% if cfg.service_webchat %}<li data-action="webchat{% if not cfg.service_webchat_urlencode %}2{% endif %}"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/webchat.png" alt="" title="{% trans "Webchat" %}" style="vertical-align:middle;" /> {% trans "Webchat" %}</a></li>{% endif %}
     {% if cfg.net_roundrobin and cfg.service_mibbit %}<li data-action="mibbit"><a href="#"><img src="theme/{{ cfg.theme }}/img/icons/mibbit.png" alt="" title="Mibbit" style="vertical-align:middle;" /> Mibbit</a></li>{% endif %}
 </ul>
 {% endblock %}
