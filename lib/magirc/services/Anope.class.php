@@ -738,8 +738,8 @@ class Anope implements Service {
      * @return mixed
      */
     public function getChannelHourlyActivity($chan, $type) {
-        $query = sprintf("SELECT time0, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11,
-            time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23
+        $query = sprintf("SELECT sum(time0), sum(time1), sum(time2), sum(time3), sum(time4), sum(time5), sum(time6), sum(time7), sum(time8), sum(time9), sum(time10), sum(time11),
+            sum(time12), sum(time13), sum(time14), sum(time15), sum(time16), sum(time17), sum(time18), sum(time19), sum(time20), sum(time21), sum(time22), sum(time23)
             FROM `%s`AS cs
             WHERE chan=:channel AND type=:type",
                 TBL_CHANSTATS);
