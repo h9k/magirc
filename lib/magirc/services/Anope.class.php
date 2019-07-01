@@ -734,14 +734,14 @@ class Anope implements Service {
     /**
      * Get the hourly average activity for the given channel
      * @param string $chan Channel
-     * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
+     * @param string $type total, monthly, weekly, daily
      * @return mixed
      */
     public function getChannelHourlyActivity($chan, $type) {
         $query = sprintf("SELECT time0, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10, time11,
             time12, time13, time14, time15, time16, time17, time18, time19, time20, time21, time22, time23
             FROM `%s`AS cs
-            WHERE chan=:channel AND type=:type",
+            WHERE chan=:channel AND type=:type AND nick=''",
                 TBL_CHANSTATS);
         $ps = $this->db->prepare($query);
         $ps->bindValue(':type', $type, PDO::PARAM_STR);

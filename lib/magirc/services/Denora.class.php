@@ -772,7 +772,7 @@ class Denora implements Service {
     /**
      * Get the hourly average activity for the given channel
      * @param string $chan Channel
-     * @param int $type int $type 0: total, 1: day, 2: week, 3: month, 4: year
+     * @param string $type total, monthly, weekly, daily
      * @return mixed
      */
     public function getChannelHourlyActivity($chan, $type) {
