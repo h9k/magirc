@@ -782,7 +782,6 @@ class Anope implements Service {
         $data = $ps->fetch();
 
         if (!$data) {
-            die($chan);
             return 404;
         }
 

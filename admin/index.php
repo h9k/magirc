@@ -4,10 +4,10 @@
  * Admin panel
  *
  * @author      Sebastian Vassiliou <hal9000@magirc.org>
- * @copyright   2012 - 2018 Sebastian Vassiliou
+ * @copyright   2012 - 2019 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
- * @version     1.6.0
+ * @version     1.7.0
  */
 
 ini_set('display_errors','on');
@@ -244,9 +244,7 @@ $admin->slim->post('/configuration/{service}/database', function($req, $res, $ar
             $writefile = fopen($db_config_file,"w");
             fwrite($writefile,$db_buffer);
             fclose($writefile);
-            die($db_config_file);
             echo json_encode(true);
-            exit;
         }
     }
     echo json_encode(false);

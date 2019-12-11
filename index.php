@@ -4,7 +4,7 @@
  * Frontend
  *
  * @author      Sebastian Vassiliou <hal9000@magirc.org>
- * @copyright   2012 - 2018 Sebastian Vassiliou
+ * @copyright   2012 - 2019 Sebastian Vassiliou
  * @link        http://www.magirc.org/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
  * @version     1.7.0

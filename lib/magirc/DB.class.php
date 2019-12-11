@@ -317,7 +317,6 @@ class DB {
      */
     function datatablesTotal($sQuery, $aParams = array()) {
         $sQuery = preg_replace('#SELECT\s.*\s?FROM\s#is', 'SELECT COUNT(*) FROM ', $sQuery, 1);
-        //die($sQuery);
         $ps = $this->prepare($sQuery);
         foreach ($aParams as $key => &$val) {
             $ps->bindParam($key, $val, is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR);
