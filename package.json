@@ -1,0 +1,20 @@
+{
+  "name": "MagIRC",
+  "version": "1.7.0",
+  "description": "Web frontend for Anope and Denora IRC statistics",
+  "main": "index.php",
+  "repository": "https://h9k@github.com/h9k/magirc.git",
+  "author": "h9k <hal9000@denorastats.org>",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "datatables.net": "^1.10.20",
+    "datatables.net-jqui": "^1.10.20",
+    "flag-icon-css": "^3.4.5",
+    "highcharts": "^8.0.0",
+    "jquery": "^3.4.1",
+    "jquery-form": "^4.2.2",
+    "jquery-ui": "^1.12.1",
+    "js-cookie": "^2.2.1",
+    "momentjs": "^2.0.0"
+  }
+}

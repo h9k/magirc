@@ -14,9 +14,9 @@
 <base href="{{ constant('BASE_URL') }}" />
 <link rel="icon" href="theme/{{ cfg.theme}}/img/favicon.ico" type="image/x-icon">
 {% block css %}
-<link href="js/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-<link href="js/vendor/datatables.net-jqui/css/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css" />
-<link href="js/vendor/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
+<link href="node_modules/jquery-ui/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="node_modules/datatables.net-jqui/css/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css" />
+<link href="node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" type="text/css" />
 <link href="theme/{{ cfg.theme }}/css/font.css" rel="stylesheet" type="text/css" />
 <link href="theme/{{ cfg.theme }}/css/styles.css" rel="stylesheet" type="text/css" />
 {% endblock %}
@@ -94,13 +94,13 @@
 </ul>
 {% endblock %}
 {% block js %}
-<script type="text/javascript" src="js/vendor/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="js/vendor/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/vendor/datatables.net-jqui/js/dataTables.jqueryui.min.js"></script>
-<script type="text/javascript" src="js/vendor/highcharts/highstock.js"></script>
-<script type="text/javascript" src="js/vendor/js-cookie/src/js.cookie.js"></script>
-<script type="text/javascript" src="js/vendor/momentjs/min/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="node_modules/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="node_modules/datatables.net-jqui/js/dataTables.jqueryui.min.js"></script>
+<script type="text/javascript" src="node_modules/highcharts/highstock.js"></script>
+<script type="text/javascript" src="node_modules/js-cookie/src/js.cookie.js"></script>
+<script type="text/javascript" src="node_modules/momentjs/min/moment-with-locales.min.js"></script>
 <script type="text/javascript">
 moment.locale('{{ constant('LANG') }}');
 var url_base = '{{ constant('BASE_URL') }}{% if not cfg.rewrite_enable %}index.php/{% endif %}';

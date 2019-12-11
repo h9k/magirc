@@ -1,8 +1,10 @@
-/.htaccess
+.htaccess
 .DS_Store
-/vendor/
-/js/vendor/
+.idea
+/vendor
+/node_modules
 /conf/*.cfg.php
 /theme/default/slim/customRoutes.inc.php
-/.idea
 composer.lock
+yarn.lock
+*.log

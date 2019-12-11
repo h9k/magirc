@@ -34,8 +34,8 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 } else {
     die('Please run the `composer install` command to install library dependencies. See README for more information.');
 }
-if (!file_exists(__DIR__.'/../js/vendor/')) {
-    die('Please run the `bower install` command to install script dependencies. See README for more information.');
+if (!file_exists(__DIR__.'/../node_modules/')) {
+    die('Please run the `yarn` command to install script dependencies. See README for more information.');
 }
 require_once(__DIR__.'/../lib/magirc/DB.class.php');
 require_once(__DIR__.'/../lib/magirc/Config.class.php');

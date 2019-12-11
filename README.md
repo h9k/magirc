@@ -2,16 +2,16 @@
 
 Thank you for your interest in MagIRC, a PHP-based Web Frontend for IRC Services released under the GPLv3 license.
 
-This software is a complete rewrite of phpDenora, a PHP-based Web Frontend for the [Denora Stats](http://www.denorastats.org) project.
+This software is a complete rewrite of phpDenora, a PHP-based Web Frontend for the [Denora Stats](https://www.denorastats.org) project.
 
-Meanwhile, MagIRC also works with [Anope](http://www.anope.org/) 2.0, which supersedes Denora.
+Meanwhile, MagIRC also works with [Anope](https://www.anope.org/) 2.0, which supersedes Denora.
 We recommend using Anope, since it is being actively maintained and has improved performance and stability over Denora.
 In case you want to migrate from Denora to Anope, we created a script for this task (see below).
 
 ### Main features ###
 * REST service
-* [Twig](http://twig.sensiolabs.org) templating engine
-* [jQuery](http://www.jquery.com/)-based UI with AJAX interactions
+* [Twig](https://twig.sensiolabs.org) templating engine
+* [jQuery](https://www.jquery.com/)-based UI with AJAX interactions
 * HTML5 and CSS3
 * Easy installation
 * Administration panel
@@ -21,46 +21,46 @@ In case you want to migrate from Denora to Anope, we created a script for this t
 * Web Server with PHP 5.6+ and the `pdo_mysql`, `gettext` and `xml` extensions installed
 * Web Browser supporting HTML5, CSS3 and JavaScript
 * Any of the following:
-	* [Denora Stats](http://www.denorastats.org) v1.5 server with MySQL enabled
-	* [Anope](http://www.anope.org/) v2.0 with the `m_mysql`, `m_chanstats` and `irc2sql` modules enabled
+	* [Denora Stats](https://www.denorastats.org) v1.5 server with MySQL enabled
+	* [Anope](https://www.anope.org/) v2.0 with the `m_mysql`, `m_chanstats` and `irc2sql` modules enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
 
 
 ## Magirc installation / upgrade ##
 
-### Using [composer](http://getcomposer.org) and [bower](http://bower.io) (recommended) ###
+### Using [composer](https://getcomposer.org) and [yarn](https://yarnpkg.com) (recommended) ###
 
 1. Execute the following command:
 	- To install:
 	    - `composer create-project magirc/magirc`
-	    - `bower install`
+	    - `yarn`
 	- To update:
 	    - `composer update`
-	    - `bower update`
+	    - `yarn`
 	    - Clean up cached pages with `rm -r tmp/*`
 2. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
-   Example: http://`yourpathtomagirc`/setup/
+   Example: https://`yourpathtomagirc`/setup/
 
 ### Using a release package ###
-1. Download the latest MagIRC release package from [magirc.org](http://www.magirc.org/)
+1. Download the latest MagIRC release package from [magirc.org](https://www.magirc.org/)
 2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
-   Example: http://`yourpathtomagirc`/setup/
+   Example: https://`yourpathtomagirc`/setup/
 
 ### Using git ###
-You need a git client, [composer](http://getcomposer.org) and [bower](http://bower.io)
+You need a git client, [composer](https://getcomposer.org) and [yarn](https://yarnpkg.com)
 
 1. Execute the following commands:
 	- To install:
 	    - `git clone git://github.com/h9k/magirc.git`
 	    - `composer install`
-	    - `bower install`
+	    - `yarn`
 	- To update:
 	    - `git pull`
 	    - `composer update`
-	    - `bower update`
+	    - `yarn`
 2. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
-   Example: http://`yourpathtomagirc`/setup/
+   Example: https://`yourpathtomagirc`/setup/
 
 
 ## Anope configuration ###

@@ -31,8 +31,8 @@ if (file_exists('vendor/autoload.php')) {
 } else {
 	die('Please run the `composer install` command to install library dependencies. See README for more information.');
 }
-if (!file_exists('js/vendor/')) {
-    die('Please run the `bower install` command to install script dependencies. See README for more information.');
+if (!file_exists('node_modules/')) {
+    die('Please run the `yarn` command to install script dependencies. See README for more information.');
 }
 
 require_once('lib/magirc/DB.class.php');
