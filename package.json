@@ -1,5 +1,5 @@
 {
-  "name": "MagIRC",
+  "name": "@h9k/magirc",
   "version": "1.7.0",
   "description": "Web frontend for Anope and Denora IRC statistics",
   "main": "index.php",
@@ -17,5 +17,8 @@
     "jquery-ui-themes": "^1.12.0",
     "js-cookie": "^2.2.1",
     "moment": "^2.24.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
