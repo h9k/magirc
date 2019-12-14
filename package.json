@@ -4,7 +4,7 @@
   "description": "Web frontend for Anope and Denora IRC statistics",
   "main": "index.php",
   "repository": "https://h9k@github.com/h9k/magirc.git",
-  "author": "h9k <hal9000@denorastats.org>",
+  "author": "h9k <hal9000@magirc.org>",
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "datatables.net": "^1.10.20",
