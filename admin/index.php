@@ -250,17 +250,6 @@ $admin->slim->post('/configuration/{service}/database', function($req, $res, $ar
     echo json_encode(false);
     return $res->withHeader('Content-Type', 'application/json');
 });
-$admin->slim->get('/support/register', function($req, $res, $args) use ($admin) {
-    if (!$admin->sessionStatus()) {
-        return $res->withStatus(403)->write('HTTP 403 Access Denied');
-    }
-    $magirc_url = (@$_SERVER['HTTPS'] ? 'https' : 'http') .'://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $magirc_url = explode("admin/",$magirc_url);
-    $this->view->render($res, 'support_register.twig', [
-        'cfg' => $admin->cfg->config,
-        'magirc_url' => $magirc_url[0]
-    ]);
-});
 $admin->slim->get('/support/doc/{file}', function($req, $res, $args) use ($admin) {
     if (!$admin->sessionStatus()) {
         return $res->withStatus(403)->write('HTTP 403 Access Denied');
