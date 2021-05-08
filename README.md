@@ -2,7 +2,7 @@
 
 Thank you for your interest in MagIRC, a PHP-based Web Frontend for IRC Services released under the GPLv3 license.
 
-This software is a complete rewrite of phpDenora, a PHP-based Web Frontend for the [Denora Stats](https://www.denorastats.org) project.
+This software is a complete rewrite of phpDenora, a PHP-based Web Frontend for the [Denora Stats](https://github.com/denora/denora) project.
 
 Meanwhile, MagIRC also works with [Anope](https://www.anope.org/) 2.0, which supersedes Denora.
 We recommend using Anope, since it is being actively maintained and has improved performance and stability over Denora.
@@ -21,7 +21,7 @@ In case you want to migrate from Denora to Anope, we created a script for this t
 * Web Server with PHP 5.6+ and the `pdo_mysql`, `gettext` and `xml` extensions installed
 * Web Browser supporting HTML5, CSS3 and JavaScript
 * Any of the following:
-	* [Denora Stats](https://www.denorastats.org) v1.5 server with MySQL enabled
+	* [Denora Stats](https://github.com/denora/denora) v1.5 server with MySQL enabled
 	* [Anope](https://www.anope.org/) v2.0 with the `m_mysql`, `m_chanstats` and `irc2sql` modules enabled
 * Supported IRC Daemons: Bahamut, Charybdis, InspIRCd, ircd-rizon, IRCu, Nefarious, Ratbox, ScaryNet, Unreal
 
@@ -42,7 +42,7 @@ In case you want to migrate from Denora to Anope, we created a script for this t
    Example: https://`yourpathtomagirc`/setup/
 
 ### Using a release package ###
-1. Download the latest MagIRC release package from [magirc.org](https://www.magirc.org/)
+1. Download the latest MagIRC release package from [GitHub](https://h9k.github.io/magirc/)
 2. Extract the MagIRC archive to your web server and move its content to the MagIRC directory.
 3. Use your web browser to navigate to the setup folder on your server and follow on-screen instructions.
    Example: https://`yourpathtomagirc`/setup/

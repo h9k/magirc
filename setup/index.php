@@ -3,9 +3,9 @@
  * MagIRC - Let the magirc begin!
  * Installer
  *
- * @author      Sebastian Vassiliou <hal9000@magirc.org>
+ * @author      Sebastian Vassiliou <h9k@users.noreply.github.com>
  * @copyright   2012 - 2018 Sebastian Vassiliou
- * @link        http://www.magirc.org/
+ * @link        https://h9k.github.io/magirc/
  * @license     GNU GPL Version 3, see http://www.gnu.org/licenses/gpl-3.0-standalone.html
  * @version     1.6.0
  */

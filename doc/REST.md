@@ -4,7 +4,7 @@ MagIRC runs on top of a RESTful Web Service to get data. This gives you powerful
 All responses are given in JSON format, which can be easily parsed.
 
 Here are all requests you can make to get info. You need to prefix each path with the full URL to the REST service.
-For example, http://www.denorastats.org/magirc/rest/service.php
+For example, http://yourdomain/magirc/rest/service.php
 
 ### Network-related ###
 * **Get Current Network Status**  
@@ -133,4 +133,3 @@ This will show hourly activity stats for a specific user in a given channel
 * **Get List of IRC Operators**  
 This will show a list of IRC Operators along with the server that they reside on as well as nick, country, level, away, etc...
 > /operators
- 

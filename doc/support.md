@@ -3,7 +3,7 @@ Support Resources
 
 News & Updates
 --------------
-Find the latest news on the project on our [Homepage](http://www.magirc.org/)
+Find the latest news on the project on our [Homepage](https://h9k.github.io/magirc/)
 
 Also visit our project on [github](https://github.com/h9k/magirc)
 

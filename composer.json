@@ -3,23 +3,22 @@
     "description": "MagIRC - Let the magirc begin!",
     "type": "project",
     "keywords": [ "irc", "denora", "anope", "stats", "statistics", "frontend" ],
-    "homepage": "https://www.magirc.org",
+    "homepage": "https://h9k.github.io/magirc",
     "license": [
         "GPL-3.0-or-later"
     ],
     "authors": [
         {
             "name": "Sebastian Vassiliou",
-            "email": "hal9000@magirc.org",
+            "email": "h9k@users.noreply.github.com",
             "role": "Developer"
         }
     ],
     "support": {
-        "email": "support@magirc.org",
         "issues": "https://github.com/h9k/magirc/issues",
-        "forum": "http://forum.anope.org/",
+        "forum": "https://github.com/h9k/magirc/discussions",
         "wiki": "https://github.com/h9k/magirc/wiki",
-        "irc": "irc://irc.teranova.net/magirc",
+        "irc": "irc://irc.anope.org/magirc",
         "source": "https://github.com/h9k/magirc"
     },
     "require": {
