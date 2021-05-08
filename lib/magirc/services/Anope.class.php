@@ -392,15 +392,15 @@ class Anope implements Service {
             foreach ($hide_servers as $key => $server) {
                 $hide_servers[$key] = $this->db->escape(trim($server));
             }
-            $where .= sprintf(" name NOT IN(%s)", implode(",", $hide_servers));
+            $where .= sprintf("WHERE name NOT IN(%s)", implode(",", $hide_servers));
         }
         if ($this->cfg->hide_ulined) {
-            $where .= $where ? " AND ulined = 'N'" : " ulined = 'N'";
+            $where .= $where ? " AND ulined = 'N'" : "WHERE ulined = 'N'";
         }
         $query = sprintf("SELECT name AS server, online, comment AS description, currentusers AS users,
         (SELECT COUNT(*) FROM `%s` AS u WHERE u.oper = 'Y' AND u.servid = s.id) AS opers
-        FROM `%s` AS s WHERE %s",
-                TBL_USER, TBL_SERVER, $where);
+        FROM `%s` AS s {$where}",
+                TBL_USER, TBL_SERVER);
         $ps = $this->db->prepare($query);
         $ps->execute();
         return $ps->fetchAll(PDO::FETCH_CLASS, 'Server');
